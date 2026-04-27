@@ -1,0 +1,451 @@
+
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Monitoring Center | SiPANDU VIRTUAL</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .material-icons { font-size: 20px; vertical-align: middle; }
+
+    /* Sticky columns */
+    .col-no   { position: sticky; left: 0;    z-index: 10; }
+    .col-name { position: sticky; left: 48px; z-index: 10; }
+    html[data-theme="light"] .col-no,
+    html[data-theme="light"] .col-name { background: #ffffff; }
+    html[data-theme="dark"]  .col-no,
+    html[data-theme="dark"]  .col-name { background: #1d2430; }
+
+    /* Table scroll */
+    .tbl-wrap { overflow-x: auto; }
+    .tbl-wrap::-webkit-scrollbar { height: 8px; }
+    .tbl-wrap::-webkit-scrollbar-thumb { background: rgba(100,100,100,.2); border-radius: 99px; }
+
+    /* Touch-friendly */
+    .touch { min-height: 48px; }
+
+    /* Sidebar active */
+    #sipandu-sidebar-nav .active {
+      background: rgb(16 185 129 / .12);
+      color: rgb(5 150 105);
+      font-weight: 700;
+    }
+  </style>
+</head>
+
+<body data-role="admin" class="bg-base-200 text-base-content min-h-screen">
+
+<div class="drawer lg:drawer-open">
+  <input id="main-drawer" type="checkbox" class="drawer-toggle" />
+
+  <!-- ── KONTEN UTAMA ── -->
+  <div class="drawer-content flex flex-col min-h-screen">
+
+    <!-- TOPBAR -->
+    <header class="navbar bg-base-100 border-b border-base-300 sticky top-0 z-30 px-4 lg:px-6 gap-3">
+
+      <!-- Hamburger (mobile) -->
+      <label for="main-drawer" class="btn btn-square btn-ghost lg:hidden" aria-label="Buka menu">
+        <span class="material-icons">menu</span>
+      </label>
+
+      <!-- Judul -->
+      <div class="flex-1 min-w-0">
+        <h1 id="sipandu-page-title" class="text-lg md:text-xl font-extrabold leading-tight truncate">
+          Monitoring Center
+        </h1>
+        <p class="text-xs text-base-content/60 hidden sm:block">
+          Pantau status kelengkapan dokumen semua guru binaan per triwulan.
+        </p>
+      </div>
+
+      <!-- Aksi kanan -->
+      <div class="flex items-center gap-2 flex-shrink-0">
+        <button id="sipandu-theme-toggle" class="btn btn-outline btn-sm gap-2 normal-case touch">
+          <span class="material-icons" id="sipandu-theme-icon">dark_mode</span>
+          <span id="sipandu-theme-label" class="hidden sm:inline">Mode Malam</span>
+        </button>
+        <button class="btn btn-primary btn-sm gap-2 normal-case touch">
+          <span class="material-icons">download</span>
+          <span class="hidden sm:inline">Export Excel</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="p-4 lg:p-6 space-y-5">
+
+      <!-- Info -->
+      <div class="alert bg-emerald-50 border border-emerald-200 text-emerald-900">
+        <span class="material-icons text-emerald-600 flex-shrink-0">info</span>
+        <div>
+          <p class="font-bold text-sm">Cara menggunakan halaman ini</p>
+          <p class="text-sm">Gunakan filter di bawah untuk mempersempit data. Klik tombol <strong>Lihat</strong> pada baris guru untuk membuka halaman detail monitoring dan review dokumen.</p>
+        </div>
+      </div>
+
+      <!-- Stat Cards -->
+      <section class="grid grid-cols-2 xl:grid-cols-4 gap-4">
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-4 md:p-5">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-sm text-base-content/60">Total Guru</p>
+                <p class="text-3xl font-extrabold mt-1">66</p>
+              </div>
+              <div class="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">
+                <span class="material-icons">groups</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-4 md:p-5">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-sm text-base-content/60">Sudah Lengkap</p>
+                <p class="text-3xl font-extrabold mt-1">39</p>
+              </div>
+              <div class="w-12 h-12 rounded-2xl bg-success/10 text-success flex items-center justify-center">
+                <span class="material-icons">check_circle</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-4 md:p-5">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-sm text-base-content/60">Perlu Revisi</p>
+                <p class="text-3xl font-extrabold mt-1">14</p>
+              </div>
+              <div class="w-12 h-12 rounded-2xl bg-warning/10 text-warning flex items-center justify-center">
+                <span class="material-icons">edit_note</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-4 md:p-5">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-sm text-base-content/60">Belum Submit</p>
+                <p class="text-3xl font-extrabold mt-1">13</p>
+              </div>
+              <div class="w-12 h-12 rounded-2xl bg-error/10 text-error flex items-center justify-center">
+                <span class="material-icons">pending_actions</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Filter -->
+      <section class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-4 md:p-5">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h2 class="font-bold text-base">Filter Data</h2>
+              <p class="text-sm text-base-content/60">Pilih sekolah, triwulan, atau status untuk mempersempit tampilan.</p>
+            </div>
+            <button class="btn btn-ghost btn-sm normal-case gap-1">
+              <span class="material-icons">restart_alt</span>
+              Reset
+            </button>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-3">
+            <label class="form-control sm:col-span-2 xl:col-span-1">
+              <div class="label pb-1"><span class="label-text font-semibold">Cari Nama Guru</span></div>
+              <label class="input input-bordered flex items-center gap-2">
+                <span class="material-icons text-base-content/40">search</span>
+                <input type="text" class="grow" placeholder="Contoh: Ahmad Fauzi" />
+              </label>
+            </label>
+
+            <label class="form-control">
+              <div class="label pb-1"><span class="label-text font-semibold">Sekolah</span></div>
+              <select class="select select-bordered touch">
+                <option>Semua Sekolah</option>
+                <option>SMAN 4 Samarinda</option>
+                <option>SMKN 2 Samarinda</option>
+                <option>SMAS Muhammadiyah 2</option>
+                <option>SMKN 8 Samarinda</option>
+                <option>SMAN 14 Samarinda</option>
+                <option>SMKS TI Airlangga</option>
+              </select>
+            </label>
+
+            <label class="form-control">
+              <div class="label pb-1"><span class="label-text font-semibold">Triwulan</span></div>
+              <select class="select select-bordered touch">
+                <option>Semua Triwulan</option>
+                <option>Triwulan I</option>
+                <option>Triwulan II</option>
+                <option>Triwulan III</option>
+                <option>Triwulan IV</option>
+              </select>
+            </label>
+
+            <label class="form-control">
+              <div class="label pb-1"><span class="label-text font-semibold">Status</span></div>
+              <select class="select select-bordered touch">
+                <option>Semua Status</option>
+                <option>Lengkap</option>
+                <option>Revisi</option>
+                <option>Pending</option>
+                <option>Belum Submit</option>
+              </select>
+            </label>
+
+            <label class="form-control">
+              <div class="label pb-1"><span class="label-text font-semibold">Urutkan</span></div>
+              <select class="select select-bordered touch">
+                <option>Nama A – Z</option>
+                <option>Nama Z – A</option>
+                <option>Status Terbaik</option>
+                <option>Status Terendah</option>
+              </select>
+            </label>
+          </div>
+          <div class="mt-4">
+            <button class="btn btn-primary normal-case gap-2 touch">
+              <span class="material-icons">filter_alt</span>
+              Terapkan Filter
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Legenda -->
+      <section class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-4 md:p-5">
+          <h2 class="font-bold text-base mb-3">Keterangan Warna Status</h2>
+          <div class="flex flex-wrap gap-3">
+            <div class="flex items-center gap-2">
+              <span class="badge badge-success badge-lg px-4 py-3">Lengkap</span>
+              <span class="text-sm text-base-content/70">Semua dokumen sudah diterima</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="badge badge-warning badge-lg px-4 py-3">Revisi</span>
+              <span class="text-sm text-base-content/70">Ada dokumen yang perlu diperbaiki</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="badge badge-info badge-lg px-4 py-3">Pending</span>
+              <span class="text-sm text-base-content/70">Menunggu review Pengawas</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="badge badge-error badge-lg px-4 py-3">Belum Submit</span>
+              <span class="text-sm text-base-content/70">Belum ada dokumen dikirim</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tabel -->
+      <section class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-0">
+
+          <!-- Header tabel -->
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-4 md:p-5 border-b border-base-300">
+            <div>
+              <h2 class="font-bold text-base">Tabel Monitoring Guru</h2>
+              <p class="text-sm text-base-content/60">Menampilkan 1–6 dari 66 guru binaan.</p>
+            </div>
+            <div class="join self-start sm:self-auto">
+              <button class="btn join-item btn-active normal-case">Semua</button>
+              <button class="btn join-item btn-outline normal-case">SMA</button>
+              <button class="btn join-item btn-outline normal-case">SMK</button>
+            </div>
+          </div>
+
+          <!-- Scroll area -->
+          <div class="tbl-wrap">
+            <table class="table table-zebra min-w-[960px] text-sm">
+              <thead>
+                <tr class="text-sm">
+                  <th class="col-no border-r border-base-300 w-12">No</th>
+                  <th class="col-name border-r border-base-300 min-w-[180px]">Nama Guru</th>
+                  <th class="min-w-[160px]">Sekolah</th>
+                  <th>Jabatan</th>
+                  <th class="text-center">TW I</th>
+                  <th class="text-center">TW II</th>
+                  <th class="text-center">TW III</th>
+                  <th class="text-center">TW IV</th>
+                  <th>Status Akhir</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <tr>
+                  <td class="col-no border-r border-base-300 font-semibold">1</td>
+                  <td class="col-name border-r border-base-300">
+                    <a href="monitoring-detail.html" class="font-bold text-primary hover:underline">Ahmad Fauzi, S.Ag</a>
+                  </td>
+                  <td>SMAN 4 Samarinda</td>
+                  <td><span class="badge badge-ghost">Guru PAI</span></td>
+                  <td class="text-center"><span class="badge badge-success w-24 justify-center">Lengkap</span></td>
+                  <td class="text-center"><span class="badge badge-success w-24 justify-center">Lengkap</span></td>
+                  <td class="text-center"><span class="badge badge-warning w-24 justify-center">Revisi</span></td>
+                  <td class="text-center"><span class="badge badge-info w-24 justify-center">Pending</span></td>
+                  <td><span class="badge badge-warning">Perlu Tindak Lanjut</span></td>
+                  <td>
+                    <a href="monitoring-detail.html" class="btn btn-sm btn-outline normal-case gap-1">
+                      <span class="material-icons">visibility</span>Lihat
+                    </a>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="col-no border-r border-base-300 font-semibold">2</td>
+                  <td class="col-name border-r border-base-300">
+                    <a href="monitoring-detail.html" class="font-bold text-primary hover:underline">Siti Rahmah, M.Pd</a>
+                  </td>
+                  <td>SMKN 2 Samarinda</td>
+                  <td><span class="badge badge-primary">Guru + Kepsek</span></td>
+                  <td class="text-center"><span class="badge badge-success w-24 justify-center">Lengkap</span></td>
+                  <td class="text-center"><span class="badge badge-success w-24 justify-center">Lengkap</span></td>
+                  <td class="text-center"><span class="badge badge-success w-24 justify-center">Lengkap</span></td>
+                  <td class="text-center"><span class="badge badge-success w-24 justify-center">Lengkap</span></td>
+                  <td><span class="badge badge-success">Sangat Baik</span></td>
+                  <td>
+                    <a href="monitoring-detail.html" class="btn btn-sm btn-outline normal-case gap-1">
+                      <span class="material-icons">visibility</span>Lihat
+                    </a>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="col-no border-r border-base-300 font-semibold">3</td>
+                  <td class="col-name border-r border-base-300">
+                    <a href="monitoring-detail.html" class="font-bold text-primary hover:underline">Nur Aisyah, S.Pd.I</a>
+                  </td>
+                  <td>SMAS Muhammadiyah 2</td>
+                  <td><span class="badge badge-ghost">Guru PAI</span></td>
+                  <td class="text-center"><span class="badge badge-warning w-24 justify-center">Revisi</span></td>
+                  <td class="text-center"><span class="badge badge-info w-24 justify-center">Pending</span></td>
+                  <td class="text-center"><span class="badge badge-error w-24 justify-center">Belum Submit</span></td>
+                  <td class="text-center"><span class="badge badge-error w-24 justify-center">Belum Submit</span></td>
+                  <td><span class="badge badge-error">Perlu Pendampingan</span></td>
+                  <td>
+                    <a href="monitoring-detail.html" class="btn btn-sm btn-outline normal-case gap-1">
+                      <span class="material-icons">visibility</span>Lihat
+                    </a>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="col-no border-r border-base-300 font-semibold">4</td>
+                  <td class="col-name border-r border-base-300">
+                    <a href="monitoring-detail.html" class="font-bold text-primary hover:underline">Muhammad Yusuf, S.Ag</a>
+                  </td>
+                  <td>SMKN 8 Samarinda</td>
+                  <td><span class="badge badge-ghost">Guru PAI</span></td>
+                  <td class="text-center"><span class="badge badge-success w-24 justify-center">Lengkap</span></td>
+                  <td class="text-center"><span class="badge badge-warning w-24 justify-center">Revisi</span></td>
+                  <td class="text-center"><span class="badge badge-warning w-24 justify-center">Revisi</span></td>
+                  <td class="text-center"><span class="badge badge-info w-24 justify-center">Pending</span></td>
+                  <td><span class="badge badge-warning">Perlu Tindak Lanjut</span></td>
+                  <td>
+                    <a href="monitoring-detail.html" class="btn btn-sm btn-outline normal-case gap-1">
+                      <span class="material-icons">visibility</span>Lihat
+                    </a>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="col-no border-r border-base-300 font-semibold">5</td>
+                  <td class="col-name border-r border-base-300">
+                    <a href="monitoring-detail.html" class="font-bold text-primary hover:underline">Hj. Faridah, M.Ag</a>
+                  </td>
+                  <td>SMAN 14 Samarinda</td>
+                  <td><span class="badge badge-primary">Guru + Kepsek</span></td>
+                  <td class="text-center"><span class="badge badge-success w-24 justify-center">Lengkap</span></td>
+                  <td class="text-center"><span class="badge badge-success w-24 justify-center">Lengkap</span></td>
+                  <td class="text-center"><span class="badge badge-success w-24 justify-center">Lengkap</span></td>
+                  <td class="text-center"><span class="badge badge-info w-24 justify-center">Pending</span></td>
+                  <td><span class="badge badge-info">Menunggu Final</span></td>
+                  <td>
+                    <a href="monitoring-detail.html" class="btn btn-sm btn-outline normal-case gap-1">
+                      <span class="material-icons">visibility</span>Lihat
+                    </a>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="col-no border-r border-base-300 font-semibold">6</td>
+                  <td class="col-name border-r border-base-300">
+                    <a href="monitoring-detail.html" class="font-bold text-primary hover:underline">Abdul Karim, S.Pd.I</a>
+                  </td>
+                  <td>SMKS TI Airlangga</td>
+                  <td><span class="badge badge-ghost">Guru PAI</span></td>
+                  <td class="text-center"><span class="badge badge-error w-24 justify-center">Belum Submit</span></td>
+                  <td class="text-center"><span class="badge badge-error w-24 justify-center">Belum Submit</span></td>
+                  <td class="text-center"><span class="badge badge-info w-24 justify-center">Pending</span></td>
+                  <td class="text-center"><span class="badge badge-info w-24 justify-center">Pending</span></td>
+                  <td><span class="badge badge-error">Belum Aktif</span></td>
+                  <td>
+                    <a href="monitoring-detail.html" class="btn btn-sm btn-outline normal-case gap-1">
+                      <span class="material-icons">visibility</span>Lihat
+                    </a>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination -->
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-4 md:p-5 border-t border-base-300">
+            <p class="text-sm text-base-content/60">Menampilkan 1–6 dari 66 guru binaan.</p>
+            <div class="join self-start sm:self-auto">
+              <button class="btn join-item btn-outline normal-case">Sebelumnya</button>
+              <button class="btn join-item btn-active">1</button>
+              <button class="btn join-item btn-outline">2</button>
+              <button class="btn join-item btn-outline">3</button>
+              <button class="btn join-item btn-outline normal-case">Berikutnya</button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ── SIDEBAR ── -->
+  <div class="drawer-side z-40">
+    <label for="main-drawer" aria-label="Tutup menu" class="drawer-overlay"></label>
+    <aside class="w-72 min-h-full bg-base-100 border-r border-base-300 flex flex-col">
+
+      <!-- Logo -->
+      <div class="flex items-center gap-3 px-5 py-4 border-b border-base-300">
+        <div class="w-11 h-11 rounded-2xl bg-primary text-primary-content flex items-center justify-center shadow-sm">
+          <span class="material-icons">school</span>
+        </div>
+        <div>
+          <div class="font-extrabold leading-tight">SiPANDU VIRTUAL</div>
+          <div class="text-xs text-base-content/60">Panel Pengawas PAI</div>
+        </div>
+      </div>
+
+      <!-- Nav — diisi bar.js -->
+      <ul id="sipandu-sidebar-nav" class="menu p-4 gap-1 text-[15px] flex-1"></ul>
+
+    </aside>
+  </div>
+</div>
+
+<script src="../assets/js/bar.js"></script>
+</body>
+</html>

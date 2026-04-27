@@ -1,0 +1,558 @@
+
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kelola Sekolah Binaan — SiPANDU VIRTUAL</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .material-icons { font-size: 20px; vertical-align: middle; }
+  </style>
+</head>
+
+<body data-role="admin" class="bg-base-200 text-base-content min-h-screen">
+
+<div class="drawer lg:drawer-open">
+  <input id="main-drawer" type="checkbox" class="drawer-toggle" />
+
+  <!-- ═══ KONTEN UTAMA ═══ -->
+  <div class="drawer-content flex flex-col min-h-screen">
+
+    <!-- TOPBAR -->
+    <header class="navbar bg-base-100 border-b border-base-300 sticky top-0 z-30 px-4 lg:px-6 gap-3">
+
+      <!-- Tombol hamburger mobile -->
+      <label for="main-drawer" class="btn btn-square btn-ghost lg:hidden" aria-label="Buka menu">
+        <span class="material-icons">menu</span>
+      </label>
+
+      <!-- Judul halaman -->
+      <div class="flex-1 min-w-0">
+        <h1 id="sipandu-page-title" class="text-lg md:text-xl font-extrabold leading-tight truncate">
+          Kelola Sekolah Binaan
+        </h1>
+        <p class="text-xs text-base-content/60 hidden sm:block">
+          Tambah, ubah, dan nonaktifkan sekolah binaan.
+        </p>
+      </div>
+
+      <!-- Aksi topbar kanan -->
+      <div class="flex items-center gap-2">
+
+        <!-- Toggle tema -->
+        <button id="sipandu-theme-toggle" class="btn btn-ghost btn-circle" aria-label="Ganti tema">
+          <span class="material-icons" id="sipandu-theme-icon">dark_mode</span>
+        </button>
+
+        <!-- Tombol tambah sekolah (desktop) -->
+        <button onclick="document.getElementById('modal-tambah').showModal()"
+          class="btn btn-primary normal-case gap-2 hidden sm:inline-flex">
+          <span class="material-icons">add_business</span>
+          Tambah Sekolah
+        </button>
+
+        <!-- Avatar dropdown -->
+        <div class="dropdown dropdown-end">
+          <div tabindex="0" role="button" class="btn btn-ghost gap-2 normal-case px-2">
+            <div class="avatar placeholder">
+              <div class="bg-emerald-100 text-emerald-700 rounded-full w-9">
+                <span class="text-sm font-bold">BN</span>
+              </div>
+            </div>
+            <div class="hidden md:block text-left">
+              <div class="text-sm font-semibold leading-tight">Baqi Nurul H.</div>
+              <div class="text-xs text-base-content/60">Pengawas PAI</div>
+            </div>
+          </div>
+          <ul tabindex="0"
+            class="dropdown-content z-50 menu p-2 shadow bg-base-100 rounded-box w-52 border border-base-300 mt-2">
+            <li><a href="#"><span class="material-icons">account_circle</span>Profil</a></li>
+            <li><a href="#"><span class="material-icons">settings</span>Pengaturan</a></li>
+            <li><a href="../login.html" class="text-error"><span class="material-icons">logout</span>Keluar</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <!-- KONTEN -->
+    <main class="flex-1 p-4 md:p-6 space-y-5 max-w-7xl mx-auto w-full">
+
+      <!-- Info penting -->
+      <div class="alert bg-info/10 border border-info/20 text-sm">
+        <span class="material-icons text-info flex-shrink-0">info</span>
+        <span>Jika sekolah tidak lagi menjadi binaan, gunakan tombol <strong>Nonaktifkan</strong>
+          — jangan dihapus agar riwayat data tetap tersimpan.</span>
+      </div>
+
+      <!-- Tombol tambah mobile -->
+      <button onclick="document.getElementById('modal-tambah').showModal()"
+        class="btn btn-primary normal-case gap-2 w-full sm:hidden">
+        <span class="material-icons">add_business</span>
+        Tambah Sekolah Baru
+      </button>
+
+      <!-- Statistik ringkas -->
+      <section class="grid grid-cols-2 xl:grid-cols-4 gap-3">
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-4 flex-row items-center justify-between gap-2">
+            <div>
+              <p class="text-xs text-base-content/60">Total Sekolah</p>
+              <p class="text-2xl font-extrabold">44</p>
+            </div>
+            <span class="material-icons text-primary text-4xl">domain</span>
+          </div>
+        </div>
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-4 flex-row items-center justify-between gap-2">
+            <div>
+              <p class="text-xs text-base-content/60">Sekolah Aktif</p>
+              <p class="text-2xl font-extrabold">41</p>
+            </div>
+            <span class="material-icons text-success text-4xl">check_circle</span>
+          </div>
+        </div>
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-4 flex-row items-center justify-between gap-2">
+            <div>
+              <p class="text-xs text-base-content/60">SMA</p>
+              <p class="text-2xl font-extrabold">18</p>
+            </div>
+            <span class="material-icons text-secondary text-4xl">school</span>
+          </div>
+        </div>
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-4 flex-row items-center justify-between gap-2">
+            <div>
+              <p class="text-xs text-base-content/60">SMK</p>
+              <p class="text-2xl font-extrabold">26</p>
+            </div>
+            <span class="material-icons text-warning text-4xl">engineering</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Filter -->
+      <section class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-4 md:p-5 gap-4">
+          <h2 class="font-bold text-base">Cari dan Filter Sekolah</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3">
+            <label class="form-control sm:col-span-2 xl:col-span-2">
+              <div class="label pb-1"><span class="label-text font-semibold">Nama Sekolah</span></div>
+              <label class="input input-bordered flex items-center gap-2">
+                <span class="material-icons text-base-content/40">search</span>
+                <input type="text" class="grow" placeholder="Contoh: SMAN 4 atau Muhammadiyah" />
+              </label>
+            </label>
+            <label class="form-control">
+              <div class="label pb-1"><span class="label-text font-semibold">Jenjang</span></div>
+              <select class="select select-bordered">
+                <option>Semua Jenjang</option>
+                <option>SMA</option>
+                <option>SMK</option>
+              </select>
+            </label>
+            <label class="form-control">
+              <div class="label pb-1"><span class="label-text font-semibold">Status Data</span></div>
+              <select class="select select-bordered">
+                <option>Semua Status</option>
+                <option>Aktif</option>
+                <option>Nonaktif</option>
+              </select>
+            </label>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <button class="btn btn-primary normal-case gap-2">
+              <span class="material-icons">filter_alt</span>Terapkan Filter
+            </button>
+            <button class="btn btn-outline normal-case gap-2">
+              <span class="material-icons">refresh</span>Reset
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tabel + kartu -->
+      <section class="card bg-base-100 border border-base-300 shadow-sm">
+
+        <!-- Header tabel -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 md:p-5 border-b border-base-300">
+          <div>
+            <h2 class="font-bold text-base">Daftar Sekolah Binaan</h2>
+            <p class="text-sm text-base-content/60">44 sekolah terdaftar — 41 aktif, 3 nonaktif.</p>
+          </div>
+          <button class="btn btn-outline btn-sm normal-case gap-2 self-start sm:self-auto">
+            <span class="material-icons">download</span>Export Excel
+          </button>
+        </div>
+
+        <!-- DESKTOP: Tabel -->
+        <div class="hidden xl:block overflow-x-auto">
+          <table class="table table-zebra">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Nama Sekolah</th>
+                <th>Jenjang</th>
+                <th>Status N/S</th>
+                <th>Kondisi</th>
+                <th class="text-right">Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-base-content/60">1</td>
+                <td>
+                  <div class="font-semibold">SMAN 4 Samarinda</div>
+                  <div class="text-xs text-base-content/50">SCH-001</div>
+                </td>
+                <td><span class="badge badge-info badge-outline">SMA</span></td>
+                <td><span class="badge badge-neutral badge-outline">Negeri</span></td>
+                <td><span class="badge badge-success gap-1"><span class="material-icons" style="font-size:14px">check_circle</span>Aktif</span></td>
+                <td>
+                  <div class="flex justify-end gap-2">
+                    <button onclick="bukaModalEdit('SMAN 4 Samarinda','SMA','Negeri')"
+                      class="btn btn-sm btn-outline normal-case gap-1">
+                      <span class="material-icons" style="font-size:16px">edit</span>Edit
+                    </button>
+                    <button onclick="bukaModalKonfirmasi('SMAN 4 Samarinda','nonaktif')"
+                      class="btn btn-sm btn-warning normal-case gap-1">
+                      <span class="material-icons" style="font-size:16px">block</span>Nonaktifkan
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-base-content/60">2</td>
+                <td>
+                  <div class="font-semibold">SMKN 1 Samarinda</div>
+                  <div class="text-xs text-base-content/50">SCH-002</div>
+                </td>
+                <td><span class="badge badge-warning badge-outline">SMK</span></td>
+                <td><span class="badge badge-neutral badge-outline">Negeri</span></td>
+                <td><span class="badge badge-success gap-1"><span class="material-icons" style="font-size:14px">check_circle</span>Aktif</span></td>
+                <td>
+                  <div class="flex justify-end gap-2">
+                    <button onclick="bukaModalEdit('SMKN 1 Samarinda','SMK','Negeri')"
+                      class="btn btn-sm btn-outline normal-case gap-1">
+                      <span class="material-icons" style="font-size:16px">edit</span>Edit
+                    </button>
+                    <button onclick="bukaModalKonfirmasi('SMKN 1 Samarinda','nonaktif')"
+                      class="btn btn-sm btn-warning normal-case gap-1">
+                      <span class="material-icons" style="font-size:16px">block</span>Nonaktifkan
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-base-content/60">3</td>
+                <td>
+                  <div class="font-semibold">SMAS Muhammadiyah 2 Samarinda</div>
+                  <div class="text-xs text-base-content/50">SCH-003</div>
+                </td>
+                <td><span class="badge badge-info badge-outline">SMA</span></td>
+                <td><span class="badge badge-accent badge-outline">Swasta</span></td>
+                <td><span class="badge badge-success gap-1"><span class="material-icons" style="font-size:14px">check_circle</span>Aktif</span></td>
+                <td>
+                  <div class="flex justify-end gap-2">
+                    <button onclick="bukaModalEdit('SMAS Muhammadiyah 2','SMA','Swasta')"
+                      class="btn btn-sm btn-outline normal-case gap-1">
+                      <span class="material-icons" style="font-size:16px">edit</span>Edit
+                    </button>
+                    <button onclick="bukaModalKonfirmasi('SMAS Muhammadiyah 2 Samarinda','nonaktif')"
+                      class="btn btn-sm btn-warning normal-case gap-1">
+                      <span class="material-icons" style="font-size:16px">block</span>Nonaktifkan
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-base-content/60">4</td>
+                <td>
+                  <div class="font-semibold">SMKS TI Airlangga Samarinda</div>
+                  <div class="text-xs text-base-content/50">SCH-004</div>
+                </td>
+                <td><span class="badge badge-warning badge-outline">SMK</span></td>
+                <td><span class="badge badge-accent badge-outline">Swasta</span></td>
+                <td><span class="badge badge-error gap-1"><span class="material-icons" style="font-size:14px">pause_circle</span>Nonaktif</span></td>
+                <td>
+                  <div class="flex justify-end gap-2">
+                    <button onclick="bukaModalEdit('SMKS TI Airlangga','SMK','Swasta')"
+                      class="btn btn-sm btn-outline normal-case gap-1">
+                      <span class="material-icons" style="font-size:16px">edit</span>Edit
+                    </button>
+                    <button onclick="bukaModalKonfirmasi('SMKS TI Airlangga Samarinda','aktif')"
+                      class="btn btn-sm btn-success normal-case gap-1">
+                      <span class="material-icons" style="font-size:16px">restart_alt</span>Aktifkan
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-base-content/60">5</td>
+                <td>
+                  <div class="font-semibold">SMA Islam Terpadu Granada</div>
+                  <div class="text-xs text-base-content/50">SCH-005</div>
+                </td>
+                <td><span class="badge badge-info badge-outline">SMA</span></td>
+                <td><span class="badge badge-accent badge-outline">Swasta</span></td>
+                <td><span class="badge badge-success gap-1"><span class="material-icons" style="font-size:14px">check_circle</span>Aktif</span></td>
+                <td>
+                  <div class="flex justify-end gap-2">
+                    <button onclick="bukaModalEdit('SMA IT Granada','SMA','Swasta')"
+                      class="btn btn-sm btn-outline normal-case gap-1">
+                      <span class="material-icons" style="font-size:16px">edit</span>Edit
+                    </button>
+                    <button onclick="bukaModalKonfirmasi('SMA Islam Terpadu Granada','nonaktif')"
+                      class="btn btn-sm btn-warning normal-case gap-1">
+                      <span class="material-icons" style="font-size:16px">block</span>Nonaktifkan
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- MOBILE: Kartu -->
+        <div class="xl:hidden p-4 space-y-3">
+          <!-- Data sekolah sebagai kartu -->
+          <script>
+            const SEKOLAH = [
+              { nama:"SMAN 4 Samarinda",       kode:"SCH-001", jenjang:"SMA", ns:"Negeri",  aktif:true  },
+              { nama:"SMKN 1 Samarinda",        kode:"SCH-002", jenjang:"SMK", ns:"Negeri",  aktif:true  },
+              { nama:"SMAS Muhammadiyah 2",     kode:"SCH-003", jenjang:"SMA", ns:"Swasta",  aktif:true  },
+              { nama:"SMKS TI Airlangga",       kode:"SCH-004", jenjang:"SMK", ns:"Swasta",  aktif:false },
+              { nama:"SMA Islam Terpadu Granada",kode:"SCH-005", jenjang:"SMA", ns:"Swasta",  aktif:true  },
+            ];
+            document.addEventListener("DOMContentLoaded", function() {
+              const container = document.getElementById("kartu-mobile");
+              SEKOLAH.forEach(s => {
+                const jBadge = s.jenjang==="SMA"
+                  ? "badge-info" : "badge-warning";
+                const nsBadge = s.ns==="Negeri"
+                  ? "badge-neutral" : "badge-accent";
+                const statusBadge = s.aktif
+                  ? "<span class='badge badge-success gap-1'><span class='material-icons' style='font-size:14px'>check_circle</span>Aktif</span>"
+                  : "<span class='badge badge-error gap-1'><span class='material-icons' style='font-size:14px'>pause_circle</span>Nonaktif</span>";
+                const aksiBtn = s.aktif
+                  ? `<button onclick="bukaModalKonfirmasi('${s.nama}','nonaktif')" class="btn btn-warning normal-case gap-1 flex-1"><span class="material-icons" style="font-size:16px">block</span>Nonaktifkan</button>`
+                  : `<button onclick="bukaModalKonfirmasi('${s.nama}','aktif')" class="btn btn-success normal-case gap-1 flex-1"><span class="material-icons" style="font-size:16px">restart_alt</span>Aktifkan</button>`;
+                container.insertAdjacentHTML("beforeend", `
+                  <div class="card bg-base-100 border border-base-300 shadow-sm">
+                    <div class="card-body p-4 gap-3">
+                      <div class="flex items-start justify-between gap-2">
+                        <div>
+                          <div class="font-bold">${s.nama}</div>
+                          <div class="text-xs text-base-content/50">${s.kode}</div>
+                        </div>
+                        ${statusBadge}
+                      </div>
+                      <div class="flex flex-wrap gap-2">
+                        <span class="badge ${jBadge} badge-outline">${s.jenjang}</span>
+                        <span class="badge ${nsBadge} badge-outline">${s.ns}</span>
+                      </div>
+                      <div class="flex gap-2 pt-1">
+                        <button onclick="bukaModalEdit('${s.nama}','${s.jenjang}','${s.ns}')"
+                          class="btn btn-outline normal-case gap-1 flex-1">
+                          <span class="material-icons" style="font-size:16px">edit</span>Edit
+                        </button>
+                        ${aksiBtn}
+                      </div>
+                    </div>
+                  </div>`);
+              });
+            });
+          </script>
+          <div id="kartu-mobile" class="space-y-3"></div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="p-4 md:p-5 border-t border-base-300 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <p class="text-sm text-base-content/60">Menampilkan 1–5 dari 44 sekolah.</p>
+          <div class="join self-start sm:self-auto">
+            <button class="join-item btn btn-outline btn-sm normal-case">Sebelumnya</button>
+            <button class="join-item btn btn-sm btn-active">1</button>
+            <button class="join-item btn btn-outline btn-sm">2</button>
+            <button class="join-item btn btn-outline btn-sm">3</button>
+            <button class="join-item btn btn-outline btn-sm normal-case">Berikutnya</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ═══ SIDEBAR ═══ -->
+  <div class="drawer-side z-40">
+    <label for="main-drawer" aria-label="Tutup menu" class="drawer-overlay"></label>
+    <aside class="w-72 min-h-full bg-base-100 border-r border-base-300 flex flex-col">
+
+      <!-- Logo -->
+      <div class="p-5 border-b border-base-300 flex items-center gap-3">
+        <div class="w-11 h-11 rounded-2xl bg-primary text-primary-content flex items-center justify-center shadow-sm flex-shrink-0">
+          <span class="material-icons">school</span>
+        </div>
+        <div>
+          <div class="font-extrabold leading-tight">SiPANDU VIRTUAL</div>
+          <div class="text-xs text-base-content/60">Panel Pengawas PAI</div>
+        </div>
+      </div>
+
+      <!-- Nav — diisi bar.js -->
+      <ul id="sipandu-sidebar-nav" class="menu px-3 py-4 gap-1 text-sm flex-1"></ul>
+
+      <!-- Tips -->
+      <div class="p-4 border-t border-base-300">
+        <div class="alert bg-primary/10 border border-primary/20 text-sm gap-2 rounded-xl">
+          <span class="material-icons text-primary flex-shrink-0">tips_and_updates</span>
+          <span>Gunakan <strong>Nonaktifkan</strong> agar riwayat sekolah tetap tersimpan.</span>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- ═══ MODAL TAMBAH ═══ -->
+<dialog id="modal-tambah" class="modal modal-bottom sm:modal-middle">
+  <div class="modal-box max-w-xl">
+    <h3 class="font-bold text-xl mb-1">Tambah Sekolah Binaan</h3>
+    <p class="text-sm text-base-content/60 mb-5">Isi data sekolah dengan lengkap dan jelas.</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <label class="form-control sm:col-span-2">
+        <div class="label pb-1"><span class="label-text font-semibold">Nama Sekolah <span class="text-error">*</span></span></div>
+        <input id="input-nama" type="text" placeholder="Contoh: SMAN 4 Samarinda"
+          class="input input-bordered" />
+      </label>
+      <label class="form-control">
+        <div class="label pb-1"><span class="label-text font-semibold">Jenjang <span class="text-error">*</span></span></div>
+        <select id="input-jenjang" class="select select-bordered">
+          <option disabled selected>Pilih Jenjang</option>
+          <option>SMA</option>
+          <option>SMK</option>
+        </select>
+      </label>
+      <label class="form-control">
+        <div class="label pb-1"><span class="label-text font-semibold">Status <span class="text-error">*</span></span></div>
+        <select id="input-status" class="select select-bordered">
+          <option disabled selected>Negeri / Swasta</option>
+          <option>Negeri</option>
+          <option>Swasta</option>
+        </select>
+      </label>
+      <label class="form-control sm:col-span-2">
+        <div class="label pb-1"><span class="label-text font-semibold">Keterangan (Opsional)</span></div>
+        <textarea id="input-ket" class="textarea textarea-bordered min-h-24"
+          placeholder="Contoh: Sekolah baru bergabung tahun ini."></textarea>
+      </label>
+    </div>
+    <div class="modal-action mt-5">
+      <form method="dialog" class="flex flex-wrap gap-2">
+        <button class="btn btn-outline normal-case">Batal</button>
+        <button class="btn btn-primary normal-case gap-2">
+          <span class="material-icons">save</span>Simpan Sekolah
+        </button>
+      </form>
+    </div>
+  </div>
+  <form method="dialog" class="modal-backdrop"><button>Tutup</button></form>
+</dialog>
+
+<!-- ═══ MODAL EDIT ═══ -->
+<dialog id="modal-edit" class="modal modal-bottom sm:modal-middle">
+  <div class="modal-box max-w-xl">
+    <h3 class="font-bold text-xl mb-1">Edit Data Sekolah</h3>
+    <p class="text-sm text-base-content/60 mb-5">Ubah data yang perlu diperbaiki lalu simpan.</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <label class="form-control sm:col-span-2">
+        <div class="label pb-1"><span class="label-text font-semibold">Nama Sekolah <span class="text-error">*</span></span></div>
+        <input id="edit-nama" type="text" class="input input-bordered" />
+      </label>
+      <label class="form-control">
+        <div class="label pb-1"><span class="label-text font-semibold">Jenjang <span class="text-error">*</span></span></div>
+        <select id="edit-jenjang" class="select select-bordered">
+          <option>SMA</option>
+          <option>SMK</option>
+        </select>
+      </label>
+      <label class="form-control">
+        <div class="label pb-1"><span class="label-text font-semibold">Status <span class="text-error">*</span></span></div>
+        <select id="edit-status" class="select select-bordered">
+          <option>Negeri</option>
+          <option>Swasta</option>
+        </select>
+      </label>
+    </div>
+    <div class="modal-action mt-5">
+      <form method="dialog" class="flex flex-wrap gap-2">
+        <button class="btn btn-outline normal-case">Batal</button>
+        <button class="btn btn-primary normal-case gap-2">
+          <span class="material-icons">save</span>Simpan Perubahan
+        </button>
+      </form>
+    </div>
+  </div>
+  <form method="dialog" class="modal-backdrop"><button>Tutup</button></form>
+</dialog>
+
+<!-- ═══ MODAL KONFIRMASI ═══ -->
+<dialog id="modal-konfirmasi" class="modal modal-bottom sm:modal-middle">
+  <div class="modal-box max-w-md">
+    <div id="konfirmasi-icon" class="text-warning mb-3">
+      <span class="material-icons text-5xl">block</span>
+    </div>
+    <h3 id="konfirmasi-judul" class="font-bold text-xl mb-2">Nonaktifkan Sekolah?</h3>
+    <p id="konfirmasi-pesan" class="text-base-content/70 mb-5 leading-relaxed"></p>
+    <div class="flex flex-wrap gap-2">
+      <button id="konfirmasi-aksi" class="btn btn-warning normal-case gap-2 flex-1">
+        <span class="material-icons">block</span>Ya, Nonaktifkan
+      </button>
+      <form method="dialog">
+        <button class="btn btn-outline normal-case">Batal</button>
+      </form>
+    </div>
+  </div>
+  <form method="dialog" class="modal-backdrop"><button>Tutup</button></form>
+</dialog>
+
+<script src="../assets/js/bar.js"></script>
+<script>
+  function bukaModalEdit(nama, jenjang, ns) {
+    document.getElementById("edit-nama").value    = nama;
+    document.getElementById("edit-jenjang").value = jenjang;
+    document.getElementById("edit-status").value  = ns;
+    document.getElementById("modal-edit").showModal();
+  }
+
+  function bukaModalKonfirmasi(nama, aksi) {
+    const modal   = document.getElementById("modal-konfirmasi");
+    const judul   = document.getElementById("konfirmasi-judul");
+    const pesan   = document.getElementById("konfirmasi-pesan");
+    const icon    = document.getElementById("konfirmasi-icon");
+    const tombol  = document.getElementById("konfirmasi-aksi");
+
+    if (aksi === "nonaktif") {
+      icon.className   = "text-warning mb-3";
+      icon.innerHTML   = "<span class='material-icons text-5xl'>block</span>";
+      judul.textContent = "Nonaktifkan Sekolah?";
+      pesan.textContent = `Sekolah "${nama}" akan dinonaktifkan. Data tetap tersimpan dan dapat diaktifkan kembali kapan saja.`;
+      tombol.className  = "btn btn-warning normal-case gap-2 flex-1";
+      tombol.innerHTML  = "<span class='material-icons'>block</span>Ya, Nonaktifkan";
+    } else {
+      icon.className   = "text-success mb-3";
+      icon.innerHTML   = "<span class='material-icons text-5xl'>restart_alt</span>";
+      judul.textContent = "Aktifkan Sekolah?";
+      pesan.textContent = `Sekolah "${nama}" akan diaktifkan kembali dan dapat digunakan oleh guru binaan.`;
+      tombol.className  = "btn btn-success normal-case gap-2 flex-1";
+      tombol.innerHTML  = "<span class='material-icons'>restart_alt</span>Ya, Aktifkan";
+    }
+    modal.showModal();
+  }
+</script>
+
+</body>
+</html>

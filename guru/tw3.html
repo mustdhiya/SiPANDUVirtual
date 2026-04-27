@@ -1,0 +1,346 @@
+
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Triwulan III - SiPANDU VIRTUAL</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    body { font-family: "Inter", sans-serif; }
+    .section-card { border-left: 4px solid oklch(var(--p)); }
+    .upload-zone {
+      border: 2px dashed oklch(var(--bc)/0.3);
+      border-radius: 0.75rem;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .upload-zone:hover { border-color: oklch(var(--p)); background: oklch(var(--p)/0.05); }
+    .material-icons { font-size: 20px; vertical-align: middle; }
+  </style>
+</head>
+<body data-role="guru" class="bg-base-200 min-h-screen">
+
+<div class="drawer lg:drawer-open">
+  <input id="main-drawer" type="checkbox" class="drawer-toggle"/>
+  <div class="drawer-content flex flex-col min-h-screen">
+
+    <header class="navbar bg-[#0f4c35] text-white sticky top-0 z-40 shadow-lg px-4 md:px-6">
+      <div class="flex-none lg:hidden mr-1">
+        <label for="main-drawer" class="btn btn-ghost btn-circle text-white" aria-label="Buka menu">
+          <span class="material-icons">menu</span>
+        </label>
+      </div>
+      <div class="flex-1 flex items-center gap-3 min-w-0">
+        <span class="material-icons text-2xl text-green-300 hidden lg:block">school</span>
+        <div class="min-w-0">
+          <h1 id="sipandu-page-title" class="font-bold text-sm md:text-base leading-tight truncate">Triwulan III</h1>
+          <p class="text-green-200 text-xs">Juli - September &middot; Batas: 30 September 2026</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-1 flex-none">
+        <button id="sipandu-theme-toggle" class="btn btn-ghost btn-circle text-white" aria-label="Ganti tema">
+          <span class="material-icons" id="sipandu-theme-icon">dark_mode</span>
+        </button>
+        <div class="dropdown dropdown-end">
+          <label tabindex="0" class="btn btn-ghost btn-circle cursor-pointer">
+            <div class="avatar placeholder">
+              <div class="bg-green-700 text-white rounded-full w-8 text-xs font-bold"><span>AF</span></div>
+            </div>
+          </label>
+          <ul tabindex="0" class="dropdown-content menu shadow bg-base-100 text-base-content rounded-box w-48 mt-2 p-2 text-sm">
+            <li class="menu-title text-xs opacity-60 pb-1">Ahmad Fauzi, S.Ag</li>
+            <li><a href="../guru/profil.html"><span class="material-icons text-sm">person</span>Profil Saya</a></li>
+            <li><a href="../login.html" class="text-error"><span class="material-icons text-sm">logout</span>Keluar</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <main class="max-w-2xl mx-auto w-full px-4 py-8 space-y-6">
+
+      <div class="card bg-base-100 shadow-sm p-5">
+        <div class="flex items-center justify-between mb-3">
+          <span class="font-bold text-sm">Progress Kelengkapan</span>
+          <span class="badge badge-warning gap-1 text-xs"><span class="material-icons text-xs">pending</span> Draft</span>
+        </div>
+        <progress class="progress progress-warning w-full" value="30" max="100"></progress>
+        <p class="text-xs text-base-content/60 mt-2">3 dari 7 item sudah diisi. Selesaikan sebelum 30 September 2026.</p>
+      </div>
+
+      <div class="alert alert-warning shadow-sm rounded-xl gap-3">
+        <span class="material-icons">schedule</span>
+        <div>
+          <p class="font-semibold text-sm">Batas waktu upload: 30 September 2026</p>
+          <p class="text-xs mt-0.5">Pastikan semua dokumen diunggah sebelum tanggal tersebut.</p>
+        </div>
+      </div>
+
+      <div class="card bg-base-100 shadow-sm section-card">
+        <div class="card-body p-5 md:p-6 space-y-5">
+          <h2 class="font-bold text-base flex items-center gap-2"><span class="material-icons text-primary">groups</span>Kehadiran MGMP</h2>
+          <label class="form-control w-full">
+            <div class="label pb-1"><span class="label-text font-medium text-sm">Jumlah Kehadiran MGMP <span class="badge badge-error badge-sm ml-1">Wajib</span></span></div>
+            <select class="select select-bordered w-full text-sm" required>
+              <option value="" disabled selected>-- Pilih jumlah kehadiran --</option>
+              <option value="1">1 Kali</option>
+              <option value="2">2 Kali</option>
+              <option value="3">3 Kali</option>
+              <option value="4">Lebih dari 3 Kali</option>
+            </select>
+            <div class="label pt-1"><span class="label-text-alt text-base-content/50">Minimal 3 kali untuk status SIAGA Siap Divalidasi</span></div>
+          </label>
+          <div class="form-control w-full">
+            <div class="label pb-1"><span class="label-text font-medium text-sm">Bukti Kehadiran (Foto / Presensi) <span class="badge badge-error badge-sm ml-1">Wajib</span></span></div>
+            <label class="upload-zone flex flex-col items-center justify-center py-8 px-4 text-center" for="fileBuktiHadir">
+              <span class="material-icons text-4xl text-primary mb-2">upload_file</span>
+              <p class="font-semibold text-sm">Klik di sini untuk pilih file</p>
+              <p class="text-xs text-base-content/50 mt-1">Format: JPG, PNG, atau PDF - Maks. 10 MB</p>
+              <input type="file" id="fileBuktiHadir" class="hidden" accept=".jpg,.jpeg,.png,.pdf"/>
+            </label>
+            <p id="labelBukti" class="text-xs text-success mt-2 hidden items-center gap-1">
+              <span class="material-icons text-sm">check_circle</span><span class="file-name"></span>
+            </p>
+          </div>
+          <div class="form-control w-full">
+            <div class="label pb-1"><span class="label-text font-medium text-sm">Sertifikat Diklat / Pelatihan <span class="badge badge-ghost badge-sm ml-1">Opsional</span></span></div>
+            <label class="upload-zone flex flex-col items-center justify-center py-8 px-4 text-center" for="fileSertifikat">
+              <span class="material-icons text-4xl text-base-content/40 mb-2">workspace_premium</span>
+              <p class="font-semibold text-sm">Klik di sini untuk pilih file</p>
+              <p class="text-xs text-base-content/50 mt-1">Format: JPG, PNG, atau PDF - Maks. 10 MB</p>
+              <input type="file" id="fileSertifikat" class="hidden" accept=".jpg,.jpeg,.png,.pdf"/>
+            </label>
+            <p id="labelSert" class="text-xs text-success mt-2 hidden items-center gap-1">
+              <span class="material-icons text-sm">check_circle</span><span class="file-name"></span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-base-100 shadow-sm section-card">
+        <div class="card-body p-5 md:p-6">
+          <h2 class="font-bold text-base flex items-center gap-2 mb-4"><span class="material-icons text-primary">edit_note</span>Resume Hasil Pembinaan</h2>
+          <label class="form-control w-full">
+            <div class="label pb-1"><span class="label-text font-medium text-sm">Poin Utama yang Akan Diterapkan di Kelas <span class="badge badge-error badge-sm ml-1">Wajib</span></span></div>
+            <textarea class="textarea textarea-bordered w-full text-sm leading-relaxed" rows="4"
+              placeholder="Tuliskan 1 poin utama hasil pembinaan MGMP yang akan Bapak/Ibu terapkan dalam kegiatan pembelajaran di kelas..."
+              minlength="20" required></textarea>
+            <div class="label pt-1"><span class="label-text-alt text-base-content/50">Minimal 20 karakter</span></div>
+          </label>
+        </div>
+      </div>
+
+      <div class="card bg-base-100 shadow-sm section-card">
+        <div class="card-body p-5 md:p-6 space-y-4">
+          <h2 class="font-bold text-base flex items-center gap-2"><span class="material-icons text-primary">menu_book</span>Monitoring Kegiatan Keagamaan</h2>
+          <label class="form-control w-full">
+            <div class="label pb-1"><span class="label-text font-medium text-sm">BTQ, Tahsin &amp; Tahfidz <span class="badge badge-ghost badge-sm ml-1">Opsional</span></span></div>
+            <textarea class="textarea textarea-bordered w-full text-sm leading-relaxed" rows="3"
+              placeholder="Ceritakan perkembangan kegiatan BTQ, Tahsin, atau Tahfidz di sekolah Bapak/Ibu..."></textarea>
+          </label>
+          <label class="form-control w-full">
+            <div class="label pb-1"><span class="label-text font-medium text-sm">Rohis &amp; Kegiatan Keagamaan Lainnya <span class="badge badge-ghost badge-sm ml-1">Opsional</span></span></div>
+            <textarea class="textarea textarea-bordered w-full text-sm leading-relaxed" rows="3"
+              placeholder="Contoh: MABIT, mentoring, bakti sosial, peringatan hari besar Islam..."></textarea>
+          </label>
+        </div>
+      </div>
+
+      <div class="card bg-base-100 shadow-sm section-card">
+        <div class="card-body p-5 md:p-6">
+          <h2 class="font-bold text-base flex items-center gap-2 mb-1"><span class="material-icons text-primary">photo_library</span>Galeri Dokumentasi <span class="badge badge-error badge-sm">Wajib</span></h2>
+          <p class="text-xs text-base-content/50 mb-4">Upload foto atau video unjuk kerja Bapak/Ibu mengajar di kelas.</p>
+          <label class="upload-zone flex flex-col items-center justify-center py-10 px-4 text-center" for="fileGaleri">
+            <span class="material-icons text-5xl text-primary mb-2">add_photo_alternate</span>
+            <p class="font-semibold text-sm">Klik di sini untuk pilih foto atau video</p>
+            <p class="text-xs text-base-content/50 mt-1">JPG, PNG, MP4, MOV - Maks. 100 MB - Bisa pilih lebih dari satu</p>
+            <input type="file" id="fileGaleri" class="hidden" accept=".jpg,.jpeg,.png,.mp4,.mov" multiple/>
+          </label>
+          <div id="galeriPreview" class="grid grid-cols-3 gap-2 mt-4"></div>
+        </div>
+      </div>
+
+      <div class="card bg-base-100 shadow-sm section-card">
+        <div class="card-body p-5 md:p-6">
+          <h2 class="font-bold text-base flex items-center gap-2 mb-1"><span class="material-icons text-primary">quiz</span>Instrumen Pendampingan TW III</h2>
+          <p class="text-xs text-base-content/50 mb-5">Pilih jawaban yang paling sesuai dengan kondisi Bapak/Ibu saat ini.</p>
+          <div id="instrumenContainer" class="space-y-6"></div>
+        </div>
+      </div>
+
+      <div class="card bg-base-100 shadow-sm p-5">
+        <div class="flex flex-col sm:flex-row gap-3 justify-end">
+          <button id="btnDraft" class="btn btn-outline gap-2 normal-case">
+            <span class="material-icons">save</span> Simpan Draft
+          </button>
+          <button class="btn btn-primary gap-2 normal-case" id="btnSubmit">
+            <span class="material-icons">send</span> Kirim ke Pengawas
+          </button>
+        </div>
+        <p class="text-xs text-base-content/50 mt-3 text-center">
+          <span class="material-icons text-xs">info</span>
+          Form tersimpan otomatis. Pastikan semua isian benar sebelum mengirim.
+        </p>
+      </div>
+
+    </main>
+  </div>
+
+  <div class="drawer-side z-50">
+    <label for="main-drawer" class="drawer-overlay" aria-label="Tutup menu"></label>
+    <aside class="w-72 min-h-full bg-base-100 border-r border-base-300 flex flex-col p-4">
+      <div class="flex items-center gap-3 px-2 py-3 mb-2">
+        <div class="w-11 h-11 rounded-2xl bg-[#0f4c35] text-white flex items-center justify-center shadow-sm">
+          <span class="material-icons">school</span>
+        </div>
+        <div>
+          <div class="font-extrabold leading-tight text-sm">SiPANDU VIRTUAL</div>
+          <div class="text-xs text-base-content/60">Panel Guru</div>
+        </div>
+      </div>
+      <ul id="sipandu-sidebar-nav" class="menu gap-1 text-sm flex-1 p-0"></ul>
+    </aside>
+  </div>
+</div>
+
+<dialog id="modalSubmit" class="modal">
+  <div class="modal-box">
+    <h3 class="font-bold text-base flex items-center gap-2">
+      <span class="material-icons text-warning">warning</span>
+      Konfirmasi Pengiriman
+    </h3>
+    <p class="py-4 text-sm leading-relaxed">
+      Setelah dikirim, Bapak/Ibu <strong>tidak dapat mengubah</strong> isian ini kecuali diminta revisi oleh Pengawas.
+      Pastikan semua dokumen dan jawaban sudah benar.
+    </p>
+    <div class="modal-action">
+      <form method="dialog" class="flex gap-3">
+        <button class="btn btn-ghost normal-case">Batal, Cek Dulu</button>
+        <button class="btn btn-primary normal-case gap-2">
+          <span class="material-icons text-sm">send</span> Ya, Kirim Sekarang
+        </button>
+      </form>
+    </div>
+  </div>
+</dialog>
+
+<button id="toTop" class="fixed bottom-6 right-6 btn btn-primary btn-circle shadow-xl z-50 hidden" aria-label="Kembali ke atas">
+  <span class="material-icons">arrow_upward</span>
+</button>
+<script src="../assets/js/bar.js"></script>
+<script>
+function bindUpload(inputId, labelId) {
+  document.getElementById(inputId).addEventListener('change', function () {
+    if (!this.files.length) return;
+    var lbl = document.getElementById(labelId);
+    lbl.querySelector('.file-name').textContent = this.files[0].name;
+    lbl.classList.remove('hidden');
+    lbl.classList.add('flex');
+  });
+}
+bindUpload('fileBuktiHadir', 'labelBukti');
+bindUpload('fileSertifikat', 'labelSert');
+
+document.getElementById('fileGaleri').addEventListener('change', function () {
+  var preview = document.getElementById('galeriPreview');
+  preview.innerHTML = '';
+  Array.from(this.files).forEach(function (file) {
+    var wrap = document.createElement('div');
+    wrap.className = 'relative rounded-lg overflow-hidden bg-base-300 aspect-square flex items-center justify-center';
+    if (file.type.startsWith('image/')) {
+      var img = document.createElement('img');
+      img.src = URL.createObjectURL(file);
+      img.className = 'w-full h-full object-cover';
+      wrap.appendChild(img);
+    } else {
+      var ic = document.createElement('span');
+      ic.className = 'material-icons text-3xl text-base-content/40';
+      ic.textContent = 'videocam';
+      wrap.appendChild(ic);
+    }
+    var cap = document.createElement('div');
+    cap.className = 'absolute bottom-0 left-0 right-0 bg-black/50 text-white text-xs p-1 truncate';
+    cap.textContent = file.name;
+    wrap.appendChild(cap);
+    preview.appendChild(wrap);
+  });
+});
+
+var soalTW3 = [
+  { no:'Q32', soal:'Dokumen utama apa yang Bapak/Ibu siapkan sebelum sesi supervisi berlangsung?',
+    opsi:['A. Modul Ajar/RPP dengan skenario pembelajaran aktif','B. Buku absensi dan nilai','C. Laporan keuangan sekolah','D. Profil sekolah terbaru'] },
+  { no:'Q33', soal:'Bagaimana sikap Bapak/Ibu dalam sesi umpan balik setelah observasi kelas?',
+    opsi:['A. Mempertahankan cara mengajar yang sudah ada','B. Mendengarkan tetapi tidak mengubah metode','C. Terbuka terhadap saran dan refleksi bersama pengawas','D. Menghindari diskusi panjang'] },
+  { no:'Q34', soal:'Metode mengajar mana yang paling mencerminkan inovasi digital di kelas PAI?',
+    opsi:['A. Ceramah dengan papan tulis','B. PBL dengan studi kasus kontemporer dan media digital','C. Hafalan ayat tanpa konteks','D. Diskusi tanpa media pendukung'] },
+  { no:'Q35', soal:'Apa perbedaan utama antara coaching dan mentoring oleh Pengawas?',
+    opsi:['A. Tidak ada perbedaan','B. Coaching menggali potensi diri; mentoring memberikan arahan ahli','C. Mentoring lebih singkat waktunya','D. Coaching hanya untuk guru baru'] },
+  { no:'Q36', soal:'Indikator keberhasilan paling valid yang bisa Bapak/Ibu laporkan setelah pembinaan?',
+    opsi:['A. Nilai ujian meningkat drastis','B. Laporan tertulis yang panjang','C. Peningkatan keterlibatan aktif siswa dalam pembelajaran','D. Jumlah jam mengajar bertambah'] },
+  { no:'Q37', soal:'Bagaimana penilaian Bapak/Ibu terhadap penggunaan media berbasis AI saat diobservasi?',
+    opsi:['A. Inovasi metode yang mendukung efektivitas pembelajaran','B. Tidak relevan untuk PAI','C. Terlalu rumit untuk diterapkan','D. Hanya untuk guru muda'] },
+  { no:'Q38', soal:'Apa yang dimaksud dengan Pra-Observasi dalam siklus supervisi akademik?',
+    opsi:['A. Observasi mendadak tanpa pemberitahuan','B. Penilaian administrasi saja','C. Kunjungan informal ke sekolah','D. Diskusi awal untuk menyepakati fokus dan instrumen observasi'] },
+  { no:'Q39', soal:'Apa fungsi utama asesmen formatif dalam proses pembelajaran?',
+    opsi:['A. Menentukan nilai akhir semester','B. Memberikan umpan balik langsung kepada siswa selama proses belajar','C. Mengukur kompetensi untuk kelulusan','D. Melaporkan hasil ke dinas pendidikan'] },
+  { no:'Q40', soal:'Apa tindakan Bapak/Ibu jika metode mengajar dinilai kurang variatif oleh Pengawas?',
+    opsi:['A. Menyusun rencana pengembangan diri dan mengikuti pelatihan','B. Mengganti mata pelajaran yang diampu','C. Meminta observasi ulang segera','D. Mengabaikan masukan tersebut'] },
+  { no:'Q41', soal:'Bagaimana keterkaitan hasil observasi kelas dengan pengisian e-Kinerja (SIAGA)?',
+    opsi:['A. Tidak ada keterkaitan','B. Observasi hanya untuk laporan internal sekolah','C. Hasil observasi menjadi bukti nyata pencapaian target kerja di e-Kinerja','D. e-Kinerja diisi terpisah oleh bagian kepegawaian'] }
+];
+
+(function renderInstrumen() {
+  var c = document.getElementById('instrumenContainer');
+  soalTW3.forEach(function (s, i) {
+    var div = document.createElement('div');
+    div.className = 'border border-base-300 rounded-xl p-4';
+    var p = document.createElement('p');
+    p.className = 'font-semibold text-sm mb-3';
+    p.textContent = (i + 1) + '. ' + s.soal;
+    div.appendChild(p);
+    var wrap = document.createElement('div');
+    wrap.className = 'space-y-2';
+    s.opsi.forEach(function (o, j) {
+      var lbl = document.createElement('label');
+      lbl.className = 'flex items-start gap-3 p-3 rounded-lg hover:bg-base-200 cursor-pointer transition-colors';
+      var r = document.createElement('input');
+      r.type = 'radio'; r.name = s.no; r.value = ['A','B','C','D'][j];
+      r.className = 'radio radio-primary radio-sm mt-0.5 flex-shrink-0';
+      var sp = document.createElement('span');
+      sp.className = 'text-sm leading-relaxed';
+      sp.textContent = o;
+      lbl.appendChild(r); lbl.appendChild(sp);
+      wrap.appendChild(lbl);
+    });
+    div.appendChild(wrap);
+    c.appendChild(div);
+  });
+})();
+
+document.getElementById('btnDraft').addEventListener('click', function () {
+  var b = this;
+  b.disabled = true;
+  b.innerHTML = '<span class="loading loading-spinner loading-sm"></span> Menyimpan...';
+  setTimeout(function () {
+    b.disabled = false;
+    b.innerHTML = '<span class="material-icons">check_circle</span> Tersimpan';
+  }, 1200);
+});
+
+document.getElementById('btnSubmit').addEventListener('click', function () {
+  document.getElementById('modalSubmit').showModal();
+});
+
+document.getElementById('toTop').addEventListener('click', function () {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+window.addEventListener('scroll', function () {
+  document.getElementById('toTop').classList.toggle('hidden', window.scrollY < 300);
+});
+</script>
+</body>
+</html>

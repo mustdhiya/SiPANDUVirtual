@@ -1,0 +1,460 @@
+
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Pengawas — SiPANDU VIRTUAL</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .material-icons { font-size: 20px; vertical-align: middle; }
+
+    /* Sidebar fixed di desktop, drawer di mobile (DaisyUI drawer) */
+    .stat-card  { transition: transform .2s, box-shadow .2s; }
+    .stat-card:hover  { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,.1); }
+    .menu-card  { transition: transform .15s; }
+    .menu-card:hover  { transform: translateY(-4px); }
+    .notif-unread { border-left: 3px solid #10b981; }
+  </style>
+</head>
+<body data-role="admin" class="bg-base-200 min-h-screen">
+
+<!-- ── DaisyUI Drawer Layout ── -->
+<div class="drawer lg:drawer-open">
+  <input id="main-drawer" type="checkbox" class="drawer-toggle" />
+
+  <!-- ── MAIN CONTENT ── -->
+  <div class="drawer-content flex flex-col min-h-screen">
+
+    <!-- TOPBAR -->
+    <header class="navbar bg-base-100 border-b border-base-300 sticky top-0 z-30 px-4 lg:px-6">
+      <!-- Hamburger mobile -->
+      <div class="flex-none lg:hidden">
+        <label for="main-drawer" class="btn btn-ghost btn-circle" aria-label="Buka menu">
+          <span class="material-icons">menu</span>
+        </label>
+      </div>
+
+      <!-- Judul halaman -->
+      <div class="flex-1 ml-2">
+        <h1 id="sipandu-page-title" class="font-bold text-base md:text-lg leading-tight">Dashboard Pengawas</h1>
+        <p class="text-xs text-base-content/50 hidden sm:block">Tahun Ajaran 2025/2026 — Triwulan II Aktif</p>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex items-center gap-1">
+
+        <!-- Theme Toggle -->
+        <button id="sipandu-theme-toggle" class="btn btn-ghost btn-sm gap-1 normal-case hidden sm:flex" aria-label="Ganti mode">
+          <span class="material-icons" id="sipandu-theme-icon">dark_mode</span>
+          <span id="sipandu-theme-label" class="text-xs hidden md:inline">Mode Malam</span>
+        </button>
+
+        <!-- Notifikasi -->
+        <div class="dropdown dropdown-end">
+          <label tabindex="0" class="btn btn-ghost btn-sm btn-circle indicator">
+            <span class="material-icons">notifications</span>
+            <span class="badge badge-error badge-xs indicator-item">5</span>
+          </label>
+          <div tabindex="0" class="dropdown-content card card-compact shadow-xl bg-base-100 border border-base-300 w-80 mt-2 z-50">
+            <div class="card-body p-0">
+              <div class="flex items-center justify-between px-4 py-3 border-b border-base-200">
+                <p class="font-bold text-sm">Notifikasi</p>
+                <button class="text-xs text-primary hover:underline">Tandai semua dibaca</button>
+              </div>
+              <div class="divide-y divide-base-200 max-h-72 overflow-y-auto">
+                <div class="flex gap-3 px-4 py-3 notif-unread bg-emerald-50/50">
+                  <span class="material-icons text-error mt-0.5 flex-shrink-0">person_add</span>
+                  <div>
+                    <p class="text-sm font-semibold">3 Guru Menunggu Verifikasi</p>
+                    <p class="text-xs text-base-content/60">Ahmad Fauzi, Siti Rahmah, +1 lainnya</p>
+                    <p class="text-xs text-base-content/40 mt-0.5">5 menit lalu</p>
+                  </div>
+                </div>
+                <div class="flex gap-3 px-4 py-3 notif-unread bg-emerald-50/50">
+                  <span class="material-icons text-warning mt-0.5 flex-shrink-0">schedule</span>
+                  <div>
+                    <p class="text-sm font-semibold">Deadline TW II — 7 Hari Lagi</p>
+                    <p class="text-xs text-base-content/60">14 guru belum submit TW II</p>
+                    <p class="text-xs text-base-content/40 mt-0.5">1 jam lalu</p>
+                  </div>
+                </div>
+                <div class="flex gap-3 px-4 py-3 notif-unread bg-emerald-50/50">
+                  <span class="material-icons text-info mt-0.5 flex-shrink-0">forum</span>
+                  <div>
+                    <p class="text-sm font-semibold">Pesan Baru di Ruang Diskusi</p>
+                    <p class="text-xs text-base-content/60">Budi Santoso — TW II</p>
+                    <p class="text-xs text-base-content/40 mt-0.5">2 jam lalu</p>
+                  </div>
+                </div>
+                <div class="flex gap-3 px-4 py-3">
+                  <span class="material-icons text-success mt-0.5 flex-shrink-0">check_circle</span>
+                  <div>
+                    <p class="text-sm">Dok. TW I Nur Aini — Diterima</p>
+                    <p class="text-xs text-base-content/40 mt-0.5">Kemarin</p>
+                  </div>
+                </div>
+                <div class="flex gap-3 px-4 py-3">
+                  <span class="material-icons text-success mt-0.5 flex-shrink-0">check_circle</span>
+                  <div>
+                    <p class="text-sm">Dok. TW I Hasan Basri — Diterima</p>
+                    <p class="text-xs text-base-content/40 mt-0.5">Kemarin</p>
+                  </div>
+                </div>
+              </div>
+              <div class="px-4 py-3 border-t border-base-200">
+                <a href="../notifikasi.html" class="text-xs text-primary hover:underline font-semibold">Lihat semua notifikasi</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Avatar dropdown -->
+        <div class="dropdown dropdown-end">
+          <div tabindex="0" role="button" class="btn btn-ghost btn-sm gap-2 normal-case pl-1 pr-2">
+            <div class="avatar placeholder">
+              <div class="bg-emerald-600 text-white rounded-full w-8">
+                <span class="text-xs font-bold">BN</span>
+              </div>
+            </div>
+            <span class="hidden md:inline text-sm font-semibold">Baqi Nurul</span>
+          </div>
+          <ul tabindex="0" class="menu dropdown-content z-50 p-2 shadow bg-base-100 rounded-box w-52 mt-2 border border-base-300">
+            <li><a href="#"><span class="material-icons">account_circle</span>Profil</a></li>
+            <li>
+              <!-- Theme toggle di dalam dropdown untuk mobile -->
+              <button id="sipandu-theme-toggle-mobile" class="flex items-center gap-3 w-full text-left">
+                <span class="material-icons" id="sipandu-theme-icon-mobile">dark_mode</span>
+                <span id="sipandu-theme-label-mobile">Mode Malam</span>
+              </button>
+            </li>
+            <li><a href="../login.html" class="text-error"><span class="material-icons">logout</span>Keluar</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- PAGE BODY -->
+    <main class="flex-1 px-4 md:px-6 py-6 space-y-6">
+
+      <!-- Alert Pending -->
+      <div class="alert border border-error/30 bg-error/10 text-error-content gap-3 rounded-xl py-3">
+        <span class="material-icons text-error flex-shrink-0">warning</span>
+        <p class="text-sm font-semibold flex-1"><strong>3 Guru</strong> menunggu verifikasi akun Anda.</p>
+        <a href="approve.html" class="btn btn-error btn-sm normal-case gap-1 flex-shrink-0">
+          <span class="material-icons text-base">how_to_reg</span>Verifikasi Sekarang
+        </a>
+      </div>
+
+      <!-- STAT CARDS -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="card bg-base-100 shadow-sm stat-card p-5 border border-base-300">
+          <div class="flex items-start justify-between mb-3">
+            <div class="w-11 h-11 rounded-xl bg-emerald-100 flex items-center justify-center">
+              <span class="material-icons text-emerald-600">groups</span>
+            </div>
+            <span class="badge badge-success badge-sm">Aktif</span>
+          </div>
+          <p class="text-3xl font-extrabold">66</p>
+          <p class="text-sm text-base-content/60 mt-0.5">Total Guru Binaan</p>
+          <p class="text-xs text-base-content/40 mt-1">44+ sekolah SMA/SMK</p>
+        </div>
+        <div class="card bg-base-100 shadow-sm stat-card p-5 border border-base-300">
+          <div class="flex items-start justify-between mb-3">
+            <div class="w-11 h-11 rounded-xl bg-blue-100 flex items-center justify-center">
+              <span class="material-icons text-blue-600">task_alt</span>
+            </div>
+            <span class="badge badge-info badge-sm">TW II</span>
+          </div>
+          <p class="text-3xl font-extrabold">52</p>
+          <p class="text-sm text-base-content/60 mt-0.5">Sudah Submit</p>
+          <div class="mt-2">
+            <div class="flex justify-between text-xs text-base-content/50 mb-1">
+              <span>Kelengkapan TW II</span><span>79%</span>
+            </div>
+            <progress class="progress progress-info h-2" value="79" max="100"></progress>
+          </div>
+        </div>
+        <div class="card bg-base-100 shadow-sm stat-card p-5 border border-base-300">
+          <div class="flex items-start justify-between mb-3">
+            <div class="w-11 h-11 rounded-xl bg-amber-100 flex items-center justify-center">
+              <span class="material-icons text-amber-600">pending_actions</span>
+            </div>
+            <span class="badge badge-warning badge-sm">TW II</span>
+          </div>
+          <p class="text-3xl font-extrabold">14</p>
+          <p class="text-sm text-base-content/60 mt-0.5">Belum Submit</p>
+          <p class="text-xs text-amber-600 mt-1 font-medium">Deadline 7 hari lagi</p>
+        </div>
+        <div class="card bg-base-100 shadow-sm stat-card p-5 border border-base-300">
+          <div class="flex items-start justify-between mb-3">
+            <div class="w-11 h-11 rounded-xl bg-red-100 flex items-center justify-center">
+              <span class="material-icons text-red-600">person_add</span>
+            </div>
+            <span class="badge badge-error badge-sm">Baru</span>
+          </div>
+          <p class="text-3xl font-extrabold">3</p>
+          <p class="text-sm text-base-content/60 mt-0.5">Pending Verifikasi</p>
+          <p class="text-xs text-red-500 mt-1 font-medium">Perlu tindakan segera</p>
+        </div>
+      </div>
+
+      <!-- GRAFIK + AKTIVITAS -->
+      <div class="grid grid-cols-1 xl:grid-cols-3 gap-5">
+        <div class="card bg-base-100 shadow-sm border border-base-300 xl:col-span-2">
+          <div class="card-body p-5">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <h2 class="font-bold text-base">Kelengkapan Dokumen per Triwulan</h2>
+                <p class="text-xs text-base-content/50">Tahun Ajaran 2025/2026 — dari 66 guru</p>
+              </div>
+              <select class="select select-bordered select-xs w-32">
+                <option>2025/2026</option>
+                <option>2024/2025</option>
+              </select>
+            </div>
+            <canvas id="twChart" height="180"></canvas>
+          </div>
+        </div>
+
+        <div class="card bg-base-100 shadow-sm border border-base-300">
+          <div class="card-body p-5">
+            <div class="flex items-center justify-between mb-3">
+              <h2 class="font-bold text-base">Aktivitas Terbaru</h2>
+              <a href="../notifikasi.html" class="text-xs text-primary hover:underline">Lihat semua</a>
+            </div>
+            <div class="space-y-3">
+              <div class="flex gap-3 items-start p-3 rounded-xl bg-error/5 border border-error/20">
+                <span class="material-icons text-error flex-shrink-0">person_add</span>
+                <div class="min-w-0">
+                  <p class="text-xs font-semibold">Registrasi Baru — Ahmad Fauzi</p>
+                  <p class="text-xs text-base-content/50">SMAN 4 Samarinda • 5 mnt lalu</p>
+                </div>
+              </div>
+              <div class="flex gap-3 items-start p-3 rounded-xl bg-warning/5 border border-warning/20">
+                <span class="material-icons text-warning flex-shrink-0">schedule</span>
+                <div class="min-w-0">
+                  <p class="text-xs font-semibold">Deadline TW II Mendekat</p>
+                  <p class="text-xs text-base-content/50">14 guru belum submit • 1 jam lalu</p>
+                </div>
+              </div>
+              <div class="flex gap-3 items-start p-3 rounded-xl bg-info/5 border border-info/20">
+                <span class="material-icons text-info flex-shrink-0">forum</span>
+                <div class="min-w-0">
+                  <p class="text-xs font-semibold">Diskusi — Budi Santoso</p>
+                  <p class="text-xs text-base-content/50">Ruang TW II • 2 jam lalu</p>
+                </div>
+              </div>
+              <div class="flex gap-3 items-start p-3 rounded-xl bg-base-200/60 border border-base-300">
+                <span class="material-icons text-success flex-shrink-0">check_circle</span>
+                <div class="min-w-0">
+                  <p class="text-xs">Dok. TW I Nur Aini — Diterima</p>
+                  <p class="text-xs text-base-content/50">Kemarin</p>
+                </div>
+              </div>
+              <div class="flex gap-3 items-start p-3 rounded-xl bg-base-200/60 border border-base-300">
+                <span class="material-icons text-success flex-shrink-0">check_circle</span>
+                <div class="min-w-0">
+                  <p class="text-xs">Dok. TW I Hasan Basri — Diterima</p>
+                  <p class="text-xs text-base-content/50">Kemarin</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- REKAP TRIWULAN -->
+      <div class="card bg-base-100 shadow-sm border border-base-300">
+        <div class="card-body p-5">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="font-bold text-base">Rekap Status Triwulan</h2>
+            <a href="monitoring.html" class="btn btn-outline btn-primary btn-sm normal-case gap-1">
+              <span class="material-icons text-base">table_chart</span>Lihat Detail
+            </a>
+          </div>
+          <div class="overflow-x-auto rounded-xl">
+            <table class="table table-sm">
+              <thead>
+                <tr class="bg-base-200 text-base-content/60 text-xs">
+                  <th>Triwulan</th><th>Periode</th><th>Status</th>
+                  <th>Sudah Submit</th><th>Belum Submit</th><th>Perlu Revisi</th><th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody class="text-sm">
+                <tr>
+                  <td class="font-semibold">TW I</td>
+                  <td class="text-xs text-base-content/60">Jan – Mar</td>
+                  <td><span class="badge badge-success badge-sm gap-1"><span class="material-icons" style="font-size:12px">lock</span>Selesai</span></td>
+                  <td><span class="font-bold text-success">63</span> / 66</td>
+                  <td class="text-base-content/50">3</td>
+                  <td><span class="badge badge-warning badge-sm">2</span></td>
+                  <td><a href="laporan.html" class="btn btn-ghost btn-xs normal-case">Laporan</a></td>
+                </tr>
+                <tr class="bg-emerald-50/30">
+                  <td class="font-semibold text-primary">TW II</td>
+                  <td class="text-xs text-base-content/60">Apr – Jun</td>
+                  <td><span class="badge badge-info badge-sm gap-1"><span class="material-icons" style="font-size:12px">play_circle</span>Sedang Berjalan</span></td>
+                  <td><span class="font-bold text-info">52</span> / 66</td>
+                  <td><span class="font-bold text-warning">14</span></td>
+                  <td><span class="badge badge-warning badge-sm">5</span></td>
+                  <td><a href="monitoring.html" class="btn btn-primary btn-xs normal-case">Monitor</a></td>
+                </tr>
+                <tr class="opacity-50">
+                  <td class="font-semibold">TW III</td>
+                  <td class="text-xs text-base-content/60">Jul – Sep</td>
+                  <td><span class="badge badge-ghost badge-sm gap-1"><span class="material-icons" style="font-size:12px">lock</span>Belum Dibuka</span></td>
+                  <td>— / 66</td><td>—</td><td>—</td>
+                  <td><a href="triwulan.html" class="btn btn-ghost btn-xs normal-case">Buka</a></td>
+                </tr>
+                <tr class="opacity-50">
+                  <td class="font-semibold">TW IV</td>
+                  <td class="text-xs text-base-content/60">Okt – Des</td>
+                  <td><span class="badge badge-ghost badge-sm gap-1"><span class="material-icons" style="font-size:12px">lock</span>Belum Dibuka</span></td>
+                  <td>— / 66</td><td>—</td><td>—</td>
+                  <td><a href="triwulan.html" class="btn btn-ghost btn-xs normal-case">Buka</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- AKSES CEPAT -->
+      <div>
+        <h2 class="font-bold text-base mb-4 flex items-center gap-2">
+          <span class="material-icons text-primary">apps</span>Akses Cepat
+        </h2>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3">
+          <a href="approve.html"       class="card bg-base-100 shadow-sm border border-base-300 menu-card p-4 text-center"><span class="material-icons text-error text-3xl mx-auto mb-2">how_to_reg</span><p class="text-xs font-semibold">Verifikasi Guru</p><span class="badge badge-error badge-xs mt-1">3 Pending</span></a>
+          <a href="monitoring.html"    class="card bg-base-100 shadow-sm border border-base-300 menu-card p-4 text-center"><span class="material-icons text-info text-3xl mx-auto mb-2">table_chart</span><p class="text-xs font-semibold">Monitoring Center</p><span class="badge badge-info badge-xs mt-1">Real-Time</span></a>
+          <a href="laporan.html"       class="card bg-base-100 shadow-sm border border-base-300 menu-card p-4 text-center"><span class="material-icons text-primary text-3xl mx-auto mb-2">print</span><p class="text-xs font-semibold">Laporan & Export</p><span class="badge badge-primary badge-xs mt-1">PDF & Excel</span></a>
+          <a href="matriks.html"       class="card bg-base-100 shadow-sm border border-base-300 menu-card p-4 text-center"><span class="material-icons text-warning text-3xl mx-auto mb-2">leaderboard</span><p class="text-xs font-semibold">Matriks Prioritas</p><span class="badge badge-warning badge-xs mt-1">3 Kategori</span></a>
+          <a href="guru.html"          class="card bg-base-100 shadow-sm border border-base-300 menu-card p-4 text-center"><span class="material-icons text-success text-3xl mx-auto mb-2">groups</span><p class="text-xs font-semibold">Guru Binaan</p><span class="badge badge-success badge-xs mt-1">66 Guru</span></a>
+          <a href="gudang.html"        class="card bg-base-100 shadow-sm border border-base-300 menu-card p-4 text-center"><span class="material-icons text-purple-500 text-3xl mx-auto mb-2">folder_open</span><p class="text-xs font-semibold">Gudang PAI-BMTS</p><span class="badge badge-ghost badge-xs mt-1">Materi</span></a>
+          <a href="diskusi.html"       class="card bg-base-100 shadow-sm border border-base-300 menu-card p-4 text-center"><span class="material-icons text-cyan-500 text-3xl mx-auto mb-2">forum</span><p class="text-xs font-semibold">Ruang Diskusi</p><span class="badge badge-info badge-xs mt-1">1 Baru</span></a>
+          <a href="triwulan.html"      class="card bg-base-100 shadow-sm border border-base-300 menu-card p-4 text-center"><span class="material-icons text-emerald-600 text-3xl mx-auto mb-2">event_note</span><p class="text-xs font-semibold">Kelola Triwulan</p><span class="badge badge-success badge-xs mt-1">TW II Aktif</span></a>
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <div class="text-center py-4 text-xs text-base-content/40 border-t border-base-300 mt-2">
+        SiPANDU VIRTUAL v1.0.0 — Pengawas PAI SMA/SMK Kota Samarinda &copy; 2026
+      </div>
+
+    </main>
+  </div><!-- end drawer-content -->
+
+  <!-- ── SIDEBAR (Drawer Side) ── -->
+  <div class="drawer-side z-40">
+    <label for="main-drawer" aria-label="Tutup menu" class="drawer-overlay"></label>
+    <aside class="w-64 min-h-full bg-base-100 border-r border-base-300 flex flex-col py-5 px-3">
+
+      <!-- Logo -->
+      <div class="flex items-center gap-3 px-2 mb-5">
+        <div class="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center flex-shrink-0">
+          <span class="material-icons text-white">school</span>
+        </div>
+        <div>
+          <p class="font-extrabold text-sm leading-tight">SiPANDU VIRTUAL</p>
+          <p class="text-xs text-base-content/50">Panel Pengawas PAI</p>
+        </div>
+      </div>
+
+      <!-- Nav — diisi otomatis oleh bar.js -->
+      <ul id="sipandu-sidebar-nav" class="menu gap-0.5 text-sm flex-1 p-0"></ul>
+
+      <!-- User info -->
+      <div class="pt-4 mt-2 border-t border-base-300">
+        <div class="flex items-center gap-3 px-2">
+          <div class="avatar placeholder">
+            <div class="bg-emerald-600 text-white rounded-full w-9">
+              <span class="text-xs font-bold">BN</span>
+            </div>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-semibold truncate">Baqi Nurul H., M.Pd.</p>
+            <p class="text-xs text-base-content/50">Pengawas PAI</p>
+          </div>
+          <a href="../login.html" class="btn btn-ghost btn-xs btn-circle" title="Keluar">
+            <span class="material-icons text-base-content/40">logout</span>
+          </a>
+        </div>
+      </div>
+
+    </aside>
+  </div>
+</div><!-- end drawer -->
+
+<!-- SCRIPTS -->
+<script src="../assets/js/bar.js"></script>
+<script>
+  // ── Sync tombol mobile (di dalam avatar dropdown) dengan bar.js ──
+  (function syncMobileThemeBtn() {
+    const btnMobile  = document.getElementById('sipandu-theme-toggle-mobile');
+    const iconMobile = document.getElementById('sipandu-theme-icon-mobile');
+    const lblMobile  = document.getElementById('sipandu-theme-label-mobile');
+    if (!btnMobile) return;
+
+    function syncMobile() {
+      const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+      iconMobile.textContent = dark ? 'light_mode' : 'dark_mode';
+      lblMobile.textContent  = dark ? 'Mode Siang'  : 'Mode Malam';
+    }
+
+    // Panggil ulang sync setiap kali data-theme berubah (observer ringan)
+    new MutationObserver(syncMobile)
+      .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+    // Klik tombol mobile → delegasikan ke tombol utama bar.js
+    btnMobile.addEventListener('click', () => {
+      document.getElementById('sipandu-theme-toggle')?.click();
+    });
+
+    syncMobile();
+  })();
+
+  // ── Chart.js ──
+  document.addEventListener('DOMContentLoaded', function () {
+    const ctx  = document.getElementById('twChart').getContext('2d');
+    const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const grid = dark ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.06)';
+    const lbl  = dark ? '#aaa' : '#6b7280';
+
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['TW I — Perencanaan', 'TW II — Pendampingan', 'TW III — Observasi', 'TW IV — Evaluasi'],
+        datasets: [
+          { label: 'Sudah Submit', data: [63, 52, 0, 0],
+            backgroundColor: ['#10b981','#3b82f6','#d1d5db','#d1d5db'],
+            borderRadius: 8, borderSkipped: false },
+          { label: 'Belum Submit', data: [3, 14, 66, 66],
+            backgroundColor: ['#d1fae5','#dbeafe','#f3f4f6','#f3f4f6'],
+            borderRadius: 8, borderSkipped: false }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: 'bottom', labels: { color: lbl, font: { size: 12 }, padding: 16 } },
+          tooltip: { callbacks: { label: c => ` ${c.dataset.label}: ${c.raw} guru` } }
+        },
+        scales: {
+          x: { stacked: true, grid: { color: grid }, ticks: { color: lbl, font: { size: 11 } } },
+          y: { stacked: true, max: 70, grid: { color: grid },
+               ticks: { color: lbl, font: { size: 11 }, callback: v => v + ' guru' } }
+        }
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

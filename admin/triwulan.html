@@ -1,0 +1,450 @@
+
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kelola Triwulan — SiPANDU VIRTUAL</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .material-icons { user-select: none; font-size: 20px; vertical-align: middle; }
+  </style>
+</head>
+
+<body data-role="admin" class="bg-base-200 text-base-content min-h-screen">
+<div class="drawer lg:drawer-open">
+  <input id="main-drawer" type="checkbox" class="drawer-toggle" />
+
+  <!-- ═══ KONTEN UTAMA ═══ -->
+  <div class="drawer-content flex flex-col min-h-screen">
+
+    <!-- TOPBAR -->
+    <header class="navbar bg-base-100 border-b border-base-300 sticky top-0 z-30 px-4 lg:px-6">
+      <div class="flex-none lg:hidden">
+        <label for="main-drawer" class="btn btn-square btn-ghost" aria-label="Buka menu">
+          <span class="material-icons">menu</span>
+        </label>
+      </div>
+      <div class="flex-1 flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
+          <span class="material-icons">event_note</span>
+        </div>
+        <div>
+          <h1 id="sipandu-page-title" class="text-lg font-extrabold leading-tight">Kelola Triwulan</h1>
+          <p class="text-sm text-base-content/60 hidden sm:block">Atur jadwal, deadline, tema, dan status buka/tutup tiap triwulan.</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button id="sipandu-theme-toggle" class="btn btn-ghost btn-sm gap-2 normal-case" aria-label="Ganti tema">
+          <span class="material-icons" id="sipandu-theme-icon">dark_mode</span>
+          <span id="sipandu-theme-label" class="hidden sm:inline">Mode Malam</span>
+        </button>
+        <button class="btn btn-ghost btn-circle" aria-label="Notifikasi">
+          <span class="material-icons">notifications</span>
+        </button>
+        <div class="dropdown dropdown-end">
+          <div tabindex="0" role="button" class="btn btn-ghost gap-2 normal-case px-2">
+            <div class="avatar placeholder">
+              <div class="bg-primary text-primary-content rounded-full w-9">
+                <span class="text-sm font-bold">BN</span>
+              </div>
+            </div>
+            <div class="text-left hidden md:block">
+              <p class="text-sm font-bold leading-tight">Baqi Nurul</p>
+              <p class="text-xs text-base-content/60">Pengawas PAI</p>
+            </div>
+          </div>
+          <ul tabindex="0" class="menu dropdown-content z-50 p-2 shadow bg-base-100 rounded-box w-52 mt-2 border border-base-300">
+            <li><a><span class="material-icons">account_circle</span>Profil</a></li>
+            <li><a><span class="material-icons">settings</span>Pengaturan</a></li>
+            <li><a class="text-error"><span class="material-icons">logout</span>Keluar</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="p-4 lg:p-6 space-y-5 max-w-screen-xl mx-auto w-full">
+
+      <!-- STAT CARDS -->
+      <section class="grid grid-cols-2 xl:grid-cols-4 gap-4">
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-xs text-base-content/60 font-semibold uppercase tracking-wide">Tahun Ajaran</p>
+                <p class="text-2xl font-extrabold text-primary mt-1">2025/2026</p>
+              </div>
+              <div class="w-11 h-11 rounded-xl bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
+                <span class="material-icons">date_range</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-xs text-base-content/60 font-semibold uppercase tracking-wide">Sedang Terbuka</p>
+                <p class="text-2xl font-extrabold text-success mt-1">1 TW</p>
+              </div>
+              <div class="w-11 h-11 rounded-xl bg-success/10 text-success flex items-center justify-center flex-shrink-0">
+                <span class="material-icons">lock_open</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-xs text-base-content/60 font-semibold uppercase tracking-wide">Deadline Terdekat</p>
+                <p class="text-2xl font-extrabold text-warning mt-1">30 Jun</p>
+              </div>
+              <div class="w-11 h-11 rounded-xl bg-warning/10 text-warning flex items-center justify-center flex-shrink-0">
+                <span class="material-icons">schedule</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-xs text-base-content/60 font-semibold uppercase tracking-wide">Total Triwulan</p>
+                <p class="text-2xl font-extrabold text-info mt-1">4 TW</p>
+              </div>
+              <div class="w-11 h-11 rounded-xl bg-info/10 text-info flex items-center justify-center flex-shrink-0">
+                <span class="material-icons">task</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- INFO -->
+      <div class="alert bg-info/10 border border-info/20">
+        <span class="material-icons text-info flex-shrink-0">info</span>
+        <div>
+          <p class="font-bold text-sm">Cara menggunakan halaman ini</p>
+          <p class="text-sm text-base-content/70">Edit tema dan deadline langsung di kolom yang tersedia. Geser tombol <strong>Buka/Tutup</strong> untuk mengaktifkan triwulan. Klik <strong>Simpan</strong> setelah selesai mengedit.</p>
+        </div>
+      </div>
+
+      <!-- FILTER & AKSI -->
+      <div class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-4 lg:p-5">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+            <div>
+              <h2 class="font-extrabold text-base">Filter & Aksi Cepat</h2>
+              <p class="text-sm text-base-content/60">Fokuskan tampilan agar lebih mudah dikelola.</p>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <button class="btn btn-primary normal-case gap-2">
+                <span class="material-icons">save</span>Simpan Semua
+              </button>
+              <button class="btn btn-outline normal-case gap-2">
+                <span class="material-icons">restart_alt</span>Reset Draft
+              </button>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3">
+            <div class="form-control">
+              <label class="label pb-1"><span class="label-text font-semibold">Tahun Ajaran</span></label>
+              <select class="select select-bordered">
+                <option selected>2025/2026</option>
+                <option>2024/2025</option>
+              </select>
+            </div>
+            <div class="form-control">
+              <label class="label pb-1"><span class="label-text font-semibold">Status</span></label>
+              <select class="select select-bordered">
+                <option selected>Semua Status</option>
+                <option>Terbuka</option>
+                <option>Tertutup</option>
+              </select>
+            </div>
+            <div class="form-control sm:col-span-2">
+              <label class="label pb-1"><span class="label-text font-semibold">Cari Tema</span></label>
+              <label class="input input-bordered flex items-center gap-2">
+                <span class="material-icons text-base-content/40">search</span>
+                <input type="text" class="grow" placeholder="Contoh: observasi, evaluasi..." />
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- KARTU TRIWULAN (mobile+desktop, satu pola) -->
+      <section class="space-y-4">
+        <div class="flex items-center justify-between">
+          <h2 class="font-extrabold text-lg">Daftar 4 Triwulan</h2>
+          <span class="badge badge-outline">Tahun 2025/2026</span>
+        </div>
+
+        <!-- TW I -->
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-4 lg:p-5 space-y-4">
+            <!-- Header baris -->
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div class="flex items-center gap-3">
+                <span class="badge badge-success badge-lg px-4 py-3">Triwulan I</span>
+                <div>
+                  <p class="font-bold">Januari – Maret</p>
+                  <p class="text-sm text-base-content/60">Perencanaan awal tahun</p>
+                </div>
+              </div>
+              <span class="badge badge-ghost">Tertutup</span>
+            </div>
+            <!-- Form baris -->
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3">
+              <div class="form-control">
+                <label class="label pb-1"><span class="label-text font-semibold">Tema</span></label>
+                <input class="input input-bordered" value="Perencanaan &amp; Pemetaan" />
+              </div>
+              <div class="form-control xl:col-span-2">
+                <label class="label pb-1"><span class="label-text font-semibold">Deskripsi</span></label>
+                <input class="input input-bordered" value="Rekap kesiapan administrasi guru di awal tahun pelajaran." />
+              </div>
+              <div class="form-control">
+                <label class="label pb-1"><span class="label-text font-semibold">Deadline</span></label>
+                <input type="date" class="input input-bordered" value="2026-03-31" />
+              </div>
+            </div>
+            <!-- Status & aksi -->
+            <div class="flex flex-wrap items-center justify-between gap-3 pt-1 border-t border-base-300">
+              <label class="cursor-pointer flex items-center gap-3">
+                <input type="checkbox" class="toggle toggle-success" />
+                <div>
+                  <p class="font-semibold text-sm">Buka Triwulan I untuk Guru</p>
+                  <p class="text-xs text-base-content/60">Geser ke kanan untuk membuka form guru.</p>
+                </div>
+              </label>
+              <div class="flex gap-2">
+                <button class="btn btn-primary btn-sm normal-case gap-1"><span class="material-icons" style="font-size:16px">save</span>Simpan</button>
+                <button class="btn btn-ghost btn-sm normal-case gap-1"><span class="material-icons" style="font-size:16px">visibility</span>Detail</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TW II -->
+        <div class="card bg-base-100 border-2 border-success shadow-sm">
+          <div class="card-body p-4 lg:p-5 space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div class="flex items-center gap-3">
+                <span class="badge badge-info badge-lg px-4 py-3">Triwulan II</span>
+                <div>
+                  <p class="font-bold">April – Juni</p>
+                  <p class="text-sm text-base-content/60">Pendampingan tahap awal</p>
+                </div>
+              </div>
+              <span class="badge badge-success gap-1"><span class="material-icons" style="font-size:14px">lock_open</span>Sedang Terbuka</span>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3">
+              <div class="form-control">
+                <label class="label pb-1"><span class="label-text font-semibold">Tema</span></label>
+                <input class="input input-bordered" value="Pendampingan Tahap Awal" />
+              </div>
+              <div class="form-control xl:col-span-2">
+                <label class="label pb-1"><span class="label-text font-semibold">Deskripsi</span></label>
+                <input class="input input-bordered" value="Dokumen pendampingan pra-penyusunan RKT berbasis PBD." />
+              </div>
+              <div class="form-control">
+                <label class="label pb-1"><span class="label-text font-semibold">Deadline</span></label>
+                <input type="date" class="input input-bordered" value="2026-06-30" />
+              </div>
+            </div>
+            <div class="flex flex-wrap items-center justify-between gap-3 pt-1 border-t border-base-300">
+              <label class="cursor-pointer flex items-center gap-3">
+                <input type="checkbox" class="toggle toggle-success" checked />
+                <div>
+                  <p class="font-semibold text-sm">Triwulan II Sedang Terbuka</p>
+                  <p class="text-xs text-base-content/60">Geser ke kiri untuk menutup.</p>
+                </div>
+              </label>
+              <div class="flex gap-2">
+                <button class="btn btn-primary btn-sm normal-case gap-1"><span class="material-icons" style="font-size:16px">save</span>Simpan</button>
+                <button class="btn btn-ghost btn-sm normal-case gap-1"><span class="material-icons" style="font-size:16px">notifications_active</span>Kirim Pengumuman</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TW III -->
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-4 lg:p-5 space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div class="flex items-center gap-3">
+                <span class="badge badge-warning badge-lg px-4 py-3">Triwulan III</span>
+                <div>
+                  <p class="font-bold">Juli – September</p>
+                  <p class="text-sm text-base-content/60">Observasi dan umpan balik</p>
+                </div>
+              </div>
+              <span class="badge badge-ghost">Tertutup</span>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3">
+              <div class="form-control">
+                <label class="label pb-1"><span class="label-text font-semibold">Tema</span></label>
+                <input class="input input-bordered" value="Observasi &amp; Umpan Balik" />
+              </div>
+              <div class="form-control xl:col-span-2">
+                <label class="label pb-1"><span class="label-text font-semibold">Deskripsi</span></label>
+                <input class="input input-bordered" value="Laporan kemajuan kinerja instruksional guru binaan." />
+              </div>
+              <div class="form-control">
+                <label class="label pb-1"><span class="label-text font-semibold">Deadline</span></label>
+                <input type="date" class="input input-bordered" value="2026-09-30" />
+              </div>
+            </div>
+            <div class="flex flex-wrap items-center justify-between gap-3 pt-1 border-t border-base-300">
+              <label class="cursor-pointer flex items-center gap-3">
+                <input type="checkbox" class="toggle toggle-success" />
+                <div>
+                  <p class="font-semibold text-sm">Buka Triwulan III untuk Guru</p>
+                  <p class="text-xs text-base-content/60">Belum dibuka. Geser untuk membuka.</p>
+                </div>
+              </label>
+              <div class="flex gap-2">
+                <button class="btn btn-primary btn-sm normal-case gap-1"><span class="material-icons" style="font-size:16px">save</span>Simpan</button>
+                <button class="btn btn-ghost btn-sm normal-case gap-1"><span class="material-icons" style="font-size:16px">content_copy</span>Salin Tema</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TW IV -->
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-4 lg:p-5 space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div class="flex items-center gap-3">
+                <span class="badge badge-error badge-lg px-4 py-3">Triwulan IV</span>
+                <div>
+                  <p class="font-bold">Oktober – Desember</p>
+                  <p class="text-sm text-base-content/60">Evaluasi dan pelaporan</p>
+                </div>
+              </div>
+              <span class="badge badge-ghost">Tertutup</span>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3">
+              <div class="form-control">
+                <label class="label pb-1"><span class="label-text font-semibold">Tema</span></label>
+                <input class="input input-bordered" value="Evaluasi &amp; Pelaporan" />
+              </div>
+              <div class="form-control xl:col-span-2">
+                <label class="label pb-1"><span class="label-text font-semibold">Deskripsi</span></label>
+                <input class="input input-bordered" value="Laporan Tahunan Terpadu siap dicetak dan diekspor." />
+              </div>
+              <div class="form-control">
+                <label class="label pb-1"><span class="label-text font-semibold">Deadline</span></label>
+                <input type="date" class="input input-bordered" value="2026-12-20" />
+              </div>
+            </div>
+            <div class="flex flex-wrap items-center justify-between gap-3 pt-1 border-t border-base-300">
+              <label class="cursor-pointer flex items-center gap-3">
+                <input type="checkbox" class="toggle toggle-success" />
+                <div>
+                  <p class="font-semibold text-sm">Buka Triwulan IV untuk Guru</p>
+                  <p class="text-xs text-base-content/60">Belum dibuka. Geser untuk membuka.</p>
+                </div>
+              </label>
+              <div class="flex gap-2">
+                <button class="btn btn-primary btn-sm normal-case gap-1"><span class="material-icons" style="font-size:16px">save</span>Simpan</button>
+                <button class="btn btn-ghost btn-sm normal-case gap-1"><span class="material-icons" style="font-size:16px">edit_calendar</span>Atur Ulang</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ATURAN + AKTIVITAS -->
+      <section class="grid grid-cols-1 xl:grid-cols-3 gap-4">
+        <div class="xl:col-span-2 card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-4 lg:p-5">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 rounded-xl bg-warning/15 text-warning flex items-center justify-center flex-shrink-0">
+                <span class="material-icons">rule</span>
+              </div>
+              <div>
+                <h2 class="font-extrabold">Aturan Penting</h2>
+                <p class="text-sm text-base-content/60">Panduan agar tidak salah membuka periode.</p>
+              </div>
+            </div>
+            <ul class="space-y-3 text-sm leading-relaxed">
+              <li class="flex gap-3 items-start"><span class="material-icons text-success flex-shrink-0" style="margin-top:2px">check_circle</span><span>Buka hanya satu triwulan aktif agar guru tidak bingung harus mengisi form yang mana.</span></li>
+              <li class="flex gap-3 items-start"><span class="material-icons text-success flex-shrink-0" style="margin-top:2px">check_circle</span><span>Deadline adalah batas waktu submit otomatis di sisi guru — pastikan tanggal sudah tepat sebelum dibuka.</span></li>
+              <li class="flex gap-3 items-start"><span class="material-icons text-success flex-shrink-0" style="margin-top:2px">check_circle</span><span>Gunakan tema yang singkat dan mudah dipahami, cukup 3–5 kata saja.</span></li>
+              <li class="flex gap-3 items-start"><span class="material-icons text-success flex-shrink-0" style="margin-top:2px">check_circle</span><span>Deskripsi cukup 1 kalimat agar maksud triwulan cepat dipahami tanpa membaca panjang.</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-4 lg:p-5">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
+                <span class="material-icons">history</span>
+              </div>
+              <div>
+                <h2 class="font-extrabold">Aktivitas Terakhir</h2>
+                <p class="text-sm text-base-content/60">Jejak perubahan terbaru.</p>
+              </div>
+            </div>
+            <div class="space-y-3">
+              <div class="rounded-xl bg-base-200 p-3">
+                <p class="text-sm font-bold">TW II dibuka</p>
+                <p class="text-xs text-base-content/60">24 Apr 2026 • Deadline 30 Jun 2026</p>
+              </div>
+              <div class="rounded-xl bg-base-200 p-3">
+                <p class="text-sm font-bold">Tema TW III diperbarui</p>
+                <p class="text-xs text-base-content/60">23 Apr 2026 • Admin Pengawas</p>
+              </div>
+              <div class="rounded-xl bg-base-200 p-3">
+                <p class="text-sm font-bold">Tahun ajaran 2025/2026 aktif</p>
+                <p class="text-xs text-base-content/60">20 Apr 2026 • Sistem</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ═══ SIDEBAR ═══ -->
+  <div class="drawer-side z-40">
+    <label for="main-drawer" aria-label="Tutup menu" class="drawer-overlay"></label>
+    <aside class="w-72 min-h-full bg-base-100 border-r border-base-300 flex flex-col p-4">
+      <div class="flex items-center gap-3 px-2 py-3 mb-3">
+        <div class="w-11 h-11 rounded-2xl bg-primary text-primary-content flex items-center justify-center shadow-sm">
+          <span class="material-icons">school</span>
+        </div>
+        <div>
+          <p class="font-extrabold leading-tight">SiPANDU VIRTUAL</p>
+          <p class="text-xs text-base-content/60">Panel Pengawas PAI</p>
+        </div>
+      </div>
+
+      <ul id="sipandu-sidebar-nav" class="menu gap-1 text-sm flex-1 px-0"></ul>
+
+      <div class="card bg-base-200 border border-base-300 mt-4">
+        <div class="card-body p-4">
+          <div class="flex items-start gap-2">
+            <span class="material-icons text-primary flex-shrink-0">tips_and_updates</span>
+            <p class="text-xs text-base-content/65 leading-relaxed">Jika admin bingung lebih dari 5 detik, tampilan perlu disederhanakan lagi.</p>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+</div>
+
+<script src="../assets/js/bar.js"></script>
+</body>
+</html>

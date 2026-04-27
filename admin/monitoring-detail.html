@@ -1,0 +1,493 @@
+
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detail Monitoring Guru | SiPANDU VIRTUAL</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .sticky-side { position: sticky; top: 72px; }
+    .doc-card { transition: transform .15s ease; }
+    .doc-card:hover { transform: translateY(-2px); }
+  </style>
+</head>
+
+<body data-role="admin" class="bg-base-200 text-base-content min-h-screen">
+
+<div class="drawer lg:drawer-open">
+  <input id="main-drawer" type="checkbox" class="drawer-toggle" />
+
+  <!-- KONTEN UTAMA -->
+  <div class="drawer-content flex flex-col min-h-screen">
+
+    <!-- TOPBAR -->
+    <header class="navbar bg-base-100 border-b border-base-300 sticky top-0 z-30 px-4 lg:px-6 gap-2">
+      <div class="flex-none lg:hidden">
+        <label for="main-drawer" class="btn btn-square btn-ghost" aria-label="Buka menu">
+          <span class="material-icons">menu</span>
+        </label>
+      </div>
+
+      <div class="flex-1 flex items-center gap-3 min-w-0">
+        <div class="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
+          <span class="material-icons">supervisor_account</span>
+        </div>
+        <div class="min-w-0">
+          <h1 id="sipandu-page-title" class="text-base md:text-lg font-extrabold truncate leading-tight">
+            Detail Monitoring Guru
+          </h1>
+          <p class="text-xs text-base-content/60 truncate">Review progres, dokumen, dan umpan balik guru binaan</p>
+        </div>
+      </div>
+
+      <div class="flex-none flex items-center gap-2">
+        <button id="sipandu-theme-toggle" class="btn btn-ghost btn-circle" aria-label="Ganti tema">
+          <span class="material-icons" id="sipandu-theme-icon">dark_mode</span>
+        </button>
+        <button class="btn btn-outline btn-sm normal-case gap-1 hidden md:inline-flex">
+          <span class="material-icons text-base">print</span>Cetak
+        </button>
+        <div class="dropdown dropdown-end">
+          <div tabindex="0" role="button" class="btn btn-ghost gap-2 normal-case pl-2 pr-3">
+            <div class="avatar placeholder">
+              <div class="bg-primary text-primary-content rounded-full w-9">
+                <span class="text-sm font-bold">BN</span>
+              </div>
+            </div>
+            <div class="text-left hidden md:block">
+              <div class="text-sm font-bold">Baqi Nurul</div>
+              <div class="text-xs text-base-content/60">Pengawas PAI</div>
+            </div>
+          </div>
+          <ul tabindex="0" class="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-2 border border-base-300">
+            <li><a href="../guru/profil.html"><span class="material-icons">account_circle</span>Profil</a></li>
+            <li><a href="../login.html" class="text-error"><span class="material-icons">logout</span>Keluar</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="p-4 lg:p-6 space-y-5">
+
+      <!-- BREADCRUMB -->
+      <div class="breadcrumbs text-sm">
+        <ul>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="monitoring.html">Monitoring Center</a></li>
+          <li>Detail Guru</li>
+        </ul>
+      </div>
+
+      <!-- LAYOUT 2 KOLOM -->
+      <div class="grid grid-cols-1 xl:grid-cols-12 gap-5 items-start">
+
+        <!-- KOLOM KIRI: PROFIL & PROGRESS -->
+        <aside class="xl:col-span-4 space-y-5 sticky-side">
+
+          <!-- Kartu Profil -->
+          <div class="card bg-base-100 border border-base-300 shadow-sm">
+            <div class="card-body gap-4">
+              <div class="flex items-start gap-4">
+                <div class="avatar placeholder">
+                  <div class="bg-primary/10 text-primary rounded-2xl w-16">
+                    <span class="text-2xl font-bold">AF</span>
+                  </div>
+                </div>
+                <div class="min-w-0">
+                  <h2 class="font-extrabold text-lg leading-tight">Ahmad Fauzi, S.Ag</h2>
+                  <p class="text-sm text-base-content/60">Guru PAI</p>
+                  <div class="flex flex-wrap gap-2 mt-2">
+                    <span class="badge badge-success gap-1">
+                      <span class="material-icons text-xs">verified</span>Akun Aktif
+                    </span>
+                    <span class="badge badge-outline text-xs">NIP: 19870812</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="divider my-0"></div>
+
+              <div class="grid grid-cols-2 xl:grid-cols-1 gap-3 text-sm">
+                <div>
+                  <p class="text-base-content/50 text-xs mb-0.5">Sekolah</p>
+                  <p class="font-semibold">SMAN 8 Samarinda</p>
+                </div>
+                <div>
+                  <p class="text-base-content/50 text-xs mb-0.5">Tahun Ajaran</p>
+                  <p class="font-semibold">2025/2026</p>
+                </div>
+                <div>
+                  <p class="text-base-content/50 text-xs mb-0.5">WhatsApp</p>
+                  <p class="font-semibold">0812-xxxx-xxxx</p>
+                </div>
+                <div>
+                  <p class="text-base-content/50 text-xs mb-0.5">Prioritas</p>
+                  <span class="badge badge-warning gap-1">
+                    <span class="material-icons text-xs">priority_high</span>Menengah
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Kartu Progress -->
+          <div class="card bg-base-100 border border-base-300 shadow-sm">
+            <div class="card-body gap-4">
+              <div class="flex items-center justify-between">
+                <h3 class="font-bold">Progress Triwulan</h3>
+                <span class="material-icons text-primary">insights</span>
+              </div>
+
+              <div class="space-y-3">
+                <div>
+                  <div class="flex justify-between text-sm mb-1">
+                    <span class="font-medium">TW I — Perencanaan</span>
+                    <span class="badge badge-success badge-sm">Lengkap</span>
+                  </div>
+                  <progress class="progress progress-success w-full" value="100" max="100"></progress>
+                </div>
+                <div>
+                  <div class="flex justify-between text-sm mb-1">
+                    <span class="font-medium">TW II — Pendampingan</span>
+                    <span class="badge badge-warning badge-sm">Revisi</span>
+                  </div>
+                  <progress class="progress progress-warning w-full" value="70" max="100"></progress>
+                </div>
+                <div>
+                  <div class="flex justify-between text-sm mb-1">
+                    <span class="font-medium">TW III — Observasi</span>
+                    <span class="badge badge-ghost badge-sm">Belum Submit</span>
+                  </div>
+                  <progress class="progress w-full" value="20" max="100"></progress>
+                </div>
+                <div>
+                  <div class="flex justify-between text-sm mb-1">
+                    <span class="font-medium">TW IV — Evaluasi</span>
+                    <span class="badge badge-ghost badge-sm">Terkunci</span>
+                  </div>
+                  <progress class="progress w-full" value="0" max="100"></progress>
+                </div>
+              </div>
+
+              <div class="bg-base-200 rounded-xl p-4 border border-base-300 text-sm">
+                <p class="text-base-content/50 text-xs mb-0.5">Kelengkapan Dokumen</p>
+                <p class="text-2xl font-extrabold">12 <span class="text-base font-normal text-base-content/50">/ 16</span></p>
+                <p class="text-xs text-base-content/60 mt-0.5">4 dokumen perlu ditindaklanjuti</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Aksi Cepat -->
+          <div class="card bg-base-100 border border-base-300 shadow-sm">
+            <div class="card-body gap-3">
+              <div class="flex items-center justify-between">
+                <h3 class="font-bold">Aksi Cepat</h3>
+                <span class="material-icons text-primary">bolt</span>
+              </div>
+
+              <button class="btn btn-success justify-start normal-case gap-3 h-auto py-3 text-left">
+                <span class="material-icons flex-shrink-0">done_all</span>
+                <span>
+                  <span class="block font-semibold text-sm">Setujui Semua yang Sudah Benar</span>
+                  <span class="block text-xs opacity-80">Gunakan setelah semua dokumen diperiksa</span>
+                </span>
+              </button>
+
+              <button class="btn btn-warning justify-start normal-case gap-3 h-auto py-3 text-left">
+                <span class="material-icons flex-shrink-0">feedback</span>
+                <span>
+                  <span class="block font-semibold text-sm">Kirim Catatan Revisi ke Guru</span>
+                  <span class="block text-xs opacity-80">Guru akan melihat catatan ini di dashboard</span>
+                </span>
+              </button>
+
+              <button class="btn btn-outline justify-start normal-case gap-3 h-auto py-3 text-left">
+                <span class="material-icons flex-shrink-0">forum</span>
+                <span>
+                  <span class="block font-semibold text-sm">Buka Ruang Diskusi Guru</span>
+                  <span class="block text-xs opacity-70">Untuk penjelasan revisi yang lebih detail</span>
+                </span>
+              </button>
+
+              <a href="monitoring.html" class="btn btn-ghost justify-start normal-case gap-3 h-auto py-3 text-left border border-base-300">
+                <span class="material-icons flex-shrink-0">arrow_back</span>
+                <span>
+                  <span class="block font-semibold text-sm">Kembali ke Monitoring Center</span>
+                  <span class="block text-xs opacity-70">Lihat daftar guru lainnya</span>
+                </span>
+              </a>
+            </div>
+          </div>
+
+        </aside>
+
+        <!-- KOLOM KANAN: DOKUMEN + RIWAYAT -->
+        <section class="xl:col-span-8 space-y-5">
+
+          <!-- Filter Triwulan -->
+          <div class="card bg-base-100 border border-base-300 shadow-sm">
+            <div class="card-body p-4 lg:p-5">
+              <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+                <div>
+                  <h2 class="text-lg font-extrabold">Dokumen Guru</h2>
+                  <p class="text-sm text-base-content/60">Pilih triwulan lalu review setiap dokumen yang dikirim.</p>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                  <select class="select select-bordered select-sm w-full sm:w-56">
+                    <option selected>Triwulan II — Pendampingan</option>
+                    <option>Triwulan I — Perencanaan</option>
+                    <option>Triwulan III — Observasi</option>
+                    <option>Triwulan IV — Evaluasi</option>
+                  </select>
+                  <button class="btn btn-outline btn-sm normal-case gap-1">
+                    <span class="material-icons text-base">filter_alt</span>Filter
+                  </button>
+                </div>
+              </div>
+
+              <div class="alert bg-base-200 border border-base-300 mt-3">
+                <span class="material-icons text-warning">rule</span>
+                <p class="text-sm">Gunakan dua keputusan: <strong>Lengkap</strong> jika sudah benar, atau <strong>Perlu Revisi</strong> jika guru perlu memperbaiki.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dokumen 1: Perlu Revisi -->
+          <article class="card doc-card bg-base-100 border border-base-300 shadow-sm">
+            <div class="card-body gap-4">
+              <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
+                <div class="flex gap-4">
+                  <div class="w-12 h-12 rounded-2xl bg-blue-100 text-blue-700 flex items-center justify-center flex-shrink-0">
+                    <span class="material-icons">ondemand_video</span>
+                  </div>
+                  <div>
+                    <div class="flex flex-wrap items-center gap-2 mb-1">
+                      <h3 class="font-bold">Link Video Mengajar</h3>
+                      <span class="badge badge-warning">Perlu Revisi</span>
+                      <span class="badge badge-outline badge-sm">Wajib</span>
+                    </div>
+                    <p class="text-sm text-base-content/60">Link YouTube wajib dikirim pada Triwulan II dan harus bisa dibuka publik.</p>
+                    <div class="flex flex-wrap gap-2 mt-2">
+                      <a class="btn btn-xs btn-outline normal-case gap-1">
+                        <span class="material-icons text-sm">open_in_new</span>Buka Link
+                      </a>
+                      <span class="badge badge-outline badge-sm">Diunggah 24 Apr 2026</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex gap-2 lg:flex-col xl:flex-row flex-shrink-0">
+                  <button class="btn btn-success btn-sm normal-case gap-1">
+                    <span class="material-icons text-base">check_circle</span>Lengkap
+                  </button>
+                  <button class="btn btn-warning btn-sm normal-case gap-1">
+                    <span class="material-icons text-base">edit_note</span>Revisi
+                  </button>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <label class="form-control">
+                  <div class="label pb-1"><span class="label-text font-medium">Catatan untuk Guru</span></div>
+                  <textarea class="textarea textarea-bordered min-h-24" placeholder="Contoh: Link belum publik. Mohon ubah pengaturan video agar dapat dibuka."></textarea>
+                  <div class="label pt-1">
+                    <span class="label-text-alt text-base-content/50">Tulis singkat, sopan, dan langsung ke intinya.</span>
+                  </div>
+                </label>
+                <div class="card bg-base-200 border border-base-300">
+                  <div class="card-body p-4 text-sm">
+                    <div class="flex items-center gap-2 mb-2 font-semibold">
+                      <span class="material-icons text-primary">lightbulb</span>Panduan Review
+                    </div>
+                    <ul class="space-y-1.5 text-base-content/70 leading-relaxed list-none">
+                      <li>• Pastikan file atau link benar-benar bisa dibuka.</li>
+                      <li>• Tulis revisi secara spesifik, bukan umum.</li>
+                      <li>• Hindari komentar panjang agar guru mudah paham.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Dokumen 2: Lengkap -->
+          <article class="card doc-card bg-base-100 border border-base-300 shadow-sm">
+            <div class="card-body gap-3">
+              <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                <div class="flex gap-4">
+                  <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center flex-shrink-0">
+                    <span class="material-icons">description</span>
+                  </div>
+                  <div>
+                    <div class="flex flex-wrap items-center gap-2 mb-1">
+                      <h3 class="font-bold">EDS & Rapor Sekolah</h3>
+                      <span class="badge badge-success">Lengkap</span>
+                    </div>
+                    <p class="text-sm text-base-content/60">Dokumen analisis sekolah untuk pendampingan berbasis data (PBD).</p>
+                    <div class="flex flex-wrap gap-2 mt-2">
+                      <a class="btn btn-xs btn-outline normal-case gap-1">
+                        <span class="material-icons text-sm">download</span>Lihat File
+                      </a>
+                      <span class="badge badge-outline badge-sm">PDF · 2.4 MB</span>
+                    </div>
+                  </div>
+                </div>
+                <button class="btn btn-success btn-sm normal-case gap-1 btn-disabled flex-shrink-0">
+                  <span class="material-icons text-base">check_circle</span>Sudah Lengkap
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Dokumen 3: Menunggu Review -->
+          <article class="card doc-card bg-base-100 border border-base-300 shadow-sm">
+            <div class="card-body gap-3">
+              <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                <div class="flex gap-4">
+                  <div class="w-12 h-12 rounded-2xl bg-violet-100 text-violet-700 flex items-center justify-center flex-shrink-0">
+                    <span class="material-icons">menu_book</span>
+                  </div>
+                  <div>
+                    <div class="flex flex-wrap items-center gap-2 mb-1">
+                      <h3 class="font-bold">Modul Ajar Terbaru</h3>
+                      <span class="badge badge-warning">Menunggu Review</span>
+                    </div>
+                    <p class="text-sm text-base-content/60">Diperiksa kesesuaiannya dengan CP, ATP, dan tujuan pembelajaran.</p>
+                    <div class="flex flex-wrap gap-2 mt-2">
+                      <a class="btn btn-xs btn-outline normal-case gap-1">
+                        <span class="material-icons text-sm">download</span>Lihat File
+                      </a>
+                      <span class="badge badge-outline badge-sm">DOCX · 1.1 MB</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex gap-2 flex-shrink-0">
+                  <button class="btn btn-success btn-sm normal-case gap-1">
+                    <span class="material-icons text-base">task_alt</span>Lengkap
+                  </button>
+                  <button class="btn btn-warning btn-sm normal-case gap-1">
+                    <span class="material-icons text-base">sms_failed</span>Revisi
+                  </button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Dokumen 4: Belum Upload -->
+          <article class="card doc-card bg-base-100 border border-base-300 shadow-sm opacity-70">
+            <div class="card-body gap-3">
+              <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                <div class="flex gap-4">
+                  <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center flex-shrink-0">
+                    <span class="material-icons">history_edu</span>
+                  </div>
+                  <div>
+                    <div class="flex flex-wrap items-center gap-2 mb-1">
+                      <h3 class="font-bold">Jurnal Refleksi Pembelajaran</h3>
+                      <span class="badge badge-ghost">Belum Upload</span>
+                    </div>
+                    <p class="text-sm text-base-content/60">Guru belum mengirim dokumen ini. Tombol review tidak tersedia.</p>
+                  </div>
+                </div>
+                <button class="btn btn-disabled btn-sm normal-case gap-1 flex-shrink-0" disabled>
+                  <span class="material-icons text-base">hourglass_empty</span>Menunggu Upload
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Riwayat Feedback -->
+          <div class="card bg-base-100 border border-base-300 shadow-sm">
+            <div class="card-body gap-4">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h2 class="text-lg font-extrabold">Riwayat Feedback</h2>
+                  <p class="text-sm text-base-content/60">Rekam jejak review dan revisi untuk guru ini.</p>
+                </div>
+                <span class="material-icons text-primary">history</span>
+              </div>
+
+              <ul class="timeline timeline-snap-icon max-md:timeline-compact timeline-vertical">
+                <li>
+                  <div class="timeline-middle text-success"><span class="material-icons">check_circle</span></div>
+                  <div class="timeline-start md:text-end mb-8 pr-4">
+                    <time class="font-mono text-xs opacity-60">24 Apr 2026</time>
+                    <div class="font-semibold">EDS & Rapor Sekolah diterima</div>
+                    <p class="text-sm text-base-content/60">Dokumen lengkap, siap digunakan untuk analisis pendampingan.</p>
+                  </div>
+                  <hr class="bg-success" />
+                </li>
+                <li>
+                  <hr class="bg-warning" />
+                  <div class="timeline-middle text-warning"><span class="material-icons">edit_note</span></div>
+                  <div class="timeline-end mb-8 pl-4">
+                    <time class="font-mono text-xs opacity-60">24 Apr 2026</time>
+                    <div class="font-semibold">Video mengajar perlu revisi</div>
+                    <p class="text-sm text-base-content/60">Link belum publik. Guru diminta mengubah pengaturan akses YouTube.</p>
+                  </div>
+                  <hr class="bg-base-300" />
+                </li>
+                <li>
+                  <div class="timeline-middle text-info"><span class="material-icons">mail</span></div>
+                  <div class="timeline-start md:text-end pr-4">
+                    <time class="font-mono text-xs opacity-60">23 Apr 2026</time>
+                    <div class="font-semibold">Guru mengirim dokumen Triwulan II</div>
+                    <p class="text-sm text-base-content/60">3 item diterima: video mengajar, EDS & Rapor, dan modul ajar.</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- SIDEBAR -->
+  <div class="drawer-side z-40">
+    <label for="main-drawer" aria-label="tutup sidebar" class="drawer-overlay"></label>
+    <aside class="w-72 min-h-full bg-base-100 border-r border-base-300 flex flex-col">
+
+      <!-- Logo -->
+      <div class="flex items-center gap-3 px-5 py-4 border-b border-base-300">
+        <div class="w-10 h-10 rounded-xl bg-primary text-primary-content flex items-center justify-center">
+          <span class="material-icons">school</span>
+        </div>
+        <div>
+          <div class="font-extrabold leading-tight text-sm">SiPANDU VIRTUAL</div>
+          <div class="text-xs text-base-content/60">Panel Pengawas PAI</div>
+        </div>
+      </div>
+
+      <!-- Nav otomatis dari bar.js -->
+      <ul id="sipandu-sidebar-nav" class="menu p-3 gap-1 text-sm flex-1"></ul>
+
+      <!-- Tips -->
+      <div class="p-3">
+        <div class="card bg-base-200 border border-base-300">
+          <div class="card-body p-4">
+            <div class="flex items-start gap-2">
+              <span class="material-icons text-primary text-base mt-0.5">tips_and_updates</span>
+              <div>
+                <div class="font-bold text-sm">Tips Review</div>
+                <p class="text-xs text-base-content/65 leading-relaxed mt-0.5">
+                  Beri catatan revisi yang singkat dan spesifik. Hindari instruksi panjang agar guru mudah memahami perbaikan.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script src="../assets/js/bar.js"></script>
+</body>
+</html>

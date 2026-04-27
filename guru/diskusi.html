@@ -1,0 +1,396 @@
+
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ruang Diskusi — SiPANDU VIRTUAL</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+
+    /* Sidebar active item */
+    #sipandu-sidebar-nav a.active {
+      background: rgb(16 185 129 / .12);
+      color: rgb(5 150 105);
+      font-weight: 700;
+    }
+
+    /* Chat bubbles */
+    .bubble-guru {
+      background: oklch(var(--b2));
+      border-radius: 0 1rem 1rem 1rem;
+    }
+    .bubble-admin {
+      background: oklch(var(--p));
+      color: oklch(var(--pc));
+      border-radius: 1rem 0 1rem 1rem;
+    }
+
+    /* Scroll to top */
+    #to-top { display: none; }
+  </style>
+</head>
+
+<body data-role="guru" class="bg-base-200 min-h-screen">
+
+<!-- ═══════════════════════════════════════
+     DRAWER LAYOUT
+═══════════════════════════════════════ -->
+<div class="drawer lg:drawer-open">
+  <input id="main-drawer" type="checkbox" class="drawer-toggle" />
+
+  <!-- ── KONTEN UTAMA ── -->
+  <div class="drawer-content flex flex-col min-h-screen">
+
+    <!-- TOPBAR -->
+    <header class="navbar bg-[#0f4c35] text-white sticky top-0 z-30 px-4 lg:px-6 shadow-md">
+
+      <!-- Hamburger (mobile) -->
+      <div class="flex-none lg:hidden">
+        <label for="main-drawer" class="btn btn-ghost btn-circle text-white" aria-label="Buka menu">
+          <span class="material-icons">menu</span>
+        </label>
+      </div>
+
+      <!-- Logo + Judul -->
+      <div class="flex-1 flex items-center gap-3 min-w-0">
+        <span class="material-icons text-green-300 text-2xl flex-shrink-0">forum</span>
+        <div class="min-w-0">
+          <h1 id="sipandu-page-title" class="font-bold text-sm md:text-base leading-tight truncate">
+            Ruang Diskusi
+          </h1>
+          <p class="text-green-200 text-xs hidden sm:block">Tanya &amp; konsultasi langsung dengan Pengawas</p>
+        </div>
+      </div>
+
+      <!-- Aksi kanan -->
+      <div class="flex items-center gap-1 flex-shrink-0">
+
+        <!-- Theme toggle -->
+        <button id="sipandu-theme-toggle"
+          class="btn btn-ghost btn-sm gap-1 text-white normal-case"
+          aria-label="Ganti tema">
+          <span class="material-icons" id="sipandu-theme-icon">dark_mode</span>
+          <span id="sipandu-theme-label" class="hidden sm:inline text-xs">Mode Malam</span>
+        </button>
+
+        <!-- Notifikasi -->
+        <a href="../notifikasi.html" class="btn btn-ghost btn-circle text-white" aria-label="Notifikasi">
+          <span class="material-icons">notifications</span>
+        </a>
+
+        <!-- Avatar dropdown -->
+        <div class="dropdown dropdown-end">
+          <label tabindex="0" class="btn btn-ghost btn-circle cursor-pointer">
+            <div class="avatar placeholder">
+              <div class="bg-green-700 text-white rounded-full w-9 text-xs font-bold">
+                <span>AF</span>
+              </div>
+            </div>
+          </label>
+          <ul tabindex="0"
+            class="dropdown-content menu shadow-lg bg-base-100 text-base-content rounded-box w-52 mt-2 p-2 text-sm border border-base-300">
+            <li class="menu-title text-xs opacity-60 px-3 py-1">Ahmad Fauzi, S.Ag</li>
+            <li><a href="profil.html"><span class="material-icons text-sm">person</span>Profil Saya</a></li>
+            <li><a href="../login.html" class="text-error"><span class="material-icons text-sm">logout</span>Keluar</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 max-w-3xl w-full mx-auto px-4 py-6 space-y-5">
+
+      <!-- Info banner -->
+      <div class="alert bg-primary/10 border border-primary/20 rounded-2xl py-3 px-4 gap-3">
+        <span class="material-icons text-primary flex-shrink-0">info</span>
+        <p class="text-sm text-base-content/80 leading-relaxed">
+          Sampaikan pertanyaan atau kendala Bapak/Ibu di sini.
+          Pengawas akan membalas secepatnya melalui platform ini.
+        </p>
+      </div>
+
+      <!-- TABS TRIWULAN -->
+      <div class="tabs tabs-boxed bg-base-100 shadow-sm p-2 rounded-2xl flex flex-wrap gap-1" role="tablist">
+        <button class="tab tab-active flex-1 gap-1 text-xs sm:text-sm normal-case rounded-xl"
+          onclick="switchTab('tw1', this)">
+          <span class="material-icons text-base">assignment</span>TW I
+        </button>
+        <button class="tab flex-1 gap-1 text-xs sm:text-sm normal-case rounded-xl"
+          onclick="switchTab('tw2', this)">
+          <span class="material-icons text-base">school</span>TW II
+        </button>
+        <button class="tab flex-1 gap-1 text-xs sm:text-sm normal-case rounded-xl"
+          onclick="switchTab('tw3', this)">
+          <span class="material-icons text-base">visibility</span>TW III
+        </button>
+        <button class="tab flex-1 gap-1 text-xs sm:text-sm normal-case rounded-xl"
+          onclick="switchTab('tw4', this)">
+          <span class="material-icons text-base">assessment</span>TW IV
+        </button>
+      </div>
+
+      <!-- ══ PANEL TW I ══ -->
+      <div id="tw1" class="tw-panel space-y-5">
+
+        <!-- Form buat thread baru -->
+        <div class="card bg-base-100 shadow-sm rounded-2xl">
+          <div class="card-body p-5 space-y-3">
+            <h2 class="font-bold text-base flex items-center gap-2">
+              <span class="material-icons text-primary">add_comment</span>
+              Ajukan Pertanyaan Baru — TW I
+            </h2>
+            <input type="text"
+              class="input input-bordered w-full"
+              placeholder="Judul pertanyaan Bapak/Ibu..." />
+            <textarea
+              class="textarea textarea-bordered w-full"
+              rows="3"
+              placeholder="Tulis pertanyaan atau kendala yang Bapak/Ibu hadapi di Triwulan I..."></textarea>
+            <div class="flex justify-end">
+              <button class="btn btn-primary normal-case gap-2">
+                <span class="material-icons">send</span>Kirim Pertanyaan
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Thread: Terjawab -->
+        <div class="card bg-base-100 shadow-sm rounded-2xl">
+          <div class="card-body p-4 space-y-3">
+
+            <!-- Header thread -->
+            <button class="w-full text-left flex items-start justify-between gap-3"
+              onclick="toggleChat('chat1')" aria-expanded="false" aria-controls="chat1">
+              <div class="flex items-start gap-3 flex-1 min-w-0">
+                <span class="material-icons text-primary mt-0.5 flex-shrink-0">forum</span>
+                <div class="min-w-0">
+                  <p class="font-semibold text-sm leading-snug">Cara upload Prota di TW I bagaimana?</p>
+                  <p class="text-xs text-base-content/50 mt-0.5">Ahmad Fauzi · 12 Jan 2026 · 2 pesan</p>
+                </div>
+              </div>
+              <span class="badge badge-success badge-sm whitespace-nowrap flex-shrink-0 gap-1">
+                <span class="material-icons text-xs">mark_chat_read</span>Terjawab
+              </span>
+            </button>
+
+            <!-- Isi chat -->
+            <div id="chat1" class="hidden space-y-3 pt-2 border-t border-base-200">
+              <div class="bubble-guru p-4 max-w-[88%]">
+                <p class="text-xs font-semibold text-primary mb-1">Ahmad Fauzi, S.Ag</p>
+                <p class="text-sm leading-relaxed">Assalamualaikum, saya ingin menanyakan bagaimana cara upload file
+                  Prota di form TW I. Apakah harus PDF atau boleh Word?</p>
+                <p class="text-xs text-base-content/40 mt-1">12 Jan 2026, 09.14</p>
+              </div>
+              <div class="bubble-admin p-4 max-w-[88%] ml-auto">
+                <p class="text-xs font-semibold opacity-80 mb-1">Pengawas (Ibu Baqi)</p>
+                <p class="text-sm leading-relaxed">Waalaikumsalam Pak Ahmad. File Prota bisa PDF atau Word (.docx).
+                  Disarankan PDF agar lebih rapi. Ukuran maksimal 10 MB. Jika ada kendala lain, silakan tanyakan lagi.</p>
+                <p class="text-xs opacity-60 mt-1">12 Jan 2026, 10.02</p>
+              </div>
+              <div class="flex gap-2">
+                <input type="text" class="input input-bordered input-sm flex-1"
+                  placeholder="Tulis balasan..." />
+                <button class="btn btn-primary btn-sm" aria-label="Kirim">
+                  <span class="material-icons">send</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Thread: Menunggu -->
+        <div class="card bg-base-100 shadow-sm rounded-2xl">
+          <div class="card-body p-4 space-y-3">
+
+            <button class="w-full text-left flex items-start justify-between gap-3"
+              onclick="toggleChat('chat2')" aria-expanded="false" aria-controls="chat2">
+              <div class="flex items-start gap-3 flex-1 min-w-0">
+                <span class="material-icons text-warning mt-0.5 flex-shrink-0">pending</span>
+                <div class="min-w-0">
+                  <p class="font-semibold text-sm leading-snug">Format kalender pendidikan sekolah swasta?</p>
+                  <p class="text-xs text-base-content/50 mt-0.5">Ahmad Fauzi · 15 Jan 2026 · 1 pesan</p>
+                </div>
+              </div>
+              <span class="badge badge-warning badge-sm whitespace-nowrap flex-shrink-0 gap-1">
+                <span class="material-icons text-xs">schedule</span>Menunggu
+              </span>
+            </button>
+
+            <div id="chat2" class="hidden space-y-3 pt-2 border-t border-base-200">
+              <div class="bubble-guru p-4 max-w-[88%]">
+                <p class="text-xs font-semibold text-primary mb-1">Ahmad Fauzi, S.Ag</p>
+                <p class="text-sm leading-relaxed">Bu, untuk sekolah swasta apakah kalender pendidikan mengikuti Dinas
+                  atau bisa buat sendiri?</p>
+                <p class="text-xs text-base-content/40 mt-1">15 Jan 2026, 14.30</p>
+              </div>
+              <div class="alert alert-warning rounded-xl text-xs py-2 px-3 gap-2">
+                <span class="material-icons text-sm">schedule</span>
+                Pertanyaan ini belum dibalas. Pengawas akan segera merespons.
+              </div>
+              <div class="flex gap-2">
+                <input type="text" class="input input-bordered input-sm flex-1"
+                  placeholder="Tulis balasan..." />
+                <button class="btn btn-primary btn-sm" aria-label="Kirim">
+                  <span class="material-icons">send</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ══ PANEL TW II, III, IV ══ -->
+      <!-- Pattern sama, cukup ganti label TW dan id panel -->
+      <div id="tw2" class="tw-panel hidden space-y-5">
+        <div class="card bg-base-100 shadow-sm rounded-2xl">
+          <div class="card-body p-5 space-y-3">
+            <h2 class="font-bold text-base flex items-center gap-2">
+              <span class="material-icons text-primary">add_comment</span>
+              Ajukan Pertanyaan Baru — TW II
+            </h2>
+            <input type="text" class="input input-bordered w-full" placeholder="Judul pertanyaan..." />
+            <textarea class="textarea textarea-bordered w-full" rows="3"
+              placeholder="Tulis pertanyaan Triwulan II..."></textarea>
+            <div class="flex justify-end">
+              <button class="btn btn-primary normal-case gap-2">
+                <span class="material-icons">send</span>Kirim Pertanyaan
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col items-center py-16 text-center text-base-content/40">
+          <span class="material-icons text-5xl mb-3">forum</span>
+          <p class="font-semibold">Belum ada diskusi di Triwulan II</p>
+          <p class="text-sm mt-1">Ajukan pertanyaan pertama Bapak/Ibu di form di atas.</p>
+        </div>
+      </div>
+
+      <div id="tw3" class="tw-panel hidden space-y-5">
+        <div class="card bg-base-100 shadow-sm rounded-2xl">
+          <div class="card-body p-5 space-y-3">
+            <h2 class="font-bold text-base flex items-center gap-2">
+              <span class="material-icons text-primary">add_comment</span>
+              Ajukan Pertanyaan Baru — TW III
+            </h2>
+            <input type="text" class="input input-bordered w-full" placeholder="Judul pertanyaan..." />
+            <textarea class="textarea textarea-bordered w-full" rows="3"
+              placeholder="Tulis pertanyaan Triwulan III..."></textarea>
+            <div class="flex justify-end">
+              <button class="btn btn-primary normal-case gap-2">
+                <span class="material-icons">send</span>Kirim Pertanyaan
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col items-center py-16 text-center text-base-content/40">
+          <span class="material-icons text-5xl mb-3">forum</span>
+          <p class="font-semibold">Belum ada diskusi di Triwulan III</p>
+          <p class="text-sm mt-1">Ajukan pertanyaan pertama Bapak/Ibu di form di atas.</p>
+        </div>
+      </div>
+
+      <div id="tw4" class="tw-panel hidden space-y-5">
+        <div class="card bg-base-100 shadow-sm rounded-2xl">
+          <div class="card-body p-5 space-y-3">
+            <h2 class="font-bold text-base flex items-center gap-2">
+              <span class="material-icons text-primary">add_comment</span>
+              Ajukan Pertanyaan Baru — TW IV
+            </h2>
+            <input type="text" class="input input-bordered w-full" placeholder="Judul pertanyaan..." />
+            <textarea class="textarea textarea-bordered w-full" rows="3"
+              placeholder="Tulis pertanyaan Triwulan IV..."></textarea>
+            <div class="flex justify-end">
+              <button class="btn btn-primary normal-case gap-2">
+                <span class="material-icons">send</span>Kirim Pertanyaan
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col items-center py-16 text-center text-base-content/40">
+          <span class="material-icons text-5xl mb-3">forum</span>
+          <p class="font-semibold">Belum ada diskusi di Triwulan IV</p>
+          <p class="text-sm mt-1">Ajukan pertanyaan pertama Bapak/Ibu di form di atas.</p>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ── SIDEBAR ── -->
+  <div class="drawer-side z-40">
+    <label for="main-drawer" aria-label="Tutup menu" class="drawer-overlay"></label>
+    <aside class="w-72 min-h-full bg-base-100 border-r border-base-300 flex flex-col p-4 gap-2">
+
+      <!-- Brand -->
+      <div class="flex items-center gap-3 px-2 py-3 mb-1">
+        <div class="w-11 h-11 rounded-2xl bg-[#0f4c35] text-white flex items-center justify-center shadow-sm">
+          <span class="material-icons">school</span>
+        </div>
+        <div>
+          <div class="font-extrabold leading-tight text-sm">SiPANDU VIRTUAL</div>
+          <div class="text-xs text-base-content/50">Portal Guru PAI</div>
+        </div>
+      </div>
+
+      <!-- Nav — diisi bar.js -->
+      <ul id="sipandu-sidebar-nav" class="menu gap-1 text-sm flex-1 p-0"></ul>
+
+      <!-- Tips -->
+      <div class="card bg-base-200 border border-base-300 mt-2">
+        <div class="card-body p-4 gap-2">
+          <div class="flex items-center gap-2 font-bold text-sm">
+            <span class="material-icons text-primary text-base">tips_and_updates</span>
+            Tips
+          </div>
+          <p class="text-xs text-base-content/60 leading-relaxed">
+            Klik judul pertanyaan untuk membuka percakapan. Tombol
+            <strong>Kirim</strong> ada di bagian bawah setiap percakapan.
+          </p>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- Scroll to top -->
+<button id="to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})"
+  class="fixed bottom-6 right-6 btn btn-primary btn-circle shadow-xl z-50"
+  aria-label="Kembali ke atas">
+  <span class="material-icons">arrow_upward</span>
+</button>
+
+<!-- ═══════════════════════════════════════
+     SCRIPTS
+═══════════════════════════════════════ -->
+<script src="../assets/js/bar.js"></script>
+<script>
+  // Tab switching
+  function switchTab(id, btn) {
+    document.querySelectorAll('.tw-panel').forEach(p => p.classList.add('hidden'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('tab-active'));
+    document.getElementById(id).classList.remove('hidden');
+    btn.classList.add('tab-active');
+  }
+
+  // Toggle chat collapse
+  function toggleChat(id) {
+    const el  = document.getElementById(id);
+    const btn = el.previousElementSibling;
+    const open = el.classList.toggle('hidden');
+    if (btn) btn.setAttribute('aria-expanded', !open);
+  }
+
+  // Scroll to top visibility
+  window.addEventListener('scroll', () => {
+    document.getElementById('to-top').style.display = window.scrollY > 300 ? 'flex' : 'none';
+  });
+</script>
+
+</body>
+</html>

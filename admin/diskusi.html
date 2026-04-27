@@ -1,0 +1,457 @@
+
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kelola Diskusi — SiPANDU VIRTUAL</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .material-icons { font-size: 20px; vertical-align: middle; }
+    .soft-ring:focus { outline: none; box-shadow: 0 0 0 3px rgb(16 185 129 / .18); }
+    .thread-scroll { max-height: calc(100vh - 220px); overflow-y: auto; }
+    .chat-scroll   { max-height: calc(100vh - 380px); overflow-y: auto; }
+    @media (max-width: 1023px) {
+      .thread-scroll, .chat-scroll { max-height: none; }
+    }
+  </style>
+</head>
+<body data-role="admin" class="bg-base-200 text-base-content min-h-screen">
+
+<div class="drawer lg:drawer-open">
+  <input id="main-drawer" type="checkbox" class="drawer-toggle" />
+
+  <!-- ═══ KONTEN UTAMA ═══ -->
+  <div class="drawer-content flex flex-col min-h-screen">
+
+    <!-- TOPBAR -->
+    <header class="navbar bg-base-100 border-b border-base-300 sticky top-0 z-30 px-4 lg:px-6">
+      <div class="flex-none lg:hidden">
+        <label for="main-drawer" class="btn btn-square btn-ghost" aria-label="Buka menu">
+          <span class="material-icons">menu</span>
+        </label>
+      </div>
+      <div class="flex-1 flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
+          <span class="material-icons">forum</span>
+        </div>
+        <div>
+          <h1 id="sipandu-page-title" class="text-lg md:text-xl font-extrabold leading-tight">Kelola Diskusi</h1>
+          <p class="text-sm text-base-content/60 hidden md:block">Pantau semua thread guru, balas pesan, dan tandai selesai.</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-1">
+        <!-- Theme toggle -->
+        <button id="sipandu-theme-toggle" class="btn btn-ghost btn-circle" aria-label="Ganti mode siang/malam">
+          <span class="material-icons" id="sipandu-theme-icon">dark_mode</span>
+        </button>
+        <!-- Notifikasi -->
+        <a href="../notifikasi.html" class="btn btn-ghost btn-circle" aria-label="Notifikasi">
+          <span class="material-icons">notifications</span>
+        </a>
+        <!-- Profil dropdown -->
+        <div class="dropdown dropdown-end">
+          <div tabindex="0" role="button" class="btn btn-ghost gap-2 normal-case pl-2 pr-3">
+            <div class="avatar placeholder">
+              <div class="bg-primary text-primary-content rounded-full w-9">
+                <span class="text-sm font-bold">BN</span>
+              </div>
+            </div>
+            <div class="text-left hidden md:block">
+              <div class="text-sm font-bold">Baqi Nurul</div>
+              <div class="text-xs text-base-content/60">Pengawas PAI</div>
+            </div>
+          </div>
+          <ul tabindex="0" class="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-2 border border-base-300">
+            <li><a href="#"><span class="material-icons">account_circle</span>Profil Saya</a></li>
+            <li><a href="#"><span class="material-icons">settings</span>Pengaturan</a></li>
+            <li><hr class="my-1 border-base-300"></li>
+            <li><a href="../login.html" class="text-error"><span class="material-icons">logout</span>Keluar</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <!-- KONTEN HALAMAN -->
+    <main class="p-4 lg:p-6 space-y-5">
+
+      <!-- STAT CARDS -->
+      <section class="grid grid-cols-2 xl:grid-cols-4 gap-4">
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-4 flex-row items-center justify-between">
+            <div>
+              <p class="text-xs text-base-content/60">Total Thread</p>
+              <p class="text-2xl font-extrabold">128</p>
+            </div>
+            <div class="w-11 h-11 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">
+              <span class="material-icons">forum</span>
+            </div>
+          </div>
+        </div>
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-4 flex-row items-center justify-between">
+            <div>
+              <p class="text-xs text-base-content/60">Belum Dibalas</p>
+              <p class="text-2xl font-extrabold text-warning">19</p>
+            </div>
+            <div class="w-11 h-11 rounded-2xl bg-warning/10 text-warning flex items-center justify-center">
+              <span class="material-icons">mark_unread_chat_alt</span>
+            </div>
+          </div>
+        </div>
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-4 flex-row items-center justify-between">
+            <div>
+              <p class="text-xs text-base-content/60">Sudah Selesai</p>
+              <p class="text-2xl font-extrabold text-success">83</p>
+            </div>
+            <div class="w-11 h-11 rounded-2xl bg-success/10 text-success flex items-center justify-center">
+              <span class="material-icons">task_alt</span>
+            </div>
+          </div>
+        </div>
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-4 flex-row items-center justify-between">
+            <div>
+              <p class="text-xs text-base-content/60">Perlu Tindak Lanjut</p>
+              <p class="text-2xl font-extrabold text-error">26</p>
+            </div>
+            <div class="w-11 h-11 rounded-2xl bg-error/10 text-error flex items-center justify-center">
+              <span class="material-icons">priority_high</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FILTER -->
+      <section class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-4 lg:p-5">
+          <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-3">
+            <label class="form-control xl:col-span-2">
+              <div class="label py-1"><span class="label-text font-semibold">Cari guru atau subjek diskusi</span></div>
+              <label class="input input-bordered flex items-center gap-2 soft-ring">
+                <span class="material-icons text-base-content/40">search</span>
+                <input type="text" class="grow" placeholder="Contoh: Ahmad Fauzi" />
+              </label>
+            </label>
+            <label class="form-control">
+              <div class="label py-1"><span class="label-text font-semibold">Triwulan</span></div>
+              <select class="select select-bordered soft-ring">
+                <option>Semua Triwulan</option>
+                <option>Triwulan I</option>
+                <option>Triwulan II</option>
+                <option>Triwulan III</option>
+                <option>Triwulan IV</option>
+              </select>
+            </label>
+            <label class="form-control">
+              <div class="label py-1"><span class="label-text font-semibold">Sekolah</span></div>
+              <select class="select select-bordered soft-ring">
+                <option>Semua Sekolah</option>
+                <option>SMAN 4 Samarinda</option>
+                <option>SMKN 2 Samarinda</option>
+                <option>SMAS Muhammadiyah 2</option>
+                <option>SMKS TI Airlangga</option>
+              </select>
+            </label>
+            <label class="form-control">
+              <div class="label py-1"><span class="label-text font-semibold">Status</span></div>
+              <select class="select select-bordered soft-ring">
+                <option>Semua Status</option>
+                <option>Belum Dibalas</option>
+                <option>Berjalan</option>
+                <option>Selesai</option>
+              </select>
+            </label>
+          </div>
+          <div class="flex flex-wrap gap-2 mt-4">
+            <button class="btn btn-primary normal-case gap-2">
+              <span class="material-icons">filter_alt</span>Terapkan Filter
+            </button>
+            <button class="btn btn-outline normal-case gap-2">
+              <span class="material-icons">restart_alt</span>Reset
+            </button>
+            <button class="btn btn-ghost normal-case gap-2">
+              <span class="material-icons">download</span>Export Daftar
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- AREA DISKUSI: DAFTAR + CHAT -->
+      <section class="grid grid-cols-1 xl:grid-cols-12 gap-5 items-start">
+
+        <!-- DAFTAR THREAD -->
+        <div class="xl:col-span-4 card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-0">
+            <div class="p-4 border-b border-base-300 flex items-center justify-between">
+              <div>
+                <h2 class="font-extrabold text-base">Daftar Thread</h2>
+                <p class="text-xs text-base-content/60 mt-0.5">Pilih thread untuk membaca dan membalas</p>
+              </div>
+              <span class="badge badge-primary badge-outline">128</span>
+            </div>
+
+            <div class="thread-scroll p-3 space-y-3">
+
+              <!-- Thread Aktif (dipilih) -->
+              <button class="w-full text-left card border-2 border-primary bg-primary/5 shadow-sm hover:shadow-md transition-shadow">
+                <div class="card-body p-4 gap-2">
+                  <div class="flex items-start justify-between gap-2">
+                    <div class="flex items-center gap-3 min-w-0">
+                      <div class="avatar placeholder flex-shrink-0">
+                        <div class="bg-primary text-primary-content rounded-full w-10 text-sm font-bold">AF</div>
+                      </div>
+                      <div class="min-w-0">
+                        <p class="font-bold truncate text-sm">Ahmad Fauzi, S.Ag</p>
+                        <p class="text-xs text-base-content/60 truncate">SMAN 4 Samarinda</p>
+                      </div>
+                    </div>
+                    <span class="badge badge-warning badge-sm flex-shrink-0">Belum Dibalas</span>
+                  </div>
+                  <p class="text-sm font-semibold">Permintaan arahan revisi Modul Ajar TW II</p>
+                  <p class="text-xs text-base-content/60 line-clamp-2">Assalamu'alaikum Ibu, saya mohon arahan bagian mana yang perlu diperbaiki...</p>
+                  <div class="flex items-center gap-2 text-xs text-base-content/50 flex-wrap">
+                    <span class="badge badge-outline badge-sm">Triwulan II</span>
+                    <span>10 menit lalu</span>
+                    <span>3 pesan</span>
+                  </div>
+                </div>
+              </button>
+
+              <!-- Thread 2 -->
+              <button class="w-full text-left card border border-base-300 bg-base-100 shadow-sm hover:shadow-md transition-shadow">
+                <div class="card-body p-4 gap-2">
+                  <div class="flex items-start justify-between gap-2">
+                    <div class="flex items-center gap-3 min-w-0">
+                      <div class="avatar placeholder flex-shrink-0">
+                        <div class="bg-success text-success-content rounded-full w-10 text-sm font-bold">SR</div>
+                      </div>
+                      <div class="min-w-0">
+                        <p class="font-bold truncate text-sm">Siti Rahmah, M.Pd</p>
+                        <p class="text-xs text-base-content/60 truncate">SMKN 2 Samarinda</p>
+                      </div>
+                    </div>
+                    <span class="badge badge-success badge-sm flex-shrink-0">Selesai</span>
+                  </div>
+                  <p class="text-sm font-semibold">Konfirmasi bukti hadir MGMP Triwulan III</p>
+                  <p class="text-xs text-base-content/60 line-clamp-2">Terima kasih Ibu, file daftar hadir sudah saya upload. Mohon dicek kembali...</p>
+                  <div class="flex items-center gap-2 text-xs text-base-content/50 flex-wrap">
+                    <span class="badge badge-outline badge-sm">Triwulan III</span>
+                    <span>Kemarin</span>
+                    <span>5 pesan</span>
+                  </div>
+                </div>
+              </button>
+
+              <!-- Thread 3 -->
+              <button class="w-full text-left card border border-base-300 bg-base-100 shadow-sm hover:shadow-md transition-shadow">
+                <div class="card-body p-4 gap-2">
+                  <div class="flex items-start justify-between gap-2">
+                    <div class="flex items-center gap-3 min-w-0">
+                      <div class="avatar placeholder flex-shrink-0">
+                        <div class="bg-info text-info-content rounded-full w-10 text-sm font-bold">NH</div>
+                      </div>
+                      <div class="min-w-0">
+                        <p class="font-bold truncate text-sm">Nur Hidayah, S.Pd.I</p>
+                        <p class="text-xs text-base-content/60 truncate">SMKS TI Airlangga</p>
+                      </div>
+                    </div>
+                    <span class="badge badge-info badge-sm flex-shrink-0">Berjalan</span>
+                  </div>
+                  <p class="text-sm font-semibold">Tanya status dokumen Guru merangkap Kepsek</p>
+                  <p class="text-xs text-base-content/60 line-clamp-2">Saya ingin memastikan apakah Program Pengembangan PAI untuk Kepala Sekolah diupload pada TW I...</p>
+                  <div class="flex items-center gap-2 text-xs text-base-content/50 flex-wrap">
+                    <span class="badge badge-outline badge-sm">Triwulan I</span>
+                    <span>2 hari lalu</span>
+                    <span>2 pesan</span>
+                  </div>
+                </div>
+              </button>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- AREA CHAT -->
+        <div class="xl:col-span-8 card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-0">
+
+            <!-- Header Chat -->
+            <div class="p-4 lg:p-5 border-b border-base-300 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div class="flex items-center gap-3">
+                <div class="avatar placeholder flex-shrink-0">
+                  <div class="bg-primary text-primary-content rounded-full w-12 font-bold">AF</div>
+                </div>
+                <div>
+                  <h2 class="font-extrabold text-base leading-snug">Permintaan arahan revisi Modul Ajar TW II</h2>
+                  <div class="flex flex-wrap gap-x-2 gap-y-0.5 mt-1 text-sm text-base-content/60">
+                    <span>Ahmad Fauzi, S.Ag</span>
+                    <span>•</span>
+                    <span>SMAN 4 Samarinda</span>
+                    <span>•</span>
+                    <span>Triwulan II</span>
+                  </div>
+                </div>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <span class="badge badge-warning badge-lg">Belum Dibalas</span>
+                <button class="btn btn-success btn-sm normal-case gap-1">
+                  <span class="material-icons" style="font-size:16px">task_alt</span>Tandai Selesai
+                </button>
+                <button class="btn btn-outline btn-sm normal-case gap-1">
+                  <span class="material-icons" style="font-size:16px">refresh</span>Buka Kembali
+                </button>
+              </div>
+            </div>
+
+            <!-- Info strip -->
+            <div class="px-4 lg:px-5 pt-4">
+              <div class="stats stats-horizontal border border-base-300 shadow-none w-full bg-base-200 rounded-xl">
+                <div class="stat py-3 px-4">
+                  <div class="stat-title text-xs">Status</div>
+                  <div class="stat-value text-base">Belum Dibalas</div>
+                </div>
+                <div class="stat py-3 px-4">
+                  <div class="stat-title text-xs">Jumlah Pesan</div>
+                  <div class="stat-value text-base">3</div>
+                </div>
+                <div class="stat py-3 px-4">
+                  <div class="stat-title text-xs">Terakhir Aktif</div>
+                  <div class="stat-value text-base">10 Menit Lalu</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Gelembung Chat -->
+            <div class="chat-scroll p-4 lg:p-5 space-y-4">
+              <div class="chat chat-start">
+                <div class="chat-image avatar placeholder">
+                  <div class="bg-primary text-primary-content rounded-full w-10 text-sm">AF</div>
+                </div>
+                <div class="chat-header font-semibold text-sm">
+                  Ahmad Fauzi, S.Ag <time class="text-xs opacity-50 ml-1">08:12</time>
+                </div>
+                <div class="chat-bubble bg-base-200 text-base-content leading-relaxed text-sm">
+                  Assalamu'alaikum Ibu, saya mohon arahan untuk revisi Modul Ajar Triwulan II. Saya masih bingung di bagian tujuan pembelajaran dan bukti video mengajar yang harus dilampirkan.
+                </div>
+              </div>
+
+              <div class="chat chat-start">
+                <div class="chat-image avatar placeholder">
+                  <div class="bg-primary text-primary-content rounded-full w-10 text-sm">AF</div>
+                </div>
+                <div class="chat-header font-semibold text-sm">
+                  Ahmad Fauzi, S.Ag <time class="text-xs opacity-50 ml-1">08:15</time>
+                </div>
+                <div class="chat-bubble bg-base-200 text-base-content leading-relaxed text-sm">
+                  Untuk video, apakah cukup link YouTube saja atau tetap perlu file cadangan juga? Saya khawatir salah unggah.
+                </div>
+              </div>
+
+              <div class="chat chat-end">
+                <div class="chat-image avatar placeholder">
+                  <div class="bg-success text-success-content rounded-full w-10 text-sm">BN</div>
+                </div>
+                <div class="chat-header font-semibold text-sm">
+                  Pengawas PAI <time class="text-xs opacity-50 ml-1">08:26</time>
+                </div>
+                <div class="chat-bubble bg-primary text-primary-content leading-relaxed text-sm">
+                  Wa'alaikumussalam. Untuk tahap awal, Bapak cukup mengunggah link YouTube yang aktif. File cadangan hanya diperlukan jika link tidak tersedia. Untuk revisi modul, perbaiki tujuan pembelajaran agar lebih spesifik dan selaras dengan CP serta ATP.
+                </div>
+                <div class="chat-footer opacity-60 text-xs mt-1">Sudah dibaca guru</div>
+              </div>
+            </div>
+
+            <!-- Form Balas -->
+            <div class="border-t border-base-300 p-4 lg:p-5 bg-base-100">
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <!-- Textarea -->
+                <label class="form-control md:col-span-2">
+                  <div class="label py-1">
+                    <span class="label-text font-semibold">Tulis Balasan</span>
+                  </div>
+                  <textarea id="reply-box" class="textarea textarea-bordered min-h-28 soft-ring text-sm"
+                    placeholder="Tulis balasan yang singkat dan jelas agar mudah dipahami guru..."></textarea>
+                </label>
+
+                <!-- Panel kanan -->
+                <div class="space-y-3">
+                  <label class="form-control">
+                    <div class="label py-1">
+                      <span class="label-text font-semibold">Template Cepat</span>
+                    </div>
+                    <select id="template-select" class="select select-bordered soft-ring text-sm"
+                      onchange="document.getElementById('reply-box').value = this.value === 'pilih' ? '' : this.value">
+                      <option value="pilih">Pilih template...</option>
+                      <option value="Mohon lengkapi dokumen yang masih kurang terlebih dahulu, kemudian hubungi Pengawas kembali.">Mohon lengkapi dokumen terlebih dahulu</option>
+                      <option value="Silakan revisi sesuai catatan yang sudah diberikan Pengawas, lalu upload ulang.">Silakan revisi sesuai catatan Pengawas</option>
+                      <option value="Dokumen sudah benar dan lengkap. Silakan lanjut ke tahap berikutnya.">Dokumen sudah benar, lanjut tahap berikutnya</option>
+                    </select>
+                  </label>
+
+                  <div class="space-y-2">
+                    <button class="btn btn-primary w-full normal-case gap-2">
+                      <span class="material-icons">send</span>Kirim Balasan
+                    </button>
+                    <button class="btn btn-success w-full normal-case gap-2">
+                      <span class="material-icons">task_alt</span>Kirim & Tandai Selesai
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </section>
+    </main>
+  </div>
+
+  <!-- ═══ SIDEBAR ═══ -->
+  <div class="drawer-side z-40">
+    <label for="main-drawer" aria-label="Tutup sidebar" class="drawer-overlay"></label>
+    <aside class="w-72 min-h-full bg-base-100 border-r border-base-300 p-4 flex flex-col">
+
+      <!-- Logo -->
+      <div class="flex items-center gap-3 px-2 py-3 mb-2">
+        <div class="w-11 h-11 rounded-2xl bg-primary text-primary-content flex items-center justify-center shadow-sm flex-shrink-0">
+          <span class="material-icons">school</span>
+        </div>
+        <div>
+          <div class="font-extrabold leading-tight">SiPANDU VIRTUAL</div>
+          <div class="text-xs text-base-content/60">Panel Pengawas PAI</div>
+        </div>
+      </div>
+
+      <!-- Nav — diisi bar.js -->
+      <ul id="sipandu-sidebar-nav" class="menu gap-1 text-sm flex-1 px-0"></ul>
+
+      <!-- Tips -->
+      <div class="card bg-base-200 border border-base-300 mt-4">
+        <div class="card-body p-4 gap-2">
+          <div class="flex items-start gap-2">
+            <span class="material-icons text-primary flex-shrink-0">tips_and_updates</span>
+            <div>
+              <p class="font-bold text-sm">Tips Penggunaan</p>
+              <p class="text-xs text-base-content/60 leading-relaxed mt-0.5">
+                Balas dengan kalimat singkat dan jelas. Hindari instruksi panjang agar guru lebih mudah memahami.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </aside>
+  </div>
+</div>
+
+<script src="../assets/js/bar.js"></script>
+
+</body>
+</html>

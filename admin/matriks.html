@@ -1,0 +1,516 @@
+
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Matriks Prioritas — SiPANDU VIRTUAL</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .material-icons { font-size: 20px; vertical-align: middle; }
+
+    /* Drag & Drop */
+    .guru-card { cursor: grab; transition: box-shadow .15s, transform .15s; user-select: none; }
+    .guru-card:active { cursor: grabbing; }
+    .guru-card.dragging { opacity: .4; transform: scale(.97); }
+    .drop-zone { min-height: 120px; transition: background .15s, border-color .15s; }
+    .drop-zone.drag-over { background: rgb(16 185 129 / .06); border-color: #10b981 !important; }
+
+    /* Column top accent */
+    .col-utama    { border-top: 4px solid #ef4444; }
+    .col-menengah { border-top: 4px solid #f59e0b; }
+    .col-akhir    { border-top: 4px solid #10b981; }
+  </style>
+</head>
+
+<body data-role="admin" class="bg-base-200 text-base-content min-h-screen">
+
+<!-- ── DRAWER WRAPPER ── -->
+<div class="drawer lg:drawer-open">
+  <input id="main-drawer" type="checkbox" class="drawer-toggle" />
+
+  <!-- ── MAIN CONTENT ── -->
+  <div class="drawer-content flex flex-col min-h-screen">
+
+    <!-- TOPBAR -->
+    <header class="navbar bg-base-100 border-b border-base-300 sticky top-0 z-30 px-4 lg:px-6 gap-3">
+      <div class="flex-none lg:hidden">
+        <label for="main-drawer" class="btn btn-square btn-ghost" aria-label="Buka menu">
+          <span class="material-icons">menu</span>
+        </label>
+      </div>
+
+      <div class="flex-1 min-w-0">
+        <h1 id="sipandu-page-title" class="font-extrabold text-base md:text-lg leading-tight truncate">Matriks Prioritas</h1>
+        <p class="text-xs text-base-content/50">Tahun Ajaran 2025/2026</p>
+      </div>
+
+      <select class="select select-bordered select-sm text-sm w-36 hidden md:block">
+        <option selected>2025/2026</option>
+        <option>2024/2025</option>
+      </select>
+
+      <button id="sipandu-theme-toggle" class="btn btn-ghost btn-circle" aria-label="Ganti tema">
+        <span class="material-icons" id="sipandu-theme-icon">dark_mode</span>
+      </button>
+
+      <div class="indicator">
+        <span class="indicator-item badge badge-error badge-xs"></span>
+        <button class="btn btn-ghost btn-circle" aria-label="Notifikasi">
+          <span class="material-icons">notifications</span>
+        </button>
+      </div>
+
+      <div class="dropdown dropdown-end">
+        <div tabindex="0" role="button" class="btn btn-ghost gap-2 normal-case pl-2 pr-3">
+          <div class="avatar placeholder">
+            <div class="bg-primary text-primary-content rounded-full w-9">
+              <span class="text-sm font-bold">BN</span>
+            </div>
+          </div>
+          <div class="text-left hidden md:block">
+            <div class="text-sm font-bold leading-tight">Baqi Nurul H.</div>
+            <div class="text-xs text-base-content/60">Pengawas PAI</div>
+          </div>
+        </div>
+        <ul tabindex="0" class="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-48 mt-2 border border-base-300 text-sm">
+          <li><a><span class="material-icons">account_circle</span>Profil</a></li>
+          <li><a><span class="material-icons">settings</span>Pengaturan</a></li>
+          <li><a class="text-error"><span class="material-icons">logout</span>Keluar</a></li>
+        </ul>
+      </div>
+    </header>
+
+    <!-- PAGE BODY -->
+    <main class="flex-1 p-4 lg:p-6 space-y-5">
+
+      <!-- INFO BANNER -->
+      <div class="alert bg-blue-50 border border-blue-200 text-blue-900 rounded-xl gap-3" id="infoBanner">
+        <span class="material-icons text-blue-500 flex-shrink-0">info</span>
+        <p class="text-sm leading-relaxed flex-1">
+          <strong>Cara menggunakan:</strong> Seret kartu nama guru ke kolom yang sesuai
+          untuk mengubah kategori prioritasnya. Klik ikon <strong>catatan</strong> pada kartu
+          untuk menambahkan alasan kategorisasi.
+        </p>
+        <button class="btn btn-ghost btn-xs" onclick="document.getElementById('infoBanner').remove()">
+          <span class="material-icons text-sm">close</span>
+        </button>
+      </div>
+
+      <!-- FILTER BAR -->
+      <div class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-4">
+          <div class="flex flex-wrap gap-3 items-end">
+            <label class="form-control w-full md:w-72">
+              <div class="label pb-1"><span class="label-text font-semibold text-sm">Cari Guru</span></div>
+              <label class="input input-bordered input-sm flex items-center gap-2">
+                <span class="material-icons text-base-content/40">search</span>
+                <input type="text" class="grow text-sm" placeholder="Nama guru atau sekolah..."
+                       oninput="filterGuru(this.value)" />
+              </label>
+            </label>
+            <label class="form-control">
+              <div class="label pb-1"><span class="label-text font-semibold text-sm">Filter Sekolah</span></div>
+              <select class="select select-bordered select-sm text-sm" onchange="filterSekolah(this.value)">
+                <option value="">Semua Sekolah</option>
+                <option>SMAN 4 Samarinda</option>
+                <option>SMAN 8 Samarinda</option>
+                <option>SMKN 1 Samarinda</option>
+                <option>SMKN 7 Samarinda</option>
+                <option>SMAS Nabil Husein</option>
+              </select>
+            </label>
+            <div class="flex-1"></div>
+            <button class="btn btn-primary btn-sm gap-2 normal-case" onclick="simpanMatriks()">
+              <span class="material-icons text-sm">save</span>Simpan Perubahan
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STAT CARDS -->
+      <div class="grid grid-cols-3 gap-3">
+        <div class="card bg-base-100 border-l-4 border-red-400 shadow-sm">
+          <div class="card-body p-4 flex-row items-center gap-3">
+            <span class="material-icons text-red-400 text-3xl">priority_high</span>
+            <div>
+              <p class="text-xs text-base-content/60">Prioritas Utama</p>
+              <p class="text-2xl font-extrabold text-red-500" id="countUtama">4</p>
+              <p class="text-xs text-base-content/50">Perlu perhatian segera</p>
+            </div>
+          </div>
+        </div>
+        <div class="card bg-base-100 border-l-4 border-amber-400 shadow-sm">
+          <div class="card-body p-4 flex-row items-center gap-3">
+            <span class="material-icons text-amber-400 text-3xl">remove_circle</span>
+            <div>
+              <p class="text-xs text-base-content/60">Prioritas Menengah</p>
+              <p class="text-2xl font-extrabold text-amber-500" id="countMenengah">5</p>
+              <p class="text-xs text-base-content/50">Pantau berkala</p>
+            </div>
+          </div>
+        </div>
+        <div class="card bg-base-100 border-l-4 border-emerald-400 shadow-sm">
+          <div class="card-body p-4 flex-row items-center gap-3">
+            <span class="material-icons text-emerald-400 text-3xl">check_circle</span>
+            <div>
+              <p class="text-xs text-base-content/60">Prioritas Akhir</p>
+              <p class="text-2xl font-extrabold text-emerald-500" id="countAkhir">6</p>
+              <p class="text-xs text-base-content/50">Sudah mandiri</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MATRIKS BOARD -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5" id="matriksBoard">
+
+        <div>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="material-icons text-red-500">priority_high</span>
+            <h2 class="font-extrabold text-base text-red-600">Prioritas Utama</h2>
+            <span class="badge badge-error badge-sm ml-auto" id="badgeUtama">4</span>
+          </div>
+          <p class="text-xs text-base-content/50 mb-3">Butuh pendampingan intensif segera.</p>
+          <div id="col-utama" class="bg-base-100 border-2 border-dashed border-red-200 rounded-xl p-3 drop-zone col-utama"
+               ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event,'utama')"></div>
+        </div>
+
+        <div>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="material-icons text-amber-500">remove_circle</span>
+            <h2 class="font-extrabold text-base text-amber-600">Prioritas Menengah</h2>
+            <span class="badge badge-warning badge-sm ml-auto" id="badgeMenengah">5</span>
+          </div>
+          <p class="text-xs text-base-content/50 mb-3">Kemajuan cukup, pemantauan berkala.</p>
+          <div id="col-menengah" class="bg-base-100 border-2 border-dashed border-amber-200 rounded-xl p-3 drop-zone col-menengah"
+               ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event,'menengah')"></div>
+        </div>
+
+        <div>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="material-icons text-emerald-500">check_circle</span>
+            <h2 class="font-extrabold text-base text-emerald-600">Prioritas Akhir</h2>
+            <span class="badge badge-success badge-sm ml-auto" id="badgeAkhir">6</span>
+          </div>
+          <p class="text-xs text-base-content/50 mb-3">Mandiri, administrasi konsisten lengkap.</p>
+          <div id="col-akhir" class="bg-base-100 border-2 border-dashed border-emerald-200 rounded-xl p-3 drop-zone col-akhir"
+               ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event,'akhir')"></div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+  <!-- END DRAWER CONTENT -->
+
+  <!-- ── SIDEBAR ── -->
+  <div class="drawer-side z-40">
+    <label for="main-drawer" aria-label="Tutup menu" class="drawer-overlay"></label>
+    <aside class="w-72 min-h-full bg-[#0f4c35] flex flex-col">
+
+      <!-- Brand -->
+      <div class="flex items-center gap-3 px-5 py-5 border-b border-white/10">
+        <span class="material-icons text-green-300 text-3xl">school</span>
+        <div>
+          <p class="text-white font-extrabold text-base leading-tight">SiPANDU VIRTUAL</p>
+          <p class="text-green-300 text-xs">Panel Pengawas PAI</p>
+        </div>
+      </div>
+
+      <!-- Nav — diisi bar.js -->
+      <nav class="flex-1 px-3 py-4 overflow-y-auto">
+        <ul id="sipandu-sidebar-nav" class="menu gap-1 p-0 text-sm
+          [&_a]:text-green-200 [&_a]:rounded-xl [&_a:hover]:bg-white/10 [&_a:hover]:text-white
+          [&_a.active]:bg-white/20 [&_a.active]:text-white [&_a.active]:font-bold
+          [&_.material-icons]:text-[20px]">
+        </ul>
+      </nav>
+
+      <!-- User footer -->
+      <div class="px-4 py-4 border-t border-white/10 flex items-center gap-3">
+        <div class="avatar placeholder flex-shrink-0">
+          <div class="w-10 rounded-full bg-green-700 text-white flex items-center justify-center">
+            <span class="font-bold text-sm">BN</span>
+          </div>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-white text-sm font-semibold truncate">Baqi Nurul H., M.Pd.</p>
+          <p class="text-green-400 text-xs">Pengawas PAI</p>
+        </div>
+        <a href="../login.html" class="text-green-400 hover:text-white transition-colors" aria-label="Keluar">
+          <span class="material-icons">logout</span>
+        </a>
+      </div>
+
+    </aside>
+  </div>
+</div>
+<!-- END DRAWER -->
+
+<!-- MODAL CATATAN -->
+<dialog id="modalCatatan" class="modal modal-bottom sm:modal-middle">
+  <div class="modal-box max-w-md">
+    <h3 class="font-bold text-base flex items-center gap-2 mb-1">
+      <span class="material-icons text-primary">edit_note</span>Catatan Kategorisasi
+    </h3>
+    <p class="text-sm text-base-content/60 mb-4" id="modalGuruName">—</p>
+    <label class="form-control">
+      <div class="label pb-1"><span class="label-text font-semibold text-sm">Alasan / Catatan Pengawas</span></div>
+      <textarea id="inputCatatan" class="textarea textarea-bordered text-sm" rows="4"
+                placeholder="Contoh: Guru belum mengumpulkan modul ajar..."></textarea>
+      <div class="label pt-1"><span class="label-text-alt text-xs text-base-content/40">Catatan hanya terlihat oleh Pengawas.</span></div>
+    </label>
+    <div class="modal-action gap-2">
+      <button class="btn btn-ghost btn-sm normal-case" onclick="document.getElementById('modalCatatan').close()">Batal</button>
+      <button class="btn btn-primary btn-sm normal-case gap-1" onclick="simpanCatatan()">
+        <span class="material-icons text-sm">save</span>Simpan Catatan
+      </button>
+    </div>
+  </div>
+  <form method="dialog" class="modal-backdrop"><button>tutup</button></form>
+</dialog>
+
+<!-- TOAST -->
+<div id="toastBox" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+<!-- bar.js -->
+<script src="../assets/js/bar.js"></script>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────
+const guruData = [
+  { id:1,  nama:"Ahmad Fauzi, S.Ag",      sekolah:"SMAN 4 Samarinda",   jabatan:"GURU",        col:"utama",    catatan:"Modul ajar belum lengkap, jarang hadir MGMP." },
+  { id:2,  nama:"Dewi Rahmawati, S.Pd.I", sekolah:"SMKN 1 Samarinda",   jabatan:"GURU",        col:"utama",    catatan:"" },
+  { id:3,  nama:"Syahrul Amin, M.Pd",     sekolah:"SMAS Nabil Husein",  jabatan:"GURU_KEPSEK", col:"utama",    catatan:"Program PAI Kepsek belum ada." },
+  { id:4,  nama:"Nur Aisyah, S.Pd.I",     sekolah:"SMKN 7 Samarinda",   jabatan:"GURU",        col:"utama",    catatan:"" },
+  { id:5,  nama:"Irfan Hakim, S.Ag",      sekolah:"SMAN 8 Samarinda",   jabatan:"GURU",        col:"menengah", catatan:"" },
+  { id:6,  nama:"Fatimah Zahra, S.Pd.I",  sekolah:"SMKN 1 Samarinda",   jabatan:"GURU",        col:"menengah", catatan:"" },
+  { id:7,  nama:"Rudi Hartono, M.Pd.I",   sekolah:"SMAN 4 Samarinda",   jabatan:"GURU",        col:"menengah", catatan:"Video TW II belum diupload." },
+  { id:8,  nama:"Siti Maryam, S.Ag",      sekolah:"SMAS Nabil Husein",  jabatan:"GURU",        col:"menengah", catatan:"" },
+  { id:9,  nama:"Hamid Saputra, S.Pd.I",  sekolah:"SMKN 7 Samarinda",   jabatan:"GURU",        col:"menengah", catatan:"" },
+  { id:10, nama:"Lailatul Fitri, S.Pd.I", sekolah:"SMAN 8 Samarinda",   jabatan:"GURU",        col:"akhir",    catatan:"" },
+  { id:11, nama:"Miftahul Huda, M.Ag",    sekolah:"SMKN 1 Samarinda",   jabatan:"GURU",        col:"akhir",    catatan:"" },
+  { id:12, nama:"Nuraini, S.Pd.I",        sekolah:"SMAN 4 Samarinda",   jabatan:"GURU",        col:"akhir",    catatan:"" },
+  { id:13, nama:"Usman, S.Ag",            sekolah:"SMKN 7 Samarinda",   jabatan:"GURU",        col:"akhir",    catatan:"" },
+  { id:14, nama:"Khadijah, S.Pd.I",       sekolah:"SMAS Nabil Husein",  jabatan:"GURU_KEPSEK", col:"akhir",    catatan:"" },
+  { id:15, nama:"Zainal Arifin, M.Pd",    sekolah:"SMAN 8 Samarinda",   jabatan:"GURU",        col:"akhir",    catatan:"" },
+];
+
+const AVATAR_COLORS = ["bg-primary","bg-secondary","bg-accent","bg-info","bg-success","bg-warning"];
+let dragId = null;
+let activeCatalanId = null;
+
+function avatarColor(id) { return AVATAR_COLORS[id % AVATAR_COLORS.length]; }
+function avatarInitial(nama) {
+  const p = nama.split(" ");
+  return p.length >= 2 ? (p[0][0] + p[1][0]).toUpperCase() : nama.substring(0,2).toUpperCase();
+}
+
+// ── BUILD CARD (XSS-safe via DOM) ─────────────────────────
+function buildCard(g) {
+  const card = document.createElement('div');
+  card.className = 'guru-card card bg-base-100 border border-base-300 shadow-sm mb-2 p-3 rounded-xl';
+  card.draggable = true;
+  card.id = 'guru-' + g.id;
+  card.dataset.id     = g.id;
+  card.dataset.col    = g.col;
+  card.dataset.nama   = g.nama;
+  card.dataset.sekolah = g.sekolah;
+  card.addEventListener('dragstart', e => onDragStart(e, g.id));
+  card.addEventListener('dragend',   onDragEnd);
+
+  // Avatar
+  const avatarWrap = document.createElement('div');
+  avatarWrap.className = 'avatar placeholder flex-shrink-0';
+  const avatarInner = document.createElement('div');
+  avatarInner.className = `w-10 h-10 rounded-full ${avatarColor(g.id)} text-white text-xs font-bold flex items-center justify-center`;
+  avatarInner.textContent = avatarInitial(g.nama);
+  avatarWrap.appendChild(avatarInner);
+
+  // Info
+  const info = document.createElement('div');
+  info.className = 'flex-1 min-w-0';
+
+  const namaPara = document.createElement('p');
+  namaPara.className = 'font-semibold text-sm leading-tight truncate';
+  namaPara.textContent = g.nama;
+
+  const sekolahPara = document.createElement('p');
+  sekolahPara.className = 'text-xs text-base-content/55 mt-0.5 flex items-center gap-1';
+  const sekolahIcon = document.createElement('span');
+  sekolahIcon.className = 'material-icons text-xs';
+  sekolahIcon.textContent = 'business';
+  const sekolahText = document.createTextNode(g.sekolah);
+  sekolahPara.appendChild(sekolahIcon);
+  sekolahPara.appendChild(sekolahText);
+
+  const badgeRow = document.createElement('div');
+  badgeRow.className = 'flex flex-wrap items-center gap-1 mt-2';
+
+  if (g.jabatan === 'GURU_KEPSEK') {
+    const kb = document.createElement('span');
+    kb.className = 'badge badge-outline badge-xs gap-1';
+    const ki = document.createElement('span');
+    ki.className = 'material-icons text-xs';
+    ki.textContent = 'star';
+    kb.appendChild(ki);
+    kb.appendChild(document.createTextNode('Kepsek'));
+    badgeRow.appendChild(kb);
+  }
+
+  const colBadge = { utama:'badge-error', menengah:'badge-warning', akhir:'badge-success' }[g.col];
+  const colLabel = { utama:'Utama', menengah:'Menengah', akhir:'Akhir' }[g.col];
+  const colB = document.createElement('span');
+  colB.className = `badge ${colBadge} badge-xs`;
+  colB.textContent = colLabel;
+  badgeRow.appendChild(colB);
+
+  if (g.catatan && g.catatan.trim()) {
+    const nb = document.createElement('span');
+    nb.className = 'badge badge-ghost badge-xs gap-1';
+    const ni = document.createElement('span');
+    ni.className = 'material-icons text-xs';
+    ni.textContent = 'notes';
+    nb.appendChild(ni);
+    nb.appendChild(document.createTextNode('Ada catatan'));
+    badgeRow.appendChild(nb);
+  }
+
+  info.append(namaPara, sekolahPara, badgeRow);
+
+  // Action button
+  const btn = document.createElement('button');
+  btn.className = 'btn btn-ghost btn-xs btn-circle flex-shrink-0';
+  btn.setAttribute('aria-label', 'Tambah catatan');
+  const btnIcon = document.createElement('span');
+  btnIcon.className = `material-icons text-base ${g.catatan && g.catatan.trim() ? 'text-primary' : 'text-base-content/40'}`;
+  btnIcon.textContent = 'edit_note';
+  btn.appendChild(btnIcon);
+  btn.addEventListener('click', () => bukaCatatan(g.id));
+
+  // Row
+  const row = document.createElement('div');
+  row.className = 'flex items-start gap-3';
+  row.append(avatarWrap, info, btn);
+  card.appendChild(row);
+
+  // Catatan preview
+  if (g.catatan && g.catatan.trim()) {
+    const cDiv = document.createElement('div');
+    cDiv.className = 'mt-2 bg-base-200 rounded-lg px-3 py-2 text-xs text-base-content/60 italic';
+    cDiv.textContent = g.catatan;
+    card.appendChild(cDiv);
+  }
+
+  return card;
+}
+
+function renderAll() {
+  ['utama','menengah','akhir'].forEach(col => {
+    const zone = document.getElementById('col-' + col);
+    zone.innerHTML = '';
+    const list = guruData.filter(g => g.col === col);
+    if (list.length === 0) {
+      const empty = document.createElement('div');
+      empty.className = 'text-center py-8 text-base-content/30';
+      empty.innerHTML = '<span class="material-icons text-3xl">inbox</span><p class="text-xs mt-1">Belum ada guru</p>';
+      zone.appendChild(empty);
+    } else {
+      list.forEach(g => zone.appendChild(buildCard(g)));
+    }
+  });
+  updateCounts();
+}
+
+function updateCounts() {
+  ['utama','menengah','akhir'].forEach(col => {
+    const n = guruData.filter(g => g.col === col).length;
+    const key = col.charAt(0).toUpperCase() + col.slice(1);
+    document.getElementById('count' + key).textContent = n;
+    document.getElementById('badge' + key).textContent = n;
+  });
+}
+
+// ── DRAG & DROP ───────────────────────────────────────────
+function onDragStart(e, id) {
+  dragId = id;
+  setTimeout(() => document.getElementById('guru-' + id)?.classList.add('dragging'), 0);
+}
+function onDragEnd() {
+  document.querySelectorAll('.guru-card').forEach(c => c.classList.remove('dragging'));
+  document.querySelectorAll('.drop-zone').forEach(z => z.classList.remove('drag-over'));
+}
+function onDragOver(e)  { e.preventDefault(); e.currentTarget.classList.add('drag-over'); }
+function onDragLeave(e) { e.currentTarget.classList.remove('drag-over'); }
+function onDrop(e, col) {
+  e.preventDefault();
+  e.currentTarget.classList.remove('drag-over');
+  if (dragId === null) return;
+  const g = guruData.find(x => x.id === dragId);
+  if (g && g.col !== col) {
+    g.col = col;
+    renderAll();
+    const label = { utama:'Utama', menengah:'Menengah', akhir:'Akhir' }[col];
+    showToast(g.nama.split(',')[0] + ' dipindah ke Prioritas ' + label, 'success');
+  }
+  dragId = null;
+}
+
+// ── CATATAN ───────────────────────────────────────────────
+function bukaCatatan(id) {
+  activeCatalanId = id;
+  const g = guruData.find(x => x.id === id);
+  document.getElementById('modalGuruName').textContent = g.nama + ' — ' + g.sekolah;
+  document.getElementById('inputCatatan').value = g.catatan || '';
+  document.getElementById('modalCatatan').showModal();
+}
+function simpanCatatan() {
+  if (activeCatalanId === null) return;
+  const g = guruData.find(x => x.id === activeCatalanId);
+  g.catatan = document.getElementById('inputCatatan').value.trim();
+  document.getElementById('modalCatatan').close();
+  renderAll();
+  showToast('Catatan berhasil disimpan.', 'success');
+}
+
+// ── SIMPAN ────────────────────────────────────────────────
+function simpanMatriks() { showToast('Matriks prioritas berhasil disimpan.', 'success'); }
+
+// ── FILTER ────────────────────────────────────────────────
+function filterGuru(q) {
+  document.querySelectorAll('.guru-card').forEach(c => {
+    const match = c.dataset.nama.toLowerCase().includes(q.toLowerCase())
+               || c.dataset.sekolah.toLowerCase().includes(q.toLowerCase());
+    c.style.display = match ? '' : 'none';
+  });
+}
+function filterSekolah(val) {
+  document.querySelectorAll('.guru-card').forEach(c => {
+    c.style.display = (!val || c.dataset.sekolah === val) ? '' : 'none';
+  });
+}
+
+// ── TOAST ─────────────────────────────────────────────────
+function showToast(msg, type) {
+  const box = document.getElementById('toastBox');
+  const el  = document.createElement('div');
+  el.className = `alert ${type === 'success' ? 'alert-success' : 'alert-info'} shadow-lg py-2 px-4 text-sm flex items-center gap-2 pointer-events-auto max-w-xs`;
+  const icon = document.createElement('span');
+  icon.className = 'material-icons text-sm';
+  icon.textContent = type === 'success' ? 'check_circle' : 'info';
+  el.appendChild(icon);
+  el.appendChild(document.createTextNode(msg));
+  box.appendChild(el);
+  setTimeout(() => el.remove(), 3000);
+}
+
+renderAll();
+</script>
+</body>
+</html>

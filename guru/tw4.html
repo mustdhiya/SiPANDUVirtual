@@ -1,0 +1,504 @@
+
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Triwulan IV — Evaluasi & Pelaporan — SiPANDU VIRTUAL</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .material-icons { font-size: 20px; vertical-align: middle; }
+
+    .upload-zone {
+      border: 2px dashed oklch(var(--bc)/0.25);
+      border-radius: 0.75rem;
+      cursor: pointer;
+      transition: border-color .2s, background .2s;
+    }
+    .upload-zone:hover {
+      border-color: oklch(var(--p));
+      background: oklch(var(--p)/0.05);
+    }
+    .section-card { border-left: 4px solid oklch(var(--p)); }
+
+    /* Sidebar active item */
+    #sipandu-sidebar-nav a.active {
+      background: oklch(var(--p)/0.12);
+      color: oklch(var(--p));
+      font-weight: 700;
+    }
+  </style>
+</head>
+
+<body class="bg-base-200 min-h-screen">
+
+<!-- ── Apply saved theme immediately, no flash ── -->
+<script>
+  (function(){
+    const t = localStorage.getItem('sipandu-theme') || 'light';
+    document.documentElement.setAttribute('data-theme', t);
+  })();
+</script>
+
+<!-- ════════════════════════════════════
+     DRAWER WRAPPER
+════════════════════════════════════ -->
+<div class="drawer lg:drawer-open">
+  <input id="main-drawer" type="checkbox" class="drawer-toggle"/>
+
+  <!-- ── MAIN CONTENT ── -->
+  <div class="drawer-content flex flex-col min-h-screen">
+
+    <!-- TOPBAR -->
+    <header class="navbar bg-[#0f4c35] text-white sticky top-0 z-40 shadow-lg px-4 md:px-6 gap-2">
+
+      <!-- Mobile: hamburger -->
+      <label for="main-drawer" class="btn btn-ghost btn-circle text-white lg:hidden">
+        <span class="material-icons">menu</span>
+      </label>
+
+      <!-- Tombol kembali + Judul -->
+      <div class="flex-1 flex items-center gap-3 min-w-0">
+        <a href="../guru/dashboard.html" class="btn btn-ghost btn-sm text-white px-2 normal-case">
+          <span class="material-icons">arrow_back</span>
+        </a>
+        <span class="material-icons text-2xl text-green-300 hidden sm:inline">assessment</span>
+        <div class="min-w-0">
+          <h1 id="sipandu-page-title" class="font-bold text-sm md:text-base leading-tight truncate">
+            Triwulan IV — Evaluasi &amp; Pelaporan
+          </h1>
+          <div class="text-green-200 text-xs">Oktober – Desember · Batas Waktu: 20 Desember 2026</div>
+        </div>
+      </div>
+
+      <!-- Theme toggle + avatar -->
+      <div class="flex items-center gap-1 flex-none">
+        <button id="sipandu-theme-toggle"
+          class="btn btn-ghost btn-circle text-white"
+          aria-label="Ganti tema">
+          <span class="material-icons" id="sipandu-theme-icon">dark_mode</span>
+        </button>
+
+        <div class="dropdown dropdown-end">
+          <label tabindex="0" class="btn btn-ghost btn-circle cursor-pointer">
+            <div class="avatar placeholder">
+              <div class="bg-green-700 text-white rounded-full w-8 text-xs font-bold">
+                <span>AF</span>
+              </div>
+            </div>
+          </label>
+          <ul tabindex="0"
+            class="dropdown-content menu shadow bg-base-100 text-base-content rounded-box w-48 mt-2 p-2 text-sm z-50">
+            <li class="menu-title text-xs opacity-60 pb-1">Ahmad Fauzi, S.Ag</li>
+            <li><a href="../guru/profil.html">
+              <span class="material-icons text-sm">person</span>Profil Saya
+            </a></li>
+            <li><a href="../login.html" class="text-error">
+              <span class="material-icons text-sm">logout</span>Keluar
+            </a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <!-- PAGE BODY -->
+    <main class="max-w-2xl mx-auto w-full px-4 py-8 space-y-6">
+
+      <!-- ── STATUS BAR ── -->
+      <div class="card bg-base-100 shadow-sm p-5">
+        <div class="flex items-center justify-between mb-3">
+          <span class="font-bold text-sm">Progress Kelengkapan</span>
+          <span class="badge badge-error gap-1 text-xs">
+            <span class="material-icons text-xs">cancel</span> Belum Dimulai
+          </span>
+        </div>
+        <progress class="progress progress-error w-full" value="0" max="100"></progress>
+        <p class="text-xs text-base-content/60 mt-2">
+          Belum ada isian. Mulai lengkapi sebelum 20 Desember 2026.
+        </p>
+      </div>
+
+      <!-- ── ALERT INFO ── -->
+      <div class="alert alert-info shadow-sm rounded-xl gap-3">
+        <span class="material-icons flex-shrink-0">info</span>
+        <div>
+          <p class="font-semibold text-sm">Triwulan IV adalah laporan akhir tahun</p>
+          <p class="text-xs mt-0.5">
+            Data di triwulan ini akan dijadikan dasar Laporan Tahunan Terpadu (Final Report) oleh Pengawas.
+          </p>
+        </div>
+      </div>
+
+      <!-- ── ① UPLOAD DOKUMEN ── -->
+      <div class="card bg-base-100 shadow-sm section-card">
+        <div class="card-body p-5 md:p-6 space-y-5">
+          <h2 class="font-bold text-base flex items-center gap-2">
+            <span class="material-icons text-primary">upload_file</span>
+            Upload Dokumen Wajib
+          </h2>
+
+          <!-- PKG -->
+          <div>
+            <div class="flex items-center gap-2 mb-2">
+              <span class="label-text font-medium text-sm">Formulir PKG (Penilaian Kinerja Guru)</span>
+              <span class="badge badge-error badge-sm">Wajib</span>
+            </div>
+            <label for="filePKG"
+              class="upload-zone flex flex-col items-center justify-center py-7 px-4 text-center">
+              <span class="material-icons text-4xl text-primary mb-2">description</span>
+              <p class="font-semibold text-sm">Klik untuk pilih file PKG</p>
+              <p class="text-xs text-base-content/50 mt-1">Format: PDF · Maksimal 10 MB</p>
+              <input type="file" id="filePKG" class="hidden" accept=".pdf"
+                onchange="showFileLabel(this,'lblPKG')"/>
+            </label>
+            <p id="lblPKG" class="text-xs text-success mt-2 hidden items-center gap-1">
+              <span class="material-icons text-sm">check_circle</span>
+              <span class="filename"></span>
+            </p>
+          </div>
+
+          <!-- Rekap Nilai -->
+          <div>
+            <div class="flex items-center gap-2 mb-2">
+              <span class="label-text font-medium text-sm">Rekap Nilai Siswa &amp; Analisis Penilaian</span>
+              <span class="badge badge-error badge-sm">Wajib</span>
+            </div>
+            <label for="fileNilai"
+              class="upload-zone flex flex-col items-center justify-center py-7 px-4 text-center">
+              <span class="material-icons text-4xl text-primary mb-2">table_chart</span>
+              <p class="font-semibold text-sm">Klik untuk pilih file rekap nilai</p>
+              <p class="text-xs text-base-content/50 mt-1">Format: PDF atau Excel (.xlsx) · Maksimal 10 MB</p>
+              <input type="file" id="fileNilai" class="hidden" accept=".pdf,.xlsx"
+                onchange="showFileLabel(this,'lblNilai')"/>
+            </label>
+            <p id="lblNilai" class="text-xs text-success mt-2 hidden items-center gap-1">
+              <span class="material-icons text-sm">check_circle</span>
+              <span class="filename"></span>
+            </p>
+          </div>
+
+          <!-- Absensi -->
+          <div>
+            <div class="flex items-center gap-2 mb-2">
+              <span class="label-text font-medium text-sm">Absensi Bulanan Lengkap (Januari s.d. Desember)</span>
+              <span class="badge badge-error badge-sm">Wajib</span>
+            </div>
+            <label for="fileAbsensi"
+              class="upload-zone flex flex-col items-center justify-center py-7 px-4 text-center">
+              <span class="material-icons text-4xl text-primary mb-2">event_available</span>
+              <p class="font-semibold text-sm">Klik untuk pilih file absensi</p>
+              <p class="text-xs text-base-content/50 mt-1">Format: PDF atau Excel (.xlsx) · Maksimal 10 MB</p>
+              <input type="file" id="fileAbsensi" class="hidden" accept=".pdf,.xlsx"
+                onchange="showFileLabel(this,'lblAbsensi')"/>
+            </label>
+            <p id="lblAbsensi" class="text-xs text-success mt-2 hidden items-center gap-1">
+              <span class="material-icons text-sm">check_circle</span>
+              <span class="filename"></span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── ② KETUNTASAN KKTP ── -->
+      <div class="card bg-base-100 shadow-sm section-card">
+        <div class="card-body p-5 md:p-6">
+          <h2 class="font-bold text-base flex items-center gap-2 mb-1">
+            <span class="material-icons text-primary">checklist</span>
+            Ketuntasan KKTP
+            <span class="badge badge-error badge-sm">Wajib</span>
+          </h2>
+          <p class="text-xs text-base-content/50 mb-3">
+            KKTP = Kriteria Ketercapaian Tujuan Pembelajaran
+          </p>
+          <label class="form-control w-full">
+            <textarea class="textarea textarea-bordered w-full text-sm leading-relaxed" rows="5"
+              placeholder="Tuliskan ringkasan hasil ketuntasan KKTP siswa per kelas. Contoh: Kelas XII IPA 1 — 85% siswa mencapai ketuntasan pada KD tentang Akhlak Mulia...">
+            </textarea>
+            <div class="label pt-1">
+              <span class="label-text-alt text-base-content/50">
+                Sertakan nama kelas dan persentase ketuntasan
+              </span>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- ── ③ REFLEKSI TAHUNAN ── -->
+      <div class="card bg-base-100 shadow-sm section-card">
+        <div class="card-body p-5 md:p-6">
+          <h2 class="font-bold text-base flex items-center gap-2 mb-1">
+            <span class="material-icons text-primary">self_improvement</span>
+            Refleksi Tahunan
+            <span class="badge badge-error badge-sm">Wajib</span>
+          </h2>
+          <p class="text-xs text-base-content/50 mb-3">
+            Evaluasi mandiri terhadap kinerja Bapak/Ibu sepanjang tahun pelajaran ini.
+          </p>
+          <label class="form-control w-full">
+            <textarea class="textarea textarea-bordered w-full text-sm leading-relaxed" rows="6"
+              placeholder="Ceritakan pencapaian terbesar, hambatan yang dihadapi, dan rencana perbaikan untuk tahun ajaran berikutnya...">
+            </textarea>
+          </label>
+        </div>
+      </div>
+
+      <!-- ── ④ SKOR KARAKTER SISWA ── -->
+      <div class="card bg-base-100 shadow-sm section-card">
+        <div class="card-body p-5 md:p-6 space-y-4">
+          <h2 class="font-bold text-base flex items-center gap-2">
+            <span class="material-icons text-primary">favorite</span>
+            Skor Karakter Siswa
+            <span class="badge badge-ghost badge-sm text-xs">High Values Religious</span>
+          </h2>
+
+          <label class="form-control w-full">
+            <div class="label pb-1">
+              <span class="label-text font-medium text-sm">
+                Skor Rata-rata Karakter (0 – 100)
+                <span class="badge badge-error badge-sm ml-1">Wajib</span>
+              </span>
+            </div>
+            <input type="number" class="input input-bordered w-full text-sm"
+              min="0" max="100" step="0.01" placeholder="Contoh: 87.50"/>
+            <div class="label pt-1">
+              <span class="label-text-alt text-base-content/50">Masukkan angka antara 0 sampai 100</span>
+            </div>
+          </label>
+
+          <p class="text-sm font-medium">Skor per Indikator Profil Pelajar Pancasila</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <label class="form-control">
+              <div class="label py-1"><span class="label-text text-xs">Beriman &amp; Bertakwa</span></div>
+              <input type="number" class="input input-bordered input-sm" min="0" max="100" step="0.01" placeholder="0 – 100"/>
+            </label>
+            <label class="form-control">
+              <div class="label py-1"><span class="label-text text-xs">Berkebinekaan Global</span></div>
+              <input type="number" class="input input-bordered input-sm" min="0" max="100" step="0.01" placeholder="0 – 100"/>
+            </label>
+            <label class="form-control">
+              <div class="label py-1"><span class="label-text text-xs">Bergotong Royong</span></div>
+              <input type="number" class="input input-bordered input-sm" min="0" max="100" step="0.01" placeholder="0 – 100"/>
+            </label>
+            <label class="form-control">
+              <div class="label py-1"><span class="label-text text-xs">Mandiri</span></div>
+              <input type="number" class="input input-bordered input-sm" min="0" max="100" step="0.01" placeholder="0 – 100"/>
+            </label>
+            <label class="form-control">
+              <div class="label py-1"><span class="label-text text-xs">Bernalar Kritis</span></div>
+              <input type="number" class="input input-bordered input-sm" min="0" max="100" step="0.01" placeholder="0 – 100"/>
+            </label>
+            <label class="form-control">
+              <div class="label py-1"><span class="label-text text-xs">Kreatif</span></div>
+              <input type="number" class="input input-bordered input-sm" min="0" max="100" step="0.01" placeholder="0 – 100"/>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── ⑤ INSTRUMEN Q42–Q51 ── -->
+      <div class="card bg-base-100 shadow-sm section-card">
+        <div class="card-body p-5 md:p-6">
+          <h2 class="font-bold text-base flex items-center gap-2 mb-1">
+            <span class="material-icons text-primary">quiz</span>
+            Instrumen Pendampingan TW IV
+          </h2>
+          <p class="text-xs text-base-content/50 mb-5">
+            Pilih jawaban yang paling sesuai dengan kondisi Bapak/Ibu.
+          </p>
+          <div class="space-y-6" id="instrumenTW4"></div>
+        </div>
+      </div>
+
+      <!-- ── TOMBOL AKSI ── -->
+      <div class="card bg-base-100 shadow-sm p-5">
+        <div class="flex flex-col sm:flex-row gap-3 justify-end">
+          <button id="btnDraft" class="btn btn-outline gap-2 normal-case" onclick="saveDraft()">
+            <span class="material-icons">save</span> Simpan Draft
+          </button>
+          <button class="btn btn-primary gap-2 normal-case"
+            onclick="document.getElementById('modalSubmit').showModal()">
+            <span class="material-icons">send</span> Kirim ke Pengawas
+          </button>
+        </div>
+        <p class="text-xs text-base-content/50 mt-3 text-center">
+          <span class="material-icons text-xs align-middle">info</span>
+          Form tersimpan otomatis. Pastikan semua isian sudah benar sebelum mengirim.
+        </p>
+      </div>
+
+    </main>
+  </div><!-- end drawer-content -->
+
+  <!-- ════════════════════════════════════
+       SIDEBAR
+  ════════════════════════════════════ -->
+  <div class="drawer-side z-50">
+    <label for="main-drawer" aria-label="Tutup menu" class="drawer-overlay"></label>
+    <aside class="w-72 min-h-full bg-base-100 border-r border-base-300 flex flex-col p-4">
+
+      <!-- Logo -->
+      <div class="flex items-center gap-3 px-2 py-3 mb-2">
+        <div class="w-11 h-11 rounded-2xl bg-[#0f4c35] text-white flex items-center justify-center shadow-sm">
+          <span class="material-icons">school</span>
+        </div>
+        <div>
+          <div class="font-extrabold leading-tight text-sm">SiPANDU VIRTUAL</div>
+          <div class="text-xs text-base-content/60">Panel Guru</div>
+        </div>
+      </div>
+
+      <!-- Nav items — diisi bar.js -->
+      <ul id="sipandu-sidebar-nav" class="menu gap-1 text-sm flex-1 p-0"></ul>
+
+      <!-- Tips -->
+      <div class="card bg-base-200 border border-base-300 mt-4">
+        <div class="card-body p-4 gap-2">
+          <div class="flex items-start gap-2">
+            <span class="material-icons text-primary flex-shrink-0">tips_and_updates</span>
+            <div>
+              <p class="font-bold text-sm">Tips</p>
+              <p class="text-xs text-base-content/65 leading-relaxed">
+                Simpan draft dulu sebelum menutup halaman. Kirim ke Pengawas hanya jika semua isian sudah lengkap.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div><!-- end drawer -->
+
+<!-- ── MODAL KONFIRMASI ── -->
+<dialog id="modalSubmit" class="modal">
+  <div class="modal-box">
+    <h3 class="font-bold text-base flex items-center gap-2">
+      <span class="material-icons text-warning">warning</span>
+      Konfirmasi Pengiriman TW IV
+    </h3>
+    <p class="py-4 text-sm leading-relaxed">
+      Triwulan IV adalah laporan akhir tahun. Setelah dikirim, data akan digunakan untuk menyusun
+      <strong>Laporan Tahunan Terpadu</strong>. Pastikan semua sudah benar.
+    </p>
+    <div class="modal-action">
+      <form method="dialog" class="flex gap-3">
+        <button class="btn btn-ghost normal-case">Batal</button>
+        <button class="btn btn-primary normal-case gap-2">
+          <span class="material-icons text-sm">send</span> Ya, Kirim
+        </button>
+      </form>
+    </div>
+  </div>
+</dialog>
+
+<!-- ── SCROLL TO TOP ── -->
+<button id="toTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"
+  class="fixed bottom-6 right-6 btn btn-primary btn-circle shadow-xl z-50"
+  style="display:none" aria-label="Kembali ke atas">
+  <span class="material-icons">arrow_upward</span>
+</button>
+
+<!-- ════════════════════════════════════
+     SCRIPTS
+════════════════════════════════════ -->
+<script src="../assets/js/bar.js"></script>
+<script>
+  // ── Data soal Q42–Q51 ──
+  const soalTW4 = [
+    { no:"Q42", soal:"Dokumen bukti fisik apa yang paling mencerminkan ketercapaian kompetensi pedagogik Bapak/Ibu?",
+      opsi:["Foto kegiatan upacara bendera","Laporan hasil evaluasi belajar dan analisis penilaian","Daftar hadir siswa saja","Foto ruang kelas yang rapi"] },
+    { no:"Q43", soal:"Bagaimana capaian target RHK e-Kinerja Bapak/Ibu secara keseluruhan tahun ini?",
+      opsi:["Belum sempat mengisi e-Kinerja","Semua target tercapai tanpa kendala","Tercapai sebagian besar, ada kendala teknis dalam penginputan","Sebagian besar tidak tercapai"] },
+    { no:"Q44", soal:"Apa tujuan utama kegiatan Refleksi Akhir Tahun bersama Pengawas?",
+      opsi:["Identifikasi keberhasilan dan hambatan sebagai dasar perbaikan tahun berikutnya","Penilaian angka kredit kenaikan pangkat","Pelaporan keuangan sekolah","Evaluasi program ekstrakurikuler saja"] },
+    { no:"Q45", soal:"Apa yang Bapak/Ibu lakukan jika ada target Program Tahunan yang tidak tercapai?",
+      opsi:["Tidak melaporkan agar tidak bermasalah","Mengganti target dengan yang lebih mudah","Menyalahkan faktor eksternal","Menjelaskan kendala secara jujur dan menyusun Rencana Tindak Lanjut (RTL)"] },
+    { no:"Q46", soal:"Hal terpenting yang perlu diperhatikan dalam rekomendasi untuk tahun ajaran berikutnya?",
+      opsi:["Keinginan pribadi guru","Anggaran yang tersedia","Kebutuhan nyata siswa dan perkembangan teknologi pendidikan","Program yang sudah berjalan lama"] },
+    { no:"Q47", soal:"Apa manfaat utama Laporan Evaluasi Kepengawasan bagi Guru PAI?",
+      opsi:["Menambah beban administrasi","Untuk koleksi dokumen saja","Bahan kenaikan gaji berkala","Dasar usulan kenaikan pangkat dan pengembangan karier profesional"] },
+    { no:"Q48", soal:"Bagaimana cara mengevaluasi dampak pendidikan karakter Profil Pelajar Pancasila di kelas?",
+      opsi:["Observasi perubahan perilaku siswa dan jurnal refleksi sikap","Nilai ujian tertulis saja","Absensi kehadiran siswa","Laporan wali kelas"] },
+    { no:"Q49", soal:"Apa peran data di platform SiPANDU VIRTUAL terhadap pelaporan di SIAGA?",
+      opsi:["Tidak ada kaitannya","Hanya untuk arsip sekolah","Menjadi basis data untuk validasi jadwal dan kelayakan tunjangan","Digantikan sepenuhnya oleh e-Kinerja"] },
+    { no:"Q50", soal:"Aktivitas apa yang paling dominan dalam Logbook Harian Bapak/Ibu per triwulan ini?",
+      opsi:["Rapat koordinasi sekolah","Piket dan tugas tambahan","Kegiatan ekstrakurikuler","Pengolahan nilai, program remedial, pengisian rapor, dan laporan"] },
+    { no:"Q51", soal:"Apa harapan terbesar Bapak/Ibu dari keseluruhan proses supervisi Pengawas selama setahun ini?",
+      opsi:["Terwujudnya peningkatan mutu pembelajaran PAI yang berdampak nyata bagi siswa","Lebih sedikit administrasi tahun depan","Supervisi dilakukan lebih jarang","Penilaian yang lebih tinggi untuk keperluan tunjangan"] },
+  ];
+
+  const HURUF = ['A','B','C','D'];
+
+  // ── Render instrumen ──
+  function renderInstrumen(soalArr, containerId) {
+    const container = document.getElementById(containerId);
+    soalArr.forEach((s, i) => {
+      const wrap = document.createElement('div');
+      wrap.className = 'border border-base-300 rounded-xl p-4';
+
+      const judul = document.createElement('p');
+      judul.className = 'font-semibold text-sm mb-3';
+      judul.textContent = `${i + 1}. ${s.soal}`;
+      wrap.appendChild(judul);
+
+      const opsiWrap = document.createElement('div');
+      opsiWrap.className = 'space-y-2';
+
+      s.opsi.forEach((teks, j) => {
+        const lbl = document.createElement('label');
+        lbl.className = 'flex items-start gap-3 p-3 rounded-lg hover:bg-base-200 cursor-pointer transition-colors';
+
+        const radio = document.createElement('input');
+        radio.type = 'radio';
+        radio.name = s.no;
+        radio.value = HURUF[j];
+        radio.className = 'radio radio-primary radio-sm mt-0.5 flex-shrink-0';
+
+        const span = document.createElement('span');
+        span.className = 'text-sm leading-relaxed';
+        span.textContent = `${HURUF[j]}. ${teks}`;
+
+        lbl.appendChild(radio);
+        lbl.appendChild(span);
+        opsiWrap.appendChild(lbl);
+      });
+
+      wrap.appendChild(opsiWrap);
+      container.appendChild(wrap);
+    });
+  }
+
+  // ── File upload label ──
+  function showFileLabel(input, labelId) {
+    if (!input.files || !input.files[0]) return;
+    const el = document.getElementById(labelId);
+    el.classList.remove('hidden');
+    el.classList.add('flex');
+    el.querySelector('.filename').textContent = input.files[0].name;
+  }
+
+  // ── Simpan draft ──
+  function saveDraft() {
+    const btn = document.getElementById('btnDraft');
+    btn.innerHTML = '<span class="loading loading-spinner loading-sm"></span> Menyimpan...';
+    btn.disabled = true;
+    setTimeout(() => {
+      btn.innerHTML = '<span class="material-icons">check</span> Tersimpan';
+      btn.disabled = false;
+    }, 1200);
+  }
+
+  // ── Scroll to top ──
+  window.addEventListener('scroll', () => {
+    document.getElementById('toTop').style.display = window.scrollY > 300 ? 'flex' : 'none';
+  });
+
+  // ── Init ──
+  renderInstrumen(soalTW4, 'instrumenTW4');
+</script>
+
+</body>
+</html>

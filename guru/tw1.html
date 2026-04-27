@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Triwulan I — SiPANDU VIRTUAL</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    body {
+      font-family: "Inter", sans-serif;
+    }
+
+    .material-icons {
+      font-size: 20px;
+      vertical-align: middle;
+    }
+
+    .section-card {
+      border: 1px solid oklch(var(--bc) / 0.12);
+      background: oklch(var(--b1));
+      border-radius: 1rem;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    }
+
+    .doc-item {
+      border: 1px solid oklch(var(--bc) / 0.10);
+      border-radius: 0.9rem;
+      padding: 1rem;
+      background: oklch(var(--b1));
+    }
+
+    .doc-item:hover {
+      border-color: oklch(var(--p) / 0.25);
+      background: oklch(var(--b2));
+    }
+
+    .radio-option {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.85rem 0.9rem;
+      border-radius: 0.85rem;
+      border: 1px solid oklch(var(--bc) / 0.08);
+      cursor: pointer;
+      transition: 0.18s ease;
+    }
+
+    .radio-option:hover {
+      background: oklch(var(--b2));
+      border-color: oklch(var(--p) / 0.22);
+    }
+
+    .upload-name {
+      font-size: 0.8rem;
+      color: oklch(var(--bc) / 0.6);
+      margin-top: 0.5rem;
+      word-break: break-word;
+    }
+
+    .sticky-action {
+      position: sticky;
+      bottom: 0;
+      z-index: 20;
+      backdrop-filter: blur(10px);
+      background: oklch(var(--b1) / 0.92);
+      border-top: 1px solid oklch(var(--bc) / 0.1);
+    }
+
+    @media (min-width: 1024px) {
+      .page-shell {
+        grid-template-columns: 18rem minmax(0, 1fr);
+      }
+    }
+  </style>
+</head>
+
+<body data-role="guru" class="bg-base-200 text-base-content min-h-screen">
+  <div class="drawer lg:drawer-open">
+    <input id="main-drawer" type="checkbox" class="drawer-toggle" />
+
+    <div class="drawer-content min-h-screen">
+      <header class="navbar bg-base-100 border-b border-base-300 sticky top-0 z-30 px-4 lg:px-6">
+        <div class="flex-none lg:hidden">
+          <label for="main-drawer" class="btn btn-square btn-ghost" aria-label="Buka menu">
+            <span class="material-icons">menu</span>
+          </label>
+        </div>
+
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-3 min-w-0">
+            <div class="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+              <span class="material-icons">assignment</span>
+            </div>
+            <div class="min-w-0">
+              <h1 id="sipandu-page-title" class="text-lg md:text-xl font-extrabold leading-tight truncate">Triwulan I</h1>
+              <p class="text-sm text-base-content/60 truncate">Perencanaan dan pemetaan kebutuhan pembelajaran</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button id="sipandu-theme-toggle" class="btn btn-outline btn-sm gap-2 normal-case">
+            <span class="material-icons" id="sipandu-theme-icon">dark_mode</span>
+            <span id="sipandu-theme-label" class="hidden sm:inline">Mode Malam</span>
+          </button>
+
+          <a href="../notifikasi.html" class="btn btn-ghost btn-circle" aria-label="Notifikasi">
+            <span class="material-icons">notifications</span>
+          </a>
+        </div>
+      </header>
+
+      <main class="p-4 md:p-6">
+        <div class="max-w-5xl mx-auto space-y-5">
+          <section class="section-card p-4 md:p-5">
+            <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
+              <div>
+                <div class="breadcrumbs text-sm text-base-content/60 mb-2">
+                  <ul>
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                    <li>Triwulan I</li>
+                  </ul>
+                </div>
+                <h2 class="text-xl md:text-2xl font-extrabold">Triwulan I — Perencanaan & Pemetaan</h2>
+                <p class="text-sm md:text-base text-base-content/70 mt-2">
+                  Lengkapi perangkat pembelajaran, administrasi, penilaian, dan instrumen kebutuhan pendampingan.
+                </p>
+              </div>
+
+              <div class="flex flex-wrap gap-2">
+                <div class="badge badge-warning badge-lg gap-2 px-4 py-4">
+                  <span class="material-icons text-sm">edit_note</span>
+                  Draft
+                </div>
+                <div class="badge badge-outline badge-lg gap-2 px-4 py-4">
+                  <span class="material-icons text-sm">event</span>
+                  Deadline 31 Maret 2026
+                </div>
+              </div>
+            </div>
+
+            <div class="grid sm:grid-cols-3 gap-3 mt-5">
+              <div class="card bg-base-200 border border-base-300">
+                <div class="card-body p-4">
+                  <p class="text-sm text-base-content/60">Periode</p>
+                  <p class="font-bold">Januari – Maret 2026</p>
+                </div>
+              </div>
+              <div class="card bg-base-200 border border-base-300">
+                <div class="card-body p-4">
+                  <p class="text-sm text-base-content/60">Status</p>
+                  <p class="font-bold">Belum Submit</p>
+                </div>
+              </div>
+              <div class="card bg-base-200 border border-base-300">
+                <div class="card-body p-4">
+                  <p class="text-sm text-base-content/60">Simpan Otomatis</p>
+                  <p class="font-bold">Aktif</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="alert border border-success/20 bg-success/10 text-base-content">
+            <span class="material-icons text-success">cloud_done</span>
+            <div>
+              <div class="font-bold">Form tersimpan otomatis.</div>
+              <div class="text-sm text-base-content/70">Isi pelan-pelan saja. Bapak/Ibu bisa lanjut kapan saja.</div>
+            </div>
+          </section>
+
+          <form id="formTW1" class="space-y-5">
+            <section class="section-card p-4 md:p-5">
+              <div class="mb-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-9 h-9 rounded-full bg-success text-success-content flex items-center justify-center font-bold">1</div>
+                  <div>
+                    <h3 class="font-extrabold text-lg">Perangkat Utama Pembelajaran</h3>
+                    <p class="text-sm text-base-content/60">CP, ATP, Modul/Media Ajar, dan KKTP</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="space-y-3">
+                <div class="doc-item">
+                  <div class="flex flex-col gap-3">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                      <input type="checkbox" class="checkbox checkbox-success mt-1" name="has_cp" />
+                      <div>
+                        <p class="font-bold">Capaian Pembelajaran (CP)</p>
+                        <p class="text-sm text-base-content/60">Dokumen acuan pembelajaran yang digunakan pada semester ini.</p>
+                      </div>
+                    </label>
+                    <div class="flex flex-wrap items-center gap-2">
+                      <label class="btn btn-outline btn-sm normal-case gap-2 cursor-pointer">
+                        <span class="material-icons">upload_file</span>
+                        Upload CP
+                        <input type="file" class="hidden file-input-track" data-target="file-cp" accept=".pdf,.doc,.docx" />
+                      </label>
+                      <p id="file-cp" class="upload-name">Belum ada file dipilih</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="doc-item">
+                  <div class="flex flex-col gap-3">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                      <input type="checkbox" class="checkbox checkbox-success mt-1" name="has_atp" />
+                      <div>
+                        <p class="font-bold">Alur Tujuan Pembelajaran (ATP)</p>
+                        <p class="text-sm text-base-content/60">Peta tujuan pembelajaran yang disusun untuk semester berjalan.</p>
+                      </div>
+                    </label>
+                    <div class="flex flex-wrap items-center gap-2">
+                      <label class="btn btn-outline btn-sm normal-case gap-2 cursor-pointer">
+                        <span class="material-icons">upload_file</span>
+                        Upload ATP
+                        <input type="file" class="hidden file-input-track" data-target="file-atp" accept=".pdf,.doc,.docx,.xls,.xlsx" />
+                      </label>
+                      <p id="file-atp" class="upload-name">Belum ada file dipilih</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="doc-item">
+                  <div class="flex flex-col gap-3">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                      <input type="checkbox" class="checkbox checkbox-success mt-1" name="has_modul" />
+                      <div>
+                        <p class="font-bold">Modul dan Media Ajar</p>
+                        <p class="text-sm text-base-content/60">PPT, alat peraga, video pembelajaran, atau media lainnya.</p>
+                      </div>
+                    </label>
+                    <div class="flex flex-wrap items-center gap-2">
+                      <label class="btn btn-outline btn-sm normal-case gap-2 cursor-pointer">
+                        <span class="material-icons">upload_file</span>
+                        Upload Modul/Media
+                        <input type="file" class="hidden file-input-track" data-target="file-modul" accept=".pdf,.ppt,.pptx,.zip,.mp4" />
+                      </label>
+                      <p id="file-modul" class="upload-name">Belum ada file dipilih</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="doc-item">
+                  <div class="flex flex-col gap-3">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                      <input type="checkbox" class="checkbox checkbox-success mt-1" name="has_kktp" />
+                      <div>
+                        <p class="font-bold">KKTP</p>
+                        <p class="text-sm text-base-content/60">Kriteria ketercapaian tujuan pembelajaran untuk ketuntasan siswa.</p>
+                      </div>
+                    </label>
+                    <div class="flex flex-wrap items-center gap-2">
+                      <label class="btn btn-outline btn-sm normal-case gap-2 cursor-pointer">
+                        <span class="material-icons">upload_file</span>
+                        Upload KKTP
+                        <input type="file" class="hidden file-input-track" data-target="file-kktp" accept=".pdf,.doc,.docx,.xls,.xlsx" />
+                      </label>
+                      <p id="file-kktp" class="upload-name">Belum ada file dipilih</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="section-card p-4 md:p-5">
+              <div class="mb-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-9 h-9 rounded-full bg-info text-info-content flex items-center justify-center font-bold">2</div>
+                  <div>
+                    <h3 class="font-extrabold text-lg">Administrasi Perencanaan & Waktu</h3>
+                    <p class="text-sm text-base-content/60">Kalender pendidikan, Prota/Promes, dan jadwal mengajar</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="space-y-3">
+                <div class="doc-item">
+                  <div class="flex flex-col gap-3">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                      <input type="checkbox" class="checkbox checkbox-info mt-1" name="has_kalender" />
+                      <div>
+                        <p class="font-bold">Kalender Pendidikan</p>
+                        <p class="text-sm text-base-content/60">Kalender pendidikan yang berlaku pada tahun ajaran ini.</p>
+                      </div>
+                    </label>
+                    <div class="flex flex-wrap items-center gap-2">
+                      <label class="btn btn-outline btn-sm normal-case gap-2 cursor-pointer">
+                        <span class="material-icons">upload_file</span>
+                        Upload Kalender
+                        <input type="file" class="hidden file-input-track" data-target="file-kalender" accept=".pdf,.jpg,.jpeg,.png" />
+                      </label>
+                      <p id="file-kalender" class="upload-name">Belum ada file dipilih</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="doc-item">
+                  <div class="flex flex-col gap-3">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                      <input type="checkbox" class="checkbox checkbox-info mt-1" name="has_prota_promes" />
+                      <div>
+                        <p class="font-bold">Program Tahunan (Prota) & Program Semester (Promes)</p>
+                        <p class="text-sm text-base-content/60">Bisa satu file gabungan atau dua file terpisah.</p>
+                      </div>
+                    </label>
+                    <div class="flex flex-wrap items-center gap-2">
+                      <label class="btn btn-outline btn-sm normal-case gap-2 cursor-pointer">
+                        <span class="material-icons">upload_file</span>
+                        Upload Prota
+                        <input type="file" class="hidden file-input-track" data-target="file-prota" accept=".pdf,.doc,.docx,.xls,.xlsx" />
+                      </label>
+                      <label class="btn btn-outline btn-sm normal-case gap-2 cursor-pointer">
+                        <span class="material-icons">upload_file</span>
+                        Upload Promes
+                        <input type="file" class="hidden file-input-track" data-target="file-promes" accept=".pdf,.doc,.docx,.xls,.xlsx" />
+                      </label>
+                    </div>
+                    <div class="space-y-1">
+                      <p id="file-prota" class="upload-name">Prota: belum ada file dipilih</p>
+                      <p id="file-promes" class="upload-name">Promes: belum ada file dipilih</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="doc-item">
+                  <div class="flex flex-col gap-3">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                      <input type="checkbox" class="checkbox checkbox-info mt-1" name="has_jadwal" />
+                      <div>
+                        <p class="font-bold">Jadwal Mengajar</p>
+                        <p class="text-sm text-base-content/60">Jadwal resmi mengajar pada semester ini.</p>
+                      </div>
+                    </label>
+                    <div class="flex flex-wrap items-center gap-2">
+                      <label class="btn btn-outline btn-sm normal-case gap-2 cursor-pointer">
+                        <span class="material-icons">upload_file</span>
+                        Upload Jadwal
+                        <input type="file" class="hidden file-input-track" data-target="file-jadwal" accept=".pdf,.jpg,.jpeg,.png,.xls,.xlsx" />
+                      </label>
+                      <p id="file-jadwal" class="upload-name">Belum ada file dipilih</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="section-card p-4 md:p-5">
+              <div class="mb-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-9 h-9 rounded-full bg-warning text-warning-content flex items-center justify-center font-bold">3</div>
+                  <div>
+                    <h3 class="font-extrabold text-lg">Administrasi Penilaian & Pemantauan</h3>
+                    <p class="text-sm text-base-content/60">Asesmen, jurnal, presensi, dan analisis hasil asesmen</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="space-y-3">
+                <div class="doc-item">
+                  <div class="flex flex-col gap-3">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                      <input type="checkbox" class="checkbox checkbox-warning mt-1" name="has_asesmen" />
+                      <div>
+                        <p class="font-bold">Asesmen</p>
+                        <p class="text-sm text-base-content/60">Kegiatan penilaian, ulangan semester, atau UAS.</p>
+                      </div>
+                    </label>
+                    <div class="flex flex-wrap items-center gap-2">
+                      <label class="btn btn-outline btn-sm normal-case gap-2 cursor-pointer">
+                        <span class="material-icons">upload_file</span>
+                        Upload Asesmen
+                        <input type="file" class="hidden file-input-track" data-target="file-asesmen" accept=".pdf,.doc,.docx,.xls,.xlsx" />
+                      </label>
+                      <p id="file-asesmen" class="upload-name">Belum ada file dipilih</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="doc-item">
+                  <div class="flex flex-col gap-3">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                      <input type="checkbox" class="checkbox checkbox-warning mt-1" name="has_jurnal" />
+                      <div>
+                        <p class="font-bold">Jurnal Mengajar</p>
+                        <p class="text-sm text-base-content/60">Catatan harian pelaksanaan pembelajaran.</p>
+                      </div>
+                    </label>
+                    <div class="flex flex-wrap items-center gap-2">
+                      <label class="btn btn-outline btn-sm normal-case gap-2 cursor-pointer">
+                        <span class="material-icons">upload_file</span>
+                        Upload Jurnal
+                        <input type="file" class="hidden file-input-track" data-target="file-jurnal" accept=".pdf,.doc,.docx,.xls,.xlsx" />
+                      </label>
+                      <p id="file-jurnal" class="upload-name">Belum ada file dipilih</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="doc-item">
+                  <div class="flex flex-col gap-3">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                      <input type="checkbox" class="checkbox checkbox-warning mt-1" name="has_presensi" />
+                      <div>
+                        <p class="font-bold">Presensi Siswa</p>
+                        <p class="text-sm text-base-content/60">Daftar hadir siswa pada semester berjalan.</p>
+                      </div>
+                    </label>
+                    <div class="flex flex-wrap items-center gap-2">
+                      <label class="btn btn-outline btn-sm normal-case gap-2 cursor-pointer">
+                        <span class="material-icons">upload_file</span>
+                        Upload Presensi
+                        <input type="file" class="hidden file-input-track" data-target="file-presensi" accept=".pdf,.jpg,.jpeg,.png,.xls,.xlsx" />
+                      </label>
+                      <p id="file-presensi" class="upload-name">Belum ada file dipilih</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="doc-item">
+                  <div class="flex flex-col gap-3">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                      <input type="checkbox" class="checkbox checkbox-warning mt-1" name="has_analisis" />
+                      <div>
+                        <p class="font-bold">Analisis Hasil Asesmen</p>
+                        <p class="text-sm text-base-content/60">Analisis nilai siswa dan tindak lanjut yang direncanakan.</p>
+                      </div>
+                    </label>
+                    <div class="flex flex-wrap items-center gap-2">
+                      <label class="btn btn-outline btn-sm normal-case gap-2 cursor-pointer">
+                        <span class="material-icons">upload_file</span>
+                        Upload Analisis
+                        <input type="file" class="hidden file-input-track" data-target="file-analisis" accept=".pdf,.xls,.xlsx" />
+                      </label>
+                      <p id="file-analisis" class="upload-name">Belum ada file dipilih</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="section-card p-4 md:p-5">
+              <div class="mb-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-9 h-9 rounded-full bg-error text-error-content flex items-center justify-center font-bold">4</div>
+                  <div>
+                    <h3 class="font-extrabold text-lg">Program Tindak Lanjut</h3>
+                    <p class="text-sm text-base-content/60">Program remedial dan pengayaan</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="space-y-3">
+                <div class="doc-item">
+                  <div class="flex flex-col gap-3">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                      <input type="checkbox" class="checkbox checkbox-error mt-1" name="has_remedial" />
+                      <div>
+                        <p class="font-bold">Program Remedial</p>
+                        <p class="text-sm text-base-content/60">Rencana pembelajaran ulang bagi siswa yang belum tuntas.</p>
+                      </div>
+                    </label>
+                    <div class="flex flex-wrap items-center gap-2">
+                      <label class="btn btn-outline btn-sm normal-case gap-2 cursor-pointer">
+                        <span class="material-icons">upload_file</span>
+                        Upload Program Remedial
+                        <input type="file" class="hidden file-input-track" data-target="file-remedial" accept=".pdf,.doc,.docx,.xls,.xlsx" />
+                      </label>
+                      <p id="file-remedial" class="upload-name">Belum ada file dipilih</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="doc-item">
+                  <div class="flex flex-col gap-3">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                      <input type="checkbox" class="checkbox checkbox-error mt-1" name="has_pengayaan" />
+                      <div>
+                        <p class="font-bold">Program Pengayaan</p>
+                        <p class="text-sm text-base-content/60">Rencana pengayaan bagi siswa yang sudah tuntas.</p>
+                      </div>
+                    </label>
+                    <div class="flex flex-wrap items-center gap-2">
+                      <label class="btn btn-outline btn-sm normal-case gap-2 cursor-pointer">
+                        <span class="material-icons">upload_file</span>
+                        Upload Program Pengayaan
+                        <input type="file" class="hidden file-input-track" data-target="file-pengayaan" accept=".pdf,.doc,.docx,.xls,.xlsx" />
+                      </label>
+                      <p id="file-pengayaan" class="upload-name">Belum ada file dipilih</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="section-card p-4 md:p-5 border-purple-200 bg-purple-50 dark:bg-base-100">
+              <div class="flex items-start gap-3 mb-4">
+                <div class="w-10 h-10 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center">
+                  <span class="material-icons">workspace_premium</span>
+                </div>
+                <div>
+                  <h3 class="font-extrabold text-lg">Khusus Guru PAI yang merangkap Kepala Sekolah</h3>
+                  <p class="text-sm text-base-content/60">Isi bagian ini hanya jika Bapak/Ibu juga menjabat sebagai Kepala Sekolah.</p>
+                </div>
+              </div>
+
+              <div class="alert bg-purple-100 text-purple-900 border border-purple-200 mb-4">
+                <span class="material-icons">info</span>
+                <span class="text-sm">Bagian ini opsional dan hanya untuk guru PAI yang merangkap Kepala Sekolah.</span>
+              </div>
+
+              <div class="doc-item bg-base-100">
+                <div class="flex flex-col gap-3">
+                  <label class="flex items-start gap-3 cursor-pointer">
+                    <input type="checkbox" class="checkbox mt-1" name="has_prog_pai_kepsek" />
+                    <div>
+                      <p class="font-bold">Program Pengembangan Pendidikan Agama Islam bagi Kepala Sekolah</p>
+                      <p class="text-sm text-base-content/60">Dokumen program pengembangan PAI yang disusun dalam peran Kepala Sekolah.</p>
+                    </div>
+                  </label>
+                  <div class="flex flex-wrap items-center gap-2">
+                    <label class="btn btn-outline btn-sm normal-case gap-2 cursor-pointer">
+                      <span class="material-icons">upload_file</span>
+                      Upload Program PAI Kepsek
+                      <input type="file" class="hidden file-input-track" data-target="file-kepsek" accept=".pdf,.doc,.docx" />
+                    </label>
+                    <p id="file-kepsek" class="upload-name">Belum ada file dipilih</p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="section-card p-4 md:p-5">
+              <div class="mb-5">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+                    <span class="material-icons">quiz</span>
+                  </div>
+                  <div>
+                    <h3 class="font-extrabold text-lg">Instrumen Pemetaan Kebutuhan</h3>
+                    <p class="text-sm text-base-content/60">Pilih satu jawaban yang paling sesuai.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="space-y-4">
+                <div class="doc-item">
+                  <p class="font-bold mb-3">1. Fokus utama peningkatan praktik pembelajaran PAI tahun ini</p>
+                  <div class="space-y-2">
+                    <label class="radio-option"><input type="radio" name="q12" class="radio radio-primary mt-1" value="A"><span>A. Penguasaan materi PAI yang lebih mendalam</span></label>
+                    <label class="radio-option"><input type="radio" name="q12" class="radio radio-primary mt-1" value="B"><span>B. Pengelolaan kelas yang lebih efektif</span></label>
+                    <label class="radio-option"><input type="radio" name="q12" class="radio radio-primary mt-1" value="C"><span>C. Penyusunan asesmen yang lebih berkualitas</span></label>
+                    <label class="radio-option"><input type="radio" name="q12" class="radio radio-primary mt-1" value="D"><span>D. Integrasi teknologi dan media digital</span></label>
+                  </div>
+                </div>
+
+                <div class="doc-item">
+                  <p class="font-bold mb-3">2. Indikator yang paling menantang dalam RHK e-Kinerja</p>
+                  <div class="space-y-2">
+                    <label class="radio-option"><input type="radio" name="q13" class="radio radio-primary mt-1" value="A"><span>A. Menyusun dokumen administrasi yang lengkap</span></label>
+                    <label class="radio-option"><input type="radio" name="q13" class="radio radio-primary mt-1" value="B"><span>B. Melaksanakan kegiatan pengembangan diri</span></label>
+                    <label class="radio-option"><input type="radio" name="q13" class="radio radio-primary mt-1" value="C"><span>C. Menghasilkan karya inovatif atau publikasi ilmiah</span></label>
+                    <label class="radio-option"><input type="radio" name="q13" class="radio radio-primary mt-1" value="D"><span>D. Meningkatkan praktik berpusat pada siswa</span></label>
+                  </div>
+                </div>
+
+                <div class="doc-item">
+                  <p class="font-bold mb-3">3. Kesiapan menerapkan pembelajaran berdiferensiasi</p>
+                  <div class="space-y-2">
+                    <label class="radio-option"><input type="radio" name="q14" class="radio radio-primary mt-1" value="A"><span>A. Belum memahami konsepnya</span></label>
+                    <label class="radio-option"><input type="radio" name="q14" class="radio radio-primary mt-1" value="B"><span>B. Sudah paham teori, belum dipraktikkan</span></label>
+                    <label class="radio-option"><input type="radio" name="q14" class="radio radio-primary mt-1" value="C"><span>C. Sudah mencoba, masih perlu bimbingan</span></label>
+                    <label class="radio-option"><input type="radio" name="q14" class="radio radio-primary mt-1" value="D"><span>D. Sangat siap, hanya butuh pendampingan teknis</span></label>
+                  </div>
+                </div>
+
+                <div class="doc-item">
+                  <p class="font-bold mb-3">4. Dukungan yang diharapkan dari Pengawas</p>
+                  <div class="space-y-2">
+                    <label class="radio-option"><input type="radio" name="q15" class="radio radio-primary mt-1" value="A"><span>A. Sesi coaching dan diskusi mendalam</span></label>
+                    <label class="radio-option"><input type="radio" name="q15" class="radio radio-primary mt-1" value="B"><span>B. Workshop pelatihan teknis</span></label>
+                    <label class="radio-option"><input type="radio" name="q15" class="radio radio-primary mt-1" value="C"><span>C. Contoh perangkat ajar siap pakai</span></label>
+                    <label class="radio-option"><input type="radio" name="q15" class="radio radio-primary mt-1" value="D"><span>D. Umpan balik langsung saat observasi kelas</span></label>
+                  </div>
+                </div>
+
+                <div class="doc-item">
+                  <p class="font-bold mb-3">5. Rencana memanfaatkan platform digital dalam pembelajaran</p>
+                  <div class="space-y-2">
+                    <label class="radio-option"><input type="radio" name="q16" class="radio radio-primary mt-1" value="A"><span>A. Belum berencana menggunakannya</span></label>
+                    <label class="radio-option"><input type="radio" name="q16" class="radio radio-primary mt-1" value="B"><span>B. Hanya untuk presentasi di kelas</span></label>
+                    <label class="radio-option"><input type="radio" name="q16" class="radio radio-primary mt-1" value="C"><span>C. Mempelajari modul pelatihan mandiri secara rutin</span></label>
+                    <label class="radio-option"><input type="radio" name="q16" class="radio radio-primary mt-1" value="D"><span>D. Mengintegrasikan LMS atau e-learning penuh</span></label>
+                  </div>
+                </div>
+
+                <div class="doc-item">
+                  <p class="font-bold mb-3">6. Prioritas pengembangan media pembelajaran ke depan</p>
+                  <div class="space-y-2">
+                    <label class="radio-option"><input type="radio" name="q17" class="radio radio-primary mt-1" value="A"><span>A. Buku teks dan modul cetak</span></label>
+                    <label class="radio-option"><input type="radio" name="q17" class="radio radio-primary mt-1" value="B"><span>B. Video pendek atau presentasi interaktif</span></label>
+                    <label class="radio-option"><input type="radio" name="q17" class="radio radio-primary mt-1" value="C"><span>C. Game edukasi berbasis digital</span></label>
+                    <label class="radio-option"><input type="radio" name="q17" class="radio radio-primary mt-1" value="D"><span>D. Podcast atau konten audio PAI</span></label>
+                  </div>
+                </div>
+
+                <div class="doc-item">
+                  <p class="font-bold mb-3">7. Pendekatan observasi kelas yang disukai</p>
+                  <div class="space-y-2">
+                    <label class="radio-option"><input type="radio" name="q18" class="radio radio-primary mt-1" value="A"><span>A. Observasi langsung dan umpan balik konstruktif</span></label>
+                    <label class="radio-option"><input type="radio" name="q18" class="radio radio-primary mt-1" value="B"><span>B. Rekam sendiri lalu didiskusikan bersama Pengawas</span></label>
+                    <label class="radio-option"><input type="radio" name="q18" class="radio radio-primary mt-1" value="C"><span>C. Peer observation bersama rekan guru</span></label>
+                    <label class="radio-option"><input type="radio" name="q18" class="radio radio-primary mt-1" value="D"><span>D. Laporan tertulis tanpa observasi langsung</span></label>
+                  </div>
+                </div>
+
+                <div class="doc-item">
+                  <p class="font-bold mb-3">8. Komitmen terhadap MGMP atau KKG PAI</p>
+                  <div class="space-y-2">
+                    <label class="radio-option"><input type="radio" name="q19" class="radio radio-primary mt-1" value="A"><span>A. Belum rutin hadir karena jadwal bentrok</span></label>
+                    <label class="radio-option"><input type="radio" name="q19" class="radio radio-primary mt-1" value="B"><span>B. Hadir jika ada waktu senggang</span></label>
+                    <label class="radio-option"><input type="radio" name="q19" class="radio radio-primary mt-1" value="C"><span>C. Aktif hadir dan berbagi praktik baik</span></label>
+                    <label class="radio-option"><input type="radio" name="q19" class="radio radio-primary mt-1" value="D"><span>D. Menjadi pengurus aktif MGMP</span></label>
+                  </div>
+                </div>
+
+                <div class="doc-item">
+                  <p class="font-bold mb-3">9. Kendala teknis utama dalam mengisi e-Kinerja</p>
+                  <div class="space-y-2">
+                    <label class="radio-option"><input type="radio" name="q20" class="radio radio-primary mt-1" value="A"><span>A. Akses internet di sekolah tidak stabil</span></label>
+                    <label class="radio-option"><input type="radio" name="q20" class="radio radio-primary mt-1" value="B"><span>B. Tampilan aplikasi sulit dipahami</span></label>
+                    <label class="radio-option"><input type="radio" name="q20" class="radio radio-primary mt-1" value="C"><span>C. Sulit menghubungkan kegiatan dengan bukti fisik</span></label>
+                    <label class="radio-option"><input type="radio" name="q20" class="radio radio-primary mt-1" value="D"><span>D. Tidak ada kendala</span></label>
+                  </div>
+                </div>
+
+                <div class="doc-item">
+                  <p class="font-bold mb-3">10. Target jangka pendek yang ingin dicapai di akhir Triwulan I</p>
+                  <div class="space-y-2">
+                    <label class="radio-option"><input type="radio" name="q21" class="radio radio-primary mt-1" value="A"><span>A. Menyelesaikan semua administrasi tepat waktu</span></label>
+                    <label class="radio-option"><input type="radio" name="q21" class="radio radio-primary mt-1" value="B"><span>B. Menerapkan satu metode inovatif di kelas</span></label>
+                    <label class="radio-option"><input type="radio" name="q21" class="radio radio-primary mt-1" value="C"><span>C. Menghadiri minimal satu sesi MGMP atau KKG</span></label>
+                    <label class="radio-option"><input type="radio" name="q21" class="radio radio-primary mt-1" value="D"><span>D. Prota dan Promes sudah selaras dengan Kurikulum Merdeka</span></label>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section class="sticky-action rounded-2xl">
+              <div class="p-4 md:p-5">
+                <div class="alert border border-warning/20 bg-warning/10 text-base-content mb-4">
+                  <span class="material-icons text-warning">warning</span>
+                  <div>
+                    <div class="font-bold">Periksa kembali sebelum submit.</div>
+                    <div class="text-sm text-base-content/70">Setelah submit, data tidak bisa diubah.</div>
+                  </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-3 sm:justify-end">
+                  <button type="button" id="saveDraftBtn" class="btn btn-outline btn-lg normal-case gap-2">
+                    <span class="material-icons">save</span>
+                    Simpan Draft
+                  </button>
+                  <button type="submit" class="btn btn-primary btn-lg normal-case gap-2">
+                    <span class="material-icons">send</span>
+                    Submit Triwulan I
+                  </button>
+                </div>
+              </div>
+            </section>
+          </form>
+        </div>
+      </main>
+    </div>
+
+    <div class="drawer-side z-40">
+      <label for="main-drawer" aria-label="Tutup menu" class="drawer-overlay"></label>
+
+      <aside class="w-72 min-h-full bg-base-100 border-r border-base-300 flex flex-col">
+        <div class="p-5 border-b border-base-300">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl bg-primary text-primary-content flex items-center justify-center">
+              <span class="material-icons">school</span>
+            </div>
+            <div>
+              <p class="font-extrabold leading-tight">SiPANDU VIRTUAL</p>
+              <p class="text-sm text-base-content/60">Panel Guru PAI</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-4 border-b border-base-300 bg-base-200/60">
+          <div class="flex items-center gap-3">
+            <div class="avatar placeholder">
+              <div class="bg-primary text-primary-content rounded-full w-11">
+                <span class="font-bold">AF</span>
+              </div>
+            </div>
+            <div>
+              <p class="font-bold leading-tight">Ahmad Fauzi, S.Ag</p>
+              <p class="text-sm text-base-content/60">SMAN 4 Samarinda</p>
+              <span class="badge badge-success badge-sm mt-1">Guru PAI</span>
+            </div>
+          </div>
+        </div>
+
+        <ul id="sipandu-sidebar-nav" class="menu p-4 gap-1"></ul>
+
+        <div class="p-4 mt-auto">
+          <div class="alert bg-base-200 border border-base-300">
+            <span class="material-icons text-primary">tips_and_updates</span>
+            <div>
+              <div class="font-bold text-sm">Tips</div>
+              <div class="text-sm text-base-content/70">Isi satu bagian sampai selesai agar lebih mudah.</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <dialog id="draftModal" class="modal">
+    <div class="modal-box max-w-md">
+      <h3 class="font-bold text-lg">Draft berhasil disimpan</h3>
+      <p class="py-3 text-base-content/70">Data sementara sudah tersimpan. Bapak/Ibu bisa melanjutkan lagi nanti.</p>
+      <div class="modal-action">
+        <form method="dialog">
+          <button class="btn btn-primary normal-case">Tutup</button>
+        </form>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="../assets/js/bar.js"></script>
+  <script>
+    document.querySelectorAll(".file-input-track").forEach((input) => {
+      input.addEventListener("change", function () {
+        const targetId = this.dataset.target;
+        const target = document.getElementById(targetId);
+        if (!target) return;
+        target.textContent = this.files && this.files[0]
+          ? this.files[0].name
+          : "Belum ada file dipilih";
+      });
+    });
+
+    document.getElementById("saveDraftBtn").addEventListener("click", function () {
+      const modal = document.getElementById("draftModal");
+      if (modal) modal.showModal();
+    });
+
+    document.getElementById("formTW1").addEventListener("submit", function (e) {
+      e.preventDefault();
+      alert("Form Triwulan I siap dikirim.");
+    });
+  </script>
+</body>
+</html>

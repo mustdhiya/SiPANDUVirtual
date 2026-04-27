@@ -1,0 +1,374 @@
+
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gudang PAI-BMTS — SiPANDU VIRTUAL</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: "Inter", sans-serif; }
+    .material-icons { font-size: 20px; vertical-align: middle; }
+    .materi-card { transition: transform .18s, box-shadow .18s; }
+    .materi-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,.10); }
+  </style>
+</head>
+
+<body data-role="guru" class="bg-base-200 min-h-screen">
+
+<div class="drawer lg:drawer-open">
+  <input id="main-drawer" type="checkbox" class="drawer-toggle" />
+
+  <!-- ═══ KONTEN UTAMA ═══ -->
+  <div class="drawer-content flex flex-col min-h-screen">
+
+    <!-- NAVBAR -->
+    <header class="navbar bg-base-100 border-b border-base-300 sticky top-0 z-30 px-4 lg:px-6 gap-2">
+      <div class="flex-none lg:hidden">
+        <label for="main-drawer" class="btn btn-ghost btn-square" aria-label="Buka menu">
+          <span class="material-icons">menu</span>
+        </label>
+      </div>
+
+      <div class="flex-1 flex items-center gap-2 min-w-0">
+        <span class="material-icons text-primary text-2xl flex-shrink-0">folder_open</span>
+        <h1 id="sipandu-page-title" class="font-extrabold text-base md:text-lg truncate"></h1>
+      </div>
+
+      <div class="flex-none flex items-center gap-2">
+        <!-- Theme Toggle -->
+        <button id="sipandu-theme-toggle" class="btn btn-ghost btn-circle" aria-label="Ganti tema">
+          <span class="material-icons" id="sipandu-theme-icon">dark_mode</span>
+        </button>
+
+        <!-- Notifikasi -->
+        <a href="../notifikasi.html" class="btn btn-ghost btn-circle indicator" aria-label="Notifikasi">
+          <span class="indicator-item badge badge-error badge-xs"></span>
+          <span class="material-icons">notifications</span>
+        </a>
+
+        <!-- Avatar dropdown -->
+        <div class="dropdown dropdown-end">
+          <div tabindex="0" role="button" class="avatar placeholder cursor-pointer">
+            <div class="bg-primary text-primary-content rounded-full w-9">
+              <span class="text-sm font-bold">AF</span>
+            </div>
+          </div>
+          <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 mt-2 border border-base-300">
+            <li class="menu-title"><span>Ahmad Fauzi, S.Ag</span></li>
+            <li><a href="profil.html"><span class="material-icons">person</span>Profil Saya</a></li>
+            <li><a href="../login.html" class="text-error"><span class="material-icons">logout</span>Keluar</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="p-4 md:p-6 max-w-6xl mx-auto w-full space-y-5">
+
+      <!-- Deskripsi halaman -->
+      <div>
+        <p class="text-base-content/60 text-sm">
+          Kumpulan materi, contoh perangkat ajar, dan instrumen dari Pengawas.
+          Silakan unduh sesuai kebutuhan Bapak/Ibu.
+        </p>
+      </div>
+
+      <!-- Info -->
+      <div class="alert bg-emerald-50 border border-emerald-200 text-emerald-900 rounded-xl">
+        <span class="material-icons text-emerald-500 flex-shrink-0">info</span>
+        <p class="text-sm">Semua materi disiapkan oleh <strong>Pengawas PAI</strong> khusus untuk guru binaan.
+          Bapak/Ibu hanya dapat mengunduh, tidak dapat mengubah isi materi.</p>
+      </div>
+
+      <!-- Search + Sort -->
+      <div class="flex flex-col sm:flex-row gap-3">
+        <label class="input input-bordered flex items-center gap-2 flex-1">
+          <span class="material-icons text-base-content/40">search</span>
+          <input type="text" id="searchInput" placeholder="Cari materi..." class="grow text-sm" />
+        </label>
+        <select id="sortSelect" class="select select-bordered text-sm w-full sm:w-48">
+          <option value="terbaru">Terbaru</option>
+          <option value="az">Nama A–Z</option>
+          <option value="populer">Paling Banyak Diunduh</option>
+        </select>
+      </div>
+
+      <!-- Filter Kategori -->
+      <div class="flex flex-wrap gap-2" id="filterBar">
+        <button class="btn btn-sm btn-primary normal-case gap-1" data-kat="semua">
+          <span class="material-icons" style="font-size:16px">apps</span>Semua
+        </button>
+        <button class="btn btn-sm btn-outline normal-case gap-1" data-kat="perangkat">
+          <span class="material-icons" style="font-size:16px">assignment</span>Perangkat Ajar
+        </button>
+        <button class="btn btn-sm btn-outline normal-case gap-1" data-kat="instrumen">
+          <span class="material-icons" style="font-size:16px">fact_check</span>Instrumen
+        </button>
+        <button class="btn btn-sm btn-outline normal-case gap-1" data-kat="panduan">
+          <span class="material-icons" style="font-size:16px">menu_book</span>Panduan
+        </button>
+        <button class="btn btn-sm btn-outline normal-case gap-1" data-kat="video">
+          <span class="material-icons" style="font-size:16px">play_circle</span>Video
+        </button>
+        <button class="btn btn-sm btn-outline normal-case gap-1" data-kat="riset">
+          <span class="material-icons" style="font-size:16px">science</span>Riset PAI-BMTS
+        </button>
+      </div>
+
+      <!-- Grid Materi -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" id="materiGrid">
+
+        <div class="card bg-base-100 shadow-sm border border-base-300 materi-card" data-kat="perangkat" data-title="Contoh Modul Ajar PAI Kelas X Kurikulum Merdeka" data-unduhan="42">
+          <div class="card-body p-5 gap-3">
+            <div class="flex items-start gap-3">
+              <div class="bg-blue-100 text-blue-600 rounded-xl p-2.5 flex-shrink-0">
+                <span class="material-icons text-2xl">description</span>
+              </div>
+              <div>
+                <span class="badge badge-info badge-sm">Perangkat Ajar</span>
+                <h3 class="font-bold text-sm leading-snug mt-1">Contoh Modul Ajar PAI Kelas X Kurikulum Merdeka</h3>
+              </div>
+            </div>
+            <p class="text-xs text-base-content/60 leading-relaxed">
+              Contoh modul ajar lengkap PAI & Budi Pekerti kelas X semester ganjil sesuai Kurikulum Merdeka. Dilengkapi ATP dan rubrik penilaian.
+            </p>
+            <div class="flex flex-wrap gap-x-3 gap-y-1 text-xs text-base-content/40">
+              <span class="flex items-center gap-1"><span class="material-icons" style="font-size:14px">calendar_today</span>10 Jan 2026</span>
+              <span class="flex items-center gap-1"><span class="material-icons" style="font-size:14px">download</span>42 unduhan</span>
+              <span class="flex items-center gap-1"><span class="material-icons" style="font-size:14px">attach_file</span>PDF · 2.1 MB</span>
+            </div>
+            <a href="#" class="btn btn-primary btn-sm normal-case w-full gap-2">
+              <span class="material-icons" style="font-size:16px">download</span>Unduh Materi
+            </a>
+          </div>
+        </div>
+
+        <div class="card bg-base-100 shadow-sm border border-base-300 materi-card" data-kat="instrumen" data-title="Instrumen Observasi Kelas PAI Form TW III" data-unduhan="66">
+          <div class="card-body p-5 gap-3">
+            <div class="flex items-start gap-3">
+              <div class="bg-green-100 text-green-600 rounded-xl p-2.5 flex-shrink-0">
+                <span class="material-icons text-2xl">fact_check</span>
+              </div>
+              <div>
+                <span class="badge badge-success badge-sm">Instrumen</span>
+                <h3 class="font-bold text-sm leading-snug mt-1">Instrumen Observasi Kelas PAI (Form TW III)</h3>
+              </div>
+            </div>
+            <p class="text-xs text-base-content/60 leading-relaxed">
+              Lembar instrumen observasi kelas resmi yang digunakan Pengawas saat kunjungan supervisi. Pelajari agar siap diobservasi.
+            </p>
+            <div class="flex flex-wrap gap-x-3 gap-y-1 text-xs text-base-content/40">
+              <span class="flex items-center gap-1"><span class="material-icons" style="font-size:14px">calendar_today</span>1 Feb 2026</span>
+              <span class="flex items-center gap-1"><span class="material-icons" style="font-size:14px">download</span>66 unduhan</span>
+              <span class="flex items-center gap-1"><span class="material-icons" style="font-size:14px">attach_file</span>PDF · 0.8 MB</span>
+            </div>
+            <a href="#" class="btn btn-primary btn-sm normal-case w-full gap-2">
+              <span class="material-icons" style="font-size:16px">download</span>Unduh Materi
+            </a>
+          </div>
+        </div>
+
+        <div class="card bg-base-100 shadow-sm border border-base-300 materi-card" data-kat="panduan" data-title="Panduan Pengisian e-Kinerja dan SIAGA untuk Guru PAI" data-unduhan="58">
+          <div class="card-body p-5 gap-3">
+            <div class="flex items-start gap-3">
+              <div class="bg-purple-100 text-purple-600 rounded-xl p-2.5 flex-shrink-0">
+                <span class="material-icons text-2xl">menu_book</span>
+              </div>
+              <div>
+                <span class="badge badge-secondary badge-sm">Panduan</span>
+                <h3 class="font-bold text-sm leading-snug mt-1">Panduan Pengisian e-Kinerja & SIAGA untuk Guru PAI</h3>
+              </div>
+            </div>
+            <p class="text-xs text-base-content/60 leading-relaxed">
+              Panduan lengkap langkah demi langkah cara mengisi e-Kinerja dan mengunggah bukti fisik di SIAGA. Disertai tangkapan layar tiap tahap.
+            </p>
+            <div class="flex flex-wrap gap-x-3 gap-y-1 text-xs text-base-content/40">
+              <span class="flex items-center gap-1"><span class="material-icons" style="font-size:14px">calendar_today</span>15 Jan 2026</span>
+              <span class="flex items-center gap-1"><span class="material-icons" style="font-size:14px">download</span>58 unduhan</span>
+              <span class="flex items-center gap-1"><span class="material-icons" style="font-size:14px">attach_file</span>PDF · 3.5 MB</span>
+            </div>
+            <a href="#" class="btn btn-primary btn-sm normal-case w-full gap-2">
+              <span class="material-icons" style="font-size:16px">download</span>Unduh Materi
+            </a>
+          </div>
+        </div>
+
+        <div class="card bg-base-100 shadow-sm border border-base-300 materi-card" data-kat="video" data-title="Video Strategi Pembelajaran PAI Berdiferensiasi" data-unduhan="29">
+          <div class="card-body p-5 gap-3">
+            <div class="flex items-start gap-3">
+              <div class="bg-red-100 text-red-600 rounded-xl p-2.5 flex-shrink-0">
+                <span class="material-icons text-2xl">play_circle</span>
+              </div>
+              <div>
+                <span class="badge badge-error badge-sm">Video</span>
+                <h3 class="font-bold text-sm leading-snug mt-1">Video: Strategi Pembelajaran PAI Berdiferensiasi</h3>
+              </div>
+            </div>
+            <p class="text-xs text-base-content/60 leading-relaxed">
+              Rekaman pelatihan penerapan pembelajaran berdiferensiasi di kelas PAI SMA/SMK. Durasi 45 menit, narasumber Pengawas PAI.
+            </p>
+            <div class="flex flex-wrap gap-x-3 gap-y-1 text-xs text-base-content/40">
+              <span class="flex items-center gap-1"><span class="material-icons" style="font-size:14px">calendar_today</span>20 Feb 2026</span>
+              <span class="flex items-center gap-1"><span class="material-icons" style="font-size:14px">download</span>29 unduhan</span>
+              <span class="flex items-center gap-1"><span class="material-icons" style="font-size:14px">attach_file</span>MP4 · 85 MB</span>
+            </div>
+            <a href="#" class="btn btn-primary btn-sm normal-case w-full gap-2">
+              <span class="material-icons" style="font-size:16px">play_arrow</span>Tonton / Unduh
+            </a>
+          </div>
+        </div>
+
+        <div class="card bg-base-100 shadow-sm border border-base-300 materi-card" data-kat="riset" data-title="Instrumen Riset High Values Religious PAI-BMTS" data-unduhan="60">
+          <div class="card-body p-5 gap-3">
+            <div class="flex items-start gap-3">
+              <div class="bg-amber-100 text-amber-600 rounded-xl p-2.5 flex-shrink-0">
+                <span class="material-icons text-2xl">science</span>
+              </div>
+              <div>
+                <span class="badge badge-warning badge-sm">Riset PAI-BMTS</span>
+                <h3 class="font-bold text-sm leading-snug mt-1">Instrumen Riset High Values Religious (PAI-BMTS)</h3>
+              </div>
+            </div>
+            <p class="text-xs text-base-content/60 leading-relaxed">
+              Instrumen pengukuran nilai karakter religius siswa untuk riset disertasi. Bapak/Ibu diminta membantu pengisian data.
+            </p>
+            <div class="flex flex-wrap gap-x-3 gap-y-1 text-xs text-base-content/40">
+              <span class="flex items-center gap-1"><span class="material-icons" style="font-size:14px">calendar_today</span>5 Mar 2026</span>
+              <span class="flex items-center gap-1"><span class="material-icons" style="font-size:14px">download</span>60 unduhan</span>
+              <span class="flex items-center gap-1"><span class="material-icons" style="font-size:14px">attach_file</span>XLSX · 1.2 MB</span>
+            </div>
+            <a href="#" class="btn btn-primary btn-sm normal-case w-full gap-2">
+              <span class="material-icons" style="font-size:16px">download</span>Unduh Materi
+            </a>
+          </div>
+        </div>
+
+        <div class="card bg-base-100 shadow-sm border border-base-300 materi-card" data-kat="perangkat" data-title="Contoh Soal Asesmen PAI SMA SMK Berbasis HOTS" data-unduhan="51">
+          <div class="card-body p-5 gap-3">
+            <div class="flex items-start gap-3">
+              <div class="bg-blue-100 text-blue-600 rounded-xl p-2.5 flex-shrink-0">
+                <span class="material-icons text-2xl">quiz</span>
+              </div>
+              <div>
+                <span class="badge badge-info badge-sm">Perangkat Ajar</span>
+                <h3 class="font-bold text-sm leading-snug mt-1">Contoh Soal Asesmen PAI SMA/SMK Berbasis HOTS</h3>
+              </div>
+            </div>
+            <p class="text-xs text-base-content/60 leading-relaxed">
+              Kumpulan soal asesmen PAI level C4–C6 (HOTS) semester ganjil dan genap. Dilengkapi kunci jawaban dan pedoman penilaian.
+            </p>
+            <div class="flex flex-wrap gap-x-3 gap-y-1 text-xs text-base-content/40">
+              <span class="flex items-center gap-1"><span class="material-icons" style="font-size:14px">calendar_today</span>18 Jan 2026</span>
+              <span class="flex items-center gap-1"><span class="material-icons" style="font-size:14px">download</span>51 unduhan</span>
+              <span class="flex items-center gap-1"><span class="material-icons" style="font-size:14px">attach_file</span>DOCX · 1.8 MB</span>
+            </div>
+            <a href="#" class="btn btn-primary btn-sm normal-case w-full gap-2">
+              <span class="material-icons" style="font-size:16px">download</span>Unduh Materi
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Empty State -->
+      <div id="emptyState" class="hidden text-center py-16">
+        <span class="material-icons text-6xl text-base-content/20 block mb-3">search_off</span>
+        <p class="font-semibold text-base-content/40">Materi tidak ditemukan</p>
+        <p class="text-sm text-base-content/30">Coba kata kunci atau kategori lain</p>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ═══ SIDEBAR ═══ -->
+  <div class="drawer-side z-40">
+    <label for="main-drawer" class="drawer-overlay" aria-label="Tutup menu"></label>
+    <aside class="bg-base-100 w-64 min-h-full flex flex-col border-r border-base-300 py-4 px-3">
+      <div class="flex items-center gap-2 px-2 mb-5">
+        <div class="w-10 h-10 rounded-xl bg-primary text-primary-content flex items-center justify-center flex-shrink-0">
+          <span class="material-icons">school</span>
+        </div>
+        <div>
+          <p class="font-extrabold text-sm leading-tight">SiPANDU VIRTUAL</p>
+          <p class="text-xs text-base-content/50">Guru PAI Binaan</p>
+        </div>
+      </div>
+
+      <!-- bar.js mengisi ul ini otomatis -->
+      <ul id="sipandu-sidebar-nav" class="menu menu-sm p-0 gap-1 flex-1"></ul>
+
+      <div class="px-2 pt-4 mt-2 border-t border-base-200">
+        <a href="../login.html" class="btn btn-ghost btn-sm w-full normal-case justify-start gap-2 text-error">
+          <span class="material-icons">logout</span>Keluar
+        </a>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script src="../assets/js/bar.js"></script>
+<script>
+  (function () {
+    const cards      = Array.from(document.querySelectorAll('#materiGrid [data-kat]'));
+    const emptyState = document.getElementById('emptyState');
+    const filterBar  = document.getElementById('filterBar');
+    const searchInput = document.getElementById('searchInput');
+    const sortSelect  = document.getElementById('sortSelect');
+    const grid        = document.getElementById('materiGrid');
+
+    let activeKat = 'semua';
+    let query     = '';
+
+    function applyFilter() {
+      let visible = 0;
+      cards.forEach(c => {
+        const matchKat   = activeKat === 'semua' || c.dataset.kat === activeKat;
+        const matchQuery = c.dataset.title.toLowerCase().includes(query)
+                        || c.querySelector('p').textContent.toLowerCase().includes(query);
+        const show = matchKat && matchQuery;
+        c.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+      emptyState.classList.toggle('hidden', visible > 0);
+    }
+
+    function applySort(val) {
+      const sorted = [...cards].sort((a, b) => {
+        if (val === 'az')      return a.dataset.title.localeCompare(b.dataset.title, 'id');
+        if (val === 'populer') return parseInt(b.dataset.unduhan) - parseInt(a.dataset.unduhan);
+        return 0; // terbaru: urutan DOM
+      });
+      sorted.forEach(c => grid.appendChild(c));
+    }
+
+    // Filter kategori
+    filterBar.addEventListener('click', e => {
+      const btn = e.target.closest('button[data-kat]');
+      if (!btn) return;
+      activeKat = btn.dataset.kat;
+      filterBar.querySelectorAll('button').forEach(b => {
+        b.classList.toggle('btn-primary', b === btn);
+        b.classList.toggle('btn-outline', b !== btn);
+      });
+      applyFilter();
+    });
+
+    // Search
+    searchInput.addEventListener('input', function () {
+      query = this.value.toLowerCase().trim();
+      applyFilter();
+    });
+
+    // Sort
+    sortSelect.addEventListener('change', function () {
+      applySort(this.value);
+    });
+  })();
+</script>
+
+</body>
+</html>

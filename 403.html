@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="sipandu">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>403 — Akses ditolak — SiPANDU VIRTUAL</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    [data-theme="sipandu"] {
+      --p: 158 64% 32%;
+      --pf: 158 64% 26%;
+      --pc: 0 0% 100%;
+      --s: 221 68% 24%;
+      --sf: 221 68% 18%;
+      --sc: 0 0% 100%;
+      --b1: 0 0% 100%;
+      --b2: 158 30% 97%;
+      --b3: 158 20% 93%;
+      --n: 221 68% 20%;
+      --nc: 0 0% 100%;
+    }
+    body { font-family: "Inter", sans-serif; }
+    .navbar-solid { background: #0f4c35; box-shadow: 0 2px 12px rgba(0,0,0,.15); }
+  </style>
+</head>
+<body class="bg-base-200 min-h-screen flex flex-col">
+<nav class="navbar navbar-solid px-4 md:px-8">
+  <div class="flex-1 gap-3">
+    <span class="material-icons text-white text-3xl">school</span>
+    <div>
+      <span class="text-white font-bold text-lg leading-tight block">SiPANDU VIRTUAL</span>
+      <span class="text-green-200 text-xs">Pengawas PAI SMA/SMK Kota Samarinda</span>
+    </div>
+  </div>
+  <div class="flex-none gap-2">
+    <a href="/guru/dashboard.html" class="btn btn-ghost btn-sm text-white gap-1 normal-case">
+      <span class="material-icons text-sm">home</span>
+      <span class="hidden md:inline">Dashboard</span>
+    </a>
+    <a href="/notifikasi.html" class="btn btn-ghost btn-sm text-white gap-1 normal-case">
+      <span class="material-icons text-sm">notifications</span>
+      <span class="hidden md:inline">Notifikasi</span>
+    </a>
+    <div class="dropdown dropdown-end">
+      <label tabindex="0" class="btn btn-ghost btn-sm text-white gap-1 normal-case">
+        <span class="material-icons text-sm">account_circle</span>
+        <span class="hidden md:inline">Ahmad Fauzi</span>
+        <span class="material-icons text-sm">expand_more</span>
+      </label>
+      <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-44 mt-2 text-sm">
+        <li><a href="/guru/profil.html"><span class="material-icons text-sm">person</span>Profil Saya</a></li>
+        <li class="mt-1"><a href="/login.html" class="text-error"><span class="material-icons text-sm">logout</span>Keluar</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="flex-1 flex items-center justify-center px-4 py-16">
+  <div class="text-center max-w-md w-full">
+
+    <!-- Ilustrasi ikon -->
+    <div class="w-28 h-28 rounded-full bg-base-100 shadow-inner flex items-center
+                justify-center mx-auto mb-6 border-4 border-base-300">
+      <span class="material-icons text-6xl text-base-content/20">search_off</span>
+    </div>
+
+    <!-- Kode error -->
+    <div class="text-8xl font-extrabold text-primary/20 leading-none select-none mb-2">
+      403
+    </div>
+
+    <!-- Judul & pesan -->
+    <h1 class="text-2xl font-extrabold text-neutral mb-3">
+      Akses ditolak
+    </h1>
+    <p class="text-base-content/60 text-sm leading-relaxed mb-8">
+      Maaf, halaman yang Bapak/Ibu cari tidak tersedia atau alamatnya sudah berubah.
+      Silakan kembali ke Dashboard untuk melanjutkan aktivitas.
+    </p>
+
+    <!-- Tombol aksi -->
+    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+      <a href="/guru/dashboard.html"
+         class="btn btn-primary normal-case gap-2 shadow-md">
+        <span class="material-icons">home</span>
+        Kembali ke Dashboard
+      </a>
+      <a href="javascript:history.back()"
+         class="btn btn-outline normal-case gap-2">
+        <span class="material-icons">arrow_back</span>
+        Halaman Sebelumnya
+      </a>
+    </div>
+
+    <!-- Divider info -->
+    <div class="divider mt-10 mb-6 text-xs text-base-content/40">Butuh bantuan?</div>
+    <div class="alert bg-base-100 border border-base-300 text-sm gap-3 rounded-xl text-left">
+      <span class="material-icons text-primary flex-shrink-0">support_agent</span>
+      <p class="text-base-content/70">
+        Jika masalah terus terjadi, hubungi tim pengelola melalui
+        <strong>Ruang Diskusi</strong> atau langsung ke
+        <strong>Pengawas PAI Kota Samarinda</strong>.
+      </p>
+    </div>
+
+  </div>
+</main>
+
+<footer class="py-6 px-4 mt-auto">
+  <p class="text-center text-xs text-base-content/40">
+    © 2026 SiPANDU VIRTUAL — Pengawas PAI SMA/SMK Kota Samarinda
+  </p>
+</footer>
+</body>
+</html>

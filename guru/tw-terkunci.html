@@ -1,0 +1,270 @@
+
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Triwulan Terkunci — SiPANDU VIRTUAL</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .material-icons { font-size: 20px; vertical-align: middle; }
+    #sipandu-sidebar-nav .active {
+      background-color: rgb(16 185 129 / .12);
+      color: rgb(5 150 105);
+      font-weight: 700;
+    }
+  </style>
+</head>
+
+<body data-role="guru" class="bg-base-200 text-base-content min-h-screen">
+
+<div class="drawer lg:drawer-open">
+  <input id="main-drawer" type="checkbox" class="drawer-toggle" />
+
+  <div class="drawer-content flex flex-col min-h-screen">
+
+    <!-- TOPBAR -->
+    <header class="navbar bg-base-100 border-b border-base-300 sticky top-0 z-30 px-4 lg:px-6 gap-3">
+
+      <!-- Hamburger mobile -->
+      <div class="flex-none lg:hidden">
+        <label for="main-drawer" class="btn btn-square btn-ghost" aria-label="Buka menu">
+          <span class="material-icons">menu</span>
+        </label>
+      </div>
+
+      <!-- Ikon halaman + Judul -->
+      <div class="flex-1 flex items-center gap-3 min-w-0">
+        <div class="w-10 h-10 rounded-xl bg-error/10 text-error flex items-center justify-center flex-shrink-0">
+          <span class="material-icons">lock</span>
+        </div>
+        <div class="min-w-0">
+          <h1 id="sipandu-page-title"
+              class="text-base md:text-lg font-extrabold leading-tight truncate">
+            Triwulan Terkunci
+          </h1>
+          <p class="text-xs text-base-content/50 hidden sm:block">SiPANDU VIRTUAL — Panel Guru</p>
+        </div>
+      </div>
+
+      <!-- Aksi kanan -->
+      <div class="flex items-center gap-2 flex-shrink-0">
+
+        <!-- Theme toggle -->
+        <button id="sipandu-theme-toggle"
+                class="btn btn-ghost btn-sm gap-2 normal-case hidden sm:flex"
+                aria-label="Ganti mode">
+          <span class="material-icons" id="sipandu-theme-icon">dark_mode</span>
+          <span id="sipandu-theme-label" class="text-xs">Mode Malam</span>
+        </button>
+        <!-- Theme toggle mobile (ikon saja) -->
+        <button id="sipandu-theme-toggle-mobile"
+                class="btn btn-ghost btn-circle sm:hidden"
+                aria-label="Ganti mode">
+          <span class="material-icons" id="sipandu-theme-icon-mobile">dark_mode</span>
+        </button>
+
+        <!-- Profil dropdown -->
+        <div class="dropdown dropdown-end">
+          <div tabindex="0" role="button" class="btn btn-ghost gap-2 normal-case pl-2 pr-3">
+            <div class="avatar placeholder">
+              <div class="bg-primary text-primary-content rounded-full w-9">
+                <span class="text-sm font-bold">AF</span>
+              </div>
+            </div>
+            <div class="text-left hidden md:block">
+              <div class="text-sm font-bold">Ahmad Fauzi</div>
+              <div class="text-xs text-base-content/60">Guru PAI</div>
+            </div>
+          </div>
+          <ul tabindex="0"
+              class="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-2 border border-base-300 text-sm">
+            <li><a href="../guru/profil.html">
+              <span class="material-icons">account_circle</span>Profil Saya
+            </a></li>
+            <li><a href="../guru/siaga.html">
+              <span class="material-icons">bar_chart</span>Status SIAGA
+            </a></li>
+            <li class="mt-1"><a href="../login.html" class="text-error">
+              <span class="material-icons">logout</span>Keluar
+            </a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <!-- KONTEN UTAMA -->
+    <main class="flex-1 flex items-center justify-center p-4 py-12">
+      <div class="w-full max-w-md flex flex-col items-center gap-6 text-center">
+
+        <!-- Ikon kunci -->
+        <div class="w-28 h-28 rounded-full bg-error/10 flex items-center justify-center">
+          <span class="material-icons text-error" style="font-size:56px">lock</span>
+        </div>
+
+        <!-- Judul & Deskripsi -->
+        <div>
+          <h2 class="text-2xl font-extrabold text-neutral mb-2">Form Belum Dibuka</h2>
+          <p class="text-base-content/60 text-sm leading-relaxed">
+            Triwulan ini belum dibuka oleh Pengawas, atau batas waktu pengiriman sudah terlewat.
+            Bapak/Ibu tidak dapat mengisi form saat ini.
+          </p>
+        </div>
+
+        <!-- Info Card: Penyebab -->
+        <div class="card bg-base-100 border border-base-300 shadow-sm w-full text-left">
+          <div class="card-body p-5 gap-4">
+
+            <div class="flex items-start gap-3">
+              <div class="w-10 h-10 rounded-xl bg-warning/15 flex items-center justify-center flex-shrink-0">
+                <span class="material-icons text-warning">schedule</span>
+              </div>
+              <div>
+                <p class="font-bold text-sm mb-2">Kemungkinan Penyebab</p>
+                <ul class="text-sm text-base-content/65 space-y-2">
+                  <li class="flex items-center gap-2">
+                    <span class="material-icons text-base-content/30" style="font-size:8px">circle</span>
+                    Triwulan belum dibuka oleh Pengawas
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="material-icons text-base-content/30" style="font-size:8px">circle</span>
+                    Batas waktu upload telah lewat
+                  </li>
+                  <li class="flex items-center gap-2">
+                    <span class="material-icons text-base-content/30" style="font-size:8px">circle</span>
+                    Tahun ajaran aktif belum dikonfigurasi
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="divider my-0"></div>
+
+            <div class="flex items-start gap-3">
+              <div class="w-10 h-10 rounded-xl bg-info/15 flex items-center justify-center flex-shrink-0">
+                <span class="material-icons text-info">support_agent</span>
+              </div>
+              <div>
+                <p class="font-bold text-sm mb-1">Butuh Bantuan?</p>
+                <p class="text-sm text-base-content/65 leading-relaxed">
+                  Hubungi Pengawas PAI lewat WhatsApp atau gunakan
+                  Ruang Diskusi di platform ini.
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Tombol Aksi -->
+        <div class="flex flex-col sm:flex-row gap-3 w-full">
+          <a href="../guru/dashboard.html"
+             class="btn btn-primary flex-1 gap-2 normal-case text-base py-3">
+            <span class="material-icons">home</span>
+            Kembali ke Dashboard
+          </a>
+          <a href="../guru/diskusi.html"
+             class="btn btn-outline flex-1 gap-2 normal-case text-base py-3">
+            <span class="material-icons">forum</span>
+            Ruang Diskusi
+          </a>
+        </div>
+
+      </div>
+    </main>
+
+  </div><!-- /drawer-content -->
+
+  <!-- SIDEBAR -->
+  <div class="drawer-side z-40">
+    <label for="main-drawer" aria-label="Tutup menu" class="drawer-overlay"></label>
+    <aside class="w-72 min-h-full bg-base-100 border-r border-base-300 flex flex-col p-4">
+
+      <!-- Logo -->
+      <div class="flex items-center gap-3 px-2 py-3 mb-2">
+        <div class="w-11 h-11 rounded-2xl bg-primary text-primary-content
+                    flex items-center justify-center shadow-sm flex-shrink-0">
+          <span class="material-icons">school</span>
+        </div>
+        <div>
+          <div class="font-extrabold leading-tight">SiPANDU VIRTUAL</div>
+          <div class="text-xs text-base-content/55">Panel Guru PAI</div>
+        </div>
+      </div>
+
+      <!-- Nav — diisi bar.js -->
+      <ul id="sipandu-sidebar-nav" class="menu gap-1 text-sm flex-1 px-0"></ul>
+
+      <!-- Theme toggle sidebar (mobile helper) -->
+      <div class="mt-4 px-2">
+        <button id="sipandu-theme-toggle-sidebar"
+                class="btn btn-outline btn-sm w-full gap-2 normal-case">
+          <span class="material-icons" id="sipandu-theme-icon-sidebar">dark_mode</span>
+          <span id="sipandu-theme-label-sidebar">Mode Malam</span>
+        </button>
+      </div>
+
+      <!-- Tips -->
+      <div class="card bg-base-200 border border-base-300 mt-3">
+        <div class="card-body p-4 gap-2">
+          <div class="flex items-start gap-2">
+            <span class="material-icons text-primary flex-shrink-0">tips_and_updates</span>
+            <div>
+              <p class="font-bold text-sm">Informasi</p>
+              <p class="text-xs text-base-content/60 leading-relaxed mt-1">
+                Jika form sudah dibuka Pengawas, Anda akan mendapat notifikasi
+                melalui WhatsApp secara otomatis.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </aside>
+  </div>
+
+</div><!-- /drawer -->
+
+<script src="../assets/js/bar.js"></script>
+<script>
+  // Sinkronisasi tombol theme di sidebar dengan bar.js
+  (function () {
+    const pairs = [
+      { btn: 'sipandu-theme-toggle-mobile',   icon: 'sipandu-theme-icon-mobile',   label: null },
+      { btn: 'sipandu-theme-toggle-sidebar',  icon: 'sipandu-theme-icon-sidebar',  label: 'sipandu-theme-label-sidebar' },
+    ];
+
+    function syncExtra(theme) {
+      pairs.forEach(({ btn, icon, label }) => {
+        const b = document.getElementById(btn);
+        const i = document.getElementById(icon);
+        const l = label ? document.getElementById(label) : null;
+        if (i) i.textContent = theme === 'dark' ? 'light_mode' : 'dark_mode';
+        if (l) l.textContent = theme === 'dark' ? 'Mode Siang' : 'Mode Malam';
+        if (b) {
+          b.onclick = () => {
+            const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', next);
+            try { localStorage.setItem('sipandu-theme', next); } catch (_) {}
+            syncExtra(next);
+            // sinkron ikon tombol utama (sudah diurus bar.js, tapi paksa sync)
+            const mi = document.getElementById('sipandu-theme-icon');
+            const ml = document.getElementById('sipandu-theme-label');
+            if (mi) mi.textContent = next === 'dark' ? 'light_mode' : 'dark_mode';
+            if (ml) ml.textContent = next === 'dark' ? 'Mode Siang' : 'Mode Malam';
+          };
+        }
+      });
+    }
+
+    const saved = (() => { try { return localStorage.getItem('sipandu-theme') || 'light'; } catch(_){return'light';} })();
+    syncExtra(saved);
+  })();
+</script>
+
+</body>
+</html>

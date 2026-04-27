@@ -1,0 +1,302 @@
+
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profil Saya — SiPANDU VIRTUAL</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .material-icons { font-size: 20px; vertical-align: middle; }
+
+    #sipandu-sidebar-nav a.active {
+      background: oklch(var(--p) / .12);
+      color: oklch(var(--p));
+      font-weight: 700;
+    }
+    #sipandu-sidebar-nav a:hover {
+      background: oklch(var(--p) / .07);
+    }
+  </style>
+</head>
+
+<body data-role="guru" class="bg-base-200 text-base-content min-h-screen">
+
+<div class="drawer lg:drawer-open">
+  <input id="main-drawer" type="checkbox" class="drawer-toggle" />
+
+  <div class="drawer-content flex flex-col min-h-screen">
+
+    <!-- NAVBAR -->
+    <header class="navbar bg-base-100 border-b border-base-300 sticky top-0 z-30 px-4">
+      <div class="flex-none lg:hidden">
+        <label for="main-drawer" class="btn btn-ghost btn-square" aria-label="Buka menu">
+          <span class="material-icons">menu</span>
+        </label>
+      </div>
+
+      <div class="flex-1 px-2">
+        <h1 id="sipandu-page-title" class="text-base md:text-lg font-extrabold leading-tight"></h1>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button id="sipandu-theme-toggle"
+          class="btn btn-ghost btn-sm gap-1 normal-case hidden md:flex"
+          aria-label="Ganti mode tampilan">
+          <span class="material-icons" id="sipandu-theme-icon">dark_mode</span>
+          <span id="sipandu-theme-label" class="text-xs">Mode Malam</span>
+        </button>
+
+        <div class="dropdown dropdown-end">
+          <div tabindex="0" role="button" class="btn btn-ghost gap-2 normal-case pl-2 pr-3">
+            <div class="avatar placeholder">
+              <div class="bg-primary text-primary-content rounded-full w-9">
+                <span class="text-sm font-bold">AF</span>
+              </div>
+            </div>
+            <div class="text-left hidden md:block">
+              <div class="text-sm font-bold">Ahmad Fauzi</div>
+              <div class="text-xs text-base-content/60">Guru PAI</div>
+            </div>
+          </div>
+          <ul tabindex="0"
+            class="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-44 mt-2 border border-base-300 text-sm">
+            <li><a href="profil.html"><span class="material-icons">person</span> Profil</a></li>
+            <li><a href="../login.html" class="text-error"><span class="material-icons">logout</span> Keluar</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <!-- KONTEN -->
+    <main class="flex-1 p-4 md:p-6 max-w-3xl mx-auto w-full pb-16 space-y-5">
+
+      <div class="text-xs breadcrumbs text-base-content/50">
+        <ul>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li>Profil Saya</li>
+        </ul>
+      </div>
+
+      <!-- Data Identitas -->
+      <div class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-5 gap-4">
+          <div class="flex items-center gap-2">
+            <span class="material-icons text-primary">badge</span>
+            <h2 class="font-bold text-base">Data Identitas</h2>
+          </div>
+
+          <div class="alert alert-info py-2 text-sm">
+            <span class="material-icons text-sm">info</span>
+            Data ini terisi otomatis dari sistem. Jika ada kesalahan, hubungi Pengawas PAI.
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="form-control">
+              <label class="label py-0 pb-1">
+                <span class="label-text text-xs text-base-content/60 font-semibold">Nama Lengkap</span>
+              </label>
+              <div class="input input-bordered bg-base-200 flex items-center text-sm h-10 px-3">Ahmad Fauzi, S.Ag</div>
+            </div>
+            <div class="form-control">
+              <label class="label py-0 pb-1">
+                <span class="label-text text-xs text-base-content/60 font-semibold">NIP / Akun SIAGA</span>
+              </label>
+              <div class="input input-bordered bg-base-200 flex items-center text-sm h-10 px-3">197205152005011004</div>
+            </div>
+            <div class="form-control">
+              <label class="label py-0 pb-1">
+                <span class="label-text text-xs text-base-content/60 font-semibold">Asal Sekolah</span>
+              </label>
+              <div class="input input-bordered bg-base-200 flex items-center text-sm h-10 px-3">SMAN 4 Samarinda</div>
+            </div>
+            <div class="form-control">
+              <label class="label py-0 pb-1">
+                <span class="label-text text-xs text-base-content/60 font-semibold">Jabatan</span>
+              </label>
+              <div class="input input-bordered bg-base-200 flex items-center gap-2 text-sm h-10 px-3">
+                Guru PAI
+                <span class="badge badge-success badge-sm ml-auto">Aktif</span>
+              </div>
+            </div>
+            <div class="form-control sm:col-span-2">
+              <label class="label py-0 pb-1">
+                <span class="label-text text-xs text-base-content/60 font-semibold">Email Akun</span>
+              </label>
+              <div class="input input-bordered bg-base-200 flex items-center text-sm h-10 px-3">
+                ahmad.fauzi@guru.samarinda.go.id
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ubah Data Kontak -->
+      <form class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-5 gap-5">
+          <div class="flex items-center gap-2">
+            <span class="material-icons text-primary">edit</span>
+            <h2 class="font-bold text-base">Ubah Data Kontak</h2>
+          </div>
+
+          <div class="flex items-center gap-4">
+            <div class="avatar placeholder flex-shrink-0">
+              <div class="bg-primary text-primary-content rounded-full w-20 h-20">
+                <span class="text-2xl font-bold">AF</span>
+              </div>
+            </div>
+            <div>
+              <p class="font-semibold text-sm mb-1">Foto Profil</p>
+              <label class="btn btn-outline btn-sm normal-case gap-2 cursor-pointer">
+                <span class="material-icons text-sm">upload</span> Pilih Foto
+                <input type="file" accept="image/*" class="hidden" />
+              </label>
+              <p class="text-xs text-base-content/50 mt-1">JPG atau PNG. Maks 2 MB.</p>
+            </div>
+          </div>
+
+          <div class="form-control">
+            <label class="label py-0 pb-1">
+              <span class="label-text font-semibold text-sm">Nomor WhatsApp</span>
+              <span class="label-text-alt text-error text-xs">Wajib diisi</span>
+            </label>
+            <label class="input input-bordered flex items-center gap-2">
+              <span class="material-icons text-base-content/40">phone</span>
+              <input type="tel" placeholder="Contoh: 08123456789" value="081234567890"
+                class="grow text-sm bg-transparent outline-none" />
+            </label>
+            <label class="label py-0 pt-1">
+              <span class="label-text-alt text-base-content/50">
+                Nomor ini digunakan untuk menerima notifikasi dari Pengawas.
+              </span>
+            </label>
+          </div>
+
+          <div class="form-control">
+            <label class="label py-0 pb-1">
+              <span class="label-text font-semibold text-sm">Ganti Password</span>
+              <span class="label-text-alt text-base-content/50 text-xs">Opsional — kosongkan jika tidak ingin ganti</span>
+            </label>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <label class="input input-bordered flex items-center gap-2">
+                <span class="material-icons text-base-content/40">lock</span>
+                <input type="password" placeholder="Password baru" class="grow text-sm bg-transparent outline-none" />
+              </label>
+              <label class="input input-bordered flex items-center gap-2">
+                <span class="material-icons text-base-content/40">lock_reset</span>
+                <input type="password" placeholder="Ulangi password baru" class="grow text-sm bg-transparent outline-none" />
+              </label>
+            </div>
+          </div>
+
+          <div class="flex justify-end gap-2 pt-1">
+            <button type="reset" class="btn btn-ghost btn-sm normal-case gap-1">
+              <span class="material-icons text-sm">restart_alt</span> Reset
+            </button>
+            <button type="submit" class="btn btn-primary btn-sm normal-case gap-2">
+              <span class="material-icons text-sm">save</span> Simpan Perubahan
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <!-- Info Akun -->
+      <div class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-5 gap-3">
+          <div class="flex items-center gap-2">
+            <span class="material-icons text-primary">security</span>
+            <h2 class="font-bold text-base">Info Akun</h2>
+          </div>
+          <div class="divide-y divide-base-200 text-sm">
+            <div class="flex justify-between items-center py-2">
+              <span class="text-base-content/60">Status Akun</span>
+              <span class="badge badge-success">Aktif &amp; Terverifikasi</span>
+            </div>
+            <div class="flex justify-between items-center py-2">
+              <span class="text-base-content/60">Tanggal Bergabung</span>
+              <span class="font-medium">10 Januari 2026</span>
+            </div>
+            <div class="flex justify-between items-center py-2">
+              <span class="text-base-content/60">Login Terakhir</span>
+              <span class="font-medium">Hari ini, 23.05 WITA</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- SIDEBAR -->
+  <div class="drawer-side z-40">
+    <label for="main-drawer" aria-label="Tutup menu" class="drawer-overlay"></label>
+
+    <aside class="w-64 min-h-full bg-base-100 border-r border-base-300 flex flex-col">
+
+      <div class="flex items-center gap-3 px-5 py-5 border-b border-base-300">
+        <span class="material-icons text-primary text-3xl">school</span>
+        <div>
+          <p class="font-extrabold text-sm leading-none">SiPANDU VIRTUAL</p>
+          <p class="text-xs text-base-content/50 mt-0.5">Pengawas PAI Samarinda</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3 px-5 py-4 bg-base-200/50 border-b border-base-300">
+        <div class="avatar placeholder flex-shrink-0">
+          <div class="bg-primary text-primary-content rounded-full w-10">
+            <span class="font-bold">AF</span>
+          </div>
+        </div>
+        <div class="min-w-0">
+          <p class="font-semibold text-sm leading-tight truncate">Ahmad Fauzi, S.Ag</p>
+          <p class="text-xs text-base-content/50 truncate">SMAN 4 Samarinda</p>
+          <span class="badge badge-success badge-xs mt-1">Guru PAI</span>
+        </div>
+      </div>
+
+      <nav class="flex-1 overflow-y-auto px-3 py-3">
+        <ul id="sipandu-sidebar-nav" class="menu gap-0.5 p-0 text-sm"></ul>
+      </nav>
+
+      <div class="px-4 py-4 border-t border-base-300 space-y-1">
+        <button id="sipandu-theme-toggle-mobile"
+          class="btn btn-ghost btn-sm w-full justify-start gap-2 normal-case">
+          <span class="material-icons" id="sipandu-theme-icon-mobile">dark_mode</span>
+          <span id="sipandu-theme-label-mobile">Mode Malam</span>
+        </button>
+        <a href="../login.html" class="btn btn-ghost btn-sm w-full justify-start gap-2 text-error normal-case">
+          <span class="material-icons">logout</span> Keluar
+        </a>
+      </div>
+
+    </aside>
+  </div>
+</div>
+
+<script src="../assets/js/bar.js"></script>
+<script>
+  // Sync tombol tema di sidebar dengan bar.js (yang mengontrol #sipandu-theme-toggle)
+  const mobileBtn   = document.getElementById('sipandu-theme-toggle-mobile');
+  const mobileIcon  = document.getElementById('sipandu-theme-icon-mobile');
+  const mobileLabel = document.getElementById('sipandu-theme-label-mobile');
+
+  function syncMobileTheme() {
+    const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    mobileIcon.textContent  = dark ? 'light_mode' : 'dark_mode';
+    mobileLabel.textContent = dark ? 'Mode Siang'  : 'Mode Malam';
+  }
+
+  requestAnimationFrame(syncMobileTheme);
+
+  mobileBtn.addEventListener('click', () => {
+    document.getElementById('sipandu-theme-toggle').click();
+    setTimeout(syncMobileTheme, 50);
+  });
+</script>
+
+</body>
+</html>

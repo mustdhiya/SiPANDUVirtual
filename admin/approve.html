@@ -1,0 +1,502 @@
+
+<!DOCTYPE html>
+<html lang="id" data-theme="emerald">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verifikasi Pendaftaran Guru — SiPANDU VIRTUAL</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .material-icons { font-size: 20px; vertical-align: middle; }
+    .photo-thumb { width: 60px; height: 60px; object-fit: cover; border-radius: 10px; }
+    .action-col { min-width: 240px; }
+    .reason-box { display: none; }
+    .row-open .reason-box { display: block; }
+  </style>
+</head>
+
+<body data-role="admin" class="bg-base-200 text-base-content min-h-screen">
+
+<div class="drawer lg:drawer-open">
+  <input id="main-drawer" type="checkbox" class="drawer-toggle" />
+
+  <div class="drawer-content flex flex-col min-h-screen">
+
+    <!-- ── NAVBAR ── -->
+    <nav class="navbar bg-base-100 border-b border-base-300 sticky top-0 z-30 px-4 lg:px-6">
+      <div class="flex-none lg:hidden">
+        <label for="main-drawer" class="btn btn-ghost btn-circle" aria-label="Buka menu">
+          <span class="material-icons">menu</span>
+        </label>
+      </div>
+      <div class="flex-1 gap-3 min-w-0">
+        <div class="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+          <span class="material-icons">how_to_reg</span>
+        </div>
+        <div class="min-w-0">
+          <h1 id="sipandu-page-title" class="text-base md:text-lg font-extrabold leading-tight truncate">Verifikasi Pendaftaran Guru</h1>
+          <p class="text-xs text-base-content/60 hidden sm:block">Periksa dan setujui akun guru yang baru mendaftar.</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 shrink-0">
+        <!-- Tombol Mode Malam/Siang -->
+        <button id="sipandu-theme-toggle" class="btn btn-ghost btn-circle" aria-label="Ganti mode siang malam">
+          <span class="material-icons" id="sipandu-theme-icon">dark_mode</span>
+        </button>
+        <button class="btn btn-primary btn-sm normal-case gap-1 hidden sm:flex">
+          <span class="material-icons">download</span>Export Daftar
+        </button>
+        <div class="dropdown dropdown-end">
+          <div tabindex="0" role="button" class="btn btn-ghost gap-2 normal-case pl-2 pr-3">
+            <div class="avatar placeholder">
+              <div class="bg-primary text-primary-content rounded-full w-9">
+                <span class="text-sm font-bold">BN</span>
+              </div>
+            </div>
+            <span class="hidden md:block text-sm font-bold">Baqi Nurul</span>
+          </div>
+          <ul tabindex="0" class="menu dropdown-content z-50 p-2 shadow bg-base-100 rounded-box w-48 mt-2 border border-base-300 text-sm">
+            <li><a href="../admin/dashboard.html"><span class="material-icons">dashboard</span>Dashboard</a></li>
+            <li><a><span class="material-icons">account_circle</span>Profil</a></li>
+            <li><a class="text-error"><span class="material-icons">logout</span>Keluar</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ── MAIN ── -->
+    <main class="px-4 lg:px-6 py-6 space-y-6">
+
+      <!-- STAT CARDS -->
+      <section class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-5 flex-row items-center justify-between">
+            <div>
+              <p class="text-sm text-base-content/60">Total Pending</p>
+              <p class="text-3xl font-extrabold">12</p>
+            </div>
+            <div class="w-12 h-12 rounded-2xl bg-warning/15 text-warning flex items-center justify-center">
+              <span class="material-icons">hourglass_top</span>
+            </div>
+          </div>
+        </div>
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-5 flex-row items-center justify-between">
+            <div>
+              <p class="text-sm text-base-content/60">Daftar Hari Ini</p>
+              <p class="text-3xl font-extrabold">4</p>
+            </div>
+            <div class="w-12 h-12 rounded-2xl bg-info/15 text-info flex items-center justify-center">
+              <span class="material-icons">today</span>
+            </div>
+          </div>
+        </div>
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-5 flex-row items-center justify-between">
+            <div>
+              <p class="text-sm text-base-content/60">Perlu Ditinjau</p>
+              <p class="text-3xl font-extrabold">3</p>
+            </div>
+            <div class="w-12 h-12 rounded-2xl bg-error/15 text-error flex items-center justify-center">
+              <span class="material-icons">report_problem</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PETUNJUK -->
+      <div class="alert bg-base-100 border border-base-300 shadow-sm">
+        <span class="material-icons text-primary shrink-0">info</span>
+        <div class="text-sm">
+          <span class="font-bold">Petunjuk: </span>
+          Pilih <strong>Setujui</strong> jika data sudah sesuai. Pilih <strong>Tolak</strong> jika ada masalah, lalu isi alasan agar guru tahu apa yang perlu diperbaiki.
+        </div>
+      </div>
+
+      <!-- TABEL -->
+      <div class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-4 lg:p-6 gap-4">
+
+          <!-- Filter -->
+          <div class="flex flex-col sm:flex-row gap-3 flex-wrap">
+            <label class="input input-bordered flex items-center gap-2 flex-1 min-w-48">
+              <span class="material-icons text-base-content/40">search</span>
+              <input type="text" placeholder="Cari nama guru..." class="grow" />
+            </label>
+            <select class="select select-bordered w-full sm:w-52">
+              <option>Semua sekolah</option>
+              <option>SMAN 4 Samarinda</option>
+              <option>SMKN 2 Samarinda</option>
+              <option>SMAS Muhammadiyah 2</option>
+              <option>SMKS TI Airlangga</option>
+            </select>
+            <select class="select select-bordered w-full sm:w-44">
+              <option>Semua status</option>
+              <option>Pending</option>
+              <option>Perlu ditinjau</option>
+            </select>
+          </div>
+
+          <!-- Table -->
+          <div class="overflow-x-auto rounded-xl border border-base-300">
+            <table class="table table-zebra">
+              <thead class="bg-base-200 text-base-content text-sm">
+                <tr>
+                  <th>No</th>
+                  <th>Guru</th>
+                  <th>Sekolah</th>
+                  <th>Tanggal Daftar</th>
+                  <th>Foto SK</th>
+                  <th>Status</th>
+                  <th class="action-col">Tindakan</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <!-- ROW 1 -->
+                <tr>
+                  <td class="font-semibold align-top pt-4">1</td>
+                  <td class="align-top pt-4">
+                    <div class="font-bold">Ahmad Fauzi, S.Ag</div>
+                    <div class="text-xs text-base-content/60 mt-0.5">NIP: 19870912XXXX</div>
+                  </td>
+                  <td class="align-top pt-4 text-sm">SMAN 4 Samarinda</td>
+                  <td class="align-top pt-4 text-sm whitespace-nowrap">27 Apr 2026<br/><span class="text-base-content/60 text-xs">08.12 WIB</span></td>
+                  <td class="align-top pt-4">
+                    <div class="flex flex-col gap-2 items-start">
+                      <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=120&q=80"
+                        alt="Foto SK Ahmad Fauzi" class="photo-thumb" />
+                      <button class="btn btn-xs btn-outline normal-case gap-1"
+                        onclick="openPreview('https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&q=80','Ahmad Fauzi, S.Ag')">
+                        <span class="material-icons text-sm">visibility</span>Lihat SK
+                      </button>
+                    </div>
+                  </td>
+                  <td class="align-top pt-4">
+                    <span class="badge badge-warning gap-1 whitespace-nowrap">
+                      <span class="material-icons" style="font-size:14px">hourglass_top</span>Pending
+                    </span>
+                  </td>
+                  <td class="action-col align-top pt-4">
+                    <div class="flex flex-col gap-2">
+                      <div class="flex flex-wrap gap-2">
+                        <button class="btn btn-success btn-sm normal-case gap-1" onclick="doApprove(this)">
+                          <span class="material-icons">check_circle</span>Setujui
+                        </button>
+                        <button class="btn btn-error btn-sm normal-case gap-1" onclick="openReject(this)">
+                          <span class="material-icons">cancel</span>Tolak
+                        </button>
+                      </div>
+                      <div class="reason-box space-y-2">
+                        <textarea class="textarea textarea-bordered w-full text-sm h-20"
+                          placeholder="Tulis alasan penolakan, contoh: nama belum sesuai data guru binaan..."></textarea>
+                        <div class="flex gap-2">
+                          <button class="btn btn-error btn-sm normal-case gap-1" onclick="doReject(this)">
+                            <span class="material-icons">send</span>Kirim
+                          </button>
+                          <button class="btn btn-ghost btn-sm normal-case" onclick="cancelReject(this)">Batal</button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- ROW 2 -->
+                <tr>
+                  <td class="font-semibold align-top pt-4">2</td>
+                  <td class="align-top pt-4">
+                    <div class="font-bold">Nur Aini, M.Pd</div>
+                    <div class="text-xs text-base-content/60 mt-0.5">NIP: 19781203XXXX</div>
+                  </td>
+                  <td class="align-top pt-4 text-sm">SMKN 2 Samarinda</td>
+                  <td class="align-top pt-4 text-sm whitespace-nowrap">27 Apr 2026<br/><span class="text-base-content/60 text-xs">07.45 WIB</span></td>
+                  <td class="align-top pt-4">
+                    <div class="flex flex-col gap-2 items-start">
+                      <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=120&q=80"
+                        alt="Foto SK Nur Aini" class="photo-thumb" />
+                      <button class="btn btn-xs btn-outline normal-case gap-1"
+                        onclick="openPreview('https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1200&q=80','Nur Aini, M.Pd')">
+                        <span class="material-icons text-sm">visibility</span>Lihat SK
+                      </button>
+                    </div>
+                  </td>
+                  <td class="align-top pt-4">
+                    <span class="badge badge-warning gap-1 whitespace-nowrap">
+                      <span class="material-icons" style="font-size:14px">hourglass_top</span>Pending
+                    </span>
+                  </td>
+                  <td class="action-col align-top pt-4">
+                    <div class="flex flex-col gap-2">
+                      <div class="flex flex-wrap gap-2">
+                        <button class="btn btn-success btn-sm normal-case gap-1" onclick="doApprove(this)">
+                          <span class="material-icons">check_circle</span>Setujui
+                        </button>
+                        <button class="btn btn-error btn-sm normal-case gap-1" onclick="openReject(this)">
+                          <span class="material-icons">cancel</span>Tolak
+                        </button>
+                      </div>
+                      <div class="reason-box space-y-2">
+                        <textarea class="textarea textarea-bordered w-full text-sm h-20"
+                          placeholder="Tulis alasan penolakan..."></textarea>
+                        <div class="flex gap-2">
+                          <button class="btn btn-error btn-sm normal-case gap-1" onclick="doReject(this)">
+                            <span class="material-icons">send</span>Kirim
+                          </button>
+                          <button class="btn btn-ghost btn-sm normal-case" onclick="cancelReject(this)">Batal</button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+
+                <!-- ROW 3 -->
+                <tr>
+                  <td class="font-semibold align-top pt-4">3</td>
+                  <td class="align-top pt-4">
+                    <div class="font-bold">Siti Rahmah, S.Pd.I</div>
+                    <div class="text-xs text-base-content/60 mt-0.5">NIP: 19840311XXXX</div>
+                  </td>
+                  <td class="align-top pt-4 text-sm">SMAS Muhammadiyah 2</td>
+                  <td class="align-top pt-4 text-sm whitespace-nowrap">26 Apr 2026<br/><span class="text-base-content/60 text-xs">16.10 WIB</span></td>
+                  <td class="align-top pt-4">
+                    <div class="flex flex-col gap-2 items-start">
+                      <img src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=120&q=80"
+                        alt="Foto SK Siti Rahmah" class="photo-thumb" />
+                      <button class="btn btn-xs btn-outline normal-case gap-1"
+                        onclick="openPreview('https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=1200&q=80','Siti Rahmah, S.Pd.I')">
+                        <span class="material-icons text-sm">visibility</span>Lihat SK
+                      </button>
+                    </div>
+                  </td>
+                  <td class="align-top pt-4">
+                    <span class="badge badge-error gap-1 whitespace-nowrap">
+                      <span class="material-icons" style="font-size:14px">report_problem</span>Perlu ditinjau
+                    </span>
+                  </td>
+                  <td class="action-col align-top pt-4">
+                    <div class="flex flex-col gap-2">
+                      <div class="flex flex-wrap gap-2">
+                        <button class="btn btn-success btn-sm normal-case gap-1" onclick="doApprove(this)">
+                          <span class="material-icons">check_circle</span>Setujui
+                        </button>
+                        <button class="btn btn-error btn-sm normal-case gap-1" onclick="openReject(this)">
+                          <span class="material-icons">cancel</span>Tolak
+                        </button>
+                      </div>
+                      <div class="reason-box space-y-2">
+                        <textarea class="textarea textarea-bordered w-full text-sm h-20"
+                          placeholder="Tulis alasan penolakan..."></textarea>
+                        <div class="flex gap-2">
+                          <button class="btn btn-error btn-sm normal-case gap-1" onclick="doReject(this)">
+                            <span class="material-icons">send</span>Kirim
+                          </button>
+                          <button class="btn btn-ghost btn-sm normal-case" onclick="cancelReject(this)">Batal</button>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination -->
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-1">
+            <p class="text-sm text-base-content/60">Menampilkan 3 dari 12 guru yang menunggu verifikasi.</p>
+            <div class="join">
+              <button class="join-item btn btn-sm">«</button>
+              <button class="join-item btn btn-sm btn-active">1</button>
+              <button class="join-item btn btn-sm">2</button>
+              <button class="join-item btn btn-sm">3</button>
+              <button class="join-item btn btn-sm">»</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- KRITERIA + CONTOH TOLAK -->
+      <section class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-5">
+            <h2 class="font-bold text-base flex items-center gap-2">
+              <span class="material-icons text-success">checklist</span>Kriteria untuk Menyetujui
+            </h2>
+            <ul class="space-y-3 text-sm text-base-content/75 mt-2">
+              <li class="flex gap-2"><span class="material-icons text-success shrink-0">check_circle</span>Nama guru sesuai data master Guru Binaan.</li>
+              <li class="flex gap-2"><span class="material-icons text-success shrink-0">check_circle</span>NIP atau nomor SIAGA cocok dan aktif.</li>
+              <li class="flex gap-2"><span class="material-icons text-success shrink-0">check_circle</span>Sekolah masih terdaftar sebagai sekolah binaan aktif.</li>
+              <li class="flex gap-2"><span class="material-icons text-success shrink-0">check_circle</span>Foto SK terbaca jelas dan dapat diverifikasi.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-5">
+            <h2 class="font-bold text-base flex items-center gap-2">
+              <span class="material-icons text-error">cancel</span>Contoh Alasan Penolakan
+            </h2>
+            <div class="space-y-2 mt-2">
+              <div class="alert bg-base-200 border border-base-300 py-3 text-sm">
+                <span class="material-icons text-error shrink-0">error</span>
+                <span>Nama belum sesuai data guru binaan. Periksa kembali penulisan nama lengkap.</span>
+              </div>
+              <div class="alert bg-base-200 border border-base-300 py-3 text-sm">
+                <span class="material-icons text-error shrink-0">error</span>
+                <span>NIP atau nomor SIAGA tidak ditemukan. Gunakan data resmi yang aktif.</span>
+              </div>
+              <div class="alert bg-base-200 border border-base-300 py-3 text-sm">
+                <span class="material-icons text-error shrink-0">error</span>
+                <span>Foto SK belum jelas. Upload ulang foto yang lebih terang dan mudah dibaca.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ── SIDEBAR ── -->
+  <div class="drawer-side z-40">
+    <label for="main-drawer" aria-label="Tutup menu" class="drawer-overlay"></label>
+    <aside class="w-72 min-h-full bg-base-100 border-r border-base-300 p-4 flex flex-col">
+      <div class="flex items-center gap-3 px-2 py-3 mb-3">
+        <div class="w-11 h-11 rounded-2xl bg-primary text-primary-content flex items-center justify-center shadow-sm">
+          <span class="material-icons">school</span>
+        </div>
+        <div>
+          <div class="font-extrabold leading-tight">SiPANDU VIRTUAL</div>
+          <div class="text-xs text-base-content/60">Panel Pengawas PAI</div>
+        </div>
+      </div>
+
+      <!-- Sidebar nav — bar.js isi otomatis -->
+      <ul id="sipandu-sidebar-nav" class="menu gap-1 text-sm flex-1"></ul>
+
+      <div class="card bg-base-200 border border-base-300 mt-4">
+        <div class="card-body p-4">
+          <div class="flex items-start gap-2">
+            <span class="material-icons text-primary shrink-0">tips_and_updates</span>
+            <div>
+              <div class="font-bold text-sm">Tips Penggunaan</div>
+              <p class="text-xs text-base-content/65 leading-relaxed">Selalu isi alasan penolakan dengan jelas agar guru dapat segera memperbaiki data mereka.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- MODAL PREVIEW SK -->
+<dialog id="previewModal" class="modal">
+  <div class="modal-box max-w-2xl">
+    <form method="dialog">
+      <button class="btn btn-sm btn-circle btn-ghost absolute right-3 top-3" aria-label="Tutup">
+        <span class="material-icons">close</span>
+      </button>
+    </form>
+    <h3 class="font-bold text-lg mb-1" id="previewName">Preview Foto SK</h3>
+    <p class="text-sm text-base-content/60 mb-4">Pastikan dokumen terbaca dengan jelas sebelum akun disetujui.</p>
+    <img id="previewImg" src="" alt="Preview SK" class="rounded-xl w-full max-h-[65vh] object-contain border border-base-300" />
+  </div>
+  <form method="dialog" class="modal-backdrop"><button>Tutup</button></form>
+</dialog>
+
+<!-- MODAL KONFIRMASI SETUJUI -->
+<dialog id="approveModal" class="modal">
+  <div class="modal-box max-w-sm text-center">
+    <div class="w-16 h-16 rounded-full bg-success/15 text-success flex items-center justify-center mx-auto mb-4">
+      <span class="material-icons text-4xl">check_circle</span>
+    </div>
+    <h3 class="font-extrabold text-xl mb-2">Setujui Akun Ini?</h3>
+    <p class="text-sm text-base-content/70 mb-6" id="approveMsg">Akun guru akan diaktifkan dan guru dapat langsung masuk ke platform.</p>
+    <div class="flex gap-3 justify-center">
+      <button class="btn btn-success normal-case gap-1" id="approveConfirmBtn">
+        <span class="material-icons">check_circle</span>Ya, Setujui
+      </button>
+      <form method="dialog">
+        <button class="btn btn-ghost normal-case">Batal</button>
+      </form>
+    </div>
+  </div>
+  <form method="dialog" class="modal-backdrop"><button>Tutup</button></form>
+</dialog>
+
+<!-- MODAL KONFIRMASI TOLAK -->
+<dialog id="rejectDoneModal" class="modal">
+  <div class="modal-box max-w-sm text-center">
+    <div class="w-16 h-16 rounded-full bg-error/15 text-error flex items-center justify-center mx-auto mb-4">
+      <span class="material-icons text-4xl">cancel</span>
+    </div>
+    <h3 class="font-extrabold text-xl mb-2">Penolakan Terkirim</h3>
+    <p class="text-sm text-base-content/70 mb-6">Guru akan menerima notifikasi beserta alasan yang Anda tulis. Mereka dapat mendaftar ulang setelah memperbaiki data.</p>
+    <form method="dialog">
+      <button class="btn btn-primary normal-case">Oke, Mengerti</button>
+    </form>
+  </div>
+  <form method="dialog" class="modal-backdrop"><button>Tutup</button></form>
+</dialog>
+
+<!-- bar.js menangani: sidebar nav, judul halaman, theme toggle, drawer mobile -->
+<script src="../assets/js/bar.js"></script>
+<script>
+  function openReject(btn) {
+    const row = btn.closest('tr');
+    document.querySelectorAll('tr.row-open').forEach(r => { if (r !== row) r.classList.remove('row-open'); });
+    row.classList.add('row-open');
+    row.querySelector('textarea').focus();
+  }
+
+  function cancelReject(btn) {
+    btn.closest('tr').classList.remove('row-open');
+  }
+
+  function doReject(btn) {
+    const row = btn.closest('tr');
+    const ta  = row.querySelector('textarea');
+    if (!ta.value.trim()) {
+      ta.focus();
+      ta.classList.add('textarea-error');
+      ta.placeholder = 'Alasan wajib diisi sebelum mengirim penolakan.';
+      return;
+    }
+    row.classList.remove('row-open');
+    document.getElementById('rejectDoneModal').showModal();
+    const badge = row.querySelector('.badge');
+    badge.className = 'badge badge-error gap-1 whitespace-nowrap';
+    badge.innerHTML = '<span class="material-icons" style="font-size:14px">cancel</span>Ditolak';
+    row.querySelectorAll('.btn-success, .btn-error').forEach(b => b.setAttribute('disabled', ''));
+  }
+
+  let pendingApproveRow = null;
+  function doApprove(btn) {
+    pendingApproveRow = btn.closest('tr');
+    const name = pendingApproveRow.querySelector('.font-bold').textContent.trim();
+    document.getElementById('approveMsg').textContent = name + ' akan diaktifkan dan dapat langsung masuk ke platform.';
+    document.getElementById('approveModal').showModal();
+  }
+
+  document.getElementById('approveConfirmBtn').addEventListener('click', function () {
+    document.getElementById('approveModal').close();
+    if (!pendingApproveRow) return;
+    const badge = pendingApproveRow.querySelector('.badge');
+    badge.className = 'badge badge-success gap-1 whitespace-nowrap';
+    badge.innerHTML = '<span class="material-icons" style="font-size:14px">check_circle</span>Disetujui';
+    pendingApproveRow.querySelectorAll('.btn-success, .btn-error').forEach(b => b.setAttribute('disabled', ''));
+    pendingApproveRow = null;
+  });
+
+  function openPreview(src, name) {
+    document.getElementById('previewImg').src = src;
+    document.getElementById('previewName').textContent = 'Foto SK — ' + name;
+    document.getElementById('previewModal').showModal();
+  }
+</script>
+
+</body>
+</html>

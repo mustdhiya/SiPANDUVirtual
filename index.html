@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="sipandu">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SiPANDU VIRTUAL — Sistem Pendampingan Terpadu Virtual</title>
+
+  <!-- DaisyUI + Tailwind -->
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Custom DaisyUI Theme ── */
+    [data-theme="sipandu"] {
+      --p: 158 64% 32%;        /* Emerald Kemenag */
+      --pf: 158 64% 26%;
+      --pc: 0 0% 100%;
+      --s: 221 68% 24%;        /* Navy Blue */
+      --sf: 221 68% 18%;
+      --sc: 0 0% 100%;
+      --a: 158 50% 50%;
+      --b1: 0 0% 100%;
+      --b2: 158 30% 97%;
+      --b3: 158 20% 93%;
+      --n: 221 68% 20%;
+      --nc: 0 0% 100%;
+    }
+
+    body { font-family: 'Inter', sans-serif; }
+
+    /* ── Hero gradient ── */
+    .hero-gradient {
+      background: linear-gradient(135deg, #0f4c35 0%, #1a6b4a 50%, #1e3a5f 100%);
+    }
+
+    /* ── Navbar scroll shadow ── */
+    .navbar-solid {
+      background: #0f4c35;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    }
+
+    /* ── Feature card hover ── */
+    .feature-card {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(15, 76, 53, 0.12);
+    }
+
+    /* ── Step connector line ── */
+    .step-line::after {
+      content: '';
+      display: block;
+      width: 2px;
+      height: 40px;
+      background: #d1fae5;
+      margin: 8px auto 0;
+    }
+    .step-line:last-child::after { display: none; }
+
+    /* ── TW Card ── */
+    .tw-card {
+      border-left: 4px solid;
+      transition: transform 0.2s ease;
+    }
+    .tw-card:hover { transform: translateX(4px); }
+    .tw-1 { border-color: #10b981; }
+    .tw-2 { border-color: #3b82f6; }
+    .tw-3 { border-color: #f59e0b; }
+    .tw-4 { border-color: #ef4444; }
+
+    /* ── Scroll-to-top ── */
+    #scrollTop {
+      position: fixed; bottom: 24px; right: 24px;
+      z-index: 50; display: none;
+    }
+  </style>
+</head>
+
+<body class="bg-base-100 text-base-content">
+
+<!-- ══════════════════════════════════════════
+     NAVBAR
+══════════════════════════════════════════ -->
+<nav class="navbar navbar-solid sticky top-0 z-40 px-4 md:px-8">
+  <div class="flex-1 gap-3">
+    <span class="material-icons text-white text-3xl">school</span>
+    <div>
+      <span class="text-white font-bold text-lg leading-tight block">SiPANDU VIRTUAL</span>
+      <span class="text-green-200 text-xs">Pengawas PAI SMA/SMK Kota Samarinda</span>
+    </div>
+  </div>
+  <div class="flex-none gap-2 hidden md:flex">
+    <a href="#fitur"      class="btn btn-ghost text-white text-sm normal-case">Fitur</a>
+    <a href="#triwulan"   class="btn btn-ghost text-white text-sm normal-case">Triwulan</a>
+    <a href="#daftar"     class="btn btn-ghost text-white text-sm normal-case">Cara Daftar</a>
+    <a href="#pengumuman" class="btn btn-ghost text-white text-sm normal-case">Pengumuman</a>
+  </div>
+  <div class="flex-none gap-2 ml-2">
+    <a href="/login.html"    class="btn btn-outline btn-sm text-white border-white hover:bg-white hover:text-green-900 normal-case">Masuk</a>
+    <a href="/register.html" class="btn btn-sm bg-white text-green-900 hover:bg-green-50 normal-case font-semibold hidden md:flex">Daftar</a>
+  </div>
+  <!-- Mobile menu -->
+  <div class="dropdown dropdown-end md:hidden ml-1">
+    <label tabindex="0" class="btn btn-ghost btn-sm text-white">
+      <span class="material-icons">menu</span>
+    </label>
+    <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 mt-2">
+      <li><a href="#fitur">Fitur</a></li>
+      <li><a href="#triwulan">Triwulan</a></li>
+      <li><a href="#daftar">Cara Daftar</a></li>
+      <li><a href="#pengumuman">Pengumuman</a></li>
+      <li class="mt-1"><a href="/register.html" class="font-semibold text-green-700">Daftar Akun</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+<!-- ══════════════════════════════════════════
+     HERO
+══════════════════════════════════════════ -->
+<section class="hero-gradient min-h-[88vh] flex items-center px-4 py-20">
+  <div class="max-w-6xl mx-auto w-full grid md:grid-cols-2 gap-12 items-center">
+
+    <!-- Kiri -->
+    <div class="text-white">
+      <div class="badge bg-green-700 text-green-100 border-0 mb-4 text-xs px-3 py-3 gap-1">
+        <span class="material-icons text-sm">verified</span>
+        Platform Resmi Kepengawasan PAI
+      </div>
+      <h1 class="text-4xl md:text-5xl font-extrabold leading-tight mb-4">
+        SiPANDU<br/>
+        <span class="text-green-300">VIRTUAL</span>
+      </h1>
+      <p class="text-green-100 text-base md:text-lg leading-relaxed mb-2 font-semibold">
+        Sistem Pendampingan Terpadu Virtual
+      </p>
+      <p class="text-green-200 text-sm md:text-base leading-relaxed mb-8">
+        Platform digital untuk monitoring, pendampingan, dan pelaporan kinerja
+        Guru PAI SMA/SMK Kota Samarinda secara efisien, terstruktur, dan real-time.
+      </p>
+      <div class="flex flex-wrap gap-3">
+        <a href="/register.html" class="btn btn-lg bg-white text-green-900 hover:bg-green-50 normal-case font-bold gap-2 shadow-lg">
+          <span class="material-icons">person_add</span>
+          Daftar Sebagai Guru
+        </a>
+        <a href="#fitur" class="btn btn-lg btn-outline text-white border-white hover:bg-white hover:text-green-900 normal-case gap-2">
+          <span class="material-icons">info</span>
+          Pelajari Lebih Lanjut
+        </a>
+      </div>
+    </div>
+
+    <!-- Kanan — Stats Cards -->
+    <div class="grid grid-cols-2 gap-4">
+      <div class="card bg-white/10 backdrop-blur border border-white/20 text-white p-5">
+        <span class="material-icons text-green-300 text-4xl mb-2">groups</span>
+        <div class="text-3xl font-extrabold">66</div>
+        <div class="text-green-200 text-sm mt-1">Guru PAI Binaan</div>
+      </div>
+      <div class="card bg-white/10 backdrop-blur border border-white/20 text-white p-5">
+        <span class="material-icons text-blue-300 text-4xl mb-2">business</span>
+        <div class="text-3xl font-extrabold">44+</div>
+        <div class="text-green-200 text-sm mt-1">Sekolah SMA/SMK</div>
+      </div>
+      <div class="card bg-white/10 backdrop-blur border border-white/20 text-white p-5">
+        <span class="material-icons text-yellow-300 text-4xl mb-2">event_note</span>
+        <div class="text-3xl font-extrabold">4</div>
+        <div class="text-green-200 text-sm mt-1">Triwulan per Tahun</div>
+      </div>
+      <div class="card bg-white/10 backdrop-blur border border-white/20 text-white p-5">
+        <span class="material-icons text-red-300 text-4xl mb-2">description</span>
+        <div class="text-3xl font-extrabold">Auto</div>
+        <div class="text-green-200 text-sm mt-1">Generate Laporan</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     PENGUMUMAN PENTING
+══════════════════════════════════════════ -->
+<section id="pengumuman" class="bg-amber-50 border-y border-amber-200 px-4 py-6">
+  <div class="max-w-5xl mx-auto">
+    <div class="alert border border-amber-300 bg-amber-100 text-amber-900 gap-3 rounded-xl">
+      <span class="material-icons text-amber-600 text-2xl flex-shrink-0">campaign</span>
+      <div>
+        <p class="font-bold text-sm md:text-base">PENGUMUMAN PENTING UNTUK GURU PAI BINAAN</p>
+        <p class="text-sm mt-1 leading-relaxed">
+          Validasi portofolio dan administrasi pada akun <strong>SIAGA</strong> akan dilakukan
+          oleh Pengawas berdasarkan data yang Bapak/Ibu unggah di platform
+          <strong>SiPANDU VIRTUAL</strong>. Pastikan bukti kehadiran MGMP dan kegiatan
+          pembinaan diunggah tepat waktu agar proses verifikasi di SIAGA berjalan lancar.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     FITUR UTAMA
+══════════════════════════════════════════ -->
+<section id="fitur" class="py-20 px-4 bg-base-100">
+  <div class="max-w-6xl mx-auto">
+
+    <div class="text-center mb-14">
+      <div class="badge badge-primary badge-outline mb-3 px-4 py-3 text-xs gap-1">
+        <span class="material-icons text-sm">star</span>
+        Fitur Platform
+      </div>
+      <h2 class="text-3xl md:text-4xl font-extrabold text-neutral mb-3">Semua yang Bapak/Ibu Butuhkan</h2>
+      <p class="text-base-content/60 max-w-xl mx-auto text-sm md:text-base">
+        Dirancang khusus agar mudah digunakan oleh semua guru, tanpa perlu keahlian teknologi khusus.
+      </p>
+    </div>
+
+    <!-- Grid Fitur Guru -->
+    <h3 class="font-bold text-lg text-neutral mb-5 flex items-center gap-2">
+      <span class="material-icons text-primary">person</span>
+      Fitur untuk Guru Binaan
+    </h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-12">
+
+      <!-- F1 -->
+      <div class="card bg-base-100 border border-base-300 shadow-sm feature-card p-6">
+        <span class="material-icons text-primary text-4xl mb-3">assignment</span>
+        <h4 class="font-bold text-base mb-1">Form Triwulan Digital</h4>
+        <p class="text-sm text-base-content/60 leading-relaxed">
+          Isi instrumen dan upload dokumen kinerja setiap triwulan langsung dari HP atau laptop.
+          Form terbuka sesuai jadwal yang ditetapkan Pengawas.
+        </p>
+      </div>
+
+      <!-- F2 -->
+      <div class="card bg-base-100 border border-base-300 shadow-sm feature-card p-6">
+        <span class="material-icons text-primary text-4xl mb-3">cloud_upload</span>
+        <h4 class="font-bold text-base mb-1">Upload Dokumen Mudah</h4>
+        <p class="text-sm text-base-content/60 leading-relaxed">
+          Upload perangkat mengajar, SK, sertifikat, foto, dan video pembelajaran.
+          Sistem memandu dokumen apa saja yang perlu dilengkapi.
+        </p>
+      </div>
+
+      <!-- F3 -->
+      <div class="card bg-base-100 border border-base-300 shadow-sm feature-card p-6">
+        <span class="material-icons text-primary text-4xl mb-3">bar_chart</span>
+        <h4 class="font-bold text-base mb-1">Status SIAGA Real-Time</h4>
+        <p class="text-sm text-base-content/60 leading-relaxed">
+          Progress bar otomatis menunjukkan apakah syarat validasi SIAGA sudah terpenuhi
+          atau masih ada yang perlu dilengkapi.
+        </p>
+      </div>
+
+      <!-- F4 -->
+      <div class="card bg-base-100 border border-base-300 shadow-sm feature-card p-6">
+        <span class="material-icons text-primary text-4xl mb-3">forum</span>
+        <h4 class="font-bold text-base mb-1">Ruang Diskusi Triwulan</h4>
+        <p class="text-sm text-base-content/60 leading-relaxed">
+          Tanya langsung kepada Pengawas melalui ruang diskusi yang tersedia di setiap
+          triwulan. Tidak perlu menunggu pertemuan tatap muka.
+        </p>
+      </div>
+
+      <!-- F5 -->
+      <div class="card bg-base-100 border border-base-300 shadow-sm feature-card p-6">
+        <span class="material-icons text-primary text-4xl mb-3">folder_open</span>
+        <h4 class="font-bold text-base mb-1">Gudang PAI-BMTS</h4>
+        <p class="text-sm text-base-content/60 leading-relaxed">
+          Akses materi, contoh perangkat ajar, dan instrumen riset yang disiapkan
+          Pengawas kapan saja dan di mana saja.
+        </p>
+      </div>
+
+      <!-- F6 -->
+      <div class="card bg-base-100 border border-base-300 shadow-sm feature-card p-6">
+        <span class="material-icons text-primary text-4xl mb-3">save</span>
+        <h4 class="font-bold text-base mb-1">Simpan Otomatis</h4>
+        <p class="text-sm text-base-content/60 leading-relaxed">
+          Isian form tersimpan otomatis setiap 2 detik. Tidak perlu khawatir data hilang
+          meskipun internet tiba-tiba terputus.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Grid Fitur Admin -->
+    <h3 class="font-bold text-lg text-neutral mb-5 flex items-center gap-2">
+      <span class="material-icons text-secondary">admin_panel_settings</span>
+      Fitur untuk Pengawas (Admin)
+    </h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+      <!-- A1 -->
+      <div class="card bg-base-100 border border-base-300 shadow-sm feature-card p-6">
+        <span class="material-icons text-secondary text-4xl mb-3">manage_accounts</span>
+        <h4 class="font-bold text-base mb-1">Kelola Guru & Sekolah</h4>
+        <p class="text-sm text-base-content/60 leading-relaxed">
+          Tambah, edit, atau nonaktifkan data guru dan sekolah binaan kapan saja
+          tanpa perlu bantuan developer.
+        </p>
+      </div>
+
+      <!-- A2 -->
+      <div class="card bg-base-100 border border-base-300 shadow-sm feature-card p-6">
+        <span class="material-icons text-secondary text-4xl mb-3">table_chart</span>
+        <h4 class="font-bold text-base mb-1">Monitoring Center</h4>
+        <p class="text-sm text-base-content/60 leading-relaxed">
+          Pantau secara real-time siapa yang sudah dan belum submit dokumen.
+          Filter berdasarkan sekolah, triwulan, atau status dokumen.
+        </p>
+      </div>
+
+      <!-- A3 -->
+      <div class="card bg-base-100 border border-base-300 shadow-sm feature-card p-6">
+        <span class="material-icons text-secondary text-4xl mb-3">rate_review</span>
+        <h4 class="font-bold text-base mb-1">Review & Feedback Dokumen</h4>
+        <p class="text-sm text-base-content/60 leading-relaxed">
+          Berikan status "Lengkap" atau "Perlu Revisi" disertai komentar langsung
+          pada dokumen yang dikirim guru.
+        </p>
+      </div>
+
+      <!-- A4 -->
+      <div class="card bg-base-100 border border-base-300 shadow-sm feature-card p-6">
+        <span class="material-icons text-secondary text-4xl mb-3">leaderboard</span>
+        <h4 class="font-bold text-base mb-1">Matriks Prioritas</h4>
+        <p class="text-sm text-base-content/60 leading-relaxed">
+          Kategorisasi guru dalam tiga prioritas (Utama, Menengah, Akhir) berdasarkan
+          kelengkapan dokumen dan respons instrumen.
+        </p>
+      </div>
+
+      <!-- A5 -->
+      <div class="card bg-base-100 border border-base-300 shadow-sm feature-card p-6">
+        <span class="material-icons text-secondary text-4xl mb-3">print</span>
+        <h4 class="font-bold text-base mb-1">Laporan Otomatis</h4>
+        <p class="text-sm text-base-content/60 leading-relaxed">
+          Generate laporan triwulan dan laporan tahunan terpadu (Final Report) secara
+          otomatis dari data yang sudah diisi guru. Siap cetak dalam format PDF dan Excel.
+        </p>
+      </div>
+
+      <!-- A6 -->
+      <div class="card bg-base-100 border border-base-300 shadow-sm feature-card p-6">
+        <span class="material-icons text-secondary text-4xl mb-3">notifications_active</span>
+        <h4 class="font-bold text-base mb-1">Notifikasi WhatsApp</h4>
+        <p class="text-sm text-base-content/60 leading-relaxed">
+          Sistem kirim pengingat otomatis ke WhatsApp guru jika mendekati batas waktu
+          upload atau dokumen perlu diperbaiki.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     SUSUNAN TRIWULAN
+══════════════════════════════════════════ -->
+<section id="triwulan" class="py-20 px-4 bg-base-200">
+  <div class="max-w-5xl mx-auto">
+
+    <div class="text-center mb-14">
+      <div class="badge badge-primary badge-outline mb-3 px-4 py-3 text-xs gap-1">
+        <span class="material-icons text-sm">event_note</span>
+        Program Tahunan
+      </div>
+      <h2 class="text-3xl md:text-4xl font-extrabold text-neutral mb-3">Susunan Triwulan</h2>
+      <p class="text-base-content/60 max-w-xl mx-auto text-sm md:text-base">
+        Empat tahap pendampingan yang terstruktur sepanjang tahun ajaran 2025/2026.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+      <!-- TW I -->
+      <div class="card bg-base-100 shadow-sm tw-card tw-1 p-6">
+        <div class="flex items-start gap-4">
+          <div class="bg-emerald-100 text-emerald-700 rounded-xl p-3 flex-shrink-0">
+            <span class="material-icons text-3xl">assignment</span>
+          </div>
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <span class="badge badge-success badge-sm text-xs">Januari – Maret</span>
+            </div>
+            <h3 class="font-bold text-base text-neutral">Triwulan I</h3>
+            <p class="text-primary font-semibold text-sm mb-2">Perencanaan & Pemetaan</p>
+            <ul class="text-sm text-base-content/70 space-y-1">
+              <li class="flex items-center gap-1"><span class="material-icons text-xs text-success">check_circle</span>Kelengkapan 4 kategori perangkat mengajar</li>
+              <li class="flex items-center gap-1"><span class="material-icons text-xs text-success">check_circle</span>Upload SK, EDS & Rapor Sekolah</li>
+              <li class="flex items-center gap-1"><span class="material-icons text-xs text-success">check_circle</span>Pemetaan komitmen & kebutuhan pendampingan</li>
+              <li class="flex items-center gap-1"><span class="material-icons text-xs text-warning">add_circle</span><em>Khusus Kepsek: Program Pengembangan PAI</em></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- TW II -->
+      <div class="card bg-base-100 shadow-sm tw-card tw-2 p-6">
+        <div class="flex items-start gap-4">
+          <div class="bg-blue-100 text-blue-700 rounded-xl p-3 flex-shrink-0">
+            <span class="material-icons text-3xl">school</span>
+          </div>
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <span class="badge badge-info badge-sm text-xs">April – Juni</span>
+            </div>
+            <h3 class="font-bold text-base text-neutral">Triwulan II</h3>
+            <p class="text-blue-600 font-semibold text-sm mb-2">Pendampingan Tahap Awal</p>
+            <ul class="text-sm text-base-content/70 space-y-1">
+              <li class="flex items-center gap-1"><span class="material-icons text-xs text-success">check_circle</span>Upload video mengajar (link YouTube — wajib)</li>
+              <li class="flex items-center gap-1"><span class="material-icons text-xs text-success">check_circle</span>EDS & Rapor Sekolah, Modul Ajar terbaru</li>
+              <li class="flex items-center gap-1"><span class="material-icons text-xs text-success">check_circle</span>Analisis PBD: akar masalah, potensi, ide program</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- TW III -->
+      <div class="card bg-base-100 shadow-sm tw-card tw-3 p-6">
+        <div class="flex items-start gap-4">
+          <div class="bg-amber-100 text-amber-700 rounded-xl p-3 flex-shrink-0">
+            <span class="material-icons text-3xl">visibility</span>
+          </div>
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <span class="badge badge-warning badge-sm text-xs">Juli – September</span>
+            </div>
+            <h3 class="font-bold text-base text-neutral">Triwulan III</h3>
+            <p class="text-amber-600 font-semibold text-sm mb-2">Observasi & Umpan Balik</p>
+            <ul class="text-sm text-base-content/70 space-y-1">
+              <li class="flex items-center gap-1"><span class="material-icons text-xs text-success">check_circle</span>Bukti kehadiran MGMP & sertifikat diklat</li>
+              <li class="flex items-center gap-1"><span class="material-icons text-xs text-success">check_circle</span>Galeri foto/video unjuk kerja di kelas</li>
+              <li class="flex items-center gap-1"><span class="material-icons text-xs text-success">check_circle</span>Monitoring BTQ, Tahfidz & Rohis</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- TW IV -->
+      <div class="card bg-base-100 shadow-sm tw-card tw-4 p-6">
+        <div class="flex items-start gap-4">
+          <div class="bg-red-100 text-red-700 rounded-xl p-3 flex-shrink-0">
+            <span class="material-icons text-3xl">assessment</span>
+          </div>
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <span class="badge badge-error badge-sm text-xs">Oktober – Desember</span>
+            </div>
+            <h3 class="font-bold text-base text-neutral">Triwulan IV</h3>
+            <p class="text-red-600 font-semibold text-sm mb-2">Evaluasi & Pelaporan</p>
+            <ul class="text-sm text-base-content/70 space-y-1">
+              <li class="flex items-center gap-1"><span class="material-icons text-xs text-success">check_circle</span>PKG, rekap nilai & ketuntasan KKTP</li>
+              <li class="flex items-center gap-1"><span class="material-icons text-xs text-success">check_circle</span>Refleksi tahunan guru & rekomendasi</li>
+              <li class="flex items-center gap-1"><span class="material-icons text-xs text-success">check_circle</span>Data High Values Religious (riset disertasi)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     CARA PENDAFTARAN
+══════════════════════════════════════════ -->
+<section id="daftar" class="py-20 px-4 bg-base-100">
+  <div class="max-w-4xl mx-auto">
+
+    <div class="text-center mb-14">
+      <div class="badge badge-primary badge-outline mb-3 px-4 py-3 text-xs gap-1">
+        <span class="material-icons text-sm">how_to_reg</span>
+        Panduan Pendaftaran
+      </div>
+      <h2 class="text-3xl md:text-4xl font-extrabold text-neutral mb-3">Cara Mendaftar</h2>
+      <p class="text-base-content/60 max-w-xl mx-auto text-sm md:text-base">
+        Proses pendaftaran mudah dan cepat — cukup 3 langkah.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+      <!-- Step 1 -->
+      <div class="text-center">
+        <div class="w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center mx-auto mb-4 shadow-lg">
+          <span class="material-icons text-3xl">edit_note</span>
+        </div>
+        <div class="badge badge-primary mb-2">Langkah 1</div>
+        <h4 class="font-bold text-base mb-2">Isi Formulir Pendaftaran</h4>
+        <p class="text-sm text-base-content/60 leading-relaxed">
+          Isi nama lengkap, NIP/akun SIAGA, nomor WhatsApp, asal sekolah, dan upload
+          foto SK Pembagian Tugas.
+        </p>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="text-center">
+        <div class="w-16 h-16 rounded-full bg-warning text-white flex items-center justify-center mx-auto mb-4 shadow-lg">
+          <span class="material-icons text-3xl">hourglass_top</span>
+        </div>
+        <div class="badge badge-warning mb-2">Langkah 2</div>
+        <h4 class="font-bold text-base mb-2">Tunggu Verifikasi Pengawas</h4>
+        <p class="text-sm text-base-content/60 leading-relaxed">
+          Pengawas akan memeriksa data Anda. Setelah disetujui, Anda akan mendapat
+          notifikasi melalui WhatsApp.
+        </p>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="text-center">
+        <div class="w-16 h-16 rounded-full bg-success text-white flex items-center justify-center mx-auto mb-4 shadow-lg">
+          <span class="material-icons text-3xl">login</span>
+        </div>
+        <div class="badge badge-success mb-2">Langkah 3</div>
+        <h4 class="font-bold text-base mb-2">Masuk & Mulai Mengisi</h4>
+        <p class="text-sm text-base-content/60 leading-relaxed">
+          Login dengan email dan password yang Anda buat. Langsung akses Dashboard
+          dan mulai isi form Triwulan yang aktif.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="text-center mt-12">
+      <div class="alert bg-emerald-50 border border-emerald-200 text-emerald-900 max-w-lg mx-auto rounded-xl mb-6">
+        <span class="material-icons text-emerald-600">info</span>
+        <p class="text-sm">
+          Pendaftaran hanya untuk <strong>Guru PAI Binaan SMA/SMK</strong> yang namanya
+          sudah terdaftar dalam data Pengawas PAI Kota Samarinda.
+        </p>
+      </div>
+      <a href="/register.html" class="btn btn-primary btn-lg normal-case gap-2 shadow-md">
+        <span class="material-icons">person_add</span>
+        Daftar Sekarang
+      </a>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     STATUS SIAGA INFO
+══════════════════════════════════════════ -->
+<section class="py-16 px-4 bg-base-200">
+  <div class="max-w-5xl mx-auto">
+
+    <div class="text-center mb-10">
+      <h2 class="text-2xl md:text-3xl font-extrabold text-neutral mb-2">Memahami Status SIAGA Anda</h2>
+      <p class="text-base-content/60 text-sm md:text-base max-w-lg mx-auto">
+        Status ini menunjukkan kesiapan validasi portofolio Anda pada akun SIAGA oleh Pengawas.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+      <div class="card bg-base-100 shadow-sm border-t-4 border-success p-5 text-center">
+        <span class="material-icons text-success text-4xl mx-auto mb-3">check_circle</span>
+        <div class="badge badge-success mb-2">SIAP DIVALIDASI</div>
+        <p class="text-sm text-base-content/60">
+          Semua dokumen lengkap dan kehadiran MGMP terpenuhi. Pengawas dapat langsung
+          memberikan persetujuan di SIAGA.
+        </p>
+      </div>
+      <div class="card bg-base-100 shadow-sm border-t-4 border-warning p-5 text-center">
+        <span class="material-icons text-warning text-4xl mx-auto mb-3">warning</span>
+        <div class="badge badge-warning mb-2">SYARAT BELUM TERPENUHI</div>
+        <p class="text-sm text-base-content/60">
+          Dokumen sudah ada namun kehadiran MGMP belum mencapai minimal 3 kali.
+          Segera lengkapi bukti kehadiran.
+        </p>
+      </div>
+      <div class="card bg-base-100 shadow-sm border-t-4 border-error p-5 text-center">
+        <span class="material-icons text-error text-4xl mx-auto mb-3">cancel</span>
+        <div class="badge badge-error mb-2">BELUM DIBINA</div>
+        <p class="text-sm text-base-content/60">
+          Belum ada data yang dikirim untuk triwulan ini. Segera buka platform dan
+          lengkapi form yang tersedia.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════ -->
+<footer class="bg-neutral text-neutral-content py-12 px-4">
+  <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+
+    <div>
+      <div class="flex items-center gap-2 mb-3">
+        <span class="material-icons text-green-300 text-2xl">school</span>
+        <span class="font-bold text-lg">SiPANDU VIRTUAL</span>
+      </div>
+      <p class="text-neutral-content/70 text-sm leading-relaxed">
+        Sistem Pendampingan Terpadu Virtual — platform resmi monitoring kinerja
+        Guru PAI SMA/SMK Kota Samarinda.
+      </p>
+    </div>
+
+    <div>
+      <p class="font-semibold mb-3 text-sm uppercase tracking-wider text-neutral-content/50">Menu</p>
+      <ul class="space-y-2 text-sm text-neutral-content/80">
+        <li><a href="#fitur"      class="hover:text-white transition-colors">Fitur Platform</a></li>
+        <li><a href="#triwulan"   class="hover:text-white transition-colors">Susunan Triwulan</a></li>
+        <li><a href="#daftar"     class="hover:text-white transition-colors">Cara Mendaftar</a></li>
+        <li><a href="#pengumuman" class="hover:text-white transition-colors">Pengumuman</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <p class="font-semibold mb-3 text-sm uppercase tracking-wider text-neutral-content/50">Penanggungjawab</p>
+      <div class="flex items-start gap-3">
+        <span class="material-icons text-green-300 mt-0.5">account_circle</span>
+        <div class="text-sm text-neutral-content/80">
+          <p class="font-semibold text-white">Baqi Nurul Hakkurahmy, M.Pd.</p>
+          <p>Pengawas PAI SMA/SMK</p>
+          <p>Kota Samarinda</p>
+          <p class="mt-2 text-neutral-content/60 text-xs">Kementerian Agama Kota Samarinda</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="divider divider-neutral mt-8 mb-4 opacity-20"></div>
+  <div class="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-2 text-xs text-neutral-content/50">
+    <span>© 2026 SiPANDU VIRTUAL. Hak Cipta Dilindungi.</span>
+    <span>Versi 1.0.0 — Dikembangkan untuk Pengawas PAI Kota Samarinda</span>
+  </div>
+</footer>
+
+
+<!-- ══════════════════════════════════════════
+     SCROLL TO TOP BUTTON
+══════════════════════════════════════════ -->
+<button id="scrollTop" class="btn btn-primary btn-circle shadow-lg"
+  onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <span class="material-icons">arrow_upward</span>
+</button>
+
+<script>
+  window.addEventListener('scroll', () => {
+    document.getElementById('scrollTop').style.display =
+      window.scrollY > 400 ? 'flex' : 'none';
+  });
+</script>
+
+</body>
+</html>

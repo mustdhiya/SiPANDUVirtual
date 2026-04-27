@@ -1,0 +1,409 @@
+
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kelola Gudang PAI-BMTS | SiPANDU VIRTUAL</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .material-icons { font-size: 20px; vertical-align: middle; }
+    .file-tile { transition: transform .2s ease; }
+    .file-tile:hover { transform: translateY(-2px); }
+  </style>
+</head>
+<body data-role="admin" class="bg-base-200 text-base-content min-h-screen">
+
+<div class="drawer lg:drawer-open">
+  <input id="main-drawer" type="checkbox" class="drawer-toggle" />
+
+  <div class="drawer-content flex flex-col min-h-screen">
+
+    <!-- TOPBAR -->
+    <header class="navbar bg-base-100 border-b border-base-300 sticky top-0 z-30 px-4 lg:px-6">
+      <div class="flex-none lg:hidden">
+        <label for="main-drawer" class="btn btn-square btn-ghost" aria-label="Buka menu">
+          <span class="material-icons">menu</span>
+        </label>
+      </div>
+      <div class="flex-1 gap-3">
+        <div class="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+          <span class="material-icons">folder_open</span>
+        </div>
+        <div>
+          <h1 id="sipandu-page-title" class="font-extrabold text-lg leading-tight">Kelola Gudang PAI-BMTS</h1>
+          <p class="text-sm text-base-content/60">Upload, rapikan, dan bagikan materi untuk guru binaan</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 pr-1">
+        <button id="sipandu-theme-toggle" class="btn btn-ghost btn-sm gap-2 normal-case" aria-label="Ganti tema">
+          <span class="material-icons" id="sipandu-theme-icon">dark_mode</span>
+          <span id="sipandu-theme-label" class="hidden sm:inline">Mode Malam</span>
+        </button>
+        <button class="btn btn-primary btn-sm gap-2 normal-case" onclick="document.getElementById('modal-tambah').showModal()">
+          <span class="material-icons">add</span>
+          <span class="hidden sm:inline">Tambah Materi</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="p-4 md:p-6 space-y-6">
+
+      <!-- INFO BANNER -->
+      <div class="alert bg-primary/10 text-primary border border-primary/20">
+        <span class="material-icons">info</span>
+        <div>
+          <p class="font-bold">Halaman ini dibuat sederhana untuk Pengawas</p>
+          <p class="text-sm">Setiap tombol punya tujuan yang jelas: tambah, ubah, hapus, dan cari materi.</p>
+        </div>
+      </div>
+
+      <!-- STAT CARDS -->
+      <section class="grid grid-cols-2 xl:grid-cols-4 gap-4">
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-5 flex-row items-center justify-between">
+            <div>
+              <p class="text-sm text-base-content/60">Total Materi</p>
+              <p class="text-3xl font-extrabold">48</p>
+            </div>
+            <div class="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+              <span class="material-icons">library_books</span>
+            </div>
+          </div>
+        </div>
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-5 flex-row items-center justify-between">
+            <div>
+              <p class="text-sm text-base-content/60">Kategori Aktif</p>
+              <p class="text-3xl font-extrabold">6</p>
+            </div>
+            <div class="w-12 h-12 rounded-xl bg-secondary/10 text-secondary flex items-center justify-center">
+              <span class="material-icons">category</span>
+            </div>
+          </div>
+        </div>
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-5 flex-row items-center justify-between">
+            <div>
+              <p class="text-sm text-base-content/60">Materi Terbaru</p>
+              <p class="text-3xl font-extrabold">12</p>
+            </div>
+            <div class="w-12 h-12 rounded-xl bg-success/10 text-success flex items-center justify-center">
+              <span class="material-icons">new_releases</span>
+            </div>
+          </div>
+        </div>
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-5 flex-row items-center justify-between">
+            <div>
+              <p class="text-sm text-base-content/60">File Besar</p>
+              <p class="text-3xl font-extrabold">9</p>
+            </div>
+            <div class="w-12 h-12 rounded-xl bg-warning/10 text-warning flex items-center justify-center">
+              <span class="material-icons">video_library</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FILTER -->
+      <section class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-4 lg:p-5 gap-4">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+            <div>
+              <h2 class="font-extrabold text-lg">Pencarian dan Filter</h2>
+              <p class="text-sm text-base-content/60">Temukan materi dengan mudah menggunakan filter di bawah ini.</p>
+            </div>
+            <div class="flex gap-2 flex-wrap">
+              <button class="btn btn-outline btn-sm normal-case gap-2"><span class="material-icons">download</span>Export Daftar</button>
+              <button class="btn btn-outline btn-sm normal-case gap-2"><span class="material-icons">sort</span>Terbaru</button>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-3">
+            <label class="form-control xl:col-span-2">
+              <div class="label pb-1"><span class="label-text font-semibold">Cari judul materi</span></div>
+              <label class="input input-bordered flex items-center gap-2">
+                <span class="material-icons text-base-content/50">search</span>
+                <input type="text" class="grow" placeholder="Contoh: Modul Ajar Kelas XI" />
+              </label>
+            </label>
+            <label class="form-control">
+              <div class="label pb-1"><span class="label-text font-semibold">Kategori</span></div>
+              <select class="select select-bordered">
+                <option>Semua Kategori</option>
+                <option>Modul Ajar</option>
+                <option>Media Pembelajaran</option>
+                <option>Instrumen Supervisi</option>
+                <option>Materi PAI-BMTS</option>
+                <option>Video Pembinaan</option>
+              </select>
+            </label>
+            <label class="form-control">
+              <div class="label pb-1"><span class="label-text font-semibold">Tipe File</span></div>
+              <select class="select select-bordered">
+                <option>Semua File</option>
+                <option>PDF</option>
+                <option>PPT</option>
+                <option>DOCX</option>
+                <option>Video</option>
+              </select>
+            </label>
+            <label class="form-control">
+              <div class="label pb-1"><span class="label-text font-semibold">Status</span></div>
+              <select class="select select-bordered">
+                <option>Semua Status</option>
+                <option>Aktif</option>
+                <option>Arsip</option>
+              </select>
+            </label>
+          </div>
+          <div class="flex gap-2">
+            <button class="btn btn-primary normal-case gap-2"><span class="material-icons">filter_alt</span>Terapkan Filter</button>
+            <button class="btn btn-outline normal-case gap-2"><span class="material-icons">restart_alt</span>Reset</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- DAFTAR MATERI + PANEL KANAN -->
+      <section class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+
+        <div class="xl:col-span-2 space-y-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="text-xl font-extrabold">Daftar Materi</h2>
+              <p class="text-sm text-base-content/60">Klik Edit atau Hapus pada setiap kartu.</p>
+            </div>
+            <span class="badge badge-outline badge-lg">48 materi</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+            <article class="card bg-base-100 border border-base-300 shadow-sm file-tile">
+              <div class="card-body p-5 gap-3">
+                <div class="flex items-start gap-3">
+                  <div class="w-11 h-11 rounded-xl bg-error/10 text-error flex items-center justify-center flex-shrink-0">
+                    <span class="material-icons">picture_as_pdf</span>
+                  </div>
+                  <div class="min-w-0">
+                    <h3 class="font-bold leading-snug">Modul Ajar PAI Kelas XI Semester Ganjil</h3>
+                    <p class="text-xs text-base-content/60 mt-1">24 Apr 2026</p>
+                  </div>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                  <span class="badge badge-primary badge-outline">Modul Ajar</span>
+                  <span class="badge badge-outline">PDF</span>
+                  <span class="badge badge-success">Aktif</span>
+                </div>
+                <p class="text-sm text-base-content/70">Referensi guru untuk penyusunan perangkat pembelajaran berbasis kurikulum terbaru.</p>
+                <div class="flex gap-2 justify-end">
+                  <button class="btn btn-outline btn-sm normal-case gap-1"><span class="material-icons">edit</span>Edit</button>
+                  <button class="btn btn-error btn-outline btn-sm normal-case gap-1"><span class="material-icons">delete</span>Hapus</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="card bg-base-100 border border-base-300 shadow-sm file-tile">
+              <div class="card-body p-5 gap-3">
+                <div class="flex items-start gap-3">
+                  <div class="w-11 h-11 rounded-xl bg-warning/10 text-warning flex items-center justify-center flex-shrink-0">
+                    <span class="material-icons">slideshow</span>
+                  </div>
+                  <div class="min-w-0">
+                    <h3 class="font-bold leading-snug">Media Presentasi Deep Learning PAI</h3>
+                    <p class="text-xs text-base-content/60 mt-1">20 Apr 2026</p>
+                  </div>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                  <span class="badge badge-secondary badge-outline">Media Pembelajaran</span>
+                  <span class="badge badge-outline">PPT</span>
+                  <span class="badge badge-success">Aktif</span>
+                </div>
+                <p class="text-sm text-base-content/70">Bahan presentasi interaktif untuk dipakai guru di kelas.</p>
+                <div class="flex gap-2 justify-end">
+                  <button class="btn btn-outline btn-sm normal-case gap-1"><span class="material-icons">edit</span>Edit</button>
+                  <button class="btn btn-error btn-outline btn-sm normal-case gap-1"><span class="material-icons">delete</span>Hapus</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="card bg-base-100 border border-base-300 shadow-sm file-tile">
+              <div class="card-body p-5 gap-3">
+                <div class="flex items-start gap-3">
+                  <div class="w-11 h-11 rounded-xl bg-info/10 text-info flex items-center justify-center flex-shrink-0">
+                    <span class="material-icons">fact_check</span>
+                  </div>
+                  <div class="min-w-0">
+                    <h3 class="font-bold leading-snug">Instrumen Supervisi Kelas GPAI</h3>
+                    <p class="text-xs text-base-content/60 mt-1">18 Apr 2026</p>
+                  </div>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                  <span class="badge badge-info badge-outline">Instrumen Supervisi</span>
+                  <span class="badge badge-outline">DOCX</span>
+                  <span class="badge badge-success">Aktif</span>
+                </div>
+                <p class="text-sm text-base-content/70">Dokumen untuk pendampingan dan observasi guru pada triwulan berjalan.</p>
+                <div class="flex gap-2 justify-end">
+                  <button class="btn btn-outline btn-sm normal-case gap-1"><span class="material-icons">edit</span>Edit</button>
+                  <button class="btn btn-error btn-outline btn-sm normal-case gap-1"><span class="material-icons">delete</span>Hapus</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="card bg-base-100 border border-base-300 shadow-sm file-tile">
+              <div class="card-body p-5 gap-3">
+                <div class="flex items-start gap-3">
+                  <div class="w-11 h-11 rounded-xl bg-success/10 text-success flex items-center justify-center flex-shrink-0">
+                    <span class="material-icons">video_library</span>
+                  </div>
+                  <div class="min-w-0">
+                    <h3 class="font-bold leading-snug">Video Pembinaan Metode Aktif PAI</h3>
+                    <p class="text-xs text-base-content/60 mt-1">12 Apr 2026</p>
+                  </div>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                  <span class="badge badge-success badge-outline">Video Pembinaan</span>
+                  <span class="badge badge-outline">MP4</span>
+                  <span class="badge badge-warning">File Besar</span>
+                </div>
+                <p class="text-sm text-base-content/70">Video contoh praktik mengajar yang bisa ditonton ulang oleh guru binaan.</p>
+                <div class="flex gap-2 justify-end">
+                  <button class="btn btn-outline btn-sm normal-case gap-1"><span class="material-icons">edit</span>Edit</button>
+                  <button class="btn btn-error btn-outline btn-sm normal-case gap-1"><span class="material-icons">delete</span>Hapus</button>
+                </div>
+              </div>
+            </article>
+
+          </div>
+        </div>
+
+        <!-- PANEL KANAN -->
+        <aside class="space-y-4">
+          <div class="card bg-base-100 border border-base-300 shadow-sm">
+            <div class="card-body p-5 gap-3">
+              <h2 class="font-extrabold text-lg">Kategori Materi</h2>
+              <div class="space-y-2 text-sm">
+                <div class="flex items-center justify-between"><span>Modul Ajar</span><span class="badge badge-outline">14</span></div>
+                <div class="flex items-center justify-between"><span>Media Pembelajaran</span><span class="badge badge-outline">9</span></div>
+                <div class="flex items-center justify-between"><span>Instrumen Supervisi</span><span class="badge badge-outline">7</span></div>
+                <div class="flex items-center justify-between"><span>Materi PAI-BMTS</span><span class="badge badge-outline">11</span></div>
+                <div class="flex items-center justify-between"><span>Video Pembinaan</span><span class="badge badge-outline">5</span></div>
+                <div class="flex items-center justify-between"><span>Lainnya</span><span class="badge badge-outline">2</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card bg-base-100 border border-base-300 shadow-sm">
+            <div class="card-body p-5 gap-3">
+              <h2 class="font-extrabold text-lg">Panduan Cepat</h2>
+              <ul class="steps steps-vertical text-sm">
+                <li class="step step-primary">Klik tombol Tambah Materi</li>
+                <li class="step step-primary">Isi judul yang mudah dipahami</li>
+                <li class="step step-primary">Pilih kategori yang tepat</li>
+                <li class="step">Upload file lalu simpan</li>
+              </ul>
+            </div>
+          </div>
+        </aside>
+
+      </section>
+    </main>
+  </div>
+
+  <!-- SIDEBAR -->
+  <div class="drawer-side z-40">
+    <label for="main-drawer" aria-label="Tutup menu" class="drawer-overlay"></label>
+    <aside class="w-72 min-h-full bg-base-100 border-r border-base-300 p-4 flex flex-col gap-4">
+      <div class="flex items-center gap-3 px-2 pt-2">
+        <div class="w-11 h-11 rounded-2xl bg-primary text-primary-content flex items-center justify-center shadow-sm">
+          <span class="material-icons">school</span>
+        </div>
+        <div>
+          <p class="font-extrabold leading-tight">SiPANDU VIRTUAL</p>
+          <p class="text-xs text-base-content/60">Panel Pengawas PAI</p>
+        </div>
+      </div>
+
+      <!-- bar.js isi otomatis berdasarkan data-role="admin" di <body> -->
+      <ul id="sipandu-sidebar-nav" class="menu gap-1 text-sm flex-1 px-0"></ul>
+
+      <div class="card bg-base-200 border border-base-300">
+        <div class="card-body p-4">
+          <div class="flex items-center gap-3">
+            <div class="avatar placeholder">
+              <div class="bg-primary text-primary-content rounded-full w-10">
+                <span class="text-sm font-bold">BN</span>
+              </div>
+            </div>
+            <div>
+              <p class="font-bold text-sm">Baqi Nurul H.</p>
+              <p class="text-xs text-base-content/60">Pengawas PAI</p>
+            </div>
+          </div>
+          <a href="../login.html" class="btn btn-outline btn-sm normal-case mt-3 gap-2">
+            <span class="material-icons">logout</span>Keluar
+          </a>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- MODAL TAMBAH MATERI -->
+<dialog id="modal-tambah" class="modal">
+  <div class="modal-box max-w-lg w-full">
+    <form method="dialog">
+      <button class="btn btn-sm btn-circle btn-ghost absolute right-3 top-3" aria-label="Tutup">
+        <span class="material-icons">close</span>
+      </button>
+    </form>
+    <h3 class="font-extrabold text-lg mb-4">Tambah Materi Baru</h3>
+    <div class="space-y-4">
+      <label class="form-control">
+        <div class="label pb-1"><span class="label-text font-semibold">Judul Materi <span class="text-error">*</span></span></div>
+        <input type="text" placeholder="Contoh: Modul Ajar PAI Kelas XII" class="input input-bordered" />
+      </label>
+      <label class="form-control">
+        <div class="label pb-1"><span class="label-text font-semibold">Kategori <span class="text-error">*</span></span></div>
+        <select class="select select-bordered">
+          <option disabled selected>Pilih kategori</option>
+          <option>Modul Ajar</option>
+          <option>Media Pembelajaran</option>
+          <option>Instrumen Supervisi</option>
+          <option>Materi PAI-BMTS</option>
+          <option>Video Pembinaan</option>
+        </select>
+      </label>
+      <label class="form-control">
+        <div class="label pb-1"><span class="label-text font-semibold">Deskripsi Singkat</span></div>
+        <textarea class="textarea textarea-bordered h-24" placeholder="Tulis isi singkat materi agar guru mudah mengenali file ini"></textarea>
+      </label>
+      <label class="form-control">
+        <div class="label pb-1"><span class="label-text font-semibold">Upload File <span class="text-error">*</span></span></div>
+        <input type="file" class="file-input file-input-bordered w-full" />
+      </label>
+      <div class="alert alert-warning text-sm">
+        <span class="material-icons">warning</span>
+        Gunakan judul yang jelas. Hindari nama seperti "dokumen1" agar guru tidak bingung saat mengunduh.
+      </div>
+    </div>
+    <div class="modal-action mt-5">
+      <form method="dialog" class="flex gap-2">
+        <button class="btn btn-ghost normal-case">Batal</button>
+        <button class="btn btn-primary normal-case gap-2">
+          <span class="material-icons">save</span>Simpan Materi
+        </button>
+      </form>
+    </div>
+  </div>
+  <form method="dialog" class="modal-backdrop"><button>tutup</button></form>
+</dialog>
+
+<script src="../assets/js/bar.js"></script>
+</body>
+</html>

@@ -1,0 +1,501 @@
+
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Triwulan II — SiPANDU VIRTUAL</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .material-icons { font-size: 20px; vertical-align: middle; }
+
+    /* Sidebar nav — dirender bar.js */
+    #sipandu-sidebar-nav a {
+      border-radius: .625rem;
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      padding: .625rem .75rem;
+      font-size: .875rem;
+      transition: background .15s;
+    }
+    #sipandu-sidebar-nav a:hover  { background: oklch(var(--p)/.08); }
+    #sipandu-sidebar-nav a.active { background: oklch(var(--p)/.12); color: oklch(var(--p)); font-weight: 700; }
+
+    /* Kompensasi sidebar desktop */
+    @media (min-width: 1024px) { .drawer-offset { margin-left: 260px; } }
+  </style>
+</head>
+
+<body data-role="guru" class="bg-base-200 text-base-content min-h-screen">
+
+<div class="drawer lg:drawer-open">
+  <input id="main-drawer" type="checkbox" class="drawer-toggle"/>
+
+  <!-- ═══════════════════════════════════════
+       KONTEN UTAMA
+  ════════════════════════════════════════ -->
+  <div class="drawer-content drawer-offset flex flex-col min-h-screen">
+
+    <!-- TOPBAR -->
+    <header class="navbar bg-base-100 border-b border-base-300 sticky top-0 z-30 px-4 gap-2">
+      <label for="main-drawer" class="btn btn-ghost btn-square lg:hidden" aria-label="Buka menu">
+        <span class="material-icons">menu</span>
+      </label>
+
+      <div class="flex-1 flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center flex-shrink-0">
+          <span class="material-icons">school</span>
+        </div>
+        <div>
+          <h1 id="sipandu-page-title" class="font-extrabold text-base leading-tight">Triwulan II — Pendampingan</h1>
+          <p class="text-xs text-base-content/50 hidden sm:block">Periode: April – Juni 2026</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-1">
+        <button id="sipandu-theme-toggle" class="btn btn-ghost btn-square" aria-label="Ganti tema">
+          <span class="material-icons" id="sipandu-theme-icon">dark_mode</span>
+        </button>
+        <button class="btn btn-ghost btn-square" aria-label="Notifikasi">
+          <span class="material-icons">notifications</span>
+        </button>
+        <div class="dropdown dropdown-end">
+          <div tabindex="0" role="button" class="btn btn-ghost btn-square">
+            <span class="material-icons">account_circle</span>
+          </div>
+          <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-44 mt-2 border border-base-300 text-sm z-50">
+            <li><a href="profil.html"><span class="material-icons">person</span>Profil Saya</a></li>
+            <li><a href="../login.html" class="text-error"><span class="material-icons">logout</span>Keluar</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="p-4 md:p-6 max-w-3xl mx-auto w-full pb-24 space-y-5">
+
+      <!-- Breadcrumb -->
+      <div class="text-xs breadcrumbs text-base-content/50">
+        <ul>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li>Triwulan II</li>
+        </ul>
+      </div>
+
+      <!-- Status bar -->
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <p class="text-sm text-base-content/60">
+          Deadline: <strong class="text-error">30 Juni 2026</strong>
+        </p>
+        <span class="badge badge-warning badge-lg gap-1">
+          <span class="material-icons" style="font-size:15px">edit_note</span>Draft
+        </span>
+      </div>
+
+      <!-- Autosave info -->
+      <div class="alert alert-success py-2.5 gap-2 text-sm">
+        <span class="material-icons">cloud_done</span>
+        Form tersimpan otomatis. Bapak/Ibu bisa melanjutkan kapan saja.
+      </div>
+
+      <form id="formTW2" class="space-y-5" novalidate>
+
+        <!-- ─── A: VIDEO ─── -->
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-5 space-y-4">
+            <div class="flex items-center gap-2">
+              <span class="w-7 h-7 rounded-full bg-error text-white flex items-center justify-center text-xs font-bold flex-shrink-0">A</span>
+              <h2 class="font-bold text-base">Video Mengajar</h2>
+              <span class="badge badge-error badge-sm">Wajib</span>
+            </div>
+            <p class="text-sm text-base-content/60">
+              Upload video Bapak/Ibu mengajar di kelas. Pilih salah satu cara di bawah ini.
+            </p>
+
+            <div class="alert border border-error/30 bg-error/5 text-error py-2.5 gap-2 text-sm">
+              <span class="material-icons flex-shrink-0">videocam</span>
+              Form <strong>tidak bisa disubmit</strong> sebelum video diisi.
+            </div>
+
+            <!-- Tab switch -->
+            <div class="tabs tabs-boxed w-fit" id="videoTabs">
+              <button type="button" class="tab tab-active gap-1 text-sm" data-tab="yt">
+                <span class="material-icons" style="font-size:16px">smart_display</span>Link YouTube
+              </button>
+              <button type="button" class="tab gap-1 text-sm" data-tab="file">
+                <span class="material-icons" style="font-size:16px">upload_file</span>Upload File
+              </button>
+            </div>
+
+            <!-- Panel: YouTube -->
+            <div id="panelYT" class="space-y-3">
+              <label class="form-control">
+                <div class="label py-0 mb-1">
+                  <span class="label-text font-semibold text-sm">Link YouTube Video Mengajar</span>
+                  <span class="label-text-alt text-error text-xs">Wajib</span>
+                </div>
+                <label class="input input-bordered flex items-center gap-2">
+                  <span class="material-icons text-red-500">smart_display</span>
+                  <input type="url" name="link_video_youtube" id="ytLink"
+                    placeholder="https://www.youtube.com/watch?v=..."
+                    class="grow text-sm bg-transparent outline-none"/>
+                </label>
+                <div class="label pt-1">
+                  <span class="label-text-alt text-base-content/40">
+                    Pastikan visibilitas video <strong>Public</strong> atau <strong>Unlisted</strong>.
+                  </span>
+                </div>
+              </label>
+              <div id="ytPreview" class="hidden rounded-xl overflow-hidden border border-base-300 aspect-video bg-base-200">
+                <iframe id="ytIframe" class="w-full h-full" allowfullscreen></iframe>
+              </div>
+            </div>
+
+            <!-- Panel: Upload File -->
+            <div id="panelFile" class="hidden">
+              <label class="border-2 border-dashed border-base-300 rounded-xl p-8 flex flex-col items-center gap-2 cursor-pointer hover:border-primary transition-colors">
+                <span class="material-icons text-5xl text-base-content/30">video_file</span>
+                <p class="font-semibold text-sm">Pilih atau seret file video ke sini</p>
+                <p class="text-xs text-base-content/50">Format: MP4, MOV, AVI — Maks. 100 MB</p>
+                <span class="btn btn-outline btn-sm normal-case gap-1 mt-1 pointer-events-none">
+                  <span class="material-icons" style="font-size:16px">upload</span>Pilih File Video
+                </span>
+                <input type="file" name="file_video_alternatif" class="hidden" accept=".mp4,.mov,.avi"/>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- ─── B: DOKUMEN ─── -->
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-5 space-y-4">
+            <div class="flex items-center gap-2">
+              <span class="w-7 h-7 rounded-full bg-info text-white flex items-center justify-center text-xs font-bold flex-shrink-0">B</span>
+              <h2 class="font-bold text-base">Upload Dokumen Pendampingan</h2>
+            </div>
+            <div id="dokumenList" class="space-y-3"></div>
+          </div>
+        </div>
+
+        <!-- ─── C: ANALISIS PBD ─── -->
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-5 space-y-4">
+            <div class="flex items-center gap-2">
+              <span class="w-7 h-7 rounded-full bg-success text-white flex items-center justify-center text-xs font-bold flex-shrink-0">C</span>
+              <h2 class="font-bold text-base">Analisis PBD &amp; Rencana Tindak Lanjut</h2>
+            </div>
+            <p class="text-sm text-base-content/60">
+              Isi berdasarkan hasil diskusi dan analisis Rapor Pendidikan sekolah Bapak/Ibu.
+            </p>
+            <div id="pbdList" class="space-y-4"></div>
+          </div>
+        </div>
+
+        <!-- ─── D: INSTRUMEN Q22-Q31 ─── -->
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-5 space-y-5">
+            <div class="flex items-center gap-2">
+              <span class="material-icons text-primary">quiz</span>
+              <h2 class="font-bold text-base">Instrumen Pendampingan TW II</h2>
+            </div>
+            <p class="text-sm text-base-content/60">
+              Pilih satu jawaban yang paling sesuai dengan kondisi Bapak/Ibu saat ini.
+            </p>
+            <div id="instrumenList" class="space-y-4"></div>
+          </div>
+        </div>
+
+        <!-- ─── AKSI ─── -->
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-5 space-y-3">
+            <div class="alert alert-warning py-2.5 gap-2 text-sm">
+              <span class="material-icons flex-shrink-0">warning</span>
+              Setelah Submit, data <strong>tidak bisa diubah</strong>. Pastikan semua isian sudah benar.
+            </div>
+            <div class="flex flex-col sm:flex-row justify-end gap-3">
+              <button type="button" id="btnDraft"
+                class="btn btn-ghost normal-case gap-2 order-2 sm:order-1">
+                <span class="material-icons">save</span>Simpan Draft
+              </button>
+              <button type="submit"
+                class="btn btn-primary normal-case gap-2 order-1 sm:order-2">
+                <span class="material-icons">send</span>Submit Triwulan II
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </form>
+    </main>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       SIDEBAR
+  ════════════════════════════════════════ -->
+  <div class="drawer-side z-40">
+    <label for="main-drawer" class="drawer-overlay" aria-label="Tutup menu"></label>
+    <aside class="w-[260px] min-h-full bg-base-100 border-r border-base-300 flex flex-col">
+
+      <!-- Logo -->
+      <div class="px-5 py-5 border-b border-base-300 flex items-center gap-2">
+        <span class="material-icons text-primary text-3xl">school</span>
+        <div>
+          <p class="font-extrabold text-sm leading-none">SiPANDU VIRTUAL</p>
+          <p class="text-xs text-base-content/50 mt-0.5">Pengawas PAI Samarinda</p>
+        </div>
+      </div>
+
+      <!-- Profil ringkas -->
+      <div class="px-5 py-4 border-b border-base-300 bg-base-200/50 flex items-center gap-3">
+        <div class="avatar placeholder flex-shrink-0">
+          <div class="bg-primary text-primary-content rounded-full w-10">
+            <span class="font-bold text-base">AF</span>
+          </div>
+        </div>
+        <div>
+          <p class="font-semibold text-sm leading-tight">Ahmad Fauzi, S.Ag</p>
+          <p class="text-xs text-base-content/50">SMAN 4 Samarinda</p>
+          <span class="badge badge-success badge-xs mt-1">Guru PAI</span>
+        </div>
+      </div>
+
+      <!-- Nav — diisi bar.js -->
+      <nav class="flex-1 px-3 py-4 overflow-y-auto">
+        <ul id="sipandu-sidebar-nav" class="menu p-0 gap-0.5 text-sm"></ul>
+      </nav>
+
+      <!-- Footer sidebar: theme toggle + keluar -->
+      <div class="px-4 py-4 border-t border-base-300 space-y-2">
+        <div class="flex items-center justify-between px-1">
+          <span class="text-sm text-base-content/70 flex items-center gap-2">
+            <span class="material-icons" id="sipandu-theme-icon">dark_mode</span>
+            <span id="sipandu-theme-label">Mode Malam</span>
+          </span>
+          <button id="sipandu-theme-toggle" class="btn btn-ghost btn-xs" aria-label="Ganti tema">
+            <span class="material-icons">swap_horiz</span>
+          </button>
+        </div>
+        <a href="../login.html"
+          class="btn btn-ghost btn-sm w-full justify-start gap-2 text-error normal-case">
+          <span class="material-icons">logout</span>Keluar
+        </a>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SCRIPTS
+════════════════════════════════════════ -->
+<script src="../assets/js/bar.js"></script>
+<script>
+'use strict';
+
+/* ── 1. Video tab switch ── */
+document.querySelectorAll('#videoTabs .tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const isYT = btn.dataset.tab === 'yt';
+    document.querySelectorAll('#videoTabs .tab').forEach(t => t.classList.remove('tab-active'));
+    btn.classList.add('tab-active');
+    document.getElementById('panelYT').classList.toggle('hidden', !isYT);
+    document.getElementById('panelFile').classList.toggle('hidden', isYT);
+  });
+});
+
+/* ── 2. YouTube live preview ── */
+document.getElementById('ytLink').addEventListener('input', function () {
+  const match   = this.value.trim().match(/(?:v=|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+  const preview = document.getElementById('ytPreview');
+  const iframe  = document.getElementById('ytIframe');
+  if (match) {
+    iframe.src = 'https://www.youtube.com/embed/' + match[1];
+    preview.classList.remove('hidden');
+  } else {
+    preview.classList.add('hidden');
+    iframe.src = '';
+  }
+});
+
+/* ── 3. Render dokumen upload ── */
+const DOKUMEN = [
+  { name: 'file_eds_rapor', label: 'EDS & Rapor Sekolah',        desc: 'Hasil Evaluasi Diri Sekolah dan Rapor Pendidikan dari Kemendikbud.', accept: '.pdf,.zip'   },
+  { name: 'file_modul',     label: 'Modul Ajar (RPP) Terbaru',   desc: 'Modul Ajar atau RPP yang digunakan semester ini.',                   accept: '.pdf,.docx'  },
+  { name: 'file_jurnal',    label: 'Jurnal Refleksi Pembelajaran',desc: 'Catatan refleksi pribadi selama proses pembelajaran TW II.',         accept: '.pdf,.docx'  },
+];
+
+DOKUMEN.forEach(d => {
+  const wrap = document.createElement('div');
+  wrap.className = 'border border-base-200 rounded-xl p-4 space-y-3';
+
+  // Header
+  const header = document.createElement('div');
+  header.className = 'flex items-start justify-between gap-2';
+  const info = document.createElement('div');
+  const lName = document.createElement('p');
+  lName.className = 'font-semibold text-sm';
+  lName.textContent = d.label;
+  const lDesc = document.createElement('p');
+  lDesc.className = 'text-xs text-base-content/50 mt-0.5';
+  lDesc.textContent = d.desc;
+  const badge = document.createElement('span');
+  badge.className = 'badge badge-error badge-sm flex-shrink-0';
+  badge.textContent = 'Wajib';
+  info.appendChild(lName);
+  info.appendChild(lDesc);
+  header.appendChild(info);
+  header.appendChild(badge);
+
+  // Upload button
+  const lbl = document.createElement('label');
+  lbl.className = 'btn btn-outline btn-sm normal-case gap-1 cursor-pointer';
+  const icon = document.createElement('span');
+  icon.className = 'material-icons';
+  icon.style.fontSize = '16px';
+  icon.textContent = 'upload_file';
+  const txt = document.createTextNode('Upload ' + d.label);
+  const inp = document.createElement('input');
+  inp.type = 'file';
+  inp.name = d.name;
+  inp.className = 'hidden';
+  inp.accept = d.accept;
+  lbl.appendChild(icon);
+  lbl.appendChild(txt);
+  lbl.appendChild(inp);
+
+  wrap.appendChild(header);
+  wrap.appendChild(lbl);
+  document.getElementById('dokumenList').appendChild(wrap);
+});
+
+/* ── 4. Render PBD textarea ── */
+const PBD = [
+  { name: 'akar_masalah',    label: 'Akar Masalah yang Ditemukan',         hint: 'Temuan utama dari analisis Rapor Pendidikan.',            ph: 'Contoh: Metode pembelajaran masih monoton; visi-misi sekolah belum selaras dengan Kurikulum Merdeka...' },
+  { name: 'potensi_harapan', label: 'Potensi & Harapan Sekolah',           hint: 'Kekuatan dan potensi yang ada di sekolah binaan.',         ph: 'Contoh: Kepala sekolah mendukung inovasi; banyak guru muda yang antusias...' },
+  { name: 'ide_program',     label: 'Ide Program / Rencana Tindak Lanjut', hint: 'Rencana program berdasarkan hasil analisis di atas.',      ph: 'Contoh: Mengadakan workshop media digital bagi guru PAI...' },
+];
+
+PBD.forEach(p => {
+  const fc = document.createElement('label');
+  fc.className = 'form-control';
+
+  const row = document.createElement('div');
+  row.className = 'label py-0 mb-1';
+  const lt = document.createElement('span');
+  lt.className = 'label-text font-semibold text-sm';
+  lt.textContent = p.label;
+  const la = document.createElement('span');
+  la.className = 'label-text-alt text-error text-xs';
+  la.textContent = 'Wajib';
+  row.appendChild(lt);
+  row.appendChild(la);
+
+  const ta = document.createElement('textarea');
+  ta.name = p.name;
+  ta.rows = 4;
+  ta.placeholder = p.ph;
+  ta.className = 'textarea textarea-bordered text-sm leading-relaxed';
+
+  const hintRow = document.createElement('div');
+  hintRow.className = 'label pt-1';
+  const hs = document.createElement('span');
+  hs.className = 'label-text-alt text-base-content/40';
+  hs.textContent = p.hint;
+  hintRow.appendChild(hs);
+
+  fc.appendChild(row);
+  fc.appendChild(ta);
+  fc.appendChild(hintRow);
+  document.getElementById('pbdList').appendChild(fc);
+});
+
+/* ── 5. Render instrumen Q22-Q31 ── */
+const INSTRUMEN = [
+  { name: 'q22', label: 'Aspek "Deep Learning" yang paling sering Bapak/Ibu terapkan dalam PAI?',
+    opts: ['Diskusi kelompok mendalam berbasis Al-Quran','Proyek karya reflektif keagamaan','Mengaitkan PAI dengan pengalaman nyata siswa','Hafalan dan pemahaman teks kitab'] },
+  { name: 'q23', label: 'Bagaimana cara Bapak/Ibu menentukan KKTP dalam Modul Ajar?',
+    opts: ['Menyalin dari contoh yang ada','Deskripsi kriteria sesuai kompetensi yang dituju','Berdasarkan nilai rata-rata kelas sebelumnya','Mengikuti KKM yang sudah ada sebelumnya'] },
+  { name: 'q24', label: 'Peran utama KKG/MGMP dalam penguatan pedagogik Bapak/Ibu?',
+    opts: ['Menyelesaikan dokumen administrasi bersama-sama','Mendapat informasi terbaru tentang kebijakan','Ruang berbagi praktik baik dan metode inovatif','Memenuhi kewajiban kehadiran rutin'] },
+  { name: 'q25', label: 'Unsur paling krusial dalam monitoring Standar Proses pembelajaran?',
+    opts: ['Kelengkapan dokumen RPP/Modul Ajar','Kesesuaian rencana pembelajaran vs pelaksanaan','Nilai akhir siswa per semester','Kehadiran guru dalam pembelajaran'] },
+  { name: 'q26', label: 'Strategi pembelajaran berdiferensiasi yang Bapak/Ibu gunakan di kelas?',
+    opts: ['Membagi siswa ke kelompok berdasarkan nilai','Berbagai pilihan aktivitas sesuai minat siswa','Memberikan tugas yang sama untuk semua','Bimbingan individual di luar jam pelajaran'] },
+  { name: 'q27', label: 'Bagaimana Bapak/Ibu memastikan materi sesuai Capaian Pembelajaran (CP)?',
+    opts: ['Mengikuti buku teks secara berurutan','Berdasarkan pengalaman mengajar tahun lalu','Bedah CP dan turunkan menjadi Tujuan Pembelajaran','Menggunakan ATP dari internet sebagai referensi'] },
+  { name: 'q28', label: 'Workshop IT apa yang paling Bapak/Ibu butuhkan?',
+    opts: ['Penggunaan dasar aplikasi perkantoran (Word, Excel)','Pemanfaatan LMS (Google Classroom, Moodle)','Pengisian e-Kinerja dan SIAGA dengan benar','Pelatihan media interaktif (video/game edukasi)'] },
+  { name: 'q29', label: 'Apa tujuan utama refleksi di akhir setiap pertemuan?',
+    opts: ['Mengetahui bagian materi yang belum dipahami siswa','Mengisi jurnal harian guru','Memotivasi siswa di akhir pelajaran','Menyelesaikan target materi harian'] },
+  { name: 'q30', label: 'Bukti fisik keberhasilan pendampingan observasi yang paling valid?',
+    opts: ['Lembar umpan balik supervisi yang disepakati bersama','Foto kegiatan belajar mengajar','Nilai UTS siswa yang meningkat','Daftar hadir kegiatan MGMP'] },
+  { name: 'q31', label: 'Tindakan saat ada kesenjangan antara kurikulum dan kesiapan siswa?',
+    opts: ['Adaptasi materi sesuai kesiapan siswa (Scaffolding)','Tetap mengikuti kurikulum tanpa perubahan','Mengurangi materi yang dianggap terlalu sulit','Melaporkan ke kepala sekolah untuk solusi bersama'] },
+];
+const LETTERS = ['A','B','C','D'];
+
+INSTRUMEN.forEach((q, idx) => {
+  const card = document.createElement('div');
+  card.className = 'border border-base-200 rounded-xl p-4 space-y-2';
+
+  const title = document.createElement('p');
+  title.className = 'font-semibold text-sm';
+  title.textContent = (idx + 22) + '. ' + q.label;   // Q22 – Q31
+  card.appendChild(title);
+
+  q.opts.forEach((opt, oi) => {
+    const lbl = document.createElement('label');
+    lbl.className = 'flex items-center gap-3 cursor-pointer p-2 rounded-lg hover:bg-base-200';
+
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = q.name;
+    radio.value = LETTERS[oi];
+    radio.className = 'radio radio-primary radio-sm flex-shrink-0';
+
+    const span = document.createElement('span');
+    span.className = 'text-sm';
+    span.textContent = LETTERS[oi] + '. ' + opt;
+
+    lbl.appendChild(radio);
+    lbl.appendChild(span);
+    card.appendChild(lbl);
+  });
+
+  document.getElementById('instrumenList').appendChild(card);
+});
+
+/* ── 6. Toast helper ── */
+function showToast(msg, type) {
+  const t = document.createElement('div');
+  t.className = 'toast toast-end z-50';
+  const alert = document.createElement('div');
+  alert.className = 'alert alert-' + type + ' gap-2 text-sm';
+  const icon = document.createElement('span');
+  icon.className = 'material-icons';
+  icon.textContent = 'check_circle';
+  const text = document.createTextNode(msg);
+  alert.appendChild(icon);
+  alert.appendChild(text);
+  t.appendChild(alert);
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 3000);
+}
+
+/* ── 7. Draft & Submit ── */
+document.getElementById('btnDraft').addEventListener('click', () => {
+  showToast('Draft tersimpan!', 'success');
+});
+
+document.getElementById('formTW2').addEventListener('submit', e => {
+  e.preventDefault();
+  showToast('Triwulan II berhasil disubmit!', 'success');
+});
+</script>
+
+</body>
+</html>

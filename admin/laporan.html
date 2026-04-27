@@ -1,0 +1,473 @@
+
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Laporan & Export — SiPANDU VIRTUAL</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: "Inter", ui-sans-serif, system-ui, sans-serif; }
+    .material-icons { font-size: 20px; vertical-align: middle; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+    .soft-ring:focus { outline: none; box-shadow: 0 0 0 3px rgb(16 185 129 / .18); }
+    .sidebar-active { background-color: rgb(16 185 129 / .12); color: rgb(5 150 105); font-weight: 700; border-radius: .75rem; }
+  </style>
+</head>
+<body data-role="admin" class="bg-base-200 text-base-content min-h-screen">
+
+<div class="drawer lg:drawer-open">
+  <input id="main-drawer" type="checkbox" class="drawer-toggle" />
+
+  <!-- KONTEN UTAMA -->
+  <div class="drawer-content flex flex-col min-h-screen">
+
+    <!-- TOPBAR -->
+    <header class="navbar bg-base-100 border-b border-base-300 sticky top-0 z-30 px-4 lg:px-6 gap-2">
+      <div class="flex-none lg:hidden">
+        <label for="main-drawer" class="btn btn-square btn-ghost" aria-label="Buka menu">
+          <span class="material-icons">menu</span>
+        </label>
+      </div>
+
+      <div class="flex-1 flex items-center gap-3 min-w-0">
+        <div class="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
+          <span class="material-icons">print</span>
+        </div>
+        <div class="min-w-0">
+          <h1 id="sipandu-page-title" class="text-lg md:text-xl font-extrabold leading-tight truncate">Laporan & Export</h1>
+          <p class="text-xs text-base-content/60 hidden sm:block">Cetak laporan triwulan dan ekspor data guru binaan.</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-1 flex-shrink-0">
+        <button id="sipandu-theme-toggle" class="btn btn-ghost btn-sm gap-2 normal-case" aria-label="Ganti mode tampilan">
+          <span class="material-icons" id="sipandu-theme-icon">dark_mode</span>
+          <span id="sipandu-theme-label" class="hidden md:inline text-sm">Mode Malam</span>
+        </button>
+        <button class="btn btn-ghost btn-circle" aria-label="Notifikasi">
+          <span class="material-icons">notifications</span>
+        </button>
+        <div class="dropdown dropdown-end">
+          <button class="btn btn-ghost gap-2 normal-case px-2">
+            <div class="avatar placeholder">
+              <div class="bg-primary text-primary-content rounded-full w-9">
+                <span class="text-sm font-bold">BN</span>
+              </div>
+            </div>
+            <div class="hidden md:block text-left">
+              <div class="text-sm font-bold leading-tight">Baqi Nurul</div>
+              <div class="text-xs text-base-content/60">Pengawas PAI</div>
+            </div>
+          </button>
+          <ul class="menu dropdown-content mt-2 p-2 shadow bg-base-100 rounded-box w-52 border border-base-300 z-50">
+            <li><a href="#"><span class="material-icons">account_circle</span>Profil</a></li>
+            <li><a href="#"><span class="material-icons">settings</span>Pengaturan</a></li>
+            <li><a href="../login.html" class="text-error"><span class="material-icons">logout</span>Keluar</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="p-4 lg:p-6 space-y-5">
+
+      <!-- Info Banner -->
+      <div class="alert bg-info/10 border border-info/20 shadow-sm">
+        <span class="material-icons text-info flex-shrink-0">info</span>
+        <div>
+          <div class="font-semibold text-sm">Halaman ini menyiapkan laporan dari data yang sudah diisi guru.</div>
+          <div class="text-sm text-base-content/70">Pilih triwulan yang ingin dicetak, periksa preview, lalu tekan tombol Cetak atau Export.</div>
+        </div>
+      </div>
+
+      <!-- Stat Cards -->
+      <section class="grid grid-cols-2 xl:grid-cols-4 gap-3">
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-4 gap-1">
+            <div class="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-1">
+              <span class="material-icons">description</span>
+            </div>
+            <p class="text-sm text-base-content/60">Laporan Siap</p>
+            <p class="text-2xl font-extrabold">4 TW</p>
+          </div>
+        </div>
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-4 gap-1">
+            <div class="w-10 h-10 rounded-xl bg-success/10 text-success flex items-center justify-center mb-1">
+              <span class="material-icons">task_alt</span>
+            </div>
+            <p class="text-sm text-base-content/60">Data Lengkap</p>
+            <p class="text-2xl font-extrabold text-success">58</p>
+          </div>
+        </div>
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-4 gap-1">
+            <div class="w-10 h-10 rounded-xl bg-warning/10 text-warning flex items-center justify-center mb-1">
+              <span class="material-icons">pending_actions</span>
+            </div>
+            <p class="text-sm text-base-content/60">Perlu Perbaikan</p>
+            <p class="text-2xl font-extrabold text-warning">8</p>
+          </div>
+        </div>
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-4 gap-1">
+            <div class="w-10 h-10 rounded-xl bg-secondary/10 text-secondary flex items-center justify-center mb-1">
+              <span class="material-icons">table_view</span>
+            </div>
+            <p class="text-sm text-base-content/60">Format Tersedia</p>
+            <p class="text-2xl font-extrabold">PDF / XLSX</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Filter -->
+      <section class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-4 lg:p-5 gap-4">
+          <div>
+            <h2 class="font-extrabold text-lg">Filter Laporan</h2>
+            <p class="text-sm text-base-content/60">Pilih tahun ajaran, jenis laporan, dan sekolah sebelum mencetak.</p>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3">
+            <label class="form-control">
+              <div class="label pb-1"><span class="label-text font-semibold">Tahun Ajaran</span></div>
+              <select class="select select-bordered soft-ring">
+                <option selected>2025/2026</option>
+                <option>2024/2025</option>
+              </select>
+            </label>
+            <label class="form-control">
+              <div class="label pb-1"><span class="label-text font-semibold">Jenis Laporan</span></div>
+              <select class="select select-bordered soft-ring">
+                <option selected>Laporan Triwulan</option>
+                <option>Laporan Tahunan Terpadu</option>
+              </select>
+            </label>
+            <label class="form-control">
+              <div class="label pb-1"><span class="label-text font-semibold">Sekolah</span></div>
+              <select class="select select-bordered soft-ring">
+                <option selected>Semua Sekolah</option>
+                <option>SMAN 4 Samarinda</option>
+                <option>SMKN 2 Samarinda</option>
+                <option>SMAS Nabil Husein</option>
+              </select>
+            </label>
+            <label class="form-control">
+              <div class="label pb-1"><span class="label-text font-semibold">Format File</span></div>
+              <select class="select select-bordered soft-ring">
+                <option selected>PDF</option>
+                <option>Excel (.xlsx)</option>
+              </select>
+            </label>
+          </div>
+          <div class="flex flex-wrap gap-3 pt-1">
+            <button class="btn btn-primary normal-case gap-2">
+              <span class="material-icons">print</span>Cetak Laporan Triwulan
+            </button>
+            <button class="btn btn-outline normal-case gap-2">
+              <span class="material-icons">file_download</span>Export Excel
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Preview Tabs -->
+      <section class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-4 lg:p-5 gap-4">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+            <div>
+              <h2 class="font-extrabold text-lg">Preview Ringkasan Laporan</h2>
+              <p class="text-sm text-base-content/60">Pilih triwulan di bawah untuk melihat isi laporan sebelum dicetak.</p>
+            </div>
+            <span class="badge badge-outline badge-lg gap-1 py-3">
+              <span class="material-icons text-sm">visibility</span>Preview sebelum cetak
+            </span>
+          </div>
+
+          <!-- Tabs -->
+          <div role="tablist" class="tabs tabs-boxed bg-base-200 p-1 flex flex-wrap gap-1">
+            <button role="tab" class="tab tab-active gap-1" data-tab="tw1"><span class="material-icons text-sm">looks_one</span>TW I</button>
+            <button role="tab" class="tab gap-1" data-tab="tw2"><span class="material-icons text-sm">looks_two</span>TW II</button>
+            <button role="tab" class="tab gap-1" data-tab="tw3"><span class="material-icons text-sm">looks_3</span>TW III</button>
+            <button role="tab" class="tab gap-1" data-tab="tw4"><span class="material-icons text-sm">looks_4</span>TW IV</button>
+            <button role="tab" class="tab gap-1" data-tab="tahun"><span class="material-icons text-sm">calendar_month</span>Tahunan</button>
+          </div>
+
+          <!-- Panel TW I -->
+          <div id="tw1" class="tab-panel active space-y-4">
+            <div class="alert bg-success/10 border border-success/20">
+              <span class="material-icons text-success">description</span>
+              <div>
+                <div class="font-semibold">Output TW I — Rekap kesiapan administrasi guru awal tahun pelajaran.</div>
+                <div class="text-sm text-base-content/70">Verifikasi dokumen induk dan kesiapan perangkat pembelajaran.</div>
+              </div>
+            </div>
+            <div class="grid grid-cols-3 gap-3">
+              <div class="card bg-base-200 p-4"><p class="text-xs text-base-content/60">Guru Aktif</p><p class="text-2xl font-bold">66</p></div>
+              <div class="card bg-base-200 p-4"><p class="text-xs text-base-content/60">Lengkap</p><p class="text-2xl font-bold text-success">54</p></div>
+              <div class="card bg-base-200 p-4"><p class="text-xs text-base-content/60">Revisi</p><p class="text-2xl font-bold text-warning">12</p></div>
+            </div>
+            <div class="overflow-x-auto rounded-xl border border-base-300">
+              <table class="table table-zebra">
+                <thead><tr><th>Komponen</th><th>Isi Preview</th></tr></thead>
+                <tbody>
+                  <tr><td>Data profil guru</td><td>Nama, NIP, golongan, satminkal</td></tr>
+                  <tr><td>Verifikasi dokumen induk</td><td>Status Prota, Promes, Silabus, link admin PAI</td></tr>
+                  <tr><td>Output laporan</td><td>Rekap kesiapan administrasi awal tahun</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Panel TW II -->
+          <div id="tw2" class="tab-panel space-y-4">
+            <div class="alert bg-info/10 border border-info/20">
+              <span class="material-icons text-info">description</span>
+              <div>
+                <div class="font-semibold">Output TW II — Dokumen Pendampingan Pra-Penyusunan RKT berbasis PBD.</div>
+                <div class="text-sm text-base-content/70">Hasil diskusi dan analisis berdasarkan data PBD dan RKT.</div>
+              </div>
+            </div>
+            <div class="overflow-x-auto rounded-xl border border-base-300">
+              <table class="table table-zebra">
+                <thead><tr><th>Komponen</th><th>Isi Preview</th></tr></thead>
+                <tbody>
+                  <tr><td>Hasil diskusi & analisis</td><td>Akar masalah, potensi, harapan, ide program</td></tr>
+                  <tr><td>Matriks prioritas</td><td>Prioritas utama, menengah, akhir</td></tr>
+                  <tr><td>Jadwal kegiatan</td><td>Kalender pemantauan bulanan</td></tr>
+                  <tr><td>Output laporan</td><td>Dokumen pendampingan pra-penyusunan RKT</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Panel TW III -->
+          <div id="tw3" class="tab-panel space-y-4">
+            <div class="alert bg-warning/10 border border-warning/20">
+              <span class="material-icons text-warning">description</span>
+              <div>
+                <div class="font-semibold">Output TW III — Laporan kemajuan kinerja instruksional guru binaan.</div>
+                <div class="text-sm text-base-content/70">Observasi kelas, monitoring ekstrakurikuler, dan bukti dukung digital.</div>
+              </div>
+            </div>
+            <div class="overflow-x-auto rounded-xl border border-base-300">
+              <table class="table table-zebra">
+                <thead><tr><th>Komponen</th><th>Isi Preview</th></tr></thead>
+                <tbody>
+                  <tr><td>Instrumen observasi kelas</td><td>Penilaian performa mengajar guru</td></tr>
+                  <tr><td>Monitoring ekstrakurikuler</td><td>BTQ, Rohis, praktik ibadah</td></tr>
+                  <tr><td>Bukti dukung</td><td>Galeri digital foto dan video</td></tr>
+                  <tr><td>Output laporan</td><td>Laporan kemajuan kinerja instruksional</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Panel TW IV -->
+          <div id="tw4" class="tab-panel space-y-4">
+            <div class="alert bg-error/10 border border-error/20">
+              <span class="material-icons text-error">description</span>
+              <div>
+                <div class="font-semibold">Output TW IV — Laporan Tahunan Terpadu siap cetak dan ekspor.</div>
+                <div class="text-sm text-base-content/70">Ketuntasan KKTP, refleksi tahunan, dan rekomendasi perbaikan.</div>
+              </div>
+            </div>
+            <div class="overflow-x-auto rounded-xl border border-base-300">
+              <table class="table table-zebra">
+                <thead><tr><th>Komponen</th><th>Isi Preview</th></tr></thead>
+                <tbody>
+                  <tr><td>Capaian hasil belajar</td><td>Data ketuntasan KKTP</td></tr>
+                  <tr><td>Refleksi tahunan</td><td>Evaluasi mandiri guru selama satu tahun</td></tr>
+                  <tr><td>Rekomendasi</td><td>Catatan pengawas untuk perbaikan berikutnya</td></tr>
+                  <tr><td>Output laporan</td><td>Laporan tahunan terpadu (final report)</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Panel Tahunan -->
+          <div id="tahun" class="tab-panel space-y-4">
+            <div class="alert bg-secondary/10 border border-secondary/20">
+              <span class="material-icons text-secondary">summarize</span>
+              <div>
+                <div class="font-semibold">Laporan Tahunan menggabungkan seluruh progres TW I sampai TW IV.</div>
+                <div class="text-sm text-base-content/70">Format final report — siap cetak atau diekspor.</div>
+              </div>
+            </div>
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="card bg-base-200">
+                <div class="card-body p-4 gap-2">
+                  <h3 class="font-semibold">Isi Laporan Tahunan</h3>
+                  <ul class="list-disc pl-5 text-sm text-base-content/70 space-y-1">
+                    <li>Ringkasan progres per triwulan</li>
+                    <li>Rekap status dokumen guru</li>
+                    <li>Distribusi matriks prioritas</li>
+                    <li>Catatan rekomendasi pengawas</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="card bg-base-200">
+                <div class="card-body p-4 gap-2">
+                  <h3 class="font-semibold">Format Tersedia</h3>
+                  <div class="space-y-2 text-sm text-base-content/70">
+                    <div class="flex items-center justify-between"><span>PDF resmi</span><span class="badge badge-success">Cetak</span></div>
+                    <div class="flex items-center justify-between"><span>Excel rekap</span><span class="badge badge-info">Analisis</span></div>
+                    <div class="flex items-center justify-between"><span>Preview web</span><span class="badge badge-outline">Lihat cepat</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Tabel File + Panduan -->
+      <section class="grid grid-cols-1 xl:grid-cols-3 gap-5">
+
+        <div class="xl:col-span-2 card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-4 lg:p-5 gap-3">
+            <div>
+              <h2 class="font-extrabold text-lg">Daftar File Laporan</h2>
+              <p class="text-sm text-base-content/60">Klik tombol Cetak atau Unduh sesuai file yang dibutuhkan.</p>
+            </div>
+            <div class="overflow-x-auto rounded-xl border border-base-300">
+              <table class="table table-zebra">
+                <thead>
+                  <tr>
+                    <th>Nama File</th>
+                    <th>Periode</th>
+                    <th>Format</th>
+                    <th>Status</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="font-medium">Laporan_TW1_2025-2026</td>
+                    <td>Januari – Maret</td>
+                    <td>PDF</td>
+                    <td><span class="badge badge-success">Siap</span></td>
+                    <td class="flex gap-2">
+                      <button class="btn btn-sm btn-primary normal-case gap-1"><span class="material-icons text-sm">print</span>Cetak</button>
+                      <button class="btn btn-sm btn-outline normal-case gap-1"><span class="material-icons text-sm">download</span>Unduh</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="font-medium">Rekap_TW2_2025-2026</td>
+                    <td>April – Juni</td>
+                    <td>XLSX</td>
+                    <td><span class="badge badge-info">Siap</span></td>
+                    <td class="flex gap-2">
+                      <button class="btn btn-sm btn-outline normal-case gap-1"><span class="material-icons text-sm">open_in_new</span>Buka</button>
+                      <button class="btn btn-sm btn-outline normal-case gap-1"><span class="material-icons text-sm">download</span>Unduh</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="font-medium">Laporan_TW3_2025-2026</td>
+                    <td>Juli – September</td>
+                    <td>PDF</td>
+                    <td><span class="badge badge-warning">Menunggu</span></td>
+                    <td><button class="btn btn-sm btn-disabled normal-case" disabled>Belum tersedia</button></td>
+                  </tr>
+                  <tr>
+                    <td class="font-medium">Final_Report_2025-2026</td>
+                    <td>Oktober – Desember</td>
+                    <td>PDF</td>
+                    <td><span class="badge badge-success">Siap</span></td>
+                    <td class="flex gap-2">
+                      <button class="btn btn-sm btn-primary normal-case gap-1"><span class="material-icons text-sm">print</span>Cetak</button>
+                      <button class="btn btn-sm btn-outline normal-case gap-1"><span class="material-icons text-sm">download</span>Unduh</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="card bg-base-100 border border-base-300 shadow-sm">
+          <div class="card-body p-4 lg:p-5 gap-4">
+            <div>
+              <h2 class="font-extrabold text-lg">Panduan Singkat</h2>
+              <p class="text-sm text-base-content/60">Ikuti 3 langkah mudah ini untuk mencetak laporan.</p>
+            </div>
+            <div class="space-y-4">
+              <div class="flex gap-3 items-start">
+                <div class="badge badge-primary badge-lg flex-shrink-0">1</div>
+                <p class="text-sm text-base-content/75">Pilih tahun ajaran dan jenis laporan di bagian Filter di atas.</p>
+              </div>
+              <div class="flex gap-3 items-start">
+                <div class="badge badge-primary badge-lg flex-shrink-0">2</div>
+                <p class="text-sm text-base-content/75">Periksa preview ringkasan di tab triwulan yang ingin dicetak.</p>
+              </div>
+              <div class="flex gap-3 items-start">
+                <div class="badge badge-primary badge-lg flex-shrink-0">3</div>
+                <p class="text-sm text-base-content/75">Tekan tombol <strong>Cetak</strong> untuk PDF atau <strong>Export Excel</strong> untuk spreadsheet.</p>
+              </div>
+            </div>
+            <div class="divider my-0"></div>
+            <div class="alert bg-base-200 border border-base-300 p-3">
+              <span class="material-icons text-primary flex-shrink-0">tips_and_updates</span>
+              <p class="text-xs text-base-content/70 leading-relaxed">Gunakan label teks di setiap tombol agar guru senior tidak bingung membaca ikon saja.</p>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+  </div>
+
+  <!-- SIDEBAR -->
+  <div class="drawer-side z-40">
+    <label for="main-drawer" aria-label="Tutup menu" class="drawer-overlay"></label>
+    <aside class="w-72 min-h-full bg-base-100 border-r border-base-300 p-4 flex flex-col">
+
+      <div class="flex items-center gap-3 px-2 py-3 mb-3 border-b border-base-300">
+        <div class="w-11 h-11 rounded-2xl bg-primary text-primary-content flex items-center justify-center">
+          <span class="material-icons">school</span>
+        </div>
+        <div>
+          <div class="font-extrabold leading-tight">SiPANDU VIRTUAL</div>
+          <div class="text-xs text-base-content/60">Panel Pengawas PAI</div>
+        </div>
+      </div>
+
+      <ul id="sipandu-sidebar-nav" class="menu gap-1 text-sm flex-1 p-0"></ul>
+
+      <div class="card bg-base-200 border border-base-300 mt-4">
+        <div class="card-body p-4 gap-1">
+          <div class="flex items-center gap-2">
+            <span class="material-icons text-primary">calendar_month</span>
+            <span class="font-semibold text-sm">Tahun Ajaran Aktif</span>
+          </div>
+          <p class="text-sm text-base-content/70">2025/2026</p>
+          <p class="text-xs text-base-content/50">Empat triwulan aktif untuk pemantauan dan pelaporan.</p>
+        </div>
+      </div>
+
+    </aside>
+  </div>
+</div>
+
+<script src="../assets/js/bar.js"></script>
+<script>
+  // Tab logic — sederhana, tidak over-engineered
+  document.querySelectorAll('[data-tab]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('[data-tab]').forEach(t => t.classList.remove('tab-active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('tab-active');
+      const panel = document.getElementById(btn.dataset.tab);
+      if (panel) panel.classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,318 @@
+
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Status SIAGA Saya — SiPANDU VIRTUAL</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .material-icons { font-size: 20px; vertical-align: middle; }
+  </style>
+</head>
+
+<body data-role="guru" class="bg-base-200 min-h-screen">
+
+<div class="drawer lg:drawer-open">
+  <input id="main-drawer" type="checkbox" class="drawer-toggle" />
+
+  <!-- ══ KONTEN UTAMA ══ -->
+  <div class="drawer-content flex flex-col min-h-screen">
+
+    <!-- NAVBAR -->
+    <header class="navbar bg-base-100 border-b border-base-300 sticky top-0 z-30 px-4 lg:px-6 gap-2">
+      <div class="flex-none lg:hidden">
+        <label for="main-drawer" class="btn btn-ghost btn-square btn-sm" aria-label="Buka menu">
+          <span class="material-icons">menu</span>
+        </label>
+      </div>
+
+      <div class="flex-1 flex items-center gap-2 min-w-0">
+        <span class="material-icons text-primary">verified_user</span>
+        <h1 id="sipandu-page-title" class="font-bold text-base truncate">Status SIAGA Saya</h1>
+      </div>
+
+      <div class="flex items-center gap-1">
+        <button id="sipandu-theme-toggle" class="btn btn-ghost btn-sm btn-circle" aria-label="Ganti tema">
+          <span class="material-icons" id="sipandu-theme-icon">dark_mode</span>
+        </button>
+        <button class="btn btn-ghost btn-sm btn-circle indicator" aria-label="Notifikasi">
+          <span class="indicator-item badge badge-error badge-xs"></span>
+          <span class="material-icons">notifications</span>
+        </button>
+        <div class="dropdown dropdown-end">
+          <div tabindex="0" role="button" class="avatar placeholder cursor-pointer ml-1">
+            <div class="bg-primary text-primary-content rounded-full w-9">
+              <span class="text-sm font-bold">AF</span>
+            </div>
+          </div>
+          <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 mt-2 border border-base-300 z-50">
+            <li class="menu-title"><span>Ahmad Fauzi, S.Ag</span></li>
+            <li><a href="../guru/profil.html"><span class="material-icons">person</span>Profil Saya</a></li>
+            <li><a href="../login.html" class="text-error"><span class="material-icons">logout</span>Keluar</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="p-4 md:p-6 max-w-5xl mx-auto w-full space-y-6">
+
+      <!-- INFO BANNER -->
+      <div class="alert bg-blue-50 border border-blue-200 text-blue-900 rounded-xl">
+        <span class="material-icons text-blue-500 flex-shrink-0">info</span>
+        <p class="text-sm leading-relaxed">
+          Validasi portofolio di akun <strong>SIAGA</strong> dilakukan oleh Pengawas berdasarkan
+          dokumen yang Bapak/Ibu unggah di sini. Pastikan semua dokumen berstatus
+          <strong>Lengkap</strong> sebelum batas waktu.
+        </p>
+      </div>
+
+      <!-- STATUS UTAMA -->
+      <div class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body p-5">
+          <div class="flex flex-col sm:flex-row items-center gap-5">
+            <div class="flex flex-col items-center gap-2 flex-shrink-0">
+              <div class="w-24 h-24 rounded-full bg-warning/10 border-4 border-warning flex items-center justify-center">
+                <span class="material-icons text-warning" style="font-size:48px">warning</span>
+              </div>
+              <span class="badge badge-warning badge-lg font-bold px-4 py-3 text-xs text-center">SYARAT BELUM TERPENUHI</span>
+            </div>
+            <div class="flex-1 text-center sm:text-left">
+              <p class="font-bold text-lg">Ahmad Fauzi, S.Ag</p>
+              <p class="text-base-content/60 text-sm mb-3">SMAN 4 Samarinda &nbsp;·&nbsp; Guru PAI</p>
+              <div class="alert alert-warning rounded-lg py-2 px-4 text-sm">
+                <span class="material-icons text-sm flex-shrink-0">info</span>
+                Kehadiran MGMP Triwulan III belum mencapai minimal <strong>3 kali</strong>.
+                Segera unggah bukti kehadiran tambahan.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROGRESS PER TRIWULAN -->
+      <div>
+        <h2 class="font-bold text-base flex items-center gap-2 mb-3">
+          <span class="material-icons text-primary">bar_chart</span>
+          Progres Kelengkapan per Triwulan
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+
+          <!-- TW I -->
+          <div class="card bg-base-100 border border-base-300 shadow-sm p-4">
+            <div class="flex justify-between items-center mb-2">
+              <span class="font-semibold text-sm">Triwulan I</span>
+              <span class="badge badge-success badge-sm">100%</span>
+            </div>
+            <progress class="progress progress-success w-full mb-1" value="100" max="100"></progress>
+            <p class="text-xs text-base-content/50">Jan – Mar · 13/13 dokumen</p>
+            <span class="badge badge-success gap-1 text-xs mt-2">
+              <span class="material-icons" style="font-size:12px">check_circle</span>Lengkap
+            </span>
+          </div>
+
+          <!-- TW II -->
+          <div class="card bg-base-100 border border-base-300 shadow-sm p-4">
+            <div class="flex justify-between items-center mb-2">
+              <span class="font-semibold text-sm">Triwulan II</span>
+              <span class="badge badge-success badge-sm">100%</span>
+            </div>
+            <progress class="progress progress-success w-full mb-1" value="100" max="100"></progress>
+            <p class="text-xs text-base-content/50">Apr – Jun · 4/4 dokumen</p>
+            <span class="badge badge-success gap-1 text-xs mt-2">
+              <span class="material-icons" style="font-size:12px">check_circle</span>Lengkap
+            </span>
+          </div>
+
+          <!-- TW III -->
+          <div class="card bg-base-100 border-l-4 border-warning shadow-sm p-4">
+            <div class="flex justify-between items-center mb-2">
+              <span class="font-semibold text-sm">Triwulan III</span>
+              <span class="badge badge-warning badge-sm">60%</span>
+            </div>
+            <progress class="progress progress-warning w-full mb-1" value="60" max="100"></progress>
+            <p class="text-xs text-base-content/50">Jul – Sep · 3/5 dokumen</p>
+            <span class="badge badge-warning gap-1 text-xs mt-2">
+              <span class="material-icons" style="font-size:12px">warning</span>Belum Lengkap
+            </span>
+          </div>
+
+          <!-- TW IV -->
+          <div class="card bg-base-100 border border-base-300 shadow-sm p-4 opacity-50">
+            <div class="flex justify-between items-center mb-2">
+              <span class="font-semibold text-sm">Triwulan IV</span>
+              <span class="badge badge-ghost badge-sm">Terkunci</span>
+            </div>
+            <progress class="progress w-full mb-1" value="0" max="100"></progress>
+            <p class="text-xs text-base-content/50">Okt – Des · Belum dibuka</p>
+            <span class="badge badge-ghost gap-1 text-xs mt-2">
+              <span class="material-icons" style="font-size:12px">lock</span>Terkunci
+            </span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- DETAIL DOKUMEN — helper macro via reusable rows -->
+
+      <!-- TW I -->
+      <div class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="flex items-center gap-3 px-5 pt-5 pb-3 border-b border-base-200">
+          <span class="material-icons text-success">assignment_turned_in</span>
+          <div class="flex-1 min-w-0">
+            <p class="font-bold text-sm">Triwulan I — Perencanaan &amp; Pemetaan</p>
+            <p class="text-xs text-base-content/50">Januari – Maret</p>
+          </div>
+          <span class="badge badge-success gap-1 flex-shrink-0">
+            <span class="material-icons" style="font-size:12px">check_circle</span>Semua Lengkap
+          </span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="table table-sm text-sm">
+            <thead><tr class="text-xs text-base-content/50"><th>Dokumen</th><th>Status</th><th>Tanggal Upload</th><th>Catatan</th></tr></thead>
+            <tbody>
+              <tr><td class="font-medium">Perangkat Utama (CP, ATP, Modul, KKTP)</td><td><span class="badge badge-success badge-sm">Lengkap</span></td><td class="text-xs text-base-content/50">10 Jan 2026</td><td class="text-xs text-base-content/40">—</td></tr>
+              <tr><td class="font-medium">Kalender Pendidikan, Prota &amp; Promes</td><td><span class="badge badge-success badge-sm">Lengkap</span></td><td class="text-xs text-base-content/50">10 Jan 2026</td><td class="text-xs text-base-content/40">—</td></tr>
+              <tr><td class="font-medium">Asesmen, Jurnal, Presensi &amp; Analisis</td><td><span class="badge badge-success badge-sm">Lengkap</span></td><td class="text-xs text-base-content/50">11 Jan 2026</td><td class="text-xs text-base-content/40">—</td></tr>
+              <tr><td class="font-medium">Program Remedial &amp; Pengayaan</td><td><span class="badge badge-success badge-sm">Lengkap</span></td><td class="text-xs text-base-content/50">11 Jan 2026</td><td class="text-xs text-base-content/40">—</td></tr>
+              <tr><td class="font-medium">EDS &amp; Rapor Sekolah</td><td><span class="badge badge-success badge-sm">Lengkap</span></td><td class="text-xs text-base-content/50">12 Jan 2026</td><td class="text-xs text-base-content/40">—</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TW II -->
+      <div class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="flex items-center gap-3 px-5 pt-5 pb-3 border-b border-base-200">
+          <span class="material-icons text-success">assignment_turned_in</span>
+          <div class="flex-1 min-w-0">
+            <p class="font-bold text-sm">Triwulan II — Pendampingan Tahap Awal</p>
+            <p class="text-xs text-base-content/50">April – Juni</p>
+          </div>
+          <span class="badge badge-success gap-1 flex-shrink-0">
+            <span class="material-icons" style="font-size:12px">check_circle</span>Semua Lengkap
+          </span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="table table-sm text-sm">
+            <thead><tr class="text-xs text-base-content/50"><th>Dokumen</th><th>Status</th><th>Tanggal Upload</th><th>Catatan</th></tr></thead>
+            <tbody>
+              <tr><td class="font-medium">Video Mengajar (YouTube)</td><td><span class="badge badge-success badge-sm">Lengkap</span></td><td class="text-xs text-base-content/50">5 Apr 2026</td><td class="text-xs text-success flex items-center gap-1"><span class="material-icons" style="font-size:12px">thumb_up</span>Bagus, media variatif</td></tr>
+              <tr><td class="font-medium">EDS &amp; Rapor Sekolah</td><td><span class="badge badge-success badge-sm">Lengkap</span></td><td class="text-xs text-base-content/50">5 Apr 2026</td><td class="text-xs text-base-content/40">—</td></tr>
+              <tr><td class="font-medium">Modul Ajar (RPP) Terbaru</td><td><span class="badge badge-success badge-sm">Lengkap</span></td><td class="text-xs text-base-content/50">6 Apr 2026</td><td class="text-xs text-base-content/40">—</td></tr>
+              <tr><td class="font-medium">Jurnal Refleksi Pembelajaran</td><td><span class="badge badge-success badge-sm">Lengkap</span></td><td class="text-xs text-base-content/50">7 Apr 2026</td><td class="text-xs text-base-content/40">—</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TW III -->
+      <div class="card bg-base-100 border border-warning/50 shadow-sm">
+        <div class="flex items-center gap-3 px-5 pt-5 pb-3 border-b border-base-200">
+          <span class="material-icons text-warning">pending</span>
+          <div class="flex-1 min-w-0">
+            <p class="font-bold text-sm">Triwulan III — Observasi &amp; Umpan Balik</p>
+            <p class="text-xs text-base-content/50">Juli – September &nbsp;·&nbsp; <strong class="text-error">Deadline: 30 Sep 2026</strong></p>
+          </div>
+          <span class="badge badge-warning gap-1 flex-shrink-0">
+            <span class="material-icons" style="font-size:12px">warning</span>3 dari 5
+          </span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="table table-sm text-sm">
+            <thead><tr class="text-xs text-base-content/50"><th>Dokumen</th><th>Status</th><th>Tanggal Upload</th><th>Catatan / Aksi</th></tr></thead>
+            <tbody>
+              <tr>
+                <td class="font-medium">Bukti Hadir MGMP</td>
+                <td><span class="badge badge-error badge-sm">Perlu Revisi</span></td>
+                <td class="text-xs text-base-content/50">2 Jul 2026</td>
+                <td class="text-xs text-error">Foto kurang jelas. Upload ulang resolusi lebih tinggi.</td>
+              </tr>
+              <tr>
+                <td class="font-medium">Resume Pembinaan</td>
+                <td><span class="badge badge-success badge-sm">Lengkap</span></td>
+                <td class="text-xs text-base-content/50">3 Jul 2026</td>
+                <td class="text-xs text-base-content/40">—</td>
+              </tr>
+              <tr>
+                <td class="font-medium">Laporan Ekstrakurikuler (BTQ &amp; Rohis)</td>
+                <td><span class="badge badge-success badge-sm">Lengkap</span></td>
+                <td class="text-xs text-base-content/50">3 Jul 2026</td>
+                <td class="text-xs text-base-content/40">—</td>
+              </tr>
+              <tr>
+                <td class="font-medium">Galeri Foto/Video Mengajar</td>
+                <td><span class="badge badge-warning badge-sm">Pending</span></td>
+                <td class="text-xs text-base-content/50">—</td>
+                <td class="text-xs text-base-content/50">Menunggu review Pengawas</td>
+              </tr>
+              <tr class="bg-error/5">
+                <td class="font-medium">Absensi Bulanan</td>
+                <td><span class="badge badge-ghost badge-sm">Belum Upload</span></td>
+                <td class="text-xs text-base-content/50">—</td>
+                <td>
+                  <a href="../guru/tw3.html" class="btn btn-xs btn-primary gap-1 normal-case">
+                    <span class="material-icons" style="font-size:12px">cloud_upload</span>Upload
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TW IV Terkunci -->
+      <div class="card bg-base-100 border border-base-300 shadow-sm opacity-50">
+        <div class="flex items-center gap-3 p-5">
+          <span class="material-icons text-base-content/30">lock</span>
+          <div>
+            <p class="font-bold text-sm text-base-content/50">Triwulan IV — Evaluasi &amp; Pelaporan</p>
+            <p class="text-xs text-base-content/40">Oktober – Desember · Belum dibuka oleh Pengawas</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOMBOL AKSI -->
+      <div class="flex flex-wrap gap-3 justify-center pb-6">
+        <a href="../guru/tw3.html" class="btn btn-primary normal-case gap-2">
+          <span class="material-icons">cloud_upload</span>Lengkapi Triwulan III
+        </a>
+        <a href="../guru/dashboard.html" class="btn btn-outline normal-case gap-2">
+          <span class="material-icons">dashboard</span>Kembali ke Dashboard
+        </a>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ══ SIDEBAR ══ -->
+  <div class="drawer-side z-40">
+    <label for="main-drawer" aria-label="Tutup menu" class="drawer-overlay"></label>
+    <aside class="w-64 min-h-full bg-base-100 border-r border-base-300 flex flex-col py-5 px-3">
+      <div class="flex items-center gap-2 px-3 mb-5">
+        <span class="material-icons text-primary" style="font-size:28px">school</span>
+        <div>
+          <p class="font-extrabold text-sm leading-tight">SiPANDU VIRTUAL</p>
+          <p class="text-xs text-base-content/50">Guru PAI Binaan</p>
+        </div>
+      </div>
+      <ul id="sipandu-sidebar-nav" class="menu menu-sm p-0 gap-1 flex-1"></ul>
+      <div class="px-3 pt-4 mt-2 border-t border-base-200">
+        <a href="../login.html" class="btn btn-ghost btn-sm w-full normal-case justify-start gap-2 text-error">
+          <span class="material-icons">logout</span>Keluar
+        </a>
+      </div>
+    </aside>
+  </div>
+
+</div>
+
+<script src="../assets/js/bar.js"></script>
+
+</body>
+</html>
