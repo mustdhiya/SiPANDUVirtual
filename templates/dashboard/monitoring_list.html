@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="space-y-4">
+    <div><h2 class="page-title">Monitoring Guru</h2></div>
+    <div class="card bg-white border shadow-sm">
+        <div class="card-body overflow-x-auto">
+            <table class="table">
+                <thead><tr><th>Guru</th><th>Sekolah</th><th>TW</th><th>Status</th><th>Progress</th></tr></thead>
+                <tbody>
+                    {% for row in monitoring_rows %}
+                    <tr>
+                        <td>{{ row.nama }}</td>
+                        <td>{{ row.sekolah }}</td>
+                        <td>{{ row.tw }}</td>
+                        <td><span class="badge badge-info">{{ row.status }}</span></td>
+                        <td>{{ row.progress }}%</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

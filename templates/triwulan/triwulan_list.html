@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Triwulan Saya - SiPANDU VIRTUAL{% endblock %}
+
+{% block content %}
+<div class="space-y-4">
+    <div>
+        <h2 class="page-title">Triwulan Saya</h2>
+        <p class="page-subtitle">Pilih triwulan yang akan Anda kerjakan atau periksa statusnya.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {% for item in triwulans %}
+        <div class="card bg-white border shadow-sm">
+            <div class="card-body">
+                <div class="flex items-start justify-between gap-3">
+                    <div>
+                        <h3 class="card-title">TW {{ item.nomor }}</h3>
+                        <p class="text-sm text-slate-500">{{ item.tema }}</p>
+                    </div>
+                    <span class="badge badge-primary status-badge">{{ item.status_label }}</span>
+                </div>
+
+                <div class="text-sm space-y-1 mt-2">
+                    <p><span class="font-semibold">Deadline:</span> {{ item.deadline }}</p>
+                    <p><span class="font-semibold">Status Review:</span> {{ item.review_status }}</p>
+                </div>
+
+                <div class="card-actions justify-end mt-4">
+                    <a href="#" class="btn btn-primary btn-sm">Buka Triwulan</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

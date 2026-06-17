@@ -1,11 +1,8 @@
-from django.http import HttpResponse
 from django.urls import path
 
-app_name = "konsultasi"
-
-def index_view(request):
-    return HttpResponse("Konsultasi")
+from apps.konsultasi import views
 
 urlpatterns = [
-    path("", index_view, name="index"),
+    path("", views.ThreadListView.as_view(), name="thread_list"),
+    path("<int:pk>/", views.ThreadDetailView.as_view(), name="thread_detail"),
 ]

@@ -18,17 +18,18 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
+from django.views.generic import RedirectView
 
 urlpatterns = [
     path("superadmin/", admin.site.urls),
-    path("", include("apps.dashboard.urls")),
-    path("accounts/", include("apps.accounts.urls")),
-    path("master/", include("apps.master.urls")),
-    path("triwulan/", include("apps.triwulan.urls")),
-    path("dokumen/", include("apps.dokumen.urls")),
-    path("konsultasi/", include("apps.konsultasi.urls")),
-    path("gudang/", include("apps.gudang.urls")),
-    path("riset/", include("apps.riset.urls")),
+    path("", RedirectView.as_view(pattern_name="dashboard:home", permanent=False), name="root"),
+    path("accounts/", include(("apps.accounts.urls", "accounts"), namespace="accounts")),
+    path("dashboard/", include(("apps.dashboard.urls", "dashboard"), namespace="dashboard")),
+    path("dokumen/", include(("apps.dokumen.urls", "dokumen"), namespace="dokumen")),
+    path("gudang/", include(("apps.gudang.urls", "gudang"), namespace="gudang")),
+    path("konsultasi/", include(("apps.konsultasi.urls", "konsultasi"), namespace="konsultasi")),
+    path("master/", include(("apps.master.urls", "master"), namespace="master")),
+    path("triwulan/", include(("apps.triwulan.urls", "triwulan"), namespace="triwulan")),
 ]
 
 if settings.DEBUG:

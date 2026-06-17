@@ -1,0 +1,11 @@
+<div class="card bg-white border shadow-sm">
+    <div class="card-body">
+        <h3 class="card-title">{{ title }}</h3>
+        {% if subtitle %}
+        <p class="text-sm text-slate-500">{{ subtitle }}</p>
+        {% endif %}
+        <div class="mt-4 space-y-4">
+            {{ content }}
+        </div>
+    </div>
+</div>

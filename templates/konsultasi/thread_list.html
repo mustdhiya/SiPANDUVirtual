@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Konsultasi - SiPANDU VIRTUAL{% endblock %}
+
+{% block content %}
+<div class="space-y-4">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+        <div>
+            <h2 class="page-title">Konsultasi</h2>
+            <p class="page-subtitle">Ajukan pertanyaan kepada pengawas terkait triwulan, dokumen, atau SIAGA.</p>
+        </div>
+        <a href="#" class="btn btn-primary">
+            <span class="material-icons">add_comment</span>
+            Buat Konsultasi Baru
+        </a>
+    </div>
+
+    <div class="space-y-3">
+        {% for thread in threads %}
+        <div class="card bg-white border shadow-sm">
+            <div class="card-body">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                    <div>
+                        <h3 class="font-semibold">{{ thread.subject }}</h3>
+                        <p class="text-sm text-slate-500">
+                            Status: {{ thread.status }} • Pesan terakhir: {{ thread.last_message_at|default:"Belum ada balasan" }}
+                        </p>
+                    </div>
+                    <a href="#" class="btn btn-outline btn-sm">Buka</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="alert alert-info">
+            <span class="material-icons">forum</span>
+            <span>Belum ada konsultasi.</span>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard Admin - SiPANDU VIRTUAL{% endblock %}
+
+{% block content %}
+<div class="space-y-4">
+    <div>
+        <h2 class="page-title">Dashboard Admin Pengawas</h2>
+        <p class="page-subtitle">Pantau guru binaan, progres triwulan, revisi, dan validasi SIAGA.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+        <div class="card bg-white border shadow-sm">
+            <div class="card-body">
+                <p class="text-sm text-slate-500">Total Guru Binaan</p>
+                <h3 class="text-2xl font-bold">{{ total_guru }}</h3>
+            </div>
+        </div>
+        <div class="card bg-white border shadow-sm">
+            <div class="card-body">
+                <p class="text-sm text-slate-500">Perlu Review</p>
+                <h3 class="text-2xl font-bold">{{ total_review }}</h3>
+            </div>
+        </div>
+        <div class="card bg-white border shadow-sm">
+            <div class="card-body">
+                <p class="text-sm text-slate-500">Perlu Revisi</p>
+                <h3 class="text-2xl font-bold">{{ total_revisi }}</h3>
+            </div>
+        </div>
+        <div class="card bg-white border shadow-sm">
+            <div class="card-body">
+                <p class="text-sm text-slate-500">Siap Divalidasi</p>
+                <h3 class="text-2xl font-bold">{{ total_siap_validasi }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
+        <div class="card bg-white border shadow-sm">
+            <div class="card-body">
+                <h3 class="card-title">Antrian Tindakan</h3>
+                <div class="space-y-3">
+                    <a href="#" class="btn btn-outline justify-start">
+                        <span class="material-icons">manage_accounts</span>
+                        Registrasi akun menunggu approval ({{ pending_registration_count }})
+                    </a>
+                    <a href="#" class="btn btn-outline justify-start">
+                        <span class="material-icons">fact_check</span>
+                        Submission menunggu review ({{ total_review }})
+                    </a>
+                    <a href="#" class="btn btn-outline justify-start">
+                        <span class="material-icons">warning</span>
+                        Dokumen perlu revisi ({{ total_revisi }})
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card bg-white border shadow-sm">
+            <div class="card-body">
+                <h3 class="card-title">Ringkasan Periode Aktif</h3>
+                <div class="space-y-2 text-sm">
+                    <div><span class="font-semibold">Tahun Ajaran:</span> {{ periode_aktif.tahun_ajaran.label }}</div>
+                    <div><span class="font-semibold">Triwulan:</span> TW {{ periode_aktif.nomor }}</div>
+                    <div><span class="font-semibold">Tema:</span> {{ periode_aktif.tema }}</div>
+                    <div><span class="font-semibold">Deadline:</span> {{ periode_aktif.deadline }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

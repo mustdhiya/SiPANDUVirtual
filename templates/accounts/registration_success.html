@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %}Pendaftaran Berhasil - SiPANDU VIRTUAL{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4">
+    <div class="card bg-base-100 border border-base-200 shadow-sm">
+        <div class="card-body p-6 lg:p-8 text-center">
+            <div class="mx-auto w-20 h-20 rounded-full bg-success/10 flex items-center justify-center mb-4">
+                <span class="material-icons text-success text-5xl">check_circle</span>
+            </div>
+
+            <h1 class="text-2xl font-bold text-base-content">Pendaftaran Berhasil Dikirim</h1>
+            <p class="text-base-content/70 mt-2">
+                Data pendaftaran Anda sudah masuk ke sistem dan sedang menunggu pemeriksaan admin.
+            </p>
+
+            <div class="alert alert-info mt-6 text-left">
+                <span class="material-icons">info</span>
+                <div>
+                    <div class="font-semibold">Apa yang terjadi setelah ini?</div>
+                    <div class="text-sm">
+                        Admin akan memeriksa kecocokan data Anda dengan master guru binaan dan dokumen yang diunggah.
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-6 text-left">
+                <div class="border border-base-200 rounded-2xl p-4">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="material-icons text-primary">person_search</span>
+                        <h3 class="font-semibold">1. Verifikasi Data</h3>
+                    </div>
+                    <p class="text-sm text-base-content/70">
+                        Admin akan mengecek nama, NIP SIAGA, dan data sekolah Anda.
+                    </p>
+                </div>
+
+                <div class="border border-base-200 rounded-2xl p-4">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="material-icons text-warning">description</span>
+                        <h3 class="font-semibold">2. Cek Dokumen</h3>
+                    </div>
+                    <p class="text-sm text-base-content/70">
+                        Berkas pendukung akan diperiksa untuk memastikan data sesuai.
+                    </p>
+                </div>
+
+                <div class="border border-base-200 rounded-2xl p-4">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="material-icons text-success">verified_user</span>
+                        <h3 class="font-semibold">3. Aktivasi Akun</h3>
+                    </div>
+                    <p class="text-sm text-base-content/70">
+                        Jika disetujui, akun Anda akan diaktifkan dan bisa digunakan untuk masuk.
+                    </p>
+                </div>
+            </div>
+
+            <div class="card bg-base-200/40 border border-base-200 mt-6 text-left">
+                <div class="card-body">
+                    <h3 class="card-title text-base">Ringkasan Data Pendaftaran</h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                        <div>
+                            <p class="text-base-content/60">Nama Lengkap</p>
+                            <p class="font-medium">{{ registration.nama_lengkap|default:user.get_full_name|default:"-" }}</p>
+                        </div>
+                        <div>
+                            <p class="text-base-content/60">NIP SIAGA</p>
+                            <p class="font-medium">{{ registration.nip_siaga|default:"-" }}</p>
+                        </div>
+                        <div>
+                            <p class="text-base-content/60">Nomor WhatsApp</p>
+                            <p class="font-medium">{{ registration.nomor_wa|default:user.nomor_wa|default:"-" }}</p>
+                        </div>
+                        <div>
+                            <p class="text-base-content/60">Status Saat Ini</p>
+                            <span class="badge badge-warning">Menunggu Verifikasi Admin</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-warning mt-6 text-left">
+                <span class="material-icons">schedule</span>
+                <div>
+                    <div class="font-semibold">Mohon menunggu proses verifikasi</div>
+                    <div class="text-sm">
+                        Selama akun belum disetujui, Anda belum dapat masuk ke dashboard utama.
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row justify-center gap-3 mt-6">
+                <a href="{% url 'accounts:login' %}" class="btn btn-primary">
+                    <span class="material-icons">login</span>
+                    Kembali ke Halaman Login
+                </a>
+                <a href="/" class="btn btn-outline">
+                    <span class="material-icons">home</span>
+                    Kembali ke Beranda
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

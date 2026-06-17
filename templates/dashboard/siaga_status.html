@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Status SIAGA - SiPANDU VIRTUAL{% endblock %}
+
+{% block content %}
+<div class="space-y-4">
+    <div>
+        <h2 class="page-title">Status SIAGA</h2>
+        <p class="page-subtitle">Lihat kelayakan validasi SIAGA Anda berdasarkan data pembinaan.</p>
+    </div>
+
+    <div class="card bg-white border shadow-sm">
+        <div class="card-body">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                <div>
+                    <p class="text-sm text-slate-500">Status Saat Ini</p>
+                    <h3 class="text-2xl font-bold">{{ siaga.status }}</h3>
+                    <p class="text-sm text-slate-500 mt-1">{{ siaga.note }}</p>
+                </div>
+
+                <div class="stats shadow border">
+                    <div class="stat">
+                        <div class="stat-title">Kehadiran MGMP</div>
+                        <div class="stat-value text-primary">{{ siaga.mgmp_count }}</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-title">Kelayakan</div>
+                        <div class="stat-value text-success">
+                            {% if siaga.is_eligible %}Ya{% else %}Belum{% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4 alert alert-info">
+                <span class="material-icons">info</span>
+                <span>{{ next_action }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Laporan - SiPANDU VIRTUAL{% endblock %}
+
+{% block content %}
+<div class="space-y-4">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+        <div>
+            <h2 class="page-title">Laporan</h2>
+            <p class="page-subtitle">Unduh rekap monitoring, progres, dan hasil pembinaan guru.</p>
+        </div>
+        <a href="#" class="btn btn-primary">
+            <span class="material-icons">download</span>
+            Export Laporan
+        </a>
+    </div>
+
+    <div class="card bg-white border shadow-sm">
+        <div class="card-body">
+            <div class="overflow-x-auto">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nama Laporan</th>
+                            <th>Periode</th>
+                            <th>Status</th>
+                            <th>Dibuat</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in reports %}
+                        <tr>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.period }}</td>
+                            <td><span class="badge badge-success">{{ item.status }}</span></td>
+                            <td>{{ item.created_at }}</td>
+                            <td><a href="#" class="btn btn-sm btn-outline">Unduh</a></td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5">
+                                <div class="alert alert-info">
+                                    <span class="material-icons">description</span>
+                                    <span>Belum ada laporan yang tersedia.</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

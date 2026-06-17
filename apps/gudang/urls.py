@@ -1,11 +1,7 @@
-from django.http import HttpResponse
 from django.urls import path
 
-app_name = "gudang"
-
-def index_view(request):
-    return HttpResponse("Gudang")
+from apps.gudang import views
 
 urlpatterns = [
-    path("", index_view, name="index"),
+    path("", views.MateriListView.as_view(), name="materi_list"),
 ]

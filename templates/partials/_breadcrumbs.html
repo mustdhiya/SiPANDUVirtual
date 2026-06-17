@@ -1,0 +1,13 @@
+{% if breadcrumbs %}
+<div class="text-sm breadcrumbs text-slate-500">
+    <ul>
+        {% for item in breadcrumbs %}
+            {% if item.url %}
+                <li><a href="{{ item.url }}">{{ item.label }}</a></li>
+            {% else %}
+                <li>{{ item.label }}</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}

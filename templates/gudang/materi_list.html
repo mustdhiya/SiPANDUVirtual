@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Gudang Materi - SiPANDU VIRTUAL{% endblock %}
+
+{% block content %}
+<div class="space-y-4">
+    <div>
+        <h2 class="page-title">Gudang Materi</h2>
+        <p class="page-subtitle">Unduh materi pembinaan, panduan, dan dokumen pendukung.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+        {% for item in materi_list %}
+        <div class="card bg-white border shadow-sm">
+            <div class="card-body">
+                <div class="flex items-start justify-between gap-3">
+                    <div>
+                        <h3 class="card-title text-lg">{{ item.title }}</h3>
+                        <p class="text-sm text-slate-500">{{ item.kategori.name|default:"Tanpa Kategori" }}</p>
+                    </div>
+                    <span class="material-icons text-primary">folder</span>
+                </div>
+
+                <p class="text-sm text-slate-600 mt-2">{{ item.description|default:"Tidak ada deskripsi." }}</p>
+
+                <div class="card-actions justify-between items-center mt-4">
+                    <span class="text-xs text-slate-400">{{ item.download_count }} kali diunduh</span>
+                    <a href="#" class="btn btn-sm btn-primary">
+                        <span class="material-icons text-sm">download</span>
+                        Unduh
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-span-full">
+            <div class="alert alert-info">
+                <span class="material-icons">folder_open</span>
+                <span>Belum ada materi yang tersedia.</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

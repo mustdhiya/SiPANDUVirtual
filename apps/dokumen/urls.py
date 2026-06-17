@@ -1,11 +1,10 @@
-from django.http import HttpResponse
 from django.urls import path
 
-app_name = "dokumen"
-
-def index_view(request):
-    return HttpResponse("Dokumen")
+from apps.dokumen import views
 
 urlpatterns = [
-    path("", index_view, name="index"),
+    path("", views.DocumentListView.as_view(), name="list"),
+    path("upload/", views.DocumentUploadView.as_view(), name="upload"),
+    path("review/", views.ReviewQueueView.as_view(), name="review_queue"),
+    path("revisions/", views.RevisionHistoryView.as_view(), name="revision_history"),
 ]

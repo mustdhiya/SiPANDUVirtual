@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Detail Konsultasi - SiPANDU VIRTUAL{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto space-y-4">
+    <div class="flex flex-col md:flex-row md:justify-between gap-3">
+        <div>
+            <h2 class="page-title">{{ thread.subject }}</h2>
+            <p class="page-subtitle">
+                Status: {{ thread.status }}{% if thread.periode %} • {{ thread.periode }}{% endif %}
+            </p>
+        </div>
+        <a href="#" class="btn btn-outline">
+            <span class="material-icons">arrow_back</span>
+            Kembali
+        </a>
+    </div>
+
+    <div class="card bg-white border shadow-sm">
+        <div class="card-body space-y-4">
+            {% for item in messages %}
+            <div class="{% if item.sender == request.user %}chat chat-end{% else %}chat chat-start{% endif %}">
+                <div class="chat-header text-xs text-slate-500">
+                    {{ item.sender.get_full_name|default:item.sender.username }}
+                    <time class="ml-2">{{ item.created_at|date:"d M Y H:i" }}</time>
+                </div>
+                <div class="chat-bubble {% if item.sender == request.user %}chat-bubble-primary{% endif %}">
+                    {{ item.message|linebreaksbr }}
+                    {% if item.attachment %}
+                    <div class="mt-2">
+                        <a href="{{ item.attachment.url }}" class="link link-white">Lihat Lampiran</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% empty %}
+            <div class="alert alert-info">
+                <span class="material-icons">forum</span>
+                <span>Belum ada pesan dalam konsultasi ini.</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <form method="post" enctype="multipart/form-data" class="card bg-white border shadow-sm">
+        <div class="card-body space-y-4">
+            {% csrf_token %}
+            <h3 class="card-title">Kirim Balasan</h3>
+            {% for field in form %}
+                {% include "partials/forms/_field.html" with field=field %}
+            {% endfor %}
+            <div class="flex justify-end">
+                <button type="submit" class="btn btn-primary">
+                    <span class="material-icons">send</span>
+                    Kirim Balasan
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
