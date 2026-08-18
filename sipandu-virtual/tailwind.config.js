@@ -3,11 +3,18 @@ module.exports = {
   content: [
     "./resources/**/*.blade.php",
     "./resources/**/*.js",
-    "./resources/**/*.vue",
   ],
   darkMode: 'class',
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        display: ['Fraunces', 'serif'],
+        sans: ['Inter', 'sans-serif'],
+      },
+      borderRadius: {
+        card: '1.25rem',
+      },
+    },
   },
   plugins: [
     require("daisyui"),
@@ -16,25 +23,25 @@ module.exports = {
     themes: [
       {
         sipandu: {
-          ...require("daisyui/src/theming/themes")["light"],
-          primary: "#10B981", // Emerald (Kemenag)
+          "primary": "#3d4a2f",
           "primary-content": "#ffffff",
-          secondary: "#1E3A5F", // Biru Navy
-          accent: "#F59E0B",
-          neutral: "#1F2937",
-          "base-100": "#F8FAFC",
-          "base-200": "#F1F5F9",
-          "base-300": "#E2E8F0",
-          info: "#38BDF8",
-          success: "#22C55E",
-          warning: "#FACC15",
-          error: "#EF4444",
+          "secondary": "#a97f34",
+          "secondary-content": "#ffffff",
+          "accent": "#a97f34",
+          "accent-content": "#ffffff",
+          "neutral": "#1f2419",
+          "base-100": "#faf7f0",
+          "base-200": "#eef0e3",
+          "base-300": "#f2e6cc",
+          "info": "#38BDF8",
+          "success": "#22C55E",
+          "warning": "#FACC15",
+          "error": "#EF4444",
         },
       },
     ],
     base: true,
     styled: true,
     utils: true,
-    logs: false,
   },
 }

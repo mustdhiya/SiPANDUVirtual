@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Submission;
 use App\Models\UploadDokumen;
 use Illuminate\Http\Request;
+use App\Notifications\SubmissionReviewedNotification;
+
 
 class ReviewTriwulanController extends Controller
 {
@@ -50,6 +52,12 @@ class ReviewTriwulanController extends Controller
             'feedback_admin' => $validated['feedback_admin'],
         ]);
 
+        // Kirim notifikasi email ke guru
+        if ($submission->guru->userAccount) {
+            $submission->guru->userAccount->notify(new SubmissionReviewedNotification($submission));
+        }
+
         return back()->with('success', 'Review submission berhasil disimpan.');
     }
+
 }

@@ -59,6 +59,24 @@
                         Diskusi
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('guru.diskusi.index') }}">
+                        <span class="material-icons align-middle">forum</span>
+                        Diskusi
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.monitoring.index') }}">
+                        <span class="material-icons align-middle">analytics</span>
+                        Monitoring
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('guru.gudang.index') }}">
+                        <span class="material-icons align-middle">folder</span>
+                        Gudang PAI-BMTS
+                    </a>
+                </li>
             </ul>
         </aside>
 

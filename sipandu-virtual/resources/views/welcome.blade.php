@@ -1,132 +1,584 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="id" data-fontscale="1">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SiPANDU VIRTUAL — Sistem Pendampingan Terpadu Virtual</title>
+<meta name="description" content="SiPANDU VIRTUAL membantu Pengawas, Guru, Sekolah, dan Orang Tua mendapatkan informasi pendampingan Pendidikan Agama Islam SMA/SMK Kota Samarinda dengan lebih mudah.">
+<link href="https://cdn.jsdelivr.net/npm/daisyui@5/daisyui.css" rel="stylesheet" type="text/css" />
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+  :root{
+    --bg:#faf7f0; --bg-alt:#eef0e3; --dark:#3d4a2f; --dark-2:#2d3822; --gold:#a97f34; --gold-tint:#f2e6cc;
+    --text:#1f2419; --text2:#4f5546; --border:rgba(61,74,47,0.16); --card:#ffffff;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth; font-size:18px;}
+  html[data-fontscale="2"]{font-size:20px;}
+  html[data-fontscale="3"]{font-size:22px;}
+  html[data-contrast="high"]{ --text2:#1f2419; --border:#1f2419; }
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:'Inter',sans-serif; line-height:1.7;
+  }
+  ::-webkit-scrollbar{width:8px;height:8px;}
+  ::-webkit-scrollbar-track{background:var(--bg);}
+  ::-webkit-scrollbar-thumb{background:var(--gold);border-radius:10px;}
 
-        <title>Laravel</title>
+  .font-display{font-family:'Fraunces',serif;}
+  a{text-decoration:none;color:inherit;}
+  .container{max-width:1200px;margin:0 auto;}
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  .skip-link{position:absolute;left:-9999px;top:0;background:var(--dark);color:#fff;padding:0.75rem 1.25rem;z-index:200;border-radius:0 0 0.75rem 0;font-weight:600;}
+  .skip-link:focus{left:0;}
+  a:focus-visible, button:focus-visible, input:focus-visible{outline:3px solid var(--gold); outline-offset:2px;}
 
-        <!-- Styles -->
-        <style>
-            /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}a{background-color:transparent}[hidden]{display:none}html{font-family:system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;line-height:1.5}*,:after,:before{box-sizing:border-box;border:0 solid #e2e8f0}a{color:inherit;text-decoration:inherit}svg,video{display:block;vertical-align:middle}video{max-width:100%;height:auto}.bg-white{--bg-opacity:1;background-color:#fff;background-color:rgba(255,255,255,var(--bg-opacity))}.bg-gray-100{--bg-opacity:1;background-color:#f7fafc;background-color:rgba(247,250,252,var(--bg-opacity))}.border-gray-200{--border-opacity:1;border-color:#edf2f7;border-color:rgba(237,242,247,var(--border-opacity))}.border-t{border-top-width:1px}.flex{display:flex}.grid{display:grid}.hidden{display:none}.items-center{align-items:center}.justify-center{justify-content:center}.font-semibold{font-weight:600}.h-5{height:1.25rem}.h-8{height:2rem}.h-16{height:4rem}.text-sm{font-size:.875rem}.text-lg{font-size:1.125rem}.leading-7{line-height:1.75rem}.mx-auto{margin-left:auto;margin-right:auto}.ml-1{margin-left:.25rem}.mt-2{margin-top:.5rem}.mr-2{margin-right:.5rem}.ml-2{margin-left:.5rem}.mt-4{margin-top:1rem}.ml-4{margin-left:1rem}.mt-8{margin-top:2rem}.ml-12{margin-left:3rem}.-mt-px{margin-top:-1px}.max-w-6xl{max-width:72rem}.min-h-screen{min-height:100vh}.overflow-hidden{overflow:hidden}.p-6{padding:1.5rem}.py-4{padding-top:1rem;padding-bottom:1rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.pt-8{padding-top:2rem}.fixed{position:fixed}.relative{position:relative}.top-0{top:0}.right-0{right:0}.shadow{box-shadow:0 1px 3px 0 rgba(0,0,0,.1),0 1px 2px 0 rgba(0,0,0,.06)}.text-center{text-align:center}.text-gray-200{--text-opacity:1;color:#edf2f7;color:rgba(237,242,247,var(--text-opacity))}.text-gray-300{--text-opacity:1;color:#e2e8f0;color:rgba(226,232,240,var(--text-opacity))}.text-gray-400{--text-opacity:1;color:#cbd5e0;color:rgba(203,213,224,var(--text-opacity))}.text-gray-500{--text-opacity:1;color:#a0aec0;color:rgba(160,174,192,var(--text-opacity))}.text-gray-600{--text-opacity:1;color:#718096;color:rgba(113,128,150,var(--text-opacity))}.text-gray-700{--text-opacity:1;color:#4a5568;color:rgba(74,85,104,var(--text-opacity))}.text-gray-900{--text-opacity:1;color:#1a202c;color:rgba(26,32,44,var(--text-opacity))}.underline{text-decoration:underline}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.w-5{width:1.25rem}.w-8{width:2rem}.w-auto{width:auto}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}@media (min-width:640px){.sm\:rounded-lg{border-radius:.5rem}.sm\:block{display:block}.sm\:items-center{align-items:center}.sm\:justify-start{justify-content:flex-start}.sm\:justify-between{justify-content:space-between}.sm\:h-20{height:5rem}.sm\:ml-0{margin-left:0}.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:pt-0{padding-top:0}.sm\:text-left{text-align:left}.sm\:text-right{text-align:right}}@media (min-width:768px){.md\:border-t-0{border-top-width:0}.md\:border-l{border-left-width:1px}.md\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}}@media (min-width:1024px){.lg\:px-8{padding-left:2rem;padding-right:2rem}}@media (prefers-color-scheme:dark){.dark\:bg-gray-800{--bg-opacity:1;background-color:#2d3748;background-color:rgba(45,55,72,var(--bg-opacity))}.dark\:bg-gray-900{--bg-opacity:1;background-color:#1a202c;background-color:rgba(26,32,44,var(--bg-opacity))}.dark\:border-gray-700{--border-opacity:1;border-color:#4a5568;border-color:rgba(74,85,104,var(--border-opacity))}.dark\:text-white{--text-opacity:1;color:#fff;color:rgba(255,255,255,var(--text-opacity))}.dark\:text-gray-400{--text-opacity:1;color:#cbd5e0;color:rgba(203,213,224,var(--text-opacity))}.dark\:text-gray-500{--tw-text-opacity:1;color:#6b7280;color:rgba(107,114,128,var(--tw-text-opacity))}}
-        </style>
+  .reveal{opacity:0; transform:translateY(28px); transition:opacity 550ms cubic-bezier(0.16,1,0.3,1), transform 550ms cubic-bezier(0.16,1,0.3,1);}
+  .reveal.visible{opacity:1; transform:translateY(0);}
 
-        <style>
-            body {
-                font-family: 'Nunito', sans-serif;
-            }
-        </style>
-    </head>
-    <body class="antialiased">
-        <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
-            @if (Route::has('login'))
-                <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-                    @auth
-                        <a href="{{ url('/home') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
-                    @else
-                        <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
+  /* accessibility toolbar */
+  .a11y-toolbar{position:fixed; bottom:1.25rem; right:1.25rem; z-index:150; display:flex; flex-direction:column; gap:0.5rem;}
+  .a11y-btn{
+    min-height:48px; padding:0 1.1rem; border-radius:9999px; font-weight:700; font-size:0.9rem;
+    display:inline-flex; align-items:center; gap:0.4rem; border:2px solid var(--dark); background:#fff; color:var(--dark);
+    cursor:pointer; box-shadow:0 6px 16px rgba(0,0,0,0.12);
+  }
+  .a11y-btn.primary{background:var(--dark); color:#fff;}
+  .a11y-btn:hover{transform:scale(1.03);}
 
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
+  /* navbar */
+  nav.navbar-main{
+    position:sticky; top:0; z-index:100; background:rgba(250,247,240,0.92);
+    backdrop-filter:blur(10px);
+    padding:1.1rem 3rem;
+    display:flex; align-items:center; justify-content:space-between;
+    border-bottom:1px solid var(--border);
+  }
+  .logo-badge{
+    width:44px;height:44px;background:var(--dark);color:#fff;
+    border-radius:0.75rem; display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .logo-text-top{font-weight:800;font-size:1.05rem;letter-spacing:0.04em;line-height:1.2; font-family:'Fraunces',serif; color:var(--dark);}
+  .logo-text-bottom{font-weight:600;font-size:0.72rem;letter-spacing:0.08em;color:var(--text2);line-height:1.3;}
+  .nav-link{font-size:1rem;font-weight:600;color:var(--text);padding-bottom:4px;}
+  .nav-link.active{color:var(--dark);border-bottom:2px solid var(--gold);}
+  .nav-link:hover{color:var(--dark);}
 
-            <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
-                <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
-                    <svg viewBox="0 0 651 192" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-16 w-auto text-gray-700 sm:h-20">
-                        <g clip-path="url(#clip0)" fill="#EF3B2D">
-                            <path d="M248.032 44.676h-16.466v100.23h47.394v-14.748h-30.928V44.676zM337.091 87.202c-2.101-3.341-5.083-5.965-8.949-7.875-3.865-1.909-7.756-2.864-11.669-2.864-5.062 0-9.69.931-13.89 2.792-4.201 1.861-7.804 4.417-10.811 7.661-3.007 3.246-5.347 6.993-7.016 11.239-1.672 4.249-2.506 8.713-2.506 13.389 0 4.774.834 9.26 2.506 13.459 1.669 4.202 4.009 7.925 7.016 11.169 3.007 3.246 6.609 5.799 10.811 7.66 4.199 1.861 8.828 2.792 13.89 2.792 3.913 0 7.804-.955 11.669-2.863 3.866-1.908 6.849-4.533 8.949-7.875v9.021h15.607V78.182h-15.607v9.02zm-1.431 32.503c-.955 2.578-2.291 4.821-4.009 6.73-1.719 1.91-3.795 3.437-6.229 4.582-2.435 1.146-5.133 1.718-8.091 1.718-2.96 0-5.633-.572-8.019-1.718-2.387-1.146-4.438-2.672-6.156-4.582-1.719-1.909-3.032-4.152-3.938-6.73-.909-2.577-1.36-5.298-1.36-8.161 0-2.864.451-5.585 1.36-8.162.905-2.577 2.219-4.819 3.938-6.729 1.718-1.908 3.77-3.437 6.156-4.582 2.386-1.146 5.059-1.718 8.019-1.718 2.958 0 5.656.572 8.091 1.718 2.434 1.146 4.51 2.674 6.229 4.582 1.718 1.91 3.054 4.152 4.009 6.729.953 2.577 1.432 5.298 1.432 8.162-.001 2.863-.479 5.584-1.432 8.161zM463.954 87.202c-2.101-3.341-5.083-5.965-8.949-7.875-3.865-1.909-7.756-2.864-11.669-2.864-5.062 0-9.69.931-13.89 2.792-4.201 1.861-7.804 4.417-10.811 7.661-3.007 3.246-5.347 6.993-7.016 11.239-1.672 4.249-2.506 8.713-2.506 13.389 0 4.774.834 9.26 2.506 13.459 1.669 4.202 4.009 7.925 7.016 11.169 3.007 3.246 6.609 5.799 10.811 7.66 4.199 1.861 8.828 2.792 13.89 2.792 3.913 0 7.804-.955 11.669-2.863 3.866-1.908 6.849-4.533 8.949-7.875v9.021h15.607V78.182h-15.607v9.02zm-1.432 32.503c-.955 2.578-2.291 4.821-4.009 6.73-1.719 1.91-3.795 3.437-6.229 4.582-2.435 1.146-5.133 1.718-8.091 1.718-2.96 0-5.633-.572-8.019-1.718-2.387-1.146-4.438-2.672-6.156-4.582-1.719-1.909-3.032-4.152-3.938-6.73-.909-2.577-1.36-5.298-1.36-8.161 0-2.864.451-5.585 1.36-8.162.905-2.577 2.219-4.819 3.938-6.729 1.718-1.908 3.77-3.437 6.156-4.582 2.386-1.146 5.059-1.718 8.019-1.718 2.958 0 5.656.572 8.091 1.718 2.434 1.146 4.51 2.674 6.229 4.582 1.718 1.91 3.054 4.152 4.009 6.729.953 2.577 1.432 5.298 1.432 8.162 0 2.863-.479 5.584-1.432 8.161zM650.772 44.676h-15.606v100.23h15.606V44.676zM365.013 144.906h15.607V93.538h26.776V78.182h-42.383v66.724zM542.133 78.182l-19.616 51.096-19.616-51.096h-15.808l25.617 66.724h19.614l25.617-66.724h-15.808zM591.98 76.466c-19.112 0-34.239 15.706-34.239 35.079 0 21.416 14.641 35.079 36.239 35.079 12.088 0 19.806-4.622 29.234-14.688l-10.544-8.158c-.006.008-7.958 10.449-19.832 10.449-13.802 0-19.612-11.127-19.612-16.884h51.777c2.72-22.043-11.772-40.877-33.023-40.877zm-18.713 29.28c.12-1.284 1.917-16.884 18.589-16.884 16.671 0 18.697 15.598 18.813 16.884h-37.402zM184.068 43.892c-.024-.088-.073-.165-.104-.25-.058-.157-.108-.316-.191-.46-.056-.097-.137-.176-.203-.265-.087-.117-.161-.242-.265-.345-.085-.086-.194-.148-.29-.223-.109-.085-.206-.182-.327-.252l-.002-.001-.002-.002-35.648-20.524a2.971 2.971 0 00-2.964 0l-35.647 20.522-.002.002-.002.001c-.121.07-.219.167-.327.252-.096.075-.205.138-.29.223-.103.103-.178.228-.265.345-.066.089-.147.169-.203.265-.083.144-.133.304-.191.46-.031.085-.08.162-.104.25-.067.249-.103.51-.103.776v38.979l-29.706 17.103V24.493a3 3 0 00-.103-.776c-.024-.088-.073-.165-.104-.25-.058-.157-.108-.316-.191-.46-.056-.097-.137-.176-.203-.265-.087-.117-.161-.242-.265-.345-.085-.086-.194-.148-.29-.223-.109-.085-.206-.182-.327-.252l-.002-.001-.002-.002L40.098 1.396a2.971 2.971 0 00-2.964 0L1.487 21.919l-.002.002-.002.001c-.121.07-.219.167-.327.252-.096.075-.205.138-.29.223-.103.103-.178.228-.265.345-.066.089-.147.169-.203.265-.083.144-.133.304-.191.46-.031.085-.08.162-.104.25-.067.249-.103.51-.103.776v122.09c0 1.063.568 2.044 1.489 2.575l71.293 41.045c.156.089.324.143.49.202.078.028.15.074.23.095a2.98 2.98 0 001.524 0c.069-.018.132-.059.2-.083.176-.061.354-.119.519-.214l71.293-41.045a2.971 2.971 0 001.489-2.575v-38.979l34.158-19.666a2.971 2.971 0 001.489-2.575V44.666a3.075 3.075 0 00-.106-.774zM74.255 143.167l-29.648-16.779 31.136-17.926.001-.001 34.164-19.669 29.674 17.084-21.772 12.428-43.555 24.863zm68.329-76.259v33.841l-12.475-7.182-17.231-9.92V49.806l12.475 7.182 17.231 9.92zm2.97-39.335l29.693 17.095-29.693 17.095-29.693-17.095 29.693-17.095zM54.06 114.089l-12.475 7.182V46.733l17.231-9.92 12.475-7.182v74.537l-17.231 9.921zM38.614 7.398l29.693 17.095-29.693 17.095L8.921 24.493 38.614 7.398zM5.938 29.632l12.475 7.182 17.231 9.92v79.676l.001.005-.001.006c0 .114.032.221.045.333.017.146.021.294.059.434l.002.007c.032.117.094.222.14.334.051.124.088.255.156.371a.036.036 0 00.004.009c.061.105.149.191.222.288.081.105.149.22.244.314l.008.01c.084.083.19.142.284.215.106.083.202.178.32.247l.013.005.011.008 34.139 19.321v34.175L5.939 144.867V29.632h-.001zm136.646 115.235l-65.352 37.625V148.31l48.399-27.628 16.953-9.677v33.862zm35.646-61.22l-29.706 17.102V66.908l17.231-9.92 12.475-7.182v33.841z"/>
-                        </g>
-                    </svg>
-                </div>
+  .btn-base{
+    min-height:48px; border-radius:9999px; padding:0.85rem 1.6rem; font-weight:700; font-size:1rem;
+    display:inline-flex; align-items:center; gap:0.5rem; border:none; cursor:pointer;
+    transition:transform 200ms cubic-bezier(0.16,1,0.3,1), background-color 200ms ease;
+  }
+  .btn-base:hover{transform:scale(1.03);}
+  .btn-dark{background:var(--dark); color:#fff;}
+  .btn-dark:hover{background:var(--dark-2); color:#fff;}
+  .btn-outline-dark{background:transparent; border:2px solid var(--dark); color:var(--dark);}
+  .btn-outline-dark:hover{background:rgba(61,74,47,0.08);}
+  .btn-gold-outline{background:var(--gold-tint); border:2px solid var(--gold); color:var(--text);}
+  .btn-gold-outline:hover{background:#ecdbb1;}
+  .btn-on-dark{background:#fff; color:var(--dark);}
+  .btn-on-dark:hover{background:var(--gold-tint);}
 
-                <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
-                    <div class="grid grid-cols-1 md:grid-cols-2">
-                        <div class="p-6">
-                            <div class="flex items-center">
-                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-500"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                                <div class="ml-4 text-lg leading-7 font-semibold"><a href="https://laravel.com/docs" class="underline text-gray-900 dark:text-white">Documentation</a></div>
-                            </div>
+  /* hero */
+  .hero-section{
+    min-height:82vh; padding:2.5rem 3rem 4rem; display:grid;
+    grid-template-columns:55% 45%; align-items:center; gap:2.5rem; position:relative;
+  }
+  .hero-label{font-size:0.95rem;letter-spacing:0.06em;color:var(--gold);text-transform:uppercase;font-weight:700;}
+  .hero-h1{font-family:'Fraunces',serif; font-size:clamp(2.4rem,5vw,3.6rem); font-weight:600; line-height:1.2; color:var(--text); margin:0.6rem 0;}
+  .hero-h1 em{font-style:italic; color:var(--gold); font-weight:600;}
+  .hero-sub{font-size:1.15rem;color:var(--text2);line-height:1.75;max-width:460px;margin-top:1rem;}
+  .connect-label{font-size:0.85rem;letter-spacing:0.06em;color:var(--text2);margin-top:2.5rem;text-transform:uppercase;font-weight:700;}
+  .trust-row{display:flex;flex-wrap:wrap;gap:0.85rem;margin-top:1rem;}
+  .trust-pill{
+    display:flex;align-items:center;gap:0.5rem; padding:0.55rem 1rem; border-radius:9999px;
+    background:#fff; border:1px solid var(--border); font-weight:600; font-size:0.95rem; color:var(--text);
+  }
 
-                            <div class="ml-12">
-                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                    Laravel has wonderful, thorough documentation covering every aspect of the framework. Whether you are new to the framework or have previous experience with Laravel, we recommend reading all of the documentation from beginning to end.
-                                </div>
-                            </div>
-                        </div>
+  .hero-image-wrap{position:relative; width:100%; max-width:420px; margin-left:auto;}
+  .hero-arch{
+    border-radius:200px 200px 24px 24px; background:var(--dark);
+    width:100%; aspect-ratio:3/4; position:relative; overflow:hidden;
+  }
+  .hero-arch img{width:100%;height:100%;object-fit:cover;display:block;}
+  .badge-circle{
+    position:absolute; top:-1rem; right:-1.5rem; width:120px; height:120px; border-radius:50%;
+    background:#fff; border:1px solid var(--border); box-shadow:0 8px 24px rgba(0,0,0,0.1);
+    display:flex; align-items:center; justify-content:center;
+    animation: rotateBadge 22s linear infinite;
+  }
+  @keyframes rotateBadge{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+  .badge-circle svg.spin-text{position:absolute; width:100%; height:100%;}
+  .badge-center-icon{position:absolute; color:var(--gold);}
+  .leaf-deco{position:absolute; opacity:0.6; pointer-events:none;}
 
-                        <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-t-0 md:border-l">
-                            <div class="flex items-center">
-                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-500"><path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                                <div class="ml-4 text-lg leading-7 font-semibold"><a href="https://laracasts.com" class="underline text-gray-900 dark:text-white">Laracasts</a></div>
-                            </div>
+  /* about */
+  .about-section{background:var(--bg-alt); padding:4.5rem 3rem; display:grid; grid-template-columns:25% 45% 30%; gap:2.5rem; align-items:center;}
+  .about-img{border-radius:1.25rem; object-fit:cover; aspect-ratio:1/1.2; width:100%; display:block;}
+  .section-label{font-size:0.95rem;letter-spacing:0.06em;color:var(--gold);text-transform:uppercase;font-weight:700;display:flex;align-items:center;gap:0.35rem;}
+  .about-h2{font-family:'Fraunces',serif; font-size:clamp(1.7rem,3.5vw,2.3rem); font-weight:600; color:var(--text); line-height:1.35; margin:0.6rem 0;}
+  .about-body{font-size:1.05rem;color:var(--text2);line-height:1.75;margin-top:1rem;}
+  .stat-list{display:flex;flex-direction:column;gap:1.1rem;}
+  .stat-item{display:flex;align-items:center;gap:0.75rem;}
+  .stat-icon{width:38px;height:38px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .stat-text{font-size:0.98rem;font-weight:700;color:var(--text);}
 
-                            <div class="ml-12">
-                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                    Laracasts offers thousands of video tutorials on Laravel, PHP, and JavaScript development. Check them out, see for yourself, and massively level up your development skills in the process.
-                                </div>
-                            </div>
-                        </div>
+  /* manfaat */
+  .services-section{background:var(--bg); padding:4.5rem 3rem;}
+  .section-header-row{display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:1rem;}
+  .section-h2{font-family:'Fraunces',serif; font-weight:600; margin:0.4rem 0 0; font-size:clamp(1.9rem,4vw,2.5rem);}
+  .services-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; margin-top:2.5rem;}
+  .service-card{
+    background:var(--card); border:1px solid var(--border); border-radius:1.25rem; padding:1.85rem;
+    min-height:220px;
+    transition:transform 200ms cubic-bezier(0.16,1,0.3,1), box-shadow 200ms cubic-bezier(0.16,1,0.3,1);
+  }
+  .service-card:hover{transform:translateY(-6px); box-shadow:0 16px 32px rgba(0,0,0,0.09);}
+  .service-icon{width:52px;height:52px;border-radius:0.9rem;background:var(--gold-tint);display:flex;align-items:center;justify-content:center;margin-bottom:1rem;}
+  .service-title{font-family:'Fraunces',serif; font-weight:700; font-size:1.2rem; color:var(--text); margin-bottom:0.5rem;}
+  .service-desc{font-size:1rem;color:var(--text2);line-height:1.65;}
 
-                        <div class="p-6 border-t border-gray-200 dark:border-gray-700">
-                            <div class="flex items-center">
-                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-500"><path d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path></svg>
-                                <div class="ml-4 text-lg leading-7 font-semibold"><a href="https://laravel-news.com/" class="underline text-gray-900 dark:text-white">Laravel News</a></div>
-                            </div>
+  /* pengguna bar */
+  .users-bar{background:var(--dark); padding:1.75rem 3rem; display:flex; align-items:center; gap:2.5rem; flex-wrap:wrap; justify-content:center;}
+  .users-label{font-size:0.85rem;letter-spacing:0.06em;color:rgba(255,255,255,0.65);text-transform:uppercase;font-weight:700;flex-shrink:0;}
+  .users-list{display:flex;gap:2rem;flex-wrap:wrap;justify-content:center;}
+  .user-item{display:flex;align-items:center;gap:0.5rem;color:#fff;font-size:1rem;font-weight:600;flex-shrink:0;}
+  .user-icon-sq{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.15);flex-shrink:0;}
 
-                            <div class="ml-12">
-                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                    Laravel News is a community driven portal and newsletter aggregating all of the latest and most important news in the Laravel ecosystem, including new package releases and tutorials.
-                                </div>
-                            </div>
-                        </div>
+  /* informasi */
+  .projects-section{background:var(--bg); padding:4.5rem 3rem;}
+  .view-all-link{font-size:1rem;color:var(--dark);font-weight:700;display:inline-flex;align-items:center;gap:0.3rem;}
+  .projects-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin-top:2.5rem;}
+  .project-card{border-radius:1.25rem; overflow:hidden; position:relative; box-shadow:0 8px 24px rgba(0,0,0,0.06); background:#fff; border:1px solid var(--border);}
+  .project-card img{width:100%; aspect-ratio:4/3; object-fit:cover; display:block;}
+  .project-info{padding:1.25rem; }
+  .project-badge{display:inline-block; background:var(--gold-tint); color:var(--text); font-size:0.82rem; font-weight:700; padding:0.3rem 0.75rem; border-radius:9999px; margin-bottom:0.6rem;}
+  .project-title{font-weight:700;font-size:1.1rem;color:var(--text); font-family:'Fraunces',serif;}
+  .project-desc{font-size:0.98rem;color:var(--text2);margin-top:0.4rem;line-height:1.6;}
+  .project-date{font-size:0.85rem;color:var(--text2);margin-top:0.6rem;}
+  .project-link{margin-top:0.75rem; display:inline-flex; align-items:center; gap:0.35rem; font-weight:700; color:var(--gold); font-size:0.98rem;}
 
-                        <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-l">
-                            <div class="flex items-center">
-                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-500"><path d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                <div class="ml-4 text-lg leading-7 font-semibold text-gray-900 dark:text-white">Vibrant Ecosystem</div>
-                            </div>
+  /* testimonials */
+  .testimonials-section{background:var(--bg-alt); padding:4.5rem 3rem; display:grid; grid-template-columns:60% 40%; gap:2.5rem; align-items:center;}
+  .testi-grid{display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:2.5rem;}
+  .testi-card{background:#fff; border-radius:1.25rem; padding:1.75rem; border:1px solid var(--border); position:relative;}
+  .testi-quote-text{font-style:italic; font-size:1.02rem; color:var(--text); line-height:1.65; margin:0.85rem 0;}
+  .testi-name{font-weight:700;font-size:1rem;color:var(--text);}
+  .testi-role{font-size:0.9rem;color:var(--text2);}
+  .testi-img{border-radius:1.25rem; aspect-ratio:3/4; object-fit:cover; width:100%; display:block;}
 
-                            <div class="ml-12">
-                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                    Laravel's robust library of first-party tools and libraries, such as <a href="https://forge.laravel.com" class="underline">Forge</a>, <a href="https://vapor.laravel.com" class="underline">Vapor</a>, <a href="https://nova.laravel.com" class="underline">Nova</a>, and <a href="https://envoyer.io" class="underline">Envoyer</a> help you take your projects to the next level. Pair them with powerful open source libraries like <a href="https://laravel.com/docs/billing" class="underline">Cashier</a>, <a href="https://laravel.com/docs/dusk" class="underline">Dusk</a>, <a href="https://laravel.com/docs/broadcasting" class="underline">Echo</a>, <a href="https://laravel.com/docs/horizon" class="underline">Horizon</a>, <a href="https://laravel.com/docs/sanctum" class="underline">Sanctum</a>, <a href="https://laravel.com/docs/telescope" class="underline">Telescope</a>, and more.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  /* faq */
+  .faq-section{background:var(--bg); padding:4.5rem 3rem;}
+  .faq-item{background:#fff; border:1px solid var(--border); border-radius:1.1rem; padding:1.4rem 1.6rem; margin-bottom:1rem;}
+  .faq-q{font-weight:700; font-size:1.1rem; display:flex; justify-content:space-between; align-items:center; cursor:pointer; color:var(--text);}
+  .faq-a{font-size:1rem; color:var(--text2); margin-top:0.85rem; line-height:1.7; display:none;}
+  .faq-item.open .faq-a{display:block;}
+  .faq-item.open .faq-chevron{transform:rotate(180deg);}
+  .faq-chevron{transition:transform 200ms ease;}
 
-                <div class="flex justify-center mt-4 sm:items-center sm:justify-between">
-                    <div class="text-center text-sm text-gray-500 sm:text-left">
-                        <div class="flex items-center">
-                            <svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor" class="-mt-px w-5 h-5 text-gray-400">
-                                <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                            </svg>
+  /* contact / CTA */
+  .contact-section{background:var(--dark); padding:4.5rem 3rem; border-radius:0; }
+  .contact-h2{font-family:'Fraunces',serif; font-size:clamp(1.9rem,4vw,2.6rem); font-weight:600; margin:0.6rem 0; color:#fff;}
+  .contact-info-row{display:flex; align-items:center; gap:0.6rem; font-size:1.02rem; color:#fff;}
 
-                            <a href="https://laravel.bigcartel.com" class="ml-1 underline">
-                                Shop
-                            </a>
+  /* footer */
+  footer.main-footer{background:var(--dark-2); padding:3.5rem 3rem 1.75rem; color:rgba(255,255,255,0.78);}
+  .footer-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:2.25rem;}
+  .footer-heading{font-weight:700;font-size:1rem;color:#fff;margin-bottom:0.85rem;}
+  .footer-link{font-size:0.95rem;color:rgba(255,255,255,0.7);line-height:2;display:block;transition:color 160ms;}
+  .footer-link:hover{color:#fff;}
+  .footer-divider{border-top:1px solid rgba(255,255,255,0.15); margin-top:2.25rem; padding-top:1.5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;}
+  .scroll-top-btn{min-width:48px;min-height:48px;padding:0 1rem;border-radius:9999px;background:rgba(255,255,255,0.12);color:#fff;display:inline-flex;align-items:center;gap:0.4rem;border:none;cursor:pointer;font-weight:600;}
+  .scroll-top-btn:hover{background:var(--gold);}
 
-                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="ml-4 -mt-px w-5 h-5 text-gray-400">
-                                <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                            </svg>
+  @media (max-width:900px){
+    .hero-section{grid-template-columns:1fr;}
+    .about-section{grid-template-columns:1fr; text-align:left;}
+    .services-grid{grid-template-columns:repeat(2,1fr);}
+    .projects-grid{grid-template-columns:1fr;}
+    .testimonials-section{grid-template-columns:1fr;}
+    .testi-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width:768px){
+    nav.navbar-main{padding:1rem 1.25rem;}
+    .nav-center-links{display:none;}
+    .hero-section{padding:1.75rem 1.5rem 3rem;}
+    .about-section, .services-section, .projects-section, .testimonials-section, .contact-section, .faq-section{padding:3rem 1.5rem;}
+    .users-bar{padding:1.5rem 1.5rem;}
+    footer.main-footer{padding:3rem 1.5rem 1.5rem;}
+    .a11y-toolbar{bottom:0.85rem; right:0.85rem;}
+  }
+</style>
+</head>
+<body>
 
-                            <a href="https://github.com/sponsors/taylorotwell" class="ml-1 underline">
-                                Sponsor
-                            </a>
-                        </div>
-                    </div>
+<a href="#konten-utama" class="skip-link">Langsung ke konten utama</a>
 
-                    <div class="ml-4 text-center text-sm text-gray-500 sm:text-right sm:ml-0">
-                        Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
-                    </div>
-                </div>
-            </div>
-        </div>
-    </body>
+<div class="a11y-toolbar" role="region" aria-label="Pengaturan tampilan">
+  <button type="button" class="a11y-btn primary" onclick="ubahUkuranTeks(1)" aria-label="Perbesar ukuran teks">
+    <i data-lucide="plus" style="width:16px;height:16px;"></i> Perbesar Teks
+  </button>
+  <button type="button" class="a11y-btn" onclick="ubahUkuranTeks(-1)" aria-label="Perkecil ukuran teks">
+    <i data-lucide="minus" style="width:16px;height:16px;"></i> Perkecil Teks
+  </button>
+  <button type="button" class="a11y-btn" onclick="toggleKontras()" aria-label="Ubah kontras tinggi">
+    <i data-lucide="contrast" style="width:16px;height:16px;"></i> Kontras Tinggi
+  </button>
+</div>
+
+<nav class="navbar-main" aria-label="Navigasi utama">
+  <a href="#home" style="display:flex;align-items:center;gap:0.75rem;">
+    <div class="logo-badge"><i data-lucide="compass" style="width:22px;height:22px;"></i></div>
+    <div>
+      <div class="logo-text-top">SiPANDU</div>
+      <div class="logo-text-bottom">VIRTUAL &middot; Pengawas PAI Samarinda</div>
+    </div>
+  </a>
+  <div class="nav-center-links" style="display:flex;gap:2rem;">
+    <a href="#home" class="nav-link active">Beranda</a>
+    <a href="#about" class="nav-link">Tentang</a>
+    <a href="#services" class="nav-link">Manfaat</a>
+    <a href="#cara-kerja" class="nav-link">Cara Kerja</a>
+    <a href="#informasi" class="nav-link">Informasi</a>
+    <a href="#faq" class="nav-link">Pertanyaan</a>
+  </div>
+  <a href="{{ route('login') }}" class="btn-base btn-dark">
+    <i data-lucide="log-in" style="width:16px;height:16px;"></i> Masuk
+  </a>
+</nav>
+
+<main id="konten-utama">
+
+<section class="hero-section" id="home">
+  <div class="reveal">
+    <div class="hero-label">Sistem Pendampingan PAI Kota Samarinda</div>
+    <h1 class="hero-h1">
+      Mendampingi Pendidikan PAI,<br>
+      <em>Menguatkan</em> Generasi
+    </h1>
+    <p class="hero-sub">Satu ruang digital untuk membantu Pengawas, Guru, Sekolah, dan Orang Tua mendapatkan informasi pendidikan PAI dengan lebih mudah.</p>
+    <div style="display:flex;gap:1rem;margin-top:2rem;flex-wrap:wrap;">
+      <a href="{{ route('login') }}" class="btn-base btn-dark">Mulai Menggunakan SiPANDU <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></a>
+      <a href="#about" class="btn-base btn-outline-dark">Pelajari Lebih Lanjut</a>
+    </div>
+    <div class="connect-label">Dipercaya Untuk Mendukung Pendampingan PAI</div>
+    <div class="trust-row">
+      <div class="trust-pill"><i data-lucide="shield-check" style="width:18px;height:18px;color:var(--gold);"></i> Pengawas PAI</div>
+      <div class="trust-pill"><i data-lucide="graduation-cap" style="width:18px;height:18px;color:var(--gold);"></i> Guru PAI</div>
+      <div class="trust-pill"><i data-lucide="building-2" style="width:18px;height:18px;color:var(--gold);"></i> Sekolah SMA/SMK</div>
+    </div>
+  </div>
+  <div class="hero-image-wrap reveal">
+    <div class="hero-arch">
+      <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&h=800&fit=crop" alt="Guru PAI berdiskusi hangat dengan siswa dan orang tua di lingkungan sekolah">
+    </div>
+    <div class="badge-circle">
+      <svg class="spin-text" viewBox="0 0 200 200">
+        <defs><path id="circlePath" d="M 100,100 m -75,0 a 75,75 0 1,1 150,0 a 75,75 0 1,1 -150,0"/></defs>
+        <text font-size="9" letter-spacing="1.5" fill="#4f5546" style="text-transform:uppercase;">
+          <textPath href="#circlePath">- TERPERCAYA - PROFESIONAL - AMANAH - </textPath>
+        </text>
+      </svg>
+      <i data-lucide="sparkles" class="badge-center-icon" style="width:22px;height:22px;"></i>
+    </div>
+    <svg class="leaf-deco" style="top:-30px;left:-40px;width:80px;height:80px;" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 10 Q70 30 50 50 Q30 30 50 10Z" fill="none" stroke="#3d4a2f" stroke-width="1.5" opacity="0.5"/></svg>
+  </div>
+</section>
+
+<section class="about-section" id="about">
+  <img class="about-img reveal" src="https://images.unsplash.com/photo-1577896334614-5498a338b4f2?w=400&h=500&fit=crop" alt="Suasana sekolah SMA/SMK di Kota Samarinda">
+  <div class="reveal">
+    <div class="section-label">Tentang SiPANDU</div>
+    <h2 class="about-h2">Satu sistem untuk pendampingan PAI yang lebih teratur dan mudah dipantau.</h2>
+    <p class="about-body">SiPANDU VIRTUAL adalah sistem digital yang membantu proses pendampingan Pendidikan Agama Islam agar lebih teratur, mudah dipantau, dan terdokumentasi dengan baik.</p>
+    <p class="about-body">Melalui SiPANDU, Pengawas dan Guru dapat berkomunikasi, melakukan pendampingan, mengelola laporan, dan memantau kegiatan secara lebih mudah.</p>
+  </div>
+  <div class="stat-list reveal">
+    <div class="stat-item"><div class="stat-icon"><i data-lucide="building-2" style="width:18px;height:18px;color:var(--gold);"></i></div><div class="stat-text">42+ Sekolah Binaan</div></div>
+    <div class="stat-item"><div class="stat-icon"><i data-lucide="users" style="width:18px;height:18px;color:var(--gold);"></i></div><div class="stat-text">128+ Guru PAI</div></div>
+    <div class="stat-item"><div class="stat-icon"><i data-lucide="calendar-check" style="width:18px;height:18px;color:var(--gold);"></i></div><div class="stat-text">12 Bulan Pendampingan</div></div>
+    <div class="stat-item"><div class="stat-icon"><i data-lucide="layout-grid" style="width:18px;height:18px;color:var(--gold);"></i></div><div class="stat-text">1 Sistem Terpadu</div></div>
+  </div>
+</section>
+
+<section class="services-section" id="services">
+  <div class="section-header-row">
+    <div>
+      <div class="section-label">Apa yang Bisa Dilakukan</div>
+      <h2 class="section-h2">Manfaat SiPANDU</h2>
+    </div>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-icon"><i data-lucide="graduation-cap" style="width:24px;height:24px;color:var(--dark);"></i></div>
+      <div class="service-title">Pendampingan Guru</div>
+      <div class="service-desc">Membantu Pengawas mendampingi Guru PAI secara teratur dan terdokumentasi.</div>
+    </div>
+    <div class="service-card reveal" style="transition-delay:100ms;">
+      <div class="service-icon"><i data-lucide="message-circle" style="width:24px;height:24px;color:var(--dark);"></i></div>
+      <div class="service-title">Diskusi &amp; Komunikasi</div>
+      <div class="service-desc">Ruang komunikasi untuk berbagi informasi, pertanyaan, dan pengalaman.</div>
+    </div>
+    <div class="service-card reveal" style="transition-delay:200ms;">
+      <div class="service-icon"><i data-lucide="clipboard-check" style="width:24px;height:24px;color:var(--dark);"></i></div>
+      <div class="service-title">Pendampingan Terpantau</div>
+      <div class="service-desc">Melihat proses pendampingan dan tindak lanjut secara lebih mudah.</div>
+    </div>
+    <div class="service-card reveal" style="transition-delay:300ms;">
+      <div class="service-icon"><i data-lucide="file-text" style="width:24px;height:24px;color:var(--dark);"></i></div>
+      <div class="service-title">Laporan</div>
+      <div class="service-desc">Membuat dan mengelola laporan pendampingan secara terstruktur.</div>
+    </div>
+  </div>
+</section>
+
+<div class="users-bar">
+  <div class="users-label">Digunakan Oleh</div>
+  <div class="users-list">
+    <div class="user-item"><div class="user-icon-sq"><i data-lucide="shield-check" style="width:16px;height:16px;"></i></div>Pengawas PAI</div>
+    <div class="user-item"><div class="user-icon-sq"><i data-lucide="graduation-cap" style="width:16px;height:16px;"></i></div>Guru PAI</div>
+    <div class="user-item"><div class="user-icon-sq"><i data-lucide="settings" style="width:16px;height:16px;"></i></div>Admin Sekolah</div>
+    <div class="user-item"><div class="user-icon-sq"><i data-lucide="users" style="width:16px;height:16px;"></i></div>Orang Tua/Wali</div>
+  </div>
+</div>
+
+<section id="cara-kerja" class="projects-section" style="background:var(--bg-alt);">
+  <div class="section-header-row">
+    <div>
+      <div class="section-label">Proses yang Sederhana</div>
+      <h2 class="section-h2">Bagaimana SiPANDU Bekerja?</h2>
+    </div>
+  </div>
+  <div class="services-grid" style="margin-top:2.5rem;">
+    <div class="service-card reveal" style="text-align:center;">
+      <div class="service-icon" style="margin:0 auto 1rem;background:var(--dark);"><span style="color:#fff;font-weight:800;font-family:'Fraunces',serif;">01</span></div>
+      <div class="service-title">Daftar &amp; Masuk</div>
+      <div class="service-desc">Pengguna masuk sesuai perannya masing-masing.</div>
+    </div>
+    <div class="service-card reveal" style="text-align:center;transition-delay:100ms;">
+      <div class="service-icon" style="margin:0 auto 1rem;background:var(--dark);"><span style="color:#fff;font-weight:800;font-family:'Fraunces',serif;">02</span></div>
+      <div class="service-title">Lihat Informasi</div>
+      <div class="service-desc">Informasi pendidikan dan pendampingan tersedia dalam satu tempat.</div>
+    </div>
+    <div class="service-card reveal" style="text-align:center;transition-delay:200ms;">
+      <div class="service-icon" style="margin:0 auto 1rem;background:var(--dark);"><span style="color:#fff;font-weight:800;font-family:'Fraunces',serif;">03</span></div>
+      <div class="service-title">Lakukan Pendampingan</div>
+      <div class="service-desc">Guru dan Pengawas melakukan proses pendampingan.</div>
+    </div>
+    <div class="service-card reveal" style="text-align:center;transition-delay:300ms;">
+      <div class="service-icon" style="margin:0 auto 1rem;background:var(--dark);"><span style="color:#fff;font-weight:800;font-family:'Fraunces',serif;">04</span></div>
+      <div class="service-title">Pantau &amp; Laporkan</div>
+      <div class="service-desc">Hasil pendampingan dicatat dan dapat dilaporkan.</div>
+    </div>
+  </div>
+</section>
+
+<section class="projects-section" id="informasi">
+  <div class="section-header-row">
+    <div>
+      <div class="section-label">Kabar Terbaru</div>
+      <h2 class="section-h2">Informasi Terbaru</h2>
+    </div>
+    <a href="#" class="view-all-link">Lihat Semua Informasi <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></a>
+  </div>
+  <div class="projects-grid">
+    <article class="project-card reveal">
+      <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=500&h=380&fit=crop" alt="Kegiatan pendampingan Guru PAI">
+      <div class="project-info">
+        <span class="project-badge">Pendampingan</span>
+        <div class="project-title">Pendampingan Guru PAI Triwulan II</div>
+        <p class="project-desc">Informasi kegiatan pendampingan Guru PAI SMA/SMK Kota Samarinda.</p>
+        <div class="project-date">15 Agustus 2026</div>
+        <a href="#" class="project-link">Baca Selengkapnya <i data-lucide="arrow-right" style="width:14px;height:14px;"></i></a>
+      </div>
+    </article>
+    <article class="project-card reveal" style="transition-delay:100ms;">
+      <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=500&h=380&fit=crop" alt="Jadwal pendampingan sekolah">
+      <div class="project-info">
+        <span class="project-badge">Jadwal</span>
+        <div class="project-title">Jadwal Pendampingan</div>
+        <p class="project-desc">Lihat jadwal pendampingan yang akan datang.</p>
+        <div class="project-date">10 Agustus 2026</div>
+        <a href="#" class="project-link">Baca Selengkapnya <i data-lucide="arrow-right" style="width:14px;height:14px;"></i></a>
+      </div>
+    </article>
+    <article class="project-card reveal" style="transition-delay:200ms;">
+      <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=500&h=380&fit=crop" alt="Panduan penggunaan SiPANDU">
+      <div class="project-info">
+        <span class="project-badge">Panduan</span>
+        <div class="project-title">Panduan Penggunaan SiPANDU</div>
+        <p class="project-desc">Panduan sederhana untuk menggunakan SiPANDU.</p>
+        <div class="project-date">1 Agustus 2026</div>
+        <a href="#" class="project-link">Baca Selengkapnya <i data-lucide="arrow-right" style="width:14px;height:14px;"></i></a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="testimonials-section" id="testimonials">
+  <div>
+    <div class="section-label">Apa Kata Mereka</div>
+    <h2 class="section-h2">Cerita dari Guru, Pengawas, dan Orang Tua</h2>
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <i data-lucide="quote" style="width:26px;height:26px;color:var(--gold);"></i>
+        <p class="testi-quote-text">&ldquo;Dengan SiPANDU, proses pendampingan menjadi lebih teratur dan informasi yang sebelumnya tersebar sekarang lebih mudah ditemukan.&rdquo;</p>
+        <div class="testi-name">Guru PAI</div>
+        <div class="testi-role">SMA Kota Samarinda</div>
+      </div>
+      <div class="testi-card reveal" style="transition-delay:100ms;">
+        <i data-lucide="quote" style="width:26px;height:26px;color:var(--gold);"></i>
+        <p class="testi-quote-text">&ldquo;Saya lebih mudah memahami informasi kegiatan pendidikan anak saya di sekolah.&rdquo;</p>
+        <div class="testi-name">Orang Tua/Wali Siswa</div>
+        <div class="testi-role">Kota Samarinda</div>
+      </div>
+    </div>
+  </div>
+  <img class="testi-img reveal" src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=500&h=650&fit=crop" alt="Pengawas PAI mendampingi kegiatan sekolah">
+</section>
+
+<section class="faq-section" id="faq">
+  <div class="section-header-row" style="justify-content:center;text-align:center;flex-direction:column;">
+    <div class="section-label" style="justify-content:center;">Pertanyaan Umum</div>
+    <h2 class="section-h2">Pertanyaan yang Sering Ditanyakan</h2>
+  </div>
+  <div style="max-width:760px;margin:2.5rem auto 0;">
+    <div class="faq-item open">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        Apa itu SiPANDU?
+        <i data-lucide="chevron-down" class="faq-chevron" style="width:20px;height:20px;"></i>
+      </div>
+      <div class="faq-a">SiPANDU adalah Sistem Pendampingan Terpadu Virtual untuk mendukung proses pendampingan PAI SMA/SMK Kota Samarinda.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        Siapa yang dapat menggunakan SiPANDU?
+        <i data-lucide="chevron-down" class="faq-chevron" style="width:20px;height:20px;"></i>
+      </div>
+      <div class="faq-a">SiPANDU digunakan oleh Pengawas PAI, Guru PAI, dan Admin, serta dapat menyediakan informasi yang relevan bagi Orang Tua/Wali.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        Apakah orang tua harus memahami teknologi?
+        <i data-lucide="chevron-down" class="faq-chevron" style="width:20px;height:20px;"></i>
+      </div>
+      <div class="faq-a">Tidak. SiPANDU dirancang dengan tampilan sederhana, termasuk fitur perbesar teks dan kontras tinggi agar mudah digunakan berbagai usia.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+        Apakah data saya aman?
+        <i data-lucide="chevron-down" class="faq-chevron" style="width:20px;height:20px;"></i>
+      </div>
+      <div class="faq-a">Data pengguna dikelola melalui sistem autentikasi dan hak akses sesuai peran pengguna (Admin, Pengawas, atau Guru).</div>
+    </div>
+  </div>
+</section>
+
+<section class="contact-section" id="contact">
+  <div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:2rem;">
+    <div>
+      <div class="section-label" style="color:var(--gold);">Mari Terhubung</div>
+      <h2 class="contact-h2">Mari Bersama Membangun Pendampingan Pendidikan yang Lebih Baik</h2>
+      <p style="font-size:1.05rem;color:rgba(255,255,255,0.85);margin-top:0.5rem;max-width:460px;">SiPANDU hadir untuk membantu Pengawas, Guru, Sekolah, dan Orang Tua terhubung dengan informasi pendidikan secara lebih mudah.</p>
+    </div>
+    <div>
+      <div style="display:flex;flex-direction:column;gap:0.85rem;">
+        <div class="contact-info-row"><i data-lucide="mail" style="width:18px;height:18px;color:var(--gold);"></i> pengawas.pai@samarinda.go.id</div>
+        <div class="contact-info-row"><i data-lucide="map-pin" style="width:18px;height:18px;color:var(--gold);"></i> Samarinda, Kalimantan Timur</div>
+      </div>
+      <a href="{{ route('login') }}" class="btn-base btn-on-dark" style="margin-top:1.25rem;">Masuk ke SiPANDU <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="main-footer">
+  <div class="container footer-grid">
+    <div>
+      <div style="display:flex;align-items:center;gap:0.75rem;">
+        <div class="logo-badge"><i data-lucide="compass" style="width:20px;height:20px;"></i></div>
+        <div style="color:#fff;font-weight:700;font-size:1.05rem;font-family:'Fraunces',serif;">SiPANDU VIRTUAL</div>
+      </div>
+      <p style="font-size:0.95rem;color:rgba(255,255,255,0.65);line-height:1.7;margin-top:0.9rem;">Platform pendampingan Pendidikan Agama Islam untuk SMA/SMK Kota Samarinda.</p>
+    </div>
+    <div>
+      <div class="footer-heading">SiPANDU</div>
+      <a href="#home" class="footer-link">Beranda</a>
+      <a href="#about" class="footer-link">Tentang</a>
+      <a href="#services" class="footer-link">Manfaat</a>
+      <a href="#cara-kerja" class="footer-link">Cara Kerja</a>
+      <a href="#informasi" class="footer-link">Informasi</a>
+    </div>
+    <div>
+      <div class="footer-heading">Layanan</div>
+      <a href="#" class="footer-link">Berita</a>
+      <a href="#" class="footer-link">Panduan</a>
+      <a href="#faq" class="footer-link">Pertanyaan</a>
+      <a href="#contact" class="footer-link">Kontak</a>
+    </div>
+    <div>
+      <div class="footer-heading">Pengguna</div>
+      <span class="footer-link">Pengawas PAI</span>
+      <span class="footer-link">Guru PAI</span>
+      <span class="footer-link">Orang Tua/Wali</span>
+    </div>
+  </div>
+  <div class="container footer-divider">
+    <div style="font-size:0.9rem;color:rgba(255,255,255,0.6);">&copy; 2026 SiPANDU VIRTUAL — Pengawas PAI SMA/SMK Kota Samarinda</div>
+    <button class="scroll-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Kembali ke atas halaman">
+      <i data-lucide="chevron-up" style="width:18px;height:18px;"></i> Ke Atas
+    </button>
+  </div>
+</footer>
+
+<script>
+  lucide.createIcons();
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const savedScale = localStorage.getItem('sipandu-fontscale') || '1';
+    document.documentElement.setAttribute('data-fontscale', savedScale);
+    const savedContrast = localStorage.getItem('sipandu-contrast');
+    if (savedContrast === 'high') document.documentElement.setAttribute('data-contrast', 'high');
+  });
+
+  function ubahUkuranTeks(arah) {
+    const html = document.documentElement;
+    let current = parseInt(html.getAttribute('data-fontscale') || '1', 10);
+    current = Math.min(3, Math.max(1, current + arah));
+    html.setAttribute('data-fontscale', current);
+    localStorage.setItem('sipandu-fontscale', current);
+  }
+
+  function toggleKontras() {
+    const html = document.documentElement;
+    const active = html.getAttribute('data-contrast') === 'high';
+    if (active) {
+      html.removeAttribute('data-contrast');
+      localStorage.setItem('sipandu-contrast', 'normal');
+    } else {
+      html.setAttribute('data-contrast', 'high');
+      localStorage.setItem('sipandu-contrast', 'high');
+    }
+  }
+</script>
+
+</body>
 </html>

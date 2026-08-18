@@ -1,81 +1,383 @@
 @extends('layouts.admin')
 
-@section('title', 'Approve Guru')
+@section('title', 'Persetujuan Guru')
 
 @section('content')
-<div class="container mx-auto p-4">
-    <h1 class="text-3xl font-bold mb-4">Approve Registrasi Guru</h1>
+@php
+    $totalPending = $pendingGurus->count();
+@endphp
 
-    @if(session('success'))
-        <div class="alert alert-success shadow-lg mb-4">
-            <span class="material-icons align-middle mr-2">check_circle</span>
-            <span>{{ session('success') }}</span>
+<div class="space-y-7">
+
+    {{-- Header --}}
+    <section class="flex flex-col gap-4 border-b border-base-300 pb-5 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+            <p class="text-xs font-bold uppercase tracking-[0.14em] text-secondary">
+                Pendampingan
+            </p>
+
+            <h1 class="font-display mt-1 text-3xl font-semibold leading-tight text-neutral">
+                Persetujuan Guru
+            </h1>
+
+            <p class="mt-2 max-w-2xl text-sm leading-6 text-neutral/60">
+                Periksa data pendaftar sebelum mengaktifkan akses mereka ke SiPANDU VIRTUAL.
+            </p>
         </div>
-    @endif
 
-    <div class="overflow-x-auto">
-        <table class="table table-zebra w-full">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nama</th>
-                    <th>Email</th>
-                    <th>Nomor WA</th>
-                    <th>Terdaftar</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($pendingGurus as $guru)
-                    <tr>
-                        <td>{{ $guru->id }}</td>
-                        <td>{{ $guru->name }}</td>
-                        <td>{{ $guru->email }}</td>
-                        <td>{{ $guru->nomor_wa ?? '-' }}</td>
-                        <td>{{ $guru->created_at->format('d M Y H:i') }}</td>
-                        <td>
-                            <div class="join">
-                                <form action="{{ route('admin.approve-guru.approve', $guru->id) }}" method="POST" class="join-item">
-                                    @csrf
-                                    <button type="submit" class="btn btn-sm btn-success">
-                                        <span class="material-icons text-sm">check</span>
-                                        Setujui
-                                    </button>
-                                </form>
+        <div class="rounded-2xl border border-base-300 bg-base-200 px-4 py-3">
+            <div class="flex items-center gap-2">
+                <span class="material-icons text-secondary">person_add</span>
+                <span class="text-sm font-semibold text-neutral">
+                    {{ $totalPending }} Guru Menunggu
+                </span>
+            </div>
+            <p class="mt-1 text-xs text-neutral/60">
+                Perlu diverifikasi oleh Pengawas PAI.
+            </p>
+        </div>
+    </section>
 
-                                <button onclick="document.getElementById('reject-modal-{{ $guru->id }}').showModal()" class="btn btn-sm btn-error join-item">
-                                    <span class="material-icons text-sm">close</span>
+    {{-- Penjelasan proses --}}
+    <section class="rounded-2xl border border-secondary/25 bg-secondary/10 p-4 sm:p-5">
+        <div class="flex items-start gap-3">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-secondary/20 text-secondary">
+                <span class="material-icons">info</span>
+            </div>
+
+            <div>
+                <h2 class="font-semibold text-neutral">
+                    Periksa sebelum menyetujui
+                </h2>
+
+                <p class="mt-1 text-sm leading-6 text-neutral/65">
+                    Pastikan nama, email, dan nomor WhatsApp guru sesuai dengan data Guru Binaan.
+                    Guru yang disetujui akan langsung dapat masuk ke sistem.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    {{-- Daftar pending --}}
+    <section class="card border border-base-300 bg-base-100 shadow-sm">
+        <div class="card-body p-0">
+
+            <div class="flex flex-col gap-2 border-b border-base-300 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+                <div>
+                    <h2 class="font-display text-xl font-semibold text-neutral">
+                        Daftar Pendaftaran
+                    </h2>
+                    <p class="mt-1 text-sm text-neutral/60">
+                        Data guru yang menunggu keputusan Anda.
+                    </p>
+                </div>
+
+                @if($totalPending > 0)
+                    <span class="badge badge-warning gap-2 self-start sm:self-auto">
+                        <span class="material-icons text-sm">schedule</span>
+                        {{ $totalPending }} menunggu
+                    </span>
+                @endif
+            </div>
+
+            @if($pendingGurus->isNotEmpty())
+                {{-- Desktop table --}}
+                <div class="hidden overflow-x-auto md:block">
+                    <table class="table w-full">
+                        <thead class="bg-base-200/70 text-neutral/65">
+                            <tr>
+                                <th class="pl-6">Guru</th>
+                                <th>Kontak</th>
+                                <th>Waktu Daftar</th>
+                                <th class="pr-6 text-right">Tindakan</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach($pendingGurus as $guru)
+                                <tr class="hover:bg-base-200/45">
+                                    <td class="pl-6">
+                                        <div class="flex items-center gap-3">
+                                            <div class="avatar placeholder">
+                                                <div class="w-10 rounded-full bg-primary text-primary-content">
+                                                    <span class="text-sm font-bold">
+                                                        {{ strtoupper(substr($guru->name, 0, 1)) }}
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <p class="font-semibold text-neutral">
+                                                    {{ $guru->name }}
+                                                </p>
+                                                <p class="mt-0.5 text-xs text-neutral/55">
+                                                    ID Pendaftar: #{{ $guru->id }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="space-y-1">
+                                            <p class="flex items-center gap-2 text-sm text-neutral/75">
+                                                <span class="material-icons text-base text-neutral/45">mail</span>
+                                                {{ $guru->email }}
+                                            </p>
+
+                                            <p class="flex items-center gap-2 text-sm text-neutral/75">
+                                                <span class="material-icons text-base text-neutral/45">phone</span>
+                                                {{ $guru->nomor_wa ?: 'Nomor WA belum diisi' }}
+                                            </p>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <p class="text-sm font-medium text-neutral">
+                                            {{ $guru->created_at->translatedFormat('d M Y') }}
+                                        </p>
+                                        <p class="mt-0.5 text-xs text-neutral/55">
+                                            Pukul {{ $guru->created_at->format('H:i') }}
+                                        </p>
+                                    </td>
+
+                                    <td class="pr-6 text-right">
+                                        <div class="flex justify-end gap-2">
+                                            <button
+                                                type="button"
+                                                class="btn btn-sm btn-success rounded-xl"
+                                                onclick="document.getElementById('approve-modal-{{ $guru->id }}').showModal()"
+                                            >
+                                                <span class="material-icons text-base">check</span>
+                                                Setujui
+                                            </button>
+
+                                            <button
+                                                type="button"
+                                                class="btn btn-sm btn-outline btn-error rounded-xl"
+                                                onclick="document.getElementById('reject-modal-{{ $guru->id }}').showModal()"
+                                            >
+                                                <span class="material-icons text-base">close</span>
+                                                Tolak
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                {{-- Modal approve --}}
+                                <dialog id="approve-modal-{{ $guru->id }}" class="modal">
+                                    <div class="modal-box max-w-md rounded-3xl p-0">
+                                        <div class="border-b border-base-300 p-6">
+                                            <div class="flex items-start gap-4">
+                                                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-success/15 text-success">
+                                                    <span class="material-icons">how_to_reg</span>
+                                                </div>
+
+                                                <div>
+                                                    <h3 class="font-display text-xl font-semibold text-neutral">
+                                                        Setujui Pendaftaran?
+                                                    </h3>
+
+                                                    <p class="mt-1 text-sm leading-6 text-neutral/60">
+                                                        Guru akan mendapatkan akses ke SiPANDU VIRTUAL setelah disetujui.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="p-6">
+                                            <div class="rounded-2xl bg-base-200 p-4">
+                                                <p class="font-semibold text-neutral">{{ $guru->name }}</p>
+                                                <p class="mt-1 text-sm text-neutral/60">{{ $guru->email }}</p>
+                                                <p class="mt-1 text-sm text-neutral/60">
+                                                    {{ $guru->nomor_wa ?: 'Nomor WA belum diisi' }}
+                                                </p>
+                                            </div>
+
+                                            <form
+                                                action="{{ route('admin.approve-guru.approve', $guru->id) }}"
+                                                method="POST"
+                                                class="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end"
+                                            >
+                                                @csrf
+
+                                                <button
+                                                    type="button"
+                                                    class="btn btn-ghost rounded-xl"
+                                                    onclick="document.getElementById('approve-modal-{{ $guru->id }}').close()"
+                                                >
+                                                    Batal
+                                                </button>
+
+                                                <button type="submit" class="btn btn-success rounded-xl">
+                                                    <span class="material-icons text-base">check_circle</span>
+                                                    Ya, Setujui Guru
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                    <form method="dialog" class="modal-backdrop">
+                                        <button aria-label="Tutup modal">Tutup</button>
+                                    </form>
+                                </dialog>
+
+                                {{-- Modal reject --}}
+                                <dialog id="reject-modal-{{ $guru->id }}" class="modal">
+                                    <div class="modal-box max-w-md rounded-3xl p-0">
+                                        <div class="border-b border-base-300 p-6">
+                                            <div class="flex items-start gap-4">
+                                                <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-error/15 text-error">
+                                                    <span class="material-icons">person_off</span>
+                                                </div>
+
+                                                <div>
+                                                    <h3 class="font-display text-xl font-semibold text-neutral">
+                                                        Tolak Pendaftaran
+                                                    </h3>
+
+                                                    <p class="mt-1 text-sm leading-6 text-neutral/60">
+                                                        Berikan alasan yang jelas agar guru dapat memahami langkah berikutnya.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <form
+                                            action="{{ route('admin.approve-guru.reject', $guru->id) }}"
+                                            method="POST"
+                                            class="p-6"
+                                        >
+                                            @csrf
+
+                                            <div class="rounded-2xl bg-base-200 p-4">
+                                                <p class="font-semibold text-neutral">{{ $guru->name }}</p>
+                                                <p class="mt-1 text-sm text-neutral/60">{{ $guru->email }}</p>
+                                            </div>
+
+                                            <div class="form-control mt-5">
+                                                <label for="alasan-{{ $guru->id }}" class="label px-0">
+                                                    <span class="label-text font-semibold">
+                                                        Alasan Penolakan
+                                                    </span>
+                                                </label>
+
+                                                <textarea
+                                                    id="alasan-{{ $guru->id }}"
+                                                    name="alasan"
+                                                    class="textarea textarea-bordered min-h-28 rounded-xl"
+                                                    placeholder="Contoh: Data NIP/SIAGA belum sesuai dengan data guru binaan."
+                                                    required
+                                                ></textarea>
+
+                                                <label class="label px-0">
+                                                    <span class="label-text-alt text-neutral/55">
+                                                        Alasan akan disampaikan kepada guru.
+                                                    </span>
+                                                </label>
+                                            </div>
+
+                                            <div class="mt-5 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+                                                <button
+                                                    type="button"
+                                                    class="btn btn-ghost rounded-xl"
+                                                    onclick="document.getElementById('reject-modal-{{ $guru->id }}').close()"
+                                                >
+                                                    Batal
+                                                </button>
+
+                                                <button type="submit" class="btn btn-error rounded-xl">
+                                                    <span class="material-icons text-base">close</span>
+                                                    Tolak Pendaftaran
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <form method="dialog" class="modal-backdrop">
+                                        <button aria-label="Tutup modal">Tutup</button>
+                                    </form>
+                                </dialog>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
+                {{-- Mobile cards --}}
+                <div class="space-y-3 p-4 md:hidden">
+                    @foreach($pendingGurus as $guru)
+                        <article class="rounded-2xl border border-base-300 bg-base-100 p-4">
+                            <div class="flex items-start gap-3">
+                                <div class="avatar placeholder">
+                                    <div class="w-11 rounded-full bg-primary text-primary-content">
+                                        <span class="text-sm font-bold">
+                                            {{ strtoupper(substr($guru->name, 0, 1)) }}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="min-w-0 flex-1">
+                                    <p class="truncate font-semibold text-neutral">
+                                        {{ $guru->name }}
+                                    </p>
+
+                                    <p class="mt-1 truncate text-sm text-neutral/60">
+                                        {{ $guru->email }}
+                                    </p>
+
+                                    <p class="mt-1 text-sm text-neutral/60">
+                                        {{ $guru->nomor_wa ?: 'Nomor WA belum diisi' }}
+                                    </p>
+
+                                    <p class="mt-2 text-xs text-neutral/50">
+                                        Daftar: {{ $guru->created_at->translatedFormat('d M Y, H:i') }}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="mt-4 grid grid-cols-2 gap-2">
+                                <button
+                                    type="button"
+                                    class="btn btn-success rounded-xl"
+                                    onclick="document.getElementById('approve-modal-{{ $guru->id }}').showModal()"
+                                >
+                                    <span class="material-icons text-base">check</span>
+                                    Setujui
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="btn btn-outline btn-error rounded-xl"
+                                    onclick="document.getElementById('reject-modal-{{ $guru->id }}').showModal()"
+                                >
+                                    <span class="material-icons text-base">close</span>
                                     Tolak
                                 </button>
                             </div>
+                        </article>
+                    @endforeach
+                </div>
+            @else
+                {{-- Empty state --}}
+                <div class="flex flex-col items-center px-5 py-14 text-center sm:px-8">
+                    <div class="flex h-16 w-16 items-center justify-center rounded-full bg-success/15 text-success">
+                        <span class="material-icons text-3xl">check_circle</span>
+                    </div>
 
-                            <dialog id="reject-modal-{{ $guru->id }}" class="modal">
-                                <form method="dialog" class="modal-box">
-                                    <h3 class="font-bold text-lg mb-4">Tolak Registrasi Guru</h3>
-                                    <form action="{{ route('admin.approve-guru.reject', $guru->id) }}" method="POST">
-                                        @csrf
-                                        <div class="form-control mb-4">
-                                            <label class="label">
-                                                <span class="label-text">Alasan Penolakan</span>
-                                            </label>
-                                            <textarea name="alasan" class="textarea textarea-bordered" rows="3" required></textarea>
-                                        </div>
-                                        <div class="modal-action">
-                                            <button type="submit" class="btn btn-error">Tolak</button>
-                                            <button class="btn">Batal</button>
-                                        </div>
-                                    </form>
-                                </form>
-                            </dialog>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="6" class="text-center">Tidak ada registrasi guru yang pending.</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
+                    <h2 class="font-display mt-5 text-2xl font-semibold text-neutral">
+                        Semua Pendaftaran Sudah Ditangani
+                    </h2>
+
+                    <p class="mt-2 max-w-md text-sm leading-6 text-neutral/60">
+                        Tidak ada akun guru yang sedang menunggu persetujuan. Pendaftaran baru akan muncul di halaman ini.
+                    </p>
+
+                    <a href="{{ route('admin.dashboard') }}" class="btn btn-primary mt-6 rounded-xl">
+                        <span class="material-icons text-base">dashboard</span>
+                        Kembali ke Dashboard
+                    </a>
+                </div>
+            @endif
+        </div>
+    </section>
 </div>
 @endsection

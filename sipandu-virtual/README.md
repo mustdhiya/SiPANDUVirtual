@@ -1,3 +1,64 @@
+# SiPANDU VIRTUAL
+
+Sistem Pendampingan Terpadu Virtual — Pengawas PAI SMA/SMK Kota Samarinda
+
+## Tech Stack
+
+- Laravel 9
+- Tailwind CSS + DaisyUI
+- SQLite (dev) / PostgreSQL (prod)
+- Maatwebsite Excel
+- DomPDF
+- Fonnte WA (opsional)
+
+## Setup Development
+
+1. Clone repository
+2. `composer install`
+3. `npm install`
+4. `cp .env.example .env`
+5. `php artisan key:generate`
+6. Setup database SQLite
+7. `php artisan migrate`
+8. `php artisan db:seed --class=AdminUserSeeder`
+9. `php artisan db:seed --class=MasterDataSeeder`
+10. `npm run dev`
+11. `php artisan serve`
+
+## Login Default
+
+- Email: `admin@sipandu.local`
+- Password: `admin123`
+
+## Fitur
+
+- ✅ Auth & Role (Admin/Guru)
+- ✅ Master Data
+- ✅ Modul Triwulan
+- ✅ Modul Diskusi
+- ✅ Modul Laporan & Export
+- ✅ Modul Monitoring
+- ✅ Modul Gudang
+- ✅ Notifikasi Email/WA
+
+## Deployment Production
+
+1. Setup PostgreSQL
+2. Update `.env` dengan DB credentials
+3. `composer install --optimize-autoloader --no-dev`
+4. `npm run build`
+5. `php artisan migrate --force`
+6. `php artisan config:cache`
+7. `php artisan route:cache`
+8. Setup web server (Nginx/Apache)
+9. Setup SSL/HTTPS
+
+## Troubleshooting
+
+- Error upload: `php artisan storage:link`
+- Error email: cek konfigurasi SMTP di `.env`
+- Error WA: cek token Fonnte di `.env`
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">
