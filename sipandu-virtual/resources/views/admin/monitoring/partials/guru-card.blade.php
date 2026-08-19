@@ -1,6 +1,7 @@
 @php
     $guru = $data['guru'];
     $submission = $data['submission'];
+    $matriks = $data['matriks'] ?? null;
 
     $scoreTotal = (float) $data['skor_total'];
     $scoreKelengkapan = (float) $data['skor_kelengkapan'];
@@ -8,25 +9,25 @@
 
     $toneClasses = [
         'error' => [
-            'border' => 'border-error/20',
-            'bg' => 'bg-error/5',
-            'icon' => 'bg-error/15 text-error',
+            'border' => 'border-error/30',
+            'bg' => 'bg-error/10',
+            'icon' => 'bg-error/20 text-error',
             'text' => 'text-error',
             'progress' => 'progress-error',
             'badge' => 'badge-error',
         ],
         'warning' => [
-            'border' => 'border-warning/25',
-            'bg' => 'bg-warning/5',
+            'border' => 'border-warning/30',
+            'bg' => 'bg-warning/10',
             'icon' => 'bg-warning/20 text-warning',
             'text' => 'text-warning',
             'progress' => 'progress-warning',
             'badge' => 'badge-warning',
         ],
         'success' => [
-            'border' => 'border-success/25',
-            'bg' => 'bg-success/5',
-            'icon' => 'bg-success/15 text-success',
+            'border' => 'border-success/30',
+            'bg' => 'bg-success/10',
+            'icon' => 'bg-success/20 text-success',
             'text' => 'text-success',
             'progress' => 'progress-success',
             'badge' => 'badge-success',
@@ -50,12 +51,14 @@
         'lengkap' => 'badge-success',
         'belum_submit' => 'badge-outline',
     ][$statusSubmission] ?? 'badge-outline';
+
+    $catatanSaatIni = old('catatan_admin', $matriks?->catatan_admin ?? '');
 @endphp
 
 <article class="mb-4 rounded-2xl border {{ $toneClasses['border'] }} bg-base-100 p-4 shadow-sm last:mb-0 sm:p-5">
     <div class="flex flex-col gap-5 xl:flex-row xl:items-start">
 
-        {{-- Guru --}}
+        {{-- Data Guru --}}
         <div class="flex min-w-0 flex-1 items-start gap-3">
             <div class="avatar placeholder">
                 <div class="w-11 rounded-2xl {{ $toneClasses['icon'] }}">
@@ -66,13 +69,15 @@
             </div>
 
             <div class="min-w-0">
-                <h3 class="font-display truncate text-lg font-semibold text-neutral">
+                <h3 class="font-display truncate text-lg font-semibold text-base-content">
                     {{ $guru->nama_lengkap }}
                 </h3>
 
-                <p class="mt-1 flex items-center gap-1 text-sm text-neutral/60">
+                <p class="mt-1 flex items-center gap-1 text-sm text-base-content/70">
                     <span class="material-icons text-base">school</span>
-                    <span class="truncate">{{ $guru->sekolah->nama_sekolah ?? 'Sekolah belum ditentukan' }}</span>
+                    <span class="truncate">
+                        {{ $guru->sekolah->nama_sekolah ?? 'Sekolah belum ditentukan' }}
+                    </span>
                 </p>
 
                 <div class="mt-2 flex flex-wrap gap-2">
@@ -91,22 +96,24 @@
             </div>
         </div>
 
-        {{-- Skor --}}
+        {{-- Nilai --}}
         <div class="grid grid-cols-3 gap-2 sm:gap-3 xl:w-[360px]">
             <div class="rounded-xl bg-base-200 p-3 text-center">
-                <p class="text-[11px] font-semibold uppercase tracking-wide text-neutral/45">
+                <p class="text-[11px] font-semibold uppercase tracking-wide text-base-content/50">
                     Dokumen
                 </p>
-                <p class="mt-1 text-lg font-bold text-neutral">
+
+                <p class="mt-1 text-lg font-bold text-base-content">
                     {{ $scoreKelengkapan }}%
                 </p>
             </div>
 
             <div class="rounded-xl bg-base-200 p-3 text-center">
-                <p class="text-[11px] font-semibold uppercase tracking-wide text-neutral/45">
+                <p class="text-[11px] font-semibold uppercase tracking-wide text-base-content/50">
                     Respons
                 </p>
-                <p class="mt-1 text-lg font-bold text-neutral">
+
+                <p class="mt-1 text-lg font-bold text-base-content">
                     {{ $scoreRespons }}%
                 </p>
             </div>
@@ -115,6 +122,7 @@
                 <p class="text-[11px] font-semibold uppercase tracking-wide {{ $toneClasses['text'] }}">
                     Total
                 </p>
+
                 <p class="mt-1 text-lg font-bold {{ $toneClasses['text'] }}">
                     {{ $scoreTotal }}%
                 </p>
@@ -124,9 +132,11 @@
 
     {{-- Progress --}}
     <div class="mt-5">
-        <div class="mb-2 flex items-center justify-between text-xs text-neutral/60">
+        <div class="mb-2 flex items-center justify-between text-xs text-base-content/70">
             <span>Skor monitoring</span>
-            <span class="font-semibold {{ $toneClasses['text'] }}">{{ $scoreTotal }}%</span>
+            <span class="font-semibold {{ $toneClasses['text'] }}">
+                {{ $scoreTotal }}%
+            </span>
         </div>
 
         <progress
@@ -136,15 +146,15 @@
         ></progress>
     </div>
 
-    {{-- Form catatan --}}
+    {{-- Catatan --}}
     <form
         action="{{ route('admin.monitoring.update-catatan', [$guru->id, $periode->id]) }}"
         method="POST"
-        class="mt-5 rounded-xl border border-base-300 bg-base-200/55 p-3"
+        class="mt-5 rounded-xl border border-base-300 bg-base-200 p-3"
     >
         @csrf
 
-        <label class="mb-2 flex items-center gap-2 text-sm font-semibold text-neutral">
+        <label class="mb-2 flex items-center gap-2 text-sm font-semibold text-base-content">
             <span class="material-icons text-base text-secondary">edit_note</span>
             Catatan Pendampingan
         </label>
@@ -153,10 +163,10 @@
             <input
                 type="text"
                 name="catatan_admin"
-                value="{{ old('catatan_admin') }}"
+                value="{{ $catatanSaatIni }}"
                 maxlength="500"
                 placeholder="Contoh: Hubungi guru untuk pendampingan dokumen..."
-                class="input input-bordered w-full rounded-xl bg-base-100"
+                class="input input-bordered w-full rounded-xl bg-base-100 text-base-content"
                 aria-label="Catatan pendampingan untuk {{ $guru->nama_lengkap }}"
             >
 
@@ -166,7 +176,7 @@
             </button>
         </div>
 
-        <p class="mt-2 text-xs text-neutral/50">
+        <p class="mt-2 text-xs text-base-content/60">
             Catatan maksimal 500 karakter.
         </p>
     </form>

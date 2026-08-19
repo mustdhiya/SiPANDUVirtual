@@ -1,3 +1,89 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .admin-page {
+        @apply min-h-full bg-base-100 text-base-content;
+    }
+
+    .admin-page-title {
+        @apply font-display text-3xl font-semibold leading-tight text-base-content;
+    }
+
+    .admin-page-subtitle {
+        @apply mt-2 text-sm leading-6 text-base-content/70;
+    }
+
+    .admin-eyebrow {
+        @apply text-xs font-bold uppercase tracking-[0.14em] text-secondary;
+    }
+
+    .admin-section-title {
+        @apply font-display mt-1 text-2xl font-semibold text-base-content;
+    }
+
+    .admin-surface {
+        @apply rounded-2xl border border-base-300 bg-base-100 shadow-sm;
+    }
+
+    .admin-surface-soft {
+        @apply rounded-2xl border border-base-300 bg-base-200 shadow-sm;
+    }
+
+    .admin-card {
+        @apply rounded-2xl border border-base-300 bg-base-100 p-4 shadow-sm transition duration-200;
+    }
+
+    .admin-card:hover {
+        @apply -translate-y-0.5 border-primary shadow-md;
+    }
+
+    .admin-icon-primary {
+        @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-base-200 text-primary;
+    }
+
+    .admin-icon-secondary {
+        @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-base-200 text-secondary;
+    }
+
+    .admin-icon-warning {
+        @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-base-200 text-warning;
+    }
+
+    .admin-icon-success {
+        @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-base-200 text-success;
+    }
+
+    .admin-menu-card {
+        @apply flex items-center gap-4 rounded-2xl border border-base-300 bg-base-100 p-4 shadow-sm transition duration-200;
+    }
+
+    .admin-menu-card:hover {
+        @apply -translate-y-0.5 border-primary shadow-md;
+    }
+
+    .admin-menu-title {
+        @apply font-semibold text-base-content;
+    }
+
+    .admin-menu-description {
+        @apply mt-1 text-sm leading-5 text-base-content/70;
+    }
+
+    .admin-menu-arrow {
+        @apply material-icons text-base-content/40 transition;
+    }
+
+    .group:hover .admin-menu-arrow {
+        @apply translate-x-1 text-primary;
+    }
+
+    .admin-help-box {
+        @apply rounded-2xl border border-base-300 bg-base-200 px-5 py-4;
+    }
+
+    .admin-table-head {
+        @apply bg-base-200 text-base-content/70;
+    }
+}

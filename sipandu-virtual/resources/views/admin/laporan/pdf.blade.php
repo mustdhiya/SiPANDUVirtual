@@ -2,8 +2,9 @@
 <html lang="id">
 <head>
     <meta charset="utf-8">
+
     <title>
-        Laporan Triwulan {{ $periode->nomor }} - {{ $periode->tahunAjaran->label }}
+        Laporan Triwulan {{ $periode->nomor }} - {{ $periode->tahunAjaran->label ?? '-' }}
     </title>
 
     <style>
@@ -63,7 +64,7 @@
             border: 1px solid #d9decf;
             padding: 10px;
             vertical-align: top;
-            width: 20%;
+            width: 25%;
         }
 
         .summary-label {
@@ -71,7 +72,7 @@
             display: block;
             font-size: 8px;
             font-weight: bold;
-            letter-spacing: 0.4px;
+            letter-spacing: .4px;
             text-transform: uppercase;
         }
 
@@ -167,23 +168,36 @@
         $sudahSubmit = (int) ($stats['sudah_submit'] ?? 0);
         $lengkap = (int) ($stats['lengkap'] ?? 0);
         $belumSubmit = max(0, $totalGuru - $sudahSubmit);
+
+        $periodeLabel = match($periode->nomor) {
+            1 => 'Januari – Maret',
+            2 => 'April – Juni',
+            3 => 'Juli – September',
+            4 => 'Oktober – Desember',
+            default => 'Periode Pendampingan',
+        };
     @endphp
 
     <div class="header">
-        <div class="brand">SiPANDU VIRTUAL — Pengawas PAI SMA/SMK Kota Samarinda</div>
+        <div class="brand">
+            SiPANDU VIRTUAL — Pengawas PAI SMA/SMK Kota Samarinda
+        </div>
 
         <h1>
             Laporan Pendampingan Triwulan {{ $periode->nomor }}
         </h1>
 
         <p class="subtitle">
-            Tahun Ajaran {{ $periode->tahunAjaran->label }} — {{ $periode->tema }}
+            Tahun Ajaran {{ $periode->tahunAjaran->label ?? '-' }}
+            — {{ $periodeLabel }}
+            — {{ $periode->tema }}
         </p>
 
         <table class="report-meta">
             <tr>
                 <td><strong>Deadline</strong></td>
                 <td>: {{ $periode->deadline?->translatedFormat('d F Y') ?? '-' }}</td>
+
                 <td><strong>Tanggal Cetak</strong></td>
                 <td>: {{ now()->translatedFormat('d F Y, H:i') }}</td>
             </tr>
@@ -282,7 +296,7 @@
     </table>
 
     <div class="footer">
-        Dokumen ini dibuat otomatis oleh SiPANDU VIRTUAL —
+        Dokumen dibuat otomatis oleh SiPANDU VIRTUAL —
         Sistem Pendampingan Terpadu Virtual Pengawas PAI Kota Samarinda.
     </div>
 </body>

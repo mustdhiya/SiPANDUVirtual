@@ -10,10 +10,18 @@ return new class extends Migration
     {
         Schema::create('pesan_diskusis', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('thread_id')->constrained('thread_diskusis')->onDelete('cascade');
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+
+            $table->foreignId('thread_id')
+                ->constrained('thread_diskusis')
+                ->onDelete('cascade');
+
+            $table->foreignId('user_id')
+                ->constrained('users')
+                ->onDelete('cascade');
+
             $table->text('isi_pesan');
             $table->boolean('is_admin')->default(false);
+
             $table->timestamps();
             $table->softDeletes();
 

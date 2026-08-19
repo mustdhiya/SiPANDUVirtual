@@ -26,13 +26,9 @@
         $rataRataSkor < 70 => 'progress-warning',
         default => 'progress-success',
     };
-
-    $renderGuruRows = function ($collection, $tone) use ($periode) {
-        return '';
-    };
 @endphp
 
-<div class="space-y-8">
+<div class="mx-auto max-w-7xl space-y-8">
 
     {{-- Header --}}
     <section class="flex flex-col gap-4 border-b border-base-300 pb-6 lg:flex-row lg:items-end lg:justify-between">
@@ -49,86 +45,106 @@
                 Monitoring SIAGA
             </p>
 
-            <h1 class="font-display mt-1 text-3xl font-semibold text-neutral">
-                Triwulan {{ $periode->nomor }} — {{ $periode->tahunAjaran->label }}
+            <h1 class="font-display mt-2 text-3xl font-semibold text-base-content md:text-4xl">
+                Triwulan {{ $periode->nomor }} — {{ $periode->tahunAjaran->label ?? '-' }}
             </h1>
 
-            <p class="mt-2 max-w-2xl text-sm leading-6 text-neutral/65">
+            <p class="mt-2 max-w-2xl text-sm leading-6 text-base-content/70">
                 {{ $periode->tema }}. Gunakan data ini untuk menentukan guru yang perlu didampingi lebih dahulu.
             </p>
         </div>
 
         <div class="rounded-2xl border border-base-300 bg-base-200 px-4 py-3">
-            <div class="flex items-center gap-2 text-sm text-neutral/65">
+            <div class="flex items-center gap-2 text-sm text-base-content/75">
                 <span class="material-icons text-secondary">event</span>
                 <span>Deadline:</span>
-                <strong class="font-semibold text-neutral">
-                    {{ $periode->deadline?->translatedFormat('d F Y') ?? '-' }}
+                <strong class="font-semibold text-base-content">
+                    {{ $periode->deadline?->translatedFormat('d F Y') ?? 'Belum diatur' }}
                 </strong>
             </div>
         </div>
     </section>
 
-    {{-- Ringkasan prioritas --}}
+    {{-- Statistik --}}
     <section class="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+
         <article class="rounded-2xl border border-base-300 bg-base-100 p-4 shadow-sm">
             <div class="flex items-start justify-between">
-                <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/15 text-primary">
                     <span class="material-icons">groups</span>
                 </div>
-                <span class="text-xs font-bold uppercase tracking-wide text-neutral/45">Total</span>
+
+                <span class="text-xs font-bold uppercase tracking-wide text-base-content/50">
+                    Total
+                </span>
             </div>
 
-            <p class="mt-5 text-sm text-neutral/60">Guru Terpantau</p>
-            <p class="font-display mt-1 text-3xl font-semibold text-primary">{{ $totalGuru }}</p>
+            <p class="mt-5 text-sm text-base-content/70">Guru Terpantau</p>
+
+            <p class="font-display mt-1 text-3xl font-semibold text-primary">
+                {{ $totalGuru }}
+            </p>
         </article>
 
-        <article class="rounded-2xl border border-error/20 bg-error/5 p-4 shadow-sm">
+        <article class="rounded-2xl border border-error/30 bg-error/10 p-4 shadow-sm">
             <div class="flex items-start justify-between">
-                <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-error/15 text-error">
+                <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-error/20 text-error">
                     <span class="material-icons">priority_high</span>
                 </div>
+
                 <span class="badge badge-error badge-sm">Segera</span>
             </div>
 
-            <p class="mt-5 text-sm text-neutral/60">Prioritas Utama</p>
-            <p class="font-display mt-1 text-3xl font-semibold text-error">{{ $utamaCount }}</p>
+            <p class="mt-5 text-sm text-base-content/75">Prioritas Utama</p>
+
+            <p class="font-display mt-1 text-3xl font-semibold text-error">
+                {{ $utamaCount }}
+            </p>
         </article>
 
-        <article class="rounded-2xl border border-warning/25 bg-warning/10 p-4 shadow-sm">
+        <article class="rounded-2xl border border-warning/30 bg-warning/10 p-4 shadow-sm">
             <div class="flex items-start justify-between">
                 <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-warning/20 text-warning">
                     <span class="material-icons">trending_up</span>
                 </div>
+
                 <span class="badge badge-warning badge-sm">Dampingi</span>
             </div>
 
-            <p class="mt-5 text-sm text-neutral/60">Prioritas Menengah</p>
-            <p class="font-display mt-1 text-3xl font-semibold text-warning">{{ $menengahCount }}</p>
+            <p class="mt-5 text-sm text-base-content/75">Prioritas Menengah</p>
+
+            <p class="font-display mt-1 text-3xl font-semibold text-warning">
+                {{ $menengahCount }}
+            </p>
         </article>
 
-        <article class="rounded-2xl border border-success/25 bg-success/5 p-4 shadow-sm">
+        <article class="rounded-2xl border border-success/30 bg-success/10 p-4 shadow-sm">
             <div class="flex items-start justify-between">
-                <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-success/15 text-success">
+                <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-success/20 text-success">
                     <span class="material-icons">verified</span>
                 </div>
+
                 <span class="badge badge-success badge-sm">Baik</span>
             </div>
 
-            <p class="mt-5 text-sm text-neutral/60">Prioritas Akhir</p>
-            <p class="font-display mt-1 text-3xl font-semibold text-success">{{ $akhirCount }}</p>
+            <p class="mt-5 text-sm text-base-content/75">Prioritas Akhir</p>
+
+            <p class="font-display mt-1 text-3xl font-semibold text-success">
+                {{ $akhirCount }}
+            </p>
         </article>
     </section>
 
     {{-- Kinerja keseluruhan --}}
     <section class="card border border-base-300 bg-base-100 shadow-sm">
         <div class="card-body gap-5 p-5 sm:p-6">
-            <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                     <p class="text-xs font-bold uppercase tracking-[0.14em] text-secondary">
                         Kinerja Keseluruhan
                     </p>
-                    <h2 class="font-display mt-1 text-2xl font-semibold text-neutral">
+
+                    <h2 class="font-display mt-1 text-2xl font-semibold text-base-content">
                         Rata-rata Progres Guru
                     </h2>
                 </div>
@@ -139,45 +155,61 @@
             </div>
 
             <div class="grid gap-5 md:grid-cols-3">
+
                 <div>
                     <div class="mb-2 flex items-center justify-between text-sm">
-                        <span class="text-neutral/65">Kelengkapan dokumen</span>
-                        <strong class="text-neutral">{{ $rataKelengkapan }}%</strong>
+                        <span class="text-base-content/70">Kelengkapan dokumen</span>
+                        <strong class="text-base-content">{{ $rataKelengkapan }}%</strong>
                     </div>
-                    <progress class="progress progress-primary w-full" value="{{ $rataKelengkapan }}" max="100"></progress>
+
+                    <progress
+                        class="progress progress-primary w-full"
+                        value="{{ $rataKelengkapan }}"
+                        max="100"
+                    ></progress>
                 </div>
 
                 <div>
                     <div class="mb-2 flex items-center justify-between text-sm">
-                        <span class="text-neutral/65">Respons submission</span>
-                        <strong class="text-neutral">{{ $rataRespons }}%</strong>
+                        <span class="text-base-content/70">Respons submission</span>
+                        <strong class="text-base-content">{{ $rataRespons }}%</strong>
                     </div>
-                    <progress class="progress progress-secondary w-full" value="{{ $rataRespons }}" max="100"></progress>
+
+                    <progress
+                        class="progress progress-secondary w-full"
+                        value="{{ $rataRespons }}"
+                        max="100"
+                    ></progress>
                 </div>
 
                 <div>
                     <div class="mb-2 flex items-center justify-between text-sm">
-                        <span class="text-neutral/65">Skor SIAGA</span>
-                        <strong class="text-neutral">{{ $rataRataSkor }}%</strong>
+                        <span class="text-base-content/70">Skor SIAGA</span>
+                        <strong class="text-base-content">{{ $rataRataSkor }}%</strong>
                     </div>
-                    <progress class="progress {{ $progressClass }} w-full" value="{{ $rataRataSkor }}" max="100"></progress>
+
+                    <progress
+                        class="progress {{ $progressClass }} w-full"
+                        value="{{ $rataRataSkor }}"
+                        max="100"
+                    ></progress>
                 </div>
             </div>
 
-            <div class="rounded-xl bg-base-200 px-4 py-3 text-sm leading-6 text-neutral/65">
-                <span class="font-semibold text-neutral">Cara baca skor:</span>
+            <div class="rounded-xl bg-base-200 px-4 py-3 text-sm leading-6 text-base-content/75">
+                <strong class="text-base-content">Cara baca skor:</strong>
                 kelengkapan dokumen dan respons submission dihitung masing-masing sebesar 50% dari skor total.
             </div>
         </div>
     </section>
 
-    {{-- PRIORITAS UTAMA --}}
-    <section class="collapse collapse-arrow border border-error/25 bg-base-100 shadow-sm" open>
+    {{-- Prioritas Utama --}}
+    <section class="collapse collapse-arrow border border-error/30 bg-base-100 shadow-sm">
         <input type="checkbox" checked>
 
         <div class="collapse-title px-5 py-5 sm:px-6">
             <div class="flex items-start gap-4 pr-7">
-                <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-error/15 text-error">
+                <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-error/20 text-error">
                     <span class="material-icons">priority_high</span>
                 </div>
 
@@ -187,7 +219,8 @@
                             <h2 class="font-display text-xl font-semibold text-error">
                                 Prioritas Utama
                             </h2>
-                            <p class="mt-1 text-sm text-neutral/65">
+
+                            <p class="mt-1 text-sm text-base-content/70">
                                 Skor di bawah 40. Perlu perhatian dan tindak lanjut segera.
                             </p>
                         </div>
@@ -209,16 +242,22 @@
                     'label' => 'Perlu Perhatian',
                 ])
             @empty
-                <div class="rounded-2xl border border-dashed border-error/25 bg-error/5 px-5 py-8 text-center">
+                <div class="rounded-2xl border border-dashed border-error/30 bg-error/10 px-5 py-8 text-center">
                     <span class="material-icons text-4xl text-success">check_circle</span>
-                    <p class="font-display mt-2 text-lg font-semibold text-neutral">Tidak ada prioritas utama</p>
-                    <p class="mt-1 text-sm text-neutral/60">Tidak ada guru dengan skor di bawah 40 pada periode ini.</p>
+
+                    <p class="font-display mt-2 text-lg font-semibold text-base-content">
+                        Tidak ada prioritas utama
+                    </p>
+
+                    <p class="mt-1 text-sm text-base-content/70">
+                        Tidak ada guru dengan skor di bawah 40 pada periode ini.
+                    </p>
                 </div>
             @endforelse
         </div>
     </section>
 
-    {{-- PRIORITAS MENENGAH --}}
+    {{-- Prioritas Menengah --}}
     <section class="collapse collapse-arrow border border-warning/30 bg-base-100 shadow-sm">
         <input type="checkbox">
 
@@ -234,7 +273,8 @@
                             <h2 class="font-display text-xl font-semibold text-warning">
                                 Prioritas Menengah
                             </h2>
-                            <p class="mt-1 text-sm text-neutral/65">
+
+                            <p class="mt-1 text-sm text-base-content/70">
                                 Skor 40 sampai kurang dari 70. Perlu pendampingan terarah.
                             </p>
                         </div>
@@ -256,22 +296,28 @@
                     'label' => 'Perlu Pendampingan',
                 ])
             @empty
-                <div class="rounded-2xl border border-dashed border-warning/30 bg-warning/5 px-5 py-8 text-center">
+                <div class="rounded-2xl border border-dashed border-warning/30 bg-warning/10 px-5 py-8 text-center">
                     <span class="material-icons text-4xl text-success">check_circle</span>
-                    <p class="font-display mt-2 text-lg font-semibold text-neutral">Tidak ada prioritas menengah</p>
-                    <p class="mt-1 text-sm text-neutral/60">Tidak ada guru dengan skor pada rentang 40 sampai kurang dari 70.</p>
+
+                    <p class="font-display mt-2 text-lg font-semibold text-base-content">
+                        Tidak ada prioritas menengah
+                    </p>
+
+                    <p class="mt-1 text-sm text-base-content/70">
+                        Tidak ada guru dengan skor pada rentang 40 sampai kurang dari 70.
+                    </p>
                 </div>
             @endforelse
         </div>
     </section>
 
-    {{-- PRIORITAS AKHIR --}}
-    <section class="collapse collapse-arrow border border-success/25 bg-base-100 shadow-sm">
+    {{-- Prioritas Akhir --}}
+    <section class="collapse collapse-arrow border border-success/30 bg-base-100 shadow-sm">
         <input type="checkbox">
 
         <div class="collapse-title px-5 py-5 sm:px-6">
             <div class="flex items-start gap-4 pr-7">
-                <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-success/15 text-success">
+                <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-success/20 text-success">
                     <span class="material-icons">verified</span>
                 </div>
 
@@ -281,7 +327,8 @@
                             <h2 class="font-display text-xl font-semibold text-success">
                                 Prioritas Akhir
                             </h2>
-                            <p class="mt-1 text-sm text-neutral/65">
+
+                            <p class="mt-1 text-sm text-base-content/70">
                                 Skor 70 atau lebih. Progres guru sudah baik dan dapat dipantau berkala.
                             </p>
                         </div>
@@ -303,10 +350,16 @@
                     'label' => 'Progres Baik',
                 ])
             @empty
-                <div class="rounded-2xl border border-dashed border-success/25 bg-success/5 px-5 py-8 text-center">
-                    <span class="material-icons text-4xl text-neutral/35">groups</span>
-                    <p class="font-display mt-2 text-lg font-semibold text-neutral">Belum ada guru pada kategori ini</p>
-                    <p class="mt-1 text-sm text-neutral/60">Guru akan muncul setelah skor monitoring mencapai 70 atau lebih.</p>
+                <div class="rounded-2xl border border-dashed border-success/30 bg-success/10 px-5 py-8 text-center">
+                    <span class="material-icons text-4xl text-base-content/35">groups</span>
+
+                    <p class="font-display mt-2 text-lg font-semibold text-base-content">
+                        Belum ada guru pada kategori ini
+                    </p>
+
+                    <p class="mt-1 text-sm text-base-content/70">
+                        Guru akan muncul setelah skor monitoring mencapai 70 atau lebih.
+                    </p>
                 </div>
             @endforelse
         </div>

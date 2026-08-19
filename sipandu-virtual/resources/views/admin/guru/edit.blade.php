@@ -11,14 +11,16 @@
         ->implode('');
 @endphp
 
-<div class="max-w-4xl space-y-6">
+<div class="mx-auto max-w-4xl space-y-6">
 
     {{-- Header --}}
-    <section class="flex flex-col gap-4 border-b border-base-300 pb-5 sm:flex-row sm:items-end sm:justify-between">
+    <section class="flex flex-col gap-4 border-b border-base-300 pb-6 sm:flex-row sm:items-end sm:justify-between">
         <div class="flex items-center gap-4">
             <div class="avatar placeholder">
                 <div class="w-14 rounded-2xl bg-primary/15 text-primary">
-                    <span class="font-display text-lg font-semibold">{{ $inisial ?: 'G' }}</span>
+                    <span class="font-display text-lg font-semibold">
+                        {{ $inisial ?: 'G' }}
+                    </span>
                 </div>
             </div>
 
@@ -27,11 +29,11 @@
                     Data Utama
                 </p>
 
-                <h1 class="font-display mt-1 text-3xl font-semibold text-neutral">
+                <h1 class="font-display mt-1 text-3xl font-semibold text-base-content">
                     Edit Guru Binaan
                 </h1>
 
-                <p class="mt-1 text-sm text-neutral/60">
+                <p class="mt-1 text-sm text-base-content/70">
                     {{ $guru->nama_lengkap }}
                 </p>
             </div>
@@ -51,16 +53,16 @@
         <section class="card border border-base-300 bg-base-100 shadow-sm">
             <div class="card-body gap-6 p-5 sm:p-7">
                 <div class="flex items-start gap-3">
-                    <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                    <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/15 text-primary">
                         <span class="material-icons">person</span>
                     </div>
 
                     <div>
-                        <h2 class="font-display text-xl font-semibold">
+                        <h2 class="font-display text-xl font-semibold text-base-content">
                             Informasi Guru
                         </h2>
 
-                        <p class="mt-1 text-sm text-neutral/60">
+                        <p class="mt-1 text-sm text-base-content/70">
                             Perbarui data identitas dan sekolah asal guru binaan.
                         </p>
                     </div>
@@ -105,7 +107,7 @@
                             @foreach($sekolahs as $sekolah)
                                 <option
                                     value="{{ $sekolah->id }}"
-                                    {{ old('sekolah_id', $guru->sekolah_id) == $sekolah->id ? 'selected' : '' }}
+                                    @selected(old('sekolah_id', $guru->sekolah_id) == $sekolah->id)
                                 >
                                     {{ $sekolah->nama_sekolah }}
                                     @if($sekolah->jenjang)
@@ -137,7 +139,7 @@
                         >
 
                         <label class="label">
-                            <span class="label-text-alt text-neutral/55">
+                            <span class="label-text-alt text-base-content/60">
                                 Pastikan nomor sesuai dengan data guru binaan.
                             </span>
                         </label>
@@ -161,11 +163,11 @@
                     </div>
 
                     <div>
-                        <h2 class="font-display text-xl font-semibold">
+                        <h2 class="font-display text-xl font-semibold text-base-content">
                             Jabatan dan Status
                         </h2>
 
-                        <p class="mt-1 text-sm text-neutral/60">
+                        <p class="mt-1 text-sm text-base-content/70">
                             Sesuaikan jabatan dan status aktif guru dalam sistem.
                         </p>
                     </div>
@@ -187,14 +189,14 @@
                         >
                             <option
                                 value="GURU"
-                                {{ old('status_jabatan', $guru->status_jabatan) === 'GURU' ? 'selected' : '' }}
+                                @selected(old('status_jabatan', $guru->status_jabatan) === 'GURU')
                             >
                                 Guru PAI
                             </option>
 
                             <option
                                 value="GURU_KEPSEK"
-                                {{ old('status_jabatan', $guru->status_jabatan) === 'GURU_KEPSEK' ? 'selected' : '' }}
+                                @selected(old('status_jabatan', $guru->status_jabatan) === 'GURU_KEPSEK')
                             >
                                 Guru PAI merangkap Kepala Sekolah
                             </option>
@@ -207,21 +209,26 @@
                         @enderror
                     </div>
 
-                    <div class="rounded-2xl border border-base-300 bg-base-200/60 p-4">
+                    <div class="rounded-2xl border border-base-300 bg-base-200 p-4">
                         <label for="is_active" class="flex cursor-pointer items-center justify-between gap-4">
                             <div>
-                                <p class="font-semibold">Status Guru Aktif</p>
-                                <p class="mt-1 text-sm leading-5 text-neutral/60">
+                                <p class="font-semibold text-base-content">
+                                    Status Guru Aktif
+                                </p>
+
+                                <p class="mt-1 text-sm leading-5 text-base-content/70">
                                     Nonaktifkan hanya jika guru mutasi, pensiun, atau tidak lagi menjadi binaan.
                                 </p>
                             </div>
+
+                            <input type="hidden" name="is_active" value="0">
 
                             <input
                                 id="is_active"
                                 type="checkbox"
                                 name="is_active"
                                 value="1"
-                                {{ old('is_active', $guru->is_active) ? 'checked' : '' }}
+                                @checked(old('is_active', $guru->is_active))
                                 class="toggle toggle-primary"
                             >
                         </label>
@@ -230,15 +237,19 @@
             </div>
         </section>
 
-        {{-- Informasi perubahan --}}
-        <section class="rounded-2xl border border-base-300 bg-base-200/70 p-4">
+        {{-- Informasi --}}
+        <section class="rounded-2xl border border-secondary/30 bg-secondary/10 p-4">
             <div class="flex items-start gap-3">
                 <span class="material-icons mt-0.5 text-secondary">info</span>
 
                 <div>
-                    <p class="font-semibold">Perhatikan sebelum menyimpan</p>
-                    <p class="mt-1 text-sm leading-6 text-neutral/60">
-                        Perubahan NIP/SIAGA atau status guru dapat memengaruhi proses pencocokan saat registrasi akun guru.
+                    <p class="font-semibold text-base-content">
+                        Perhatikan sebelum menyimpan
+                    </p>
+
+                    <p class="mt-1 text-sm leading-6 text-base-content/70">
+                        Perubahan NIP/SIAGA atau status guru dapat memengaruhi proses pencocokan
+                        saat registrasi akun guru.
                     </p>
                 </div>
             </div>

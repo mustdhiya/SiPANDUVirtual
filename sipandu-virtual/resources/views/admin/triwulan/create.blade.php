@@ -3,21 +3,21 @@
 @section('title', 'Tambah Triwulan')
 
 @section('content')
-<div class="space-y-7">
+<div class="mx-auto max-w-6xl space-y-7">
 
     {{-- Header --}}
-    <section class="flex flex-col gap-4 border-b border-base-300 pb-5 sm:flex-row sm:items-end sm:justify-between">
+    <section class="flex flex-col gap-4 border-b border-base-300 pb-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
             <p class="text-xs font-bold uppercase tracking-[0.14em] text-secondary">
                 Pengaturan Pendampingan
             </p>
 
-            <h1 class="font-display mt-1 text-3xl font-semibold text-neutral">
+            <h1 class="font-display mt-2 text-3xl font-semibold text-base-content">
                 Tambah Triwulan
             </h1>
 
-            <p class="mt-2 max-w-2xl text-sm leading-6 text-neutral/60">
-                Buat periode triwulan baru, pilih tahun ajaran, tentukan deadline, lalu atur apakah guru dapat mengaksesnya.
+            <p class="mt-2 max-w-2xl text-sm leading-6 text-base-content/70">
+                Buat periode triwulan baru, tentukan tahun ajaran, tema, deadline, dan status akses guru.
             </p>
         </div>
 
@@ -30,12 +30,14 @@
     @if($tahunAjarans->isEmpty())
         <section class="alert alert-warning rounded-2xl border border-warning/30 shadow-sm">
             <span class="material-icons">warning</span>
+
             <div>
-                <h2 class="font-bold">Belum ada tahun ajaran aktif.</h2>
+                <h2 class="font-bold">Belum ada tahun ajaran.</h2>
                 <p class="mt-1 text-sm">
-                    Buat dan aktifkan tahun ajaran terlebih dahulu sebelum menambahkan triwulan.
+                    Buat dan aktifkan tahun ajaran terlebih dahulu sebelum menambahkan periode triwulan.
                 </p>
             </div>
+
             <a href="{{ route('admin.tahun-ajaran.create') }}" class="btn btn-sm btn-warning">
                 Buat Tahun Ajaran
             </a>
@@ -50,10 +52,11 @@
                 <section class="card border border-base-300 bg-base-100 shadow-sm">
                     <div class="card-body gap-6 p-5 sm:p-7">
                         <div>
-                            <h2 class="font-display text-2xl font-semibold text-neutral">
+                            <h2 class="font-display text-2xl font-semibold text-base-content">
                                 Informasi Triwulan
                             </h2>
-                            <p class="mt-1 text-sm text-neutral/60">
+
+                            <p class="mt-1 text-sm text-base-content/70">
                                 Isi seluruh informasi dasar periode pendampingan.
                             </p>
                         </div>
@@ -77,7 +80,7 @@
                                     @foreach($tahunAjarans as $ta)
                                         <option
                                             value="{{ $ta->id }}"
-                                            {{ old('tahun_ajaran_id') == $ta->id ? 'selected' : '' }}
+                                            @selected(old('tahun_ajaran_id') == $ta->id)
                                         >
                                             {{ $ta->label }}
                                         </option>
@@ -105,18 +108,10 @@
                                     <option value="" disabled {{ old('nomor') ? '' : 'selected' }}>
                                         Pilih triwulan
                                     </option>
-                                    <option value="1" {{ old('nomor') == 1 ? 'selected' : '' }}>
-                                        Triwulan I — Jan sampai Mar
-                                    </option>
-                                    <option value="2" {{ old('nomor') == 2 ? 'selected' : '' }}>
-                                        Triwulan II — Apr sampai Jun
-                                    </option>
-                                    <option value="3" {{ old('nomor') == 3 ? 'selected' : '' }}>
-                                        Triwulan III — Jul sampai Sep
-                                    </option>
-                                    <option value="4" {{ old('nomor') == 4 ? 'selected' : '' }}>
-                                        Triwulan IV — Okt sampai Des
-                                    </option>
+                                    <option value="1" @selected(old('nomor') == 1)>Triwulan I — Januari sampai Maret</option>
+                                    <option value="2" @selected(old('nomor') == 2)>Triwulan II — April sampai Juni</option>
+                                    <option value="3" @selected(old('nomor') == 3)>Triwulan III — Juli sampai September</option>
+                                    <option value="4" @selected(old('nomor') == 4)>Triwulan IV — Oktober sampai Desember</option>
                                 </select>
 
                                 @error('nomor')
@@ -143,8 +138,8 @@
                             >
 
                             <label class="label px-0">
-                                <span class="label-text-alt text-neutral/55">
-                                    Tema akan ditampilkan kepada guru pada halaman triwulan.
+                                <span class="label-text-alt text-base-content/60">
+                                    Tema akan tampil pada dashboard dan halaman triwulan guru.
                                 </span>
                             </label>
 
@@ -170,8 +165,8 @@
                             >
 
                             <label class="label px-0">
-                                <span class="label-text-alt text-neutral/55">
-                                    Setelah tanggal ini, guru sebaiknya tidak lagi melakukan pengisian.
+                                <span class="label-text-alt text-base-content/60">
+                                    Tetapkan deadline yang realistis agar guru mempunyai waktu cukup untuk menyiapkan dokumen.
                                 </span>
                             </label>
 
@@ -182,25 +177,26 @@
                             @enderror
                         </div>
 
-                        {{-- Status akses --}}
-                        <div class="rounded-2xl border border-base-300 bg-base-200/70 p-4">
+                        <div class="rounded-2xl border border-base-300 bg-base-200 p-4">
                             <label for="is_open" class="flex cursor-pointer items-start gap-4">
+                                <input type="hidden" name="is_open" value="0">
+
                                 <input
                                     id="is_open"
                                     type="checkbox"
                                     name="is_open"
                                     value="1"
-                                    {{ old('is_open') ? 'checked' : '' }}
+                                    @checked(old('is_open'))
                                     class="toggle toggle-primary mt-0.5"
                                 >
 
                                 <div>
-                                    <p class="font-semibold text-neutral">
+                                    <p class="font-semibold text-base-content">
                                         Buka akses untuk guru
                                     </p>
 
-                                    <p class="mt-1 text-sm leading-6 text-neutral/60">
-                                        Jika diaktifkan, guru dapat melihat triwulan ini serta mulai mengunggah dokumen dan mengisi instrumen.
+                                    <p class="mt-1 text-sm leading-6 text-base-content/70">
+                                        Jika aktif, guru dapat melihat periode ini serta mengunggah dokumen dan mengisi instrumen.
                                     </p>
                                 </div>
                             </label>
@@ -219,18 +215,18 @@
                     </div>
                 </section>
 
-                {{-- Panel bantuan --}}
+                {{-- Informasi bantuan --}}
                 <aside class="space-y-4">
-                    <section class="rounded-2xl border border-secondary/20 bg-secondary/10 p-5">
-                        <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-secondary/15 text-secondary">
+                    <section class="rounded-2xl border border-secondary/30 bg-secondary/10 p-5">
+                        <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-secondary/20 text-secondary">
                             <span class="material-icons">lightbulb</span>
                         </div>
 
-                        <h2 class="font-display mt-4 text-xl font-semibold">
+                        <h2 class="font-display mt-4 text-xl font-semibold text-base-content">
                             Sebelum Menyimpan
                         </h2>
 
-                        <ul class="mt-3 space-y-3 text-sm leading-6 text-neutral/65">
+                        <ul class="mt-3 space-y-3 text-sm leading-6 text-base-content/75">
                             <li class="flex gap-2">
                                 <span class="material-icons mt-1 text-base text-secondary">check_circle</span>
                                 Pilih tahun ajaran yang tepat.
@@ -241,7 +237,7 @@
                             </li>
                             <li class="flex gap-2">
                                 <span class="material-icons mt-1 text-base text-secondary">check_circle</span>
-                                Buka akses hanya saat triwulan siap digunakan.
+                                Buka akses hanya jika dokumen wajib sudah siap.
                             </li>
                         </ul>
                     </section>
@@ -249,10 +245,10 @@
                     <section class="rounded-2xl border border-base-300 bg-base-100 p-5">
                         <div class="flex items-center gap-2">
                             <span class="material-icons text-primary">info</span>
-                            <h2 class="font-semibold">Alur Pendampingan</h2>
+                            <h2 class="font-semibold text-base-content">Alur Pendampingan</h2>
                         </div>
 
-                        <ol class="mt-3 space-y-3 text-sm text-neutral/65">
+                        <ol class="mt-4 space-y-3 text-sm text-base-content/70">
                             <li class="flex gap-3">
                                 <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-content">1</span>
                                 Atur tahun ajaran.

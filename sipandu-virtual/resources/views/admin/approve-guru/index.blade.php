@@ -7,20 +7,21 @@
     $totalPending = $pendingGurus->count();
 @endphp
 
-<div class="space-y-7">
+<div class="mx-auto max-w-7xl space-y-8">
 
     {{-- Header --}}
-    <section class="flex flex-col gap-4 border-b border-base-300 pb-5 sm:flex-row sm:items-end sm:justify-between">
+    <section class="flex flex-col gap-5 border-b border-base-300 pb-6 lg:flex-row lg:items-end lg:justify-between">
         <div>
-            <p class="text-xs font-bold uppercase tracking-[0.14em] text-secondary">
+            <div class="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-secondary">
+                <span class="material-icons text-base">how_to_reg</span>
                 Pendampingan
-            </p>
+            </div>
 
-            <h1 class="font-display mt-1 text-3xl font-semibold leading-tight text-neutral">
+            <h1 class="font-display mt-2 text-3xl font-semibold leading-tight text-base-content md:text-4xl">
                 Persetujuan Guru
             </h1>
 
-            <p class="mt-2 max-w-2xl text-sm leading-6 text-neutral/60">
+            <p class="mt-2 max-w-2xl text-sm leading-6 text-base-content/70">
                 Periksa data pendaftar sebelum mengaktifkan akses mereka ke SiPANDU VIRTUAL.
             </p>
         </div>
@@ -28,31 +29,32 @@
         <div class="rounded-2xl border border-base-300 bg-base-200 px-4 py-3">
             <div class="flex items-center gap-2">
                 <span class="material-icons text-secondary">person_add</span>
-                <span class="text-sm font-semibold text-neutral">
+                <span class="text-sm font-semibold text-base-content">
                     {{ $totalPending }} Guru Menunggu
                 </span>
             </div>
-            <p class="mt-1 text-xs text-neutral/60">
+
+            <p class="mt-1 text-xs text-base-content/60">
                 Perlu diverifikasi oleh Pengawas PAI.
             </p>
         </div>
     </section>
 
-    {{-- Penjelasan proses --}}
-    <section class="rounded-2xl border border-secondary/25 bg-secondary/10 p-4 sm:p-5">
+    {{-- Penjelasan --}}
+    <section class="rounded-2xl border border-secondary/30 bg-secondary/10 p-4 sm:p-5">
         <div class="flex items-start gap-3">
             <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-secondary/20 text-secondary">
                 <span class="material-icons">info</span>
             </div>
 
             <div>
-                <h2 class="font-semibold text-neutral">
+                <h2 class="font-semibold text-base-content">
                     Periksa sebelum menyetujui
                 </h2>
 
-                <p class="mt-1 text-sm leading-6 text-neutral/65">
-                    Pastikan nama, email, dan nomor WhatsApp guru sesuai dengan data Guru Binaan.
-                    Guru yang disetujui akan langsung dapat masuk ke sistem.
+                <p class="mt-1 text-sm leading-6 text-base-content/75">
+                    Pastikan nama, email, serta nomor WhatsApp sesuai dengan data Guru Binaan.
+                    Guru yang disetujui akan dapat masuk dan mengakses layanan pendampingan.
                 </p>
             </div>
         </div>
@@ -62,13 +64,14 @@
     <section class="card border border-base-300 bg-base-100 shadow-sm">
         <div class="card-body p-0">
 
-            <div class="flex flex-col gap-2 border-b border-base-300 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+            <div class="flex flex-col gap-3 border-b border-base-300 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
                 <div>
-                    <h2 class="font-display text-xl font-semibold text-neutral">
+                    <h2 class="font-display text-xl font-semibold text-base-content">
                         Daftar Pendaftaran
                     </h2>
-                    <p class="mt-1 text-sm text-neutral/60">
-                        Data guru yang menunggu keputusan Anda.
+
+                    <p class="mt-1 text-sm text-base-content/70">
+                        Data akun guru yang sedang menunggu keputusan Anda.
                     </p>
                 </div>
 
@@ -81,10 +84,11 @@
             </div>
 
             @if($pendingGurus->isNotEmpty())
+
                 {{-- Desktop table --}}
                 <div class="hidden overflow-x-auto md:block">
                     <table class="table w-full">
-                        <thead class="bg-base-200/70 text-neutral/65">
+                        <thead class="bg-base-200 text-base-content/70">
                             <tr>
                                 <th class="pl-6">Guru</th>
                                 <th>Kontak</th>
@@ -95,7 +99,7 @@
 
                         <tbody>
                             @foreach($pendingGurus as $guru)
-                                <tr class="hover:bg-base-200/45">
+                                <tr class="hover:bg-base-200">
                                     <td class="pl-6">
                                         <div class="flex items-center gap-3">
                                             <div class="avatar placeholder">
@@ -107,10 +111,11 @@
                                             </div>
 
                                             <div>
-                                                <p class="font-semibold text-neutral">
+                                                <p class="font-semibold text-base-content">
                                                     {{ $guru->name }}
                                                 </p>
-                                                <p class="mt-0.5 text-xs text-neutral/55">
+
+                                                <p class="mt-0.5 text-xs text-base-content/60">
                                                     ID Pendaftar: #{{ $guru->id }}
                                                 </p>
                                             </div>
@@ -118,24 +123,25 @@
                                     </td>
 
                                     <td>
-                                        <div class="space-y-1">
-                                            <p class="flex items-center gap-2 text-sm text-neutral/75">
-                                                <span class="material-icons text-base text-neutral/45">mail</span>
+                                        <div class="space-y-2">
+                                            <p class="flex items-center gap-2 text-sm text-base-content/75">
+                                                <span class="material-icons text-base text-base-content/50">mail</span>
                                                 {{ $guru->email }}
                                             </p>
 
-                                            <p class="flex items-center gap-2 text-sm text-neutral/75">
-                                                <span class="material-icons text-base text-neutral/45">phone</span>
+                                            <p class="flex items-center gap-2 text-sm text-base-content/75">
+                                                <span class="material-icons text-base text-base-content/50">phone</span>
                                                 {{ $guru->nomor_wa ?: 'Nomor WA belum diisi' }}
                                             </p>
                                         </div>
                                     </td>
 
                                     <td>
-                                        <p class="text-sm font-medium text-neutral">
+                                        <p class="text-sm font-medium text-base-content">
                                             {{ $guru->created_at->translatedFormat('d M Y') }}
                                         </p>
-                                        <p class="mt-0.5 text-xs text-neutral/55">
+
+                                        <p class="mt-0.5 text-xs text-base-content/60">
                                             Pukul {{ $guru->created_at->format('H:i') }}
                                         </p>
                                     </td>
@@ -173,11 +179,11 @@
                                                 </div>
 
                                                 <div>
-                                                    <h3 class="font-display text-xl font-semibold text-neutral">
+                                                    <h3 class="font-display text-xl font-semibold text-base-content">
                                                         Setujui Pendaftaran?
                                                     </h3>
 
-                                                    <p class="mt-1 text-sm leading-6 text-neutral/60">
+                                                    <p class="mt-1 text-sm leading-6 text-base-content/70">
                                                         Guru akan mendapatkan akses ke SiPANDU VIRTUAL setelah disetujui.
                                                     </p>
                                                 </div>
@@ -185,10 +191,16 @@
                                         </div>
 
                                         <div class="p-6">
-                                            <div class="rounded-2xl bg-base-200 p-4">
-                                                <p class="font-semibold text-neutral">{{ $guru->name }}</p>
-                                                <p class="mt-1 text-sm text-neutral/60">{{ $guru->email }}</p>
-                                                <p class="mt-1 text-sm text-neutral/60">
+                                            <div class="rounded-2xl border border-base-300 bg-base-200 p-4">
+                                                <p class="font-semibold text-base-content">
+                                                    {{ $guru->name }}
+                                                </p>
+
+                                                <p class="mt-1 text-sm text-base-content/70">
+                                                    {{ $guru->email }}
+                                                </p>
+
+                                                <p class="mt-1 text-sm text-base-content/70">
                                                     {{ $guru->nomor_wa ?: 'Nomor WA belum diisi' }}
                                                 </p>
                                             </div>
@@ -231,12 +243,12 @@
                                                 </div>
 
                                                 <div>
-                                                    <h3 class="font-display text-xl font-semibold text-neutral">
+                                                    <h3 class="font-display text-xl font-semibold text-base-content">
                                                         Tolak Pendaftaran
                                                     </h3>
 
-                                                    <p class="mt-1 text-sm leading-6 text-neutral/60">
-                                                        Berikan alasan yang jelas agar guru dapat memahami langkah berikutnya.
+                                                    <p class="mt-1 text-sm leading-6 text-base-content/70">
+                                                        Berikan alasan yang jelas agar guru memahami langkah berikutnya.
                                                     </p>
                                                 </div>
                                             </div>
@@ -249,9 +261,14 @@
                                         >
                                             @csrf
 
-                                            <div class="rounded-2xl bg-base-200 p-4">
-                                                <p class="font-semibold text-neutral">{{ $guru->name }}</p>
-                                                <p class="mt-1 text-sm text-neutral/60">{{ $guru->email }}</p>
+                                            <div class="rounded-2xl border border-base-300 bg-base-200 p-4">
+                                                <p class="font-semibold text-base-content">
+                                                    {{ $guru->name }}
+                                                </p>
+
+                                                <p class="mt-1 text-sm text-base-content/70">
+                                                    {{ $guru->email }}
+                                                </p>
                                             </div>
 
                                             <div class="form-control mt-5">
@@ -265,13 +282,13 @@
                                                     id="alasan-{{ $guru->id }}"
                                                     name="alasan"
                                                     class="textarea textarea-bordered min-h-28 rounded-xl"
-                                                    placeholder="Contoh: Data NIP/SIAGA belum sesuai dengan data guru binaan."
+                                                    placeholder="Contoh: Data NIP/SIAGA belum sesuai dengan data Guru Binaan."
                                                     required
                                                 ></textarea>
 
                                                 <label class="label px-0">
-                                                    <span class="label-text-alt text-neutral/55">
-                                                        Alasan akan disampaikan kepada guru.
+                                                    <span class="label-text-alt text-base-content/60">
+                                                        Alasan ini akan disampaikan kepada guru.
                                                     </span>
                                                 </label>
                                             </div>
@@ -316,19 +333,19 @@
                                 </div>
 
                                 <div class="min-w-0 flex-1">
-                                    <p class="truncate font-semibold text-neutral">
+                                    <p class="truncate font-semibold text-base-content">
                                         {{ $guru->name }}
                                     </p>
 
-                                    <p class="mt-1 truncate text-sm text-neutral/60">
+                                    <p class="mt-1 truncate text-sm text-base-content/70">
                                         {{ $guru->email }}
                                     </p>
 
-                                    <p class="mt-1 text-sm text-neutral/60">
+                                    <p class="mt-1 text-sm text-base-content/70">
                                         {{ $guru->nomor_wa ?: 'Nomor WA belum diisi' }}
                                     </p>
 
-                                    <p class="mt-2 text-xs text-neutral/50">
+                                    <p class="mt-2 text-xs text-base-content/60">
                                         Daftar: {{ $guru->created_at->translatedFormat('d M Y, H:i') }}
                                     </p>
                                 </div>
@@ -363,12 +380,13 @@
                         <span class="material-icons text-3xl">check_circle</span>
                     </div>
 
-                    <h2 class="font-display mt-5 text-2xl font-semibold text-neutral">
+                    <h2 class="font-display mt-5 text-2xl font-semibold text-base-content">
                         Semua Pendaftaran Sudah Ditangani
                     </h2>
 
-                    <p class="mt-2 max-w-md text-sm leading-6 text-neutral/60">
-                        Tidak ada akun guru yang sedang menunggu persetujuan. Pendaftaran baru akan muncul di halaman ini.
+                    <p class="mt-2 max-w-md text-sm leading-6 text-base-content/70">
+                        Tidak ada akun guru yang sedang menunggu persetujuan.
+                        Pendaftaran baru akan muncul di halaman ini.
                     </p>
 
                     <a href="{{ route('admin.dashboard') }}" class="btn btn-primary mt-6 rounded-xl">

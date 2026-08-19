@@ -10,20 +10,20 @@
     $totalSmk = $sekolahs->where('jenjang', 'SMK')->count();
 @endphp
 
-<div class="space-y-7">
+<div class="mx-auto max-w-7xl space-y-8">
 
     {{-- Header --}}
-    <section class="flex flex-col gap-4 border-b border-base-300 pb-5 sm:flex-row sm:items-end sm:justify-between">
+    <section class="flex flex-col gap-4 border-b border-base-300 pb-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
             <p class="text-xs font-bold uppercase tracking-[0.14em] text-secondary">
                 Data Utama
             </p>
 
-            <h1 class="font-display mt-1 text-3xl font-semibold text-neutral">
+            <h1 class="font-display mt-2 text-3xl font-semibold text-base-content md:text-4xl">
                 Sekolah Binaan
             </h1>
 
-            <p class="mt-2 max-w-2xl text-sm leading-6 text-neutral/60">
+            <p class="mt-2 max-w-2xl text-sm leading-6 text-base-content/70">
                 Kelola daftar sekolah SMA dan SMK yang menjadi binaan Pengawas PAI Kota Samarinda.
             </p>
         </div>
@@ -36,15 +36,18 @@
 
     {{-- Statistik --}}
     <section class="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+
         <article class="rounded-2xl border border-base-300 bg-base-100 p-4 shadow-sm sm:p-5">
             <div class="flex items-center justify-between">
                 <span class="material-icons text-primary">school</span>
-                <span class="text-[11px] font-bold uppercase tracking-wide text-neutral/45">
+                <span class="text-[11px] font-bold uppercase tracking-wide text-base-content/50">
                     Total
                 </span>
             </div>
 
-            <p class="mt-5 text-sm text-neutral/60">Sekolah Terdaftar</p>
+            <p class="mt-5 text-sm text-base-content/70">
+                Sekolah Terdaftar
+            </p>
 
             <p class="font-display mt-1 text-3xl font-semibold text-primary">
                 {{ $totalSekolah }}
@@ -54,12 +57,14 @@
         <article class="rounded-2xl border border-base-300 bg-base-100 p-4 shadow-sm sm:p-5">
             <div class="flex items-center justify-between">
                 <span class="material-icons text-success">check_circle</span>
-                <span class="text-[11px] font-bold uppercase tracking-wide text-neutral/45">
+                <span class="text-[11px] font-bold uppercase tracking-wide text-base-content/50">
                     Aktif
                 </span>
             </div>
 
-            <p class="mt-5 text-sm text-neutral/60">Sekolah Aktif</p>
+            <p class="mt-5 text-sm text-base-content/70">
+                Sekolah Aktif
+            </p>
 
             <p class="font-display mt-1 text-3xl font-semibold text-success">
                 {{ $totalAktif }}
@@ -69,12 +74,14 @@
         <article class="rounded-2xl border border-base-300 bg-base-100 p-4 shadow-sm sm:p-5">
             <div class="flex items-center justify-between">
                 <span class="material-icons text-secondary">account_balance</span>
-                <span class="text-[11px] font-bold uppercase tracking-wide text-neutral/45">
+                <span class="text-[11px] font-bold uppercase tracking-wide text-base-content/50">
                     Jenjang
                 </span>
             </div>
 
-            <p class="mt-5 text-sm text-neutral/60">SMA Binaan</p>
+            <p class="mt-5 text-sm text-base-content/70">
+                SMA Binaan
+            </p>
 
             <p class="font-display mt-1 text-3xl font-semibold text-secondary">
                 {{ $totalSma }}
@@ -84,12 +91,14 @@
         <article class="rounded-2xl border border-base-300 bg-base-100 p-4 shadow-sm sm:p-5">
             <div class="flex items-center justify-between">
                 <span class="material-icons text-warning">construction</span>
-                <span class="text-[11px] font-bold uppercase tracking-wide text-neutral/45">
+                <span class="text-[11px] font-bold uppercase tracking-wide text-base-content/50">
                     Jenjang
                 </span>
             </div>
 
-            <p class="mt-5 text-sm text-neutral/60">SMK Binaan</p>
+            <p class="mt-5 text-sm text-base-content/70">
+                SMK Binaan
+            </p>
 
             <p class="font-display mt-1 text-3xl font-semibold text-warning">
                 {{ $totalSmk }}
@@ -97,19 +106,20 @@
         </article>
     </section>
 
-    {{-- Daftar sekolah --}}
+    {{-- Daftar Sekolah --}}
     <section class="overflow-hidden rounded-2xl border border-base-300 bg-base-100 shadow-sm">
         <div class="flex flex-col gap-3 border-b border-base-300 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-                <h2 class="font-display text-xl font-semibold text-neutral">
+                <h2 class="font-display text-xl font-semibold text-base-content">
                     Daftar Sekolah
                 </h2>
-                <p class="mt-1 text-sm text-neutral/60">
+
+                <p class="mt-1 text-sm text-base-content/70">
                     {{ $totalSekolah }} sekolah tersedia di dalam sistem.
                 </p>
             </div>
 
-            <div class="flex items-center gap-2 rounded-xl bg-base-200 px-3 py-2 text-sm text-neutral/60">
+            <div class="flex items-center gap-2 rounded-xl bg-base-200 px-3 py-2 text-sm text-base-content/70">
                 <span class="material-icons text-base text-secondary">info</span>
                 Pilih ikon pensil untuk mengubah data.
             </div>
@@ -117,8 +127,8 @@
 
         @if($sekolahs->isNotEmpty())
             <div class="overflow-x-auto">
-                <table class="table table-zebra w-full">
-                    <thead class="bg-base-200 text-neutral">
+                <table class="table w-full">
+                    <thead class="bg-base-200 text-base-content/70">
                         <tr>
                             <th class="w-16">No.</th>
                             <th>Nama Sekolah</th>
@@ -131,23 +141,23 @@
 
                     <tbody>
                         @foreach($sekolahs as $index => $sekolah)
-                            <tr class="hover">
-                                <td class="font-semibold text-neutral/55">
+                            <tr class="hover:bg-base-200">
+                                <td class="font-semibold text-base-content/60">
                                     {{ $index + 1 }}
                                 </td>
 
                                 <td>
                                     <div class="flex items-center gap-3">
-                                        <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                                        <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/15 text-primary">
                                             <span class="material-icons">school</span>
                                         </div>
 
                                         <div>
-                                            <p class="font-semibold text-neutral">
+                                            <p class="font-semibold text-base-content">
                                                 {{ $sekolah->nama_sekolah }}
                                             </p>
 
-                                            <p class="mt-0.5 text-xs text-neutral/55">
+                                            <p class="mt-0.5 text-xs text-base-content/60">
                                                 ID Sekolah: #{{ $sekolah->id }}
                                             </p>
                                         </div>
@@ -155,7 +165,7 @@
                                 </td>
 
                                 <td>
-                                    <span class="badge badge-outline border-primary/35 bg-primary/5 font-semibold text-primary">
+                                    <span class="badge badge-outline border-primary/40 bg-primary/10 font-semibold text-primary">
                                         {{ $sekolah->jenjang }}
                                     </span>
                                 </td>
@@ -211,30 +221,27 @@
 
                                         <dialog id="hapus-sekolah-{{ $sekolah->id }}" class="modal">
                                             <div class="modal-box max-w-md rounded-3xl">
-                                                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-error/10 text-error">
+                                                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-error/15 text-error">
                                                     <span class="material-icons">delete_forever</span>
                                                 </div>
 
-                                                <h3 class="font-display mt-4 text-xl font-semibold">
+                                                <h3 class="font-display mt-4 text-xl font-semibold text-base-content">
                                                     Hapus Sekolah?
                                                 </h3>
 
-                                                <p class="mt-2 text-sm leading-6 text-neutral/65">
+                                                <p class="mt-2 text-sm leading-6 text-base-content/70">
                                                     Data <strong>{{ $sekolah->nama_sekolah }}</strong> akan dihapus dari daftar sekolah binaan.
                                                     Pastikan sekolah ini memang tidak lagi diperlukan.
                                                 </p>
 
                                                 <div class="modal-action">
                                                     <form method="dialog">
-                                                        <button type="button" class="btn btn-ghost rounded-xl">
+                                                        <button type="submit" class="btn btn-ghost rounded-xl">
                                                             Batal
                                                         </button>
                                                     </form>
 
-                                                    <form
-                                                        action="{{ route('admin.sekolah.destroy', $sekolah->id) }}"
-                                                        method="POST"
-                                                    >
+                                                    <form action="{{ route('admin.sekolah.destroy', $sekolah->id) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
 
@@ -263,11 +270,11 @@
                     <span class="material-icons text-3xl">school</span>
                 </div>
 
-                <h2 class="font-display mt-5 text-2xl font-semibold">
+                <h2 class="font-display mt-5 text-2xl font-semibold text-base-content">
                     Belum ada sekolah binaan
                 </h2>
 
-                <p class="mt-2 max-w-md text-sm leading-6 text-neutral/60">
+                <p class="mt-2 max-w-md text-sm leading-6 text-base-content/70">
                     Tambahkan sekolah pertama agar data guru binaan dapat dihubungkan dengan sekolahnya.
                 </p>
 

@@ -25,6 +25,9 @@ class PesanDiskusi extends Model
         'deleted_at' => 'datetime',
     ];
 
+    /**
+     * Kolom thread_id mengarah ke tabel thread_diskusis.
+     */
     public function thread(): BelongsTo
     {
         return $this->belongsTo(ThreadDiskusi::class, 'thread_id');

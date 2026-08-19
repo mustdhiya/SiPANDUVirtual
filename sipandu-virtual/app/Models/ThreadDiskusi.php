@@ -7,9 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Models\GuruBinaan;
-use App\Models\PeriodeTriwulan;
-use App\Models\User;
 
 class ThreadDiskusi extends Model
 {
@@ -40,8 +37,12 @@ class ThreadDiskusi extends Model
         return $this->belongsTo(PeriodeTriwulan::class, 'periode_id');
     }
 
+    /**
+     * Foreign key di tabel pesan_diskusis adalah thread_id,
+     * bukan thread_diskusi_id.
+     */
     public function pesanDiskusi(): HasMany
     {
-        return $this->hasMany(PesanDiskusi::class);
+        return $this->hasMany(PesanDiskusi::class, 'thread_id');
     }
 }

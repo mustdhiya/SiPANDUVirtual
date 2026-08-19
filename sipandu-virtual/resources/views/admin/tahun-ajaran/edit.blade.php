@@ -3,7 +3,7 @@
 @section('title', 'Edit Tahun Ajaran')
 
 @section('content')
-<div class="max-w-3xl space-y-7">
+<div class="mx-auto max-w-3xl space-y-7">
 
     {{-- Header --}}
     <section class="flex flex-col gap-4 border-b border-base-300 pb-5 sm:flex-row sm:items-end sm:justify-between">
@@ -20,12 +20,13 @@
                 Data Utama
             </p>
 
-            <h1 class="font-display mt-1 text-3xl font-semibold text-neutral">
+            <h1 class="font-display mt-1 text-3xl font-semibold text-base-content">
                 Edit Tahun Ajaran
             </h1>
 
-            <p class="mt-2 text-sm leading-6 text-neutral/60">
-                Perbarui label atau status tahun ajaran <strong>{{ $tahunAjaran->label }}</strong>.
+            <p class="mt-2 text-sm leading-6 text-base-content/70">
+                Perbarui label atau status tahun ajaran
+                <strong>{{ $tahunAjaran->label }}</strong>.
             </p>
         </div>
 
@@ -44,17 +45,18 @@
 
     {{-- Form --}}
     <section class="overflow-hidden rounded-3xl border border-base-300 bg-base-100 shadow-sm">
-        <div class="border-b border-base-300 bg-base-200/55 px-5 py-4 sm:px-6">
+        <div class="border-b border-base-300 bg-base-200 px-5 py-4 sm:px-6">
             <div class="flex items-center gap-3">
-                <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/15 text-primary">
                     <span class="material-icons">edit_calendar</span>
                 </div>
 
                 <div>
-                    <h2 class="font-display text-lg font-semibold text-neutral">
+                    <h2 class="font-display text-lg font-semibold text-base-content">
                         Informasi Tahun Ajaran
                     </h2>
-                    <p class="text-sm text-neutral/60">
+
+                    <p class="text-sm text-base-content/70">
                         Perubahan akan langsung digunakan dalam sistem.
                     </p>
                 </div>
@@ -71,7 +73,7 @@
 
             <div class="form-control">
                 <label for="label" class="label px-0">
-                    <span class="label-text text-sm font-semibold text-neutral">
+                    <span class="label-text text-sm font-semibold text-base-content">
                         Label Tahun Ajaran
                     </span>
                 </label>
@@ -82,14 +84,14 @@
                     name="label"
                     value="{{ old('label', $tahunAjaran->label) }}"
                     placeholder="Contoh: 2026/2027"
-                    class="input input-bordered h-12 rounded-xl bg-base-100 text-base focus:border-primary focus:outline-none"
+                    class="input input-bordered h-12 rounded-xl bg-base-100 text-base text-base-content focus:border-primary focus:outline-none @error('label') input-error @enderror"
                     required
                     autofocus
                     maxlength="20"
                     aria-describedby="label-help @error('label') label-error @enderror"
                 >
 
-                <p id="label-help" class="mt-2 text-sm text-neutral/55">
+                <p id="label-help" class="mt-2 text-sm text-base-content/60">
                     Gunakan format empat digit tahun awal dan empat digit tahun akhir.
                 </p>
 
@@ -101,14 +103,14 @@
                 @enderror
             </div>
 
-            <div class="rounded-2xl border border-secondary/25 bg-secondary/10 p-4">
+            <div class="rounded-2xl border border-secondary/30 bg-secondary/10 p-4">
                 <label for="is_active" class="flex cursor-pointer items-start justify-between gap-4">
                     <div>
-                        <p class="font-semibold text-neutral">
+                        <p class="font-semibold text-base-content">
                             Jadikan tahun ajaran aktif
                         </p>
 
-                        <p class="mt-1 text-sm leading-6 text-neutral/65">
+                        <p class="mt-1 text-sm leading-6 text-base-content/70">
                             Hanya satu tahun ajaran yang dapat aktif dalam satu waktu. Mengaktifkan periode ini akan menonaktifkan periode aktif sebelumnya.
                         </p>
                     </div>
@@ -124,21 +126,24 @@
                 </label>
             </div>
 
-            <div class="grid gap-3 rounded-2xl border border-base-300 bg-base-200/50 p-4 sm:grid-cols-2">
+            {{-- Metadata --}}
+            <div class="grid gap-3 rounded-2xl border border-base-300 bg-base-200 p-4 sm:grid-cols-2">
                 <div>
-                    <p class="text-xs font-bold uppercase tracking-wide text-neutral/45">
+                    <p class="text-xs font-bold uppercase tracking-wide text-base-content/50">
                         Dibuat
                     </p>
-                    <p class="mt-1 text-sm font-semibold text-neutral">
+
+                    <p class="mt-1 text-sm font-semibold text-base-content">
                         {{ $tahunAjaran->created_at->translatedFormat('d F Y, H:i') }}
                     </p>
                 </div>
 
                 <div>
-                    <p class="text-xs font-bold uppercase tracking-wide text-neutral/45">
+                    <p class="text-xs font-bold uppercase tracking-wide text-base-content/50">
                         Terakhir Diubah
                     </p>
-                    <p class="mt-1 text-sm font-semibold text-neutral">
+
+                    <p class="mt-1 text-sm font-semibold text-base-content">
                         {{ $tahunAjaran->updated_at->translatedFormat('d F Y, H:i') }}
                     </p>
                 </div>

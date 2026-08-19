@@ -10,22 +10,22 @@
     $totalKepsek = $dokumens->where('berlaku_untuk', 'KEPSEK')->count();
 @endphp
 
-<div class="space-y-7">
+<div class="mx-auto max-w-7xl space-y-8">
 
-    {{-- Header halaman --}}
-    <section class="flex flex-col gap-4 border-b border-base-300 pb-5 sm:flex-row sm:items-end sm:justify-between">
+    {{-- Header --}}
+    <section class="flex flex-col gap-4 border-b border-base-300 pb-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
             <p class="text-xs font-bold uppercase tracking-[0.14em] text-secondary">
                 Konfigurasi Triwulan
             </p>
 
-            <h1 class="font-display mt-1 text-3xl font-semibold text-neutral">
+            <h1 class="font-display mt-2 text-3xl font-semibold text-base-content md:text-4xl">
                 Dokumen Wajib
             </h1>
 
-            <p class="mt-2 max-w-2xl text-sm leading-6 text-neutral/60">
+            <p class="mt-2 max-w-2xl text-sm leading-6 text-base-content/70">
                 Atur daftar dokumen yang harus diunggah guru pada setiap periode triwulan.
-                Dokumen dapat dibedakan untuk semua guru atau khusus guru yang merangkap kepala sekolah.
+                Dokumen dapat berlaku untuk seluruh guru atau khusus guru yang merangkap kepala sekolah.
             </p>
         </div>
 
@@ -40,52 +40,61 @@
 
     {{-- Ringkasan --}}
     <section class="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
-        <article class="rounded-2xl border border-base-300 bg-base-100 p-4 shadow-sm">
+
+        <article class="rounded-2xl border border-base-300 bg-base-100 p-4 shadow-sm sm:p-5">
             <div class="flex items-center justify-between">
                 <span class="material-icons text-primary">description</span>
-                <span class="text-[11px] font-bold uppercase tracking-wide text-neutral/45">Total</span>
+                <span class="text-[11px] font-bold uppercase tracking-wide text-base-content/50">
+                    Total
+                </span>
             </div>
 
-            <p class="mt-4 text-sm text-neutral/60">Seluruh Dokumen</p>
+            <p class="mt-5 text-sm text-base-content/70">Seluruh Dokumen</p>
 
             <p class="font-display mt-1 text-3xl font-semibold text-primary">
                 {{ $totalDokumen }}
             </p>
         </article>
 
-        <article class="rounded-2xl border border-base-300 bg-base-100 p-4 shadow-sm">
+        <article class="rounded-2xl border border-base-300 bg-base-100 p-4 shadow-sm sm:p-5">
             <div class="flex items-center justify-between">
                 <span class="material-icons text-success">check_circle</span>
-                <span class="text-[11px] font-bold uppercase tracking-wide text-neutral/45">Utama</span>
+                <span class="text-[11px] font-bold uppercase tracking-wide text-base-content/50">
+                    Utama
+                </span>
             </div>
 
-            <p class="mt-4 text-sm text-neutral/60">Dokumen Wajib</p>
+            <p class="mt-5 text-sm text-base-content/70">Dokumen Wajib</p>
 
             <p class="font-display mt-1 text-3xl font-semibold text-success">
                 {{ $totalWajib }}
             </p>
         </article>
 
-        <article class="rounded-2xl border border-base-300 bg-base-100 p-4 shadow-sm">
+        <article class="rounded-2xl border border-base-300 bg-base-100 p-4 shadow-sm sm:p-5">
             <div class="flex items-center justify-between">
-                <span class="material-icons text-neutral/60">playlist_add</span>
-                <span class="text-[11px] font-bold uppercase tracking-wide text-neutral/45">Tambahan</span>
+                <span class="material-icons text-base-content/60">playlist_add</span>
+                <span class="text-[11px] font-bold uppercase tracking-wide text-base-content/50">
+                    Tambahan
+                </span>
             </div>
 
-            <p class="mt-4 text-sm text-neutral/60">Dokumen Opsional</p>
+            <p class="mt-5 text-sm text-base-content/70">Dokumen Opsional</p>
 
-            <p class="font-display mt-1 text-3xl font-semibold text-neutral">
+            <p class="font-display mt-1 text-3xl font-semibold text-base-content">
                 {{ $totalOpsional }}
             </p>
         </article>
 
-        <article class="rounded-2xl border border-base-300 bg-base-100 p-4 shadow-sm">
+        <article class="rounded-2xl border border-base-300 bg-base-100 p-4 shadow-sm sm:p-5">
             <div class="flex items-center justify-between">
                 <span class="material-icons text-secondary">account_balance</span>
-                <span class="text-[11px] font-bold uppercase tracking-wide text-neutral/45">Khusus</span>
+                <span class="text-[11px] font-bold uppercase tracking-wide text-base-content/50">
+                    Khusus
+                </span>
             </div>
 
-            <p class="mt-4 text-sm text-neutral/60">Untuk Guru Kepsek</p>
+            <p class="mt-5 text-sm text-base-content/70">Guru + Kepsek</p>
 
             <p class="font-display mt-1 text-3xl font-semibold text-secondary">
                 {{ $totalKepsek }}
@@ -93,33 +102,33 @@
         </article>
     </section>
 
-    {{-- Informasi bantuan --}}
-    <section class="rounded-2xl border border-secondary/20 bg-secondary/10 px-4 py-4 sm:px-5">
-        <div class="flex gap-3">
+    {{-- Informasi Bantuan --}}
+    <section class="rounded-2xl border border-secondary/30 bg-secondary/10 px-4 py-4 sm:px-5">
+        <div class="flex items-start gap-3">
             <span class="material-icons mt-0.5 shrink-0 text-secondary">info</span>
 
             <div>
-                <p class="font-semibold text-neutral">
+                <p class="font-semibold text-base-content">
                     Atur urutan dokumen dengan angka kecil terlebih dahulu.
                 </p>
 
-                <p class="mt-1 text-sm leading-6 text-neutral/65">
-                    Contoh: isi urutan <strong>1</strong> untuk dokumen yang ingin tampil paling atas,
-                    lalu lanjutkan dengan 2, 3, dan seterusnya.
+                <p class="mt-1 text-sm leading-6 text-base-content/75">
+                    Isi urutan <strong>1</strong> untuk dokumen yang tampil paling atas,
+                    lalu lanjutkan dengan urutan 2, 3, dan seterusnya.
                 </p>
             </div>
         </div>
     </section>
 
-    {{-- Tabel data --}}
+    {{-- Tabel --}}
     <section class="overflow-hidden rounded-2xl border border-base-300 bg-base-100 shadow-sm">
-        <div class="flex flex-col gap-2 border-b border-base-300 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+        <div class="flex flex-col gap-3 border-b border-base-300 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-                <h2 class="font-display text-xl font-semibold text-neutral">
+                <h2 class="font-display text-xl font-semibold text-base-content">
                     Daftar Dokumen
                 </h2>
 
-                <p class="mt-1 text-sm text-neutral/60">
+                <p class="mt-1 text-sm text-base-content/70">
                     {{ $totalDokumen }} dokumen telah dikonfigurasi.
                 </p>
             </div>
@@ -132,8 +141,8 @@
 
         <div class="overflow-x-auto">
             <table class="table table-zebra w-full min-w-[920px]">
-                <thead>
-                    <tr class="border-b border-base-300 bg-base-200/65 text-neutral/70">
+                <thead class="bg-base-200 text-base-content/70">
+                    <tr>
                         <th class="w-16">Urutan</th>
                         <th>Triwulan</th>
                         <th>Dokumen dan Instruksi</th>
@@ -145,7 +154,7 @@
 
                 <tbody>
                     @forelse($dokumens as $dokumen)
-                        <tr class="hover">
+                        <tr class="hover:bg-base-200">
                             <td>
                                 <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-base-200 font-semibold text-primary">
                                     {{ $dokumen->urutan }}
@@ -154,15 +163,16 @@
 
                             <td>
                                 <div class="flex items-center gap-2">
-                                    <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                                    <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/15 text-primary">
                                         <span class="font-bold">TW{{ $dokumen->triwulan }}</span>
                                     </span>
 
                                     <div>
-                                        <p class="font-semibold text-neutral">
+                                        <p class="font-semibold text-base-content">
                                             Triwulan {{ $dokumen->triwulan }}
                                         </p>
-                                        <p class="text-xs text-neutral/55">
+
+                                        <p class="text-xs text-base-content/60">
                                             Periode pendampingan
                                         </p>
                                     </div>
@@ -170,12 +180,12 @@
                             </td>
 
                             <td class="max-w-md">
-                                <p class="font-semibold text-neutral">
+                                <p class="font-semibold text-base-content">
                                     {{ $dokumen->nama_dokumen }}
                                 </p>
 
                                 <p
-                                    class="mt-1 line-clamp-2 text-sm leading-5 text-neutral/60"
+                                    class="mt-1 line-clamp-2 text-sm leading-5 text-base-content/70"
                                     title="{{ $dokumen->instruksi }}"
                                 >
                                     {{ $dokumen->instruksi }}
@@ -228,7 +238,7 @@
                                 <div class="flex justify-center gap-2">
                                     <a
                                         href="{{ route('admin.dokumen.edit', $dokumen->id) }}"
-                                        class="btn btn-square btn-sm btn-ghost rounded-xl text-primary hover:bg-primary/10"
+                                        class="btn btn-square btn-sm btn-ghost rounded-xl text-primary hover:bg-primary/15"
                                         title="Edit dokumen"
                                         aria-label="Edit {{ $dokumen->nama_dokumen }}"
                                     >
@@ -237,7 +247,7 @@
 
                                     <button
                                         type="button"
-                                        class="btn btn-square btn-sm btn-ghost rounded-xl text-error hover:bg-error/10"
+                                        class="btn btn-square btn-sm btn-ghost rounded-xl text-error hover:bg-error/15"
                                         title="Hapus dokumen"
                                         aria-label="Hapus {{ $dokumen->nama_dokumen }}"
                                         onclick="document.getElementById('hapus-dokumen-{{ $dokumen->id }}').showModal()"
@@ -249,18 +259,18 @@
                                 <dialog id="hapus-dokumen-{{ $dokumen->id }}" class="modal">
                                     <div class="modal-box rounded-3xl">
                                         <div class="flex items-start gap-3">
-                                            <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-error/10 text-error">
+                                            <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-error/15 text-error">
                                                 <span class="material-icons">delete_forever</span>
                                             </div>
 
                                             <div>
-                                                <h3 class="font-display text-xl font-semibold">
+                                                <h3 class="font-display text-xl font-semibold text-base-content">
                                                     Hapus Dokumen?
                                                 </h3>
 
-                                                <p class="mt-2 text-sm leading-6 text-neutral/65">
+                                                <p class="mt-2 text-sm leading-6 text-base-content/70">
                                                     Dokumen <strong>{{ $dokumen->nama_dokumen }}</strong> akan dihapus dari konfigurasi.
-                                                    Tindakan ini dapat memengaruhi daftar dokumen guru.
+                                                    Tindakan ini dapat memengaruhi daftar dokumen pada akun guru.
                                                 </p>
                                             </div>
                                         </div>
@@ -285,7 +295,7 @@
                                     </div>
 
                                     <form method="dialog" class="modal-backdrop">
-                                        <button aria-label="Tutup">Tutup</button>
+                                        <button aria-label="Tutup modal">Tutup</button>
                                     </form>
                                 </dialog>
                             </td>
@@ -298,12 +308,12 @@
                                         <span class="material-icons text-3xl">description</span>
                                     </div>
 
-                                    <h3 class="font-display mt-4 text-xl font-semibold">
+                                    <h3 class="font-display mt-4 text-xl font-semibold text-base-content">
                                         Belum ada dokumen wajib
                                     </h3>
 
-                                    <p class="mt-2 text-sm leading-6 text-neutral/60">
-                                        Mulai dengan menambahkan dokumen yang harus diunggah guru pada tiap triwulan.
+                                    <p class="mt-2 text-sm leading-6 text-base-content/70">
+                                        Mulai dengan menambahkan dokumen yang perlu diunggah guru pada tiap triwulan.
                                     </p>
 
                                     <a href="{{ route('admin.dokumen.create') }}" class="btn btn-primary mt-5 rounded-xl">

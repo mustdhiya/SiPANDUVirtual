@@ -211,6 +211,12 @@ Route::prefix('admin')
 
                 Route::post('/', [GuruController::class, 'store'])
                     ->name('store');
+                
+                Route::get('/hubungkan-akun', [GuruController::class, 'linkAccount'])
+                    ->name('link-account');
+
+                Route::post('/hubungkan-akun', [GuruController::class, 'storeLinkedAccount'])
+                    ->name('store-linked-account');
 
                 Route::get('/{guru}/edit', [GuruController::class, 'edit'])
                     ->name('edit');

@@ -3,93 +3,230 @@
 @section('title', 'Diskusi TW ' . $periode->nomor)
 
 @section('content')
-<div class="container mx-auto p-4">
-    <div class="flex justify-between items-center mb-4">
-        <h1 class="text-3xl font-bold">
-            Diskusi TW {{ $periode->nomor }} - {{ $periode->tahunAjaran->label }}
-        </h1>
-        <div>
-            <a href="{{ route('guru.diskusi.index') }}" class="btn btn-ghost">
-                <span class="material-icons align-middle">arrow_back</span>
-                Kembali
+@php
+    $totalThread = $threads->count();
+    $totalPesan = $threads->sum(fn ($thread) => $thread->pesanDiskusi->count());
+    $threadTerkunci = $threads->where('is_locked', true)->count();
+@endphp
+
+<div class="max-w-5xl mx-auto">
+    <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between mb-6">
+        <div class="flex gap-3">
+            <a
+                href="{{ route('guru.diskusi.index') }}"
+                class="btn btn-circle btn-ghost shrink-0"
+                aria-label="Kembali ke daftar diskusi"
+            >
+                <span class="material-icons">arrow_back</span>
             </a>
-            <a href="{{ route('guru.diskusi.create', $periode->id) }}" class="btn btn-primary">
-                <span class="material-icons align-middle mr-1">add</span>
-                Buat Thread
-            </a>
+
+            <div>
+                <div class="text-sm font-bold tracking-wide uppercase text-secondary">
+                    {{ $periode->tahunAjaran->label }}
+                </div>
+
+                <h1 class="font-display text-3xl font-semibold mt-1">
+                    Diskusi Triwulan {{ $periode->nomor }}
+                </h1>
+
+                <p class="text-neutral/60 mt-1">
+                    {{ $periode->tema }}
+                </p>
+            </div>
+        </div>
+
+        <a href="{{ route('guru.diskusi.create', $periode->id) }}" class="btn btn-primary gap-2">
+            <span class="material-icons">add_comment</span>
+            Buat Pertanyaan
+        </a>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6">
+        <div class="stat bg-base-100 border border-base-300 rounded-2xl p-4">
+            <div class="stat-figure text-primary">
+                <span class="material-icons">forum</span>
+            </div>
+            <div class="stat-title">Total Thread</div>
+            <div class="stat-value text-primary text-2xl">{{ $totalThread }}</div>
+        </div>
+
+        <div class="stat bg-base-100 border border-base-300 rounded-2xl p-4">
+            <div class="stat-figure text-info">
+                <span class="material-icons">chat</span>
+            </div>
+            <div class="stat-title">Total Pesan</div>
+            <div class="stat-value text-info text-2xl">{{ $totalPesan }}</div>
+        </div>
+
+        <div class="stat bg-base-100 border border-base-300 rounded-2xl p-4">
+            <div class="stat-figure text-warning">
+                <span class="material-icons">lock</span>
+            </div>
+            <div class="stat-title">Thread Dikunci</div>
+            <div class="stat-value text-warning text-2xl">{{ $threadTerkunci }}</div>
         </div>
     </div>
 
-    @if(session('success'))
-        <div class="alert alert-success shadow-lg mb-4">
-            <span class="material-icons align-middle mr-2">check_circle</span>
-            <span>{{ session('success') }}</span>
-        </div>
-    @endif
-
-    @if(session('error'))
-        <div class="alert alert-error shadow-lg mb-4">
-            <span class="material-icons align-middle mr-2">error</span>
-            <span>{{ session('error') }}</span>
-        </div>
-    @endif
-
-    @forelse($threads as $thread)
-        <div class="card bg-base-200 shadow-md mb-4">
-            <div class="card-body">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <h2 class="card-title">{{ $thread->judul }}</h2>
-                        <p class="text-sm text-gray-500">
-                            Oleh: {{ $thread->guru->nama_lengkap }} ({{ $thread->guru->sekolah->nama_sekolah ?? '-' }})
-                            • {{ $thread->created_at->diffForHumans() }}
-                            @if($thread->is_locked)
-                                <span class="badge badge-error ml-2">Dikunci</span>
-                            @endif
-                        </p>
-                    </div>
-                </div>
-
-                <div class="mt-4 space-y-2">
-                    @foreach($thread->pesanDiskusi as $pesan)
-                        <div class="p-3 bg-base-100 rounded {{ $pesan->is_admin ? 'border-2 border-primary' : '' }}">
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="font-bold text-sm">
-                                    {{ $pesan->user->name }}
-                                    @if($pesan->is_admin)
-                                        <span class="badge badge-info ml-2">Admin</span>
-                                    @endif
-                                </span>
-                                <span class="text-xs text-gray-500">{{ $pesan->created_at->format('d M Y H:i') }}</span>
-                            </div>
-                            <p class="text-sm">{{ $pesan->isi_pesan }}</p>
-                        </div>
-                    @endforeach
-                </div>
-
-                @if(!$thread->is_locked)
-                    <form action="{{ route('guru.diskusi.reply', $thread->id) }}" method="POST" class="mt-4">
-                        @csrf
-                        <div class="form-control">
-                            <textarea name="isi_pesan" class="textarea textarea-bordered" rows="2" placeholder="Balas thread..." required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-sm btn-primary mt-2">
-                            <span class="material-icons text-sm align-middle mr-1">reply</span>
-                            Balas
-                        </button>
-                    </form>
-                @else
-                    <div class="alert alert-warning mt-4">
-                        <span class="material-icons align-middle mr-2">lock</span>
-                        <span>Thread ini sudah dikunci oleh admin.</span>
-                    </div>
-                @endif
+    <div class="alert alert-info mb-6">
+        <span class="material-icons">tips_and_updates</span>
+        <div>
+            <strong>Tips menulis pertanyaan.</strong>
+            <div class="text-sm">
+                Gunakan judul yang spesifik, jelaskan kendala secara singkat, lalu tunggu tanggapan dari pengawas.
             </div>
         </div>
-    @empty
-        <div class="text-center py-8">
-            <p>Belum ada thread diskusi untuk triwulan ini.</p>
-        </div>
-    @endforelse
+    </div>
+
+    <div class="space-y-5">
+        @forelse($threads as $thread)
+            <article class="card bg-base-100 border border-base-300 shadow-sm">
+                <div class="card-body p-0">
+                    <div class="p-5 border-b border-base-300">
+                        <div class="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+                            <div class="flex gap-3">
+                                <div class="avatar placeholder">
+                                    <div class="bg-primary text-primary-content rounded-full w-11">
+                                        <span class="font-bold">
+                                            {{ strtoupper(substr($thread->guru->nama_lengkap, 0, 1)) }}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <h2 class="font-display text-xl font-semibold">
+                                        {{ $thread->judul }}
+                                    </h2>
+
+                                    <p class="text-sm text-neutral/60 mt-1">
+                                        {{ $thread->guru->nama_lengkap }}
+                                        <span class="mx-1">•</span>
+                                        {{ $thread->guru->sekolah->nama_sekolah ?? 'Sekolah belum diatur' }}
+                                    </p>
+
+                                    <p class="text-xs text-neutral/50 mt-1">
+                                        Dibuat {{ $thread->created_at->diffForHumans() }}
+                                    </p>
+                                </div>
+                            </div>
+
+                            @if($thread->is_locked)
+                                <span class="badge badge-warning gap-1">
+                                    <span class="material-icons text-xs">lock</span>
+                                    Diskusi Ditutup
+                                </span>
+                            @else
+                                <span class="badge badge-success gap-1">
+                                    <span class="material-icons text-xs">forum</span>
+                                    Diskusi Aktif
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="p-5 bg-base-200/40">
+                        <div class="space-y-3">
+                            @forelse($thread->pesanDiskusi as $pesan)
+                                <div class="flex gap-3 {{ $pesan->is_admin ? 'md:flex-row-reverse' : '' }}">
+                                    <div class="avatar placeholder shrink-0">
+                                        <div class="{{ $pesan->is_admin ? 'bg-secondary text-secondary-content' : 'bg-primary text-primary-content' }} rounded-full w-9">
+                                            <span class="text-xs font-bold">
+                                                {{ strtoupper(substr($pesan->user->name, 0, 1)) }}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="max-w-3xl {{ $pesan->is_admin ? 'md:text-right' : '' }}">
+                                        <div class="flex items-center gap-2 mb-1 {{ $pesan->is_admin ? 'md:justify-end' : '' }}">
+                                            <span class="text-sm font-semibold">{{ $pesan->user->name }}</span>
+
+                                            @if($pesan->is_admin)
+                                                <span class="badge badge-secondary badge-sm">Pengawas</span>
+                                            @endif
+
+                                            <span class="text-xs text-neutral/50">
+                                                {{ $pesan->created_at->format('d M Y, H:i') }}
+                                            </span>
+                                        </div>
+
+                                        <div class="rounded-2xl px-4 py-3 text-sm leading-relaxed {{
+                                            $pesan->is_admin
+                                                ? 'bg-secondary text-secondary-content rounded-tr-sm'
+                                                : 'bg-base-100 border border-base-300 rounded-tl-sm'
+                                        }}">
+                                            {!! nl2br(e($pesan->isi_pesan)) !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="text-center py-8 text-neutral/60">
+                                    Belum ada pesan pada diskusi ini.
+                                </div>
+                            @endforelse
+                        </div>
+                    </div>
+
+                    @if(!$thread->is_locked)
+                        <div class="p-5 border-t border-base-300">
+                            <form action="{{ route('guru.diskusi.reply', $thread->id) }}" method="POST">
+                                @csrf
+
+                                <label class="form-control">
+                                    <span class="label">
+                                        <span class="label-text font-semibold">Tulis Balasan</span>
+                                    </span>
+
+                                    <textarea
+                                        name="isi_pesan"
+                                        class="textarea textarea-bordered min-h-28 @error('isi_pesan') textarea-error @enderror"
+                                        placeholder="Tulis tanggapan atau tambahan informasi Anda..."
+                                        required
+                                    >{{ old('isi_pesan') }}</textarea>
+
+                                    @error('isi_pesan')
+                                        <span class="label">
+                                            <span class="label-text-alt text-error">{{ $message }}</span>
+                                        </span>
+                                    @enderror
+                                </label>
+
+                                <div class="flex justify-end mt-3">
+                                    <button type="submit" class="btn btn-primary gap-2">
+                                        <span class="material-icons">send</span>
+                                        Kirim Balasan
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    @else
+                        <div class="alert alert-warning rounded-none rounded-b-2xl">
+                            <span class="material-icons">lock</span>
+                            <div>
+                                <strong>Thread ini telah dikunci pengawas.</strong>
+                                <div class="text-sm">
+                                    Anda masih dapat membaca diskusi, tetapi tidak dapat mengirim balasan baru.
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                </div>
+            </article>
+        @empty
+            <div class="card bg-base-100 border border-base-300">
+                <div class="card-body items-center text-center py-14">
+                    <span class="material-icons text-6xl text-neutral/25">forum</span>
+                    <h2 class="font-display text-2xl font-semibold mt-3">
+                        Belum ada diskusi
+                    </h2>
+                    <p class="text-neutral/60 max-w-md">
+                        Belum ada pertanyaan untuk Triwulan {{ $periode->nomor }}. Anda dapat memulai diskusi baru dengan pengawas.
+                    </p>
+                    <a href="{{ route('guru.diskusi.create', $periode->id) }}" class="btn btn-primary mt-3 gap-2">
+                        <span class="material-icons">add_comment</span>
+                        Buat Pertanyaan
+                    </a>
+                </div>
+            </div>
+        @endforelse
+    </div>
 </div>
 @endsection

@@ -8,7 +8,7 @@
     $tahunAjaranAktif = $tahunAjarans->firstWhere('is_active', true);
 @endphp
 
-<div class="space-y-7">
+<div class="mx-auto max-w-6xl space-y-7">
 
     {{-- Header --}}
     <section class="flex flex-col gap-4 border-b border-base-300 pb-5 sm:flex-row sm:items-end sm:justify-between">
@@ -17,11 +17,11 @@
                 Data Utama
             </p>
 
-            <h1 class="font-display mt-1 text-3xl font-semibold text-neutral">
+            <h1 class="font-display mt-1 text-3xl font-semibold text-base-content">
                 Tahun Ajaran
             </h1>
 
-            <p class="mt-2 max-w-2xl text-sm leading-6 text-neutral/60">
+            <p class="mt-2 max-w-2xl text-sm leading-6 text-base-content/70">
                 Atur periode tahun ajaran yang digunakan sebagai dasar pengelolaan triwulan dan pendampingan guru.
             </p>
         </div>
@@ -35,31 +35,37 @@
         </a>
     </section>
 
-    {{-- Summary --}}
+    {{-- Ringkasan --}}
     <section class="grid gap-4 sm:grid-cols-2">
+
         <article class="rounded-2xl border border-base-300 bg-base-100 p-5 shadow-sm">
             <div class="flex items-start justify-between gap-4">
                 <div>
-                    <p class="text-sm text-neutral/60">Total Tahun Ajaran</p>
+                    <p class="text-sm text-base-content/70">
+                        Total Tahun Ajaran
+                    </p>
+
                     <p class="font-display mt-1 text-3xl font-semibold text-primary">
                         {{ $totalTahunAjaran }}
                     </p>
                 </div>
 
-                <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/15 text-primary">
                     <span class="material-icons">calendar_today</span>
                 </div>
             </div>
 
-            <p class="mt-4 text-sm text-neutral/55">
-                Data tahun ajaran tersimpan dalam sistem.
+            <p class="mt-4 text-sm text-base-content/60">
+                Data tahun ajaran yang tersimpan dalam sistem.
             </p>
         </article>
 
         <article class="rounded-2xl border border-base-300 bg-base-100 p-5 shadow-sm">
             <div class="flex items-start justify-between gap-4">
                 <div>
-                    <p class="text-sm text-neutral/60">Tahun Ajaran Aktif</p>
+                    <p class="text-sm text-base-content/70">
+                        Tahun Ajaran Aktif
+                    </p>
 
                     @if($tahunAjaranAktif)
                         <p class="font-display mt-1 text-3xl font-semibold text-secondary">
@@ -77,7 +83,7 @@
                 </div>
             </div>
 
-            <p class="mt-4 text-sm text-neutral/55">
+            <p class="mt-4 text-sm text-base-content/60">
                 @if($tahunAjaranAktif)
                     Digunakan sebagai periode utama sistem saat ini.
                 @else
@@ -87,14 +93,15 @@
         </article>
     </section>
 
-    {{-- Table --}}
+    {{-- Tabel --}}
     <section class="overflow-hidden rounded-2xl border border-base-300 bg-base-100 shadow-sm">
-        <div class="flex flex-col gap-3 border-b border-base-300 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+        <div class="flex flex-col gap-3 border-b border-base-300 bg-base-200 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-                <h2 class="font-display text-xl font-semibold text-neutral">
+                <h2 class="font-display text-xl font-semibold text-base-content">
                     Daftar Tahun Ajaran
                 </h2>
-                <p class="mt-1 text-sm text-neutral/60">
+
+                <p class="mt-1 text-sm text-base-content/70">
                     Klik ikon pensil untuk mengubah data tahun ajaran.
                 </p>
             </div>
@@ -109,7 +116,7 @@
             <div class="overflow-x-auto">
                 <table class="table table-lg w-full">
                     <thead>
-                        <tr class="border-base-300 text-xs uppercase tracking-wide text-neutral/55">
+                        <tr class="border-base-300 text-xs uppercase tracking-wide text-base-content/60">
                             <th class="w-20">No.</th>
                             <th>Tahun Ajaran</th>
                             <th>Status</th>
@@ -120,31 +127,29 @@
 
                     <tbody>
                         @foreach($tahunAjarans as $index => $ta)
-                            <tr class="hover:bg-base-200/60">
-                                <td class="font-medium text-neutral/55">
+                            <tr class="transition-colors hover:bg-base-200">
+                                <td class="font-medium text-base-content/60">
                                     {{ $index + 1 }}
                                 </td>
 
                                 <td>
                                     <div class="flex items-center gap-3">
-                                        <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                                        <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/15 text-primary">
                                             <span class="material-icons text-lg">calendar_month</span>
                                         </div>
 
                                         <div>
-                                            <p class="font-display text-lg font-semibold text-neutral">
+                                            <p class="font-display text-lg font-semibold text-base-content">
                                                 {{ $ta->label }}
                                             </p>
 
-                                            @if($ta->is_active)
-                                                <p class="mt-0.5 text-xs text-neutral/55">
+                                            <p class="mt-0.5 text-xs text-base-content/60">
+                                                @if($ta->is_active)
                                                     Periode utama yang sedang digunakan.
-                                                </p>
-                                            @else
-                                                <p class="mt-0.5 text-xs text-neutral/55">
+                                                @else
                                                     Periode arsip atau belum digunakan.
-                                                </p>
-                                            @endif
+                                                @endif
+                                            </p>
                                         </div>
                                     </div>
                                 </td>
@@ -163,10 +168,10 @@
                                     @endif
                                 </td>
 
-                                <td class="text-sm text-neutral/60">
+                                <td class="text-sm text-base-content/70">
                                     <div class="flex flex-col">
                                         <span>{{ $ta->created_at->translatedFormat('d M Y') }}</span>
-                                        <span class="text-xs text-neutral/45">
+                                        <span class="text-xs text-base-content/50">
                                             {{ $ta->created_at->format('H:i') }}
                                         </span>
                                     </div>
@@ -176,7 +181,7 @@
                                     <div class="flex justify-center gap-2">
                                         <a
                                             href="{{ route('admin.tahun-ajaran.edit', $ta->id) }}"
-                                            class="btn btn-square btn-sm btn-ghost rounded-xl text-primary hover:bg-primary/10"
+                                            class="btn btn-square btn-sm btn-ghost rounded-xl text-primary hover:bg-primary/15"
                                             title="Edit tahun ajaran {{ $ta->label }}"
                                             aria-label="Edit tahun ajaran {{ $ta->label }}"
                                         >
@@ -185,7 +190,7 @@
 
                                         <button
                                             type="button"
-                                            class="btn btn-square btn-sm btn-ghost rounded-xl text-error hover:bg-error/10"
+                                            class="btn btn-square btn-sm btn-ghost rounded-xl text-error hover:bg-error/15"
                                             title="Hapus tahun ajaran {{ $ta->label }}"
                                             aria-label="Hapus tahun ajaran {{ $ta->label }}"
                                             onclick="document.getElementById('delete-modal-{{ $ta->id }}').showModal()"
@@ -195,16 +200,16 @@
                                     </div>
 
                                     <dialog id="delete-modal-{{ $ta->id }}" class="modal">
-                                        <div class="modal-box max-w-md rounded-3xl p-6">
-                                            <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-error/10 text-error">
+                                        <div class="modal-box max-w-md rounded-3xl bg-base-100 p-6">
+                                            <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-error/15 text-error">
                                                 <span class="material-icons">delete_forever</span>
                                             </div>
 
-                                            <h3 class="font-display mt-4 text-2xl font-semibold text-neutral">
+                                            <h3 class="font-display mt-4 text-2xl font-semibold text-base-content">
                                                 Hapus Tahun Ajaran?
                                             </h3>
 
-                                            <p class="mt-2 text-sm leading-6 text-neutral/65">
+                                            <p class="mt-2 text-sm leading-6 text-base-content/70">
                                                 Anda akan menghapus tahun ajaran
                                                 <strong>{{ $ta->label }}</strong>.
                                                 Tindakan ini tidak dapat dibatalkan.
@@ -244,15 +249,15 @@
             </div>
         @else
             <div class="flex flex-col items-center justify-center px-6 py-16 text-center">
-                <div class="flex h-16 w-16 items-center justify-center rounded-3xl bg-primary/10 text-primary">
+                <div class="flex h-16 w-16 items-center justify-center rounded-3xl bg-primary/15 text-primary">
                     <span class="material-icons text-3xl">calendar_month</span>
                 </div>
 
-                <h3 class="font-display mt-5 text-xl font-semibold text-neutral">
+                <h3 class="font-display mt-5 text-xl font-semibold text-base-content">
                     Belum ada tahun ajaran
                 </h3>
 
-                <p class="mt-2 max-w-md text-sm leading-6 text-neutral/60">
+                <p class="mt-2 max-w-md text-sm leading-6 text-base-content/70">
                     Tambahkan tahun ajaran terlebih dahulu sebelum membuat periode triwulan.
                 </p>
 

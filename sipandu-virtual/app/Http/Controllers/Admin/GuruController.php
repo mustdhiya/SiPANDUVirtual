@@ -7,6 +7,7 @@ use App\Models\GuruBinaan;
 use App\Models\SekolahBinaan;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class GuruController extends Controller
 {
@@ -65,5 +66,55 @@ class GuruController extends Controller
         $guru->delete();
         return redirect()->route('admin.guru.index')
             ->with('success', 'Guru binaan berhasil dihapus.');
+    }
+    public function linkAccount()
+    {
+        $users = User::where('role', User::ROLE_GURU)
+            ->whereNotExists(function ($query) {
+                $query->selectRaw(1)
+                    ->from('guru_binaans')
+                    ->whereColumn('guru_binaans.user_account_id', 'users.id')
+                    ->whereNull('guru_binaans.deleted_at');
+            })
+            ->orderBy('name')
+            ->get();
+
+        $sekolahs = SekolahBinaan::where('is_active', true)
+            ->orderBy('nama_sekolah')
+            ->get();
+
+        return view('admin.guru.link-account', compact('users', 'sekolahs'));
+    }
+
+    public function storeLinkedAccount(Request $request)
+    {
+        $validated = $request->validate([
+            'user_id' => [
+                'required',
+                'exists:users,id',
+                Rule::unique('guru_binaans', 'user_account_id'),
+            ],
+            'sekolah_id' => 'nullable|exists:sekolah_binaans,id',
+            'nip_siaga' => 'nullable|string|max:50|unique:guru_binaans,nip_siaga',
+            'status_jabatan' => 'required|in:GURU,GURU_KEPSEK',
+            'is_active' => 'boolean',
+        ]);
+
+        $user = User::where('id', $validated['user_id'])
+            ->where('role', User::ROLE_GURU)
+            ->firstOrFail();
+
+        GuruBinaan::create([
+            'nama_lengkap' => $user->name,
+            'sekolah_id' => $validated['sekolah_id'] ?? null,
+            'nip_siaga' => $validated['nip_siaga'] ?? null,
+            'status_jabatan' => $validated['status_jabatan'],
+            'is_active' => $validated['is_active'] ?? true,
+            'user_account_id' => $user->id,
+        ]);
+
+        return redirect()
+            ->route('admin.guru.index')
+            ->with('success', 'Akun guru ' . $user->name . ' berhasil dihubungkan sebagai guru binaan.');
     }
 }

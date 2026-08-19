@@ -3,47 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Dashboard') — SiPANDU VIRTUAL</title>
 
-    <meta name="theme-color" content="#3d4a2f">
-    <meta name="description" content="SiPANDU VIRTUAL — Sistem Pendampingan Terpadu Virtual Pengawas PAI SMA/SMK Kota Samarinda.">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>@yield('title', 'SiPANDU VIRTUAL') — SiPANDU VIRTUAL</title>
 
     <link
-        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="icon"
+        type="image/png"
+        href="{{ asset('images/logo.png') }}"
+    >
+
+    <link
+        rel="apple-touch-icon"
+        href="{{ asset('images/logo.png') }}"
+    >
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet"
     >
 
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        rel="stylesheet"
+    >
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
-        :root {
-            --sipandu-ink: #1f2419;
-            --sipandu-muted: #66705c;
-            --sipandu-olive: #3d4a2f;
-            --sipandu-olive-dark: #2d3822;
-            --sipandu-gold: #a97f34;
-            --sipandu-gold-soft: #f2e6cc;
-            --sipandu-cream: #faf7f0;
-            --sipandu-sage: #eef0e3;
-            --sipandu-border: rgba(61, 74, 47, 0.14);
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
-            min-height: 100vh;
             font-family: 'Inter', sans-serif;
-            color: var(--sipandu-ink);
-            background:
-                radial-gradient(circle at 100% 0%, rgba(242, 230, 204, 0.32), transparent 24rem),
-                var(--sipandu-cream);
         }
 
         .font-display {
@@ -51,119 +41,102 @@
         }
 
         .material-icons {
-            font-size: 20px;
             line-height: 1;
             vertical-align: middle;
         }
 
-        .skip-link {
-            position: fixed;
-            top: 0.75rem;
-            left: 0.75rem;
-            z-index: 100;
-            transform: translateY(-160%);
-            border-radius: 0.875rem;
-            background: var(--sipandu-olive);
-            color: #ffffff;
-            padding: 0.75rem 1rem;
-            font-size: 0.875rem;
-            font-weight: 700;
-            box-shadow: 0 8px 20px rgba(45, 56, 34, 0.22);
-            transition: transform 180ms ease;
-        }
-
-        .skip-link:focus {
-            transform: translateY(0);
-        }
-
         .page-shell {
             width: 100%;
-            max-width: 1440px;
-            margin: 0 auto;
+            max-width: 1600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .content-shell {
+        /*
+        |--------------------------------------------------------------------------
+        | SiPANDU Logo
+        |--------------------------------------------------------------------------
+        */
+
+        .sipandu-logo-image {
+            display: block;
             width: 100%;
-            max-width: 1240px;
-            margin: 0 auto;
+            height: 100%;
+            object-fit: contain;
         }
 
-        .toast-alert {
-            animation: toast-enter 220ms ease-out both;
+        .sipandu-logo-header {
+            width: 42px;
+            height: 42px;
+            padding: 3px;
+            border-radius: 0.85rem;
+            background: hsl(var(--b1));
+            border: 1px solid hsl(var(--b3));
+            box-shadow: 0 2px 8px hsl(var(--bc) / 0.10);
         }
 
-        @keyframes toast-enter {
-            from {
-                opacity: 0;
-                transform: translateY(-0.5rem);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .sipandu-logo-sidebar {
+            width: 50px;
+            height: 50px;
+            padding: 4px;
+            border-radius: 1rem;
+            background: hsl(var(--b1));
+            border: 1px solid hsl(var(--b3));
+            box-shadow: 0 5px 14px hsl(var(--bc) / 0.12);
         }
 
-        @media (prefers-reduced-motion: reduce) {
-            *,
-            *::before,
-            *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-                scroll-behavior: auto !important;
-            }
+        .sipandu-logo-footer {
+            width: 42px;
+            height: 42px;
+            padding: 3px;
+            border-radius: 0.85rem;
+            background: hsl(var(--b1));
+            border: 1px solid hsl(var(--b3));
         }
     </style>
 
     @stack('styles')
 </head>
 
-<body class="min-h-screen">
-    <a href="#main-content" class="skip-link">
-        Langsung ke isi halaman
-    </a>
-
+<body class="min-h-screen bg-base-100 text-base-content">
     <div class="drawer lg:drawer-open">
-        <input id="app-drawer" type="checkbox" class="drawer-toggle">
+        <input
+            id="app-drawer"
+            type="checkbox"
+            class="drawer-toggle"
+        >
 
-        <div class="drawer-content flex min-h-screen flex-col">
+        <div class="drawer-content flex min-h-screen flex-col bg-base-100">
             @yield('navbar')
 
-            <main
-                id="main-content"
-                class="flex-1 px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-8"
-            >
-                <div class="content-shell">
+            <main class="flex-1 bg-base-100 p-4 sm:p-5 lg:p-7">
+                <div class="page-shell">
                     @if(session('success'))
-                        <div
-                            role="alert"
-                            class="toast-alert alert alert-success mb-5 rounded-2xl border border-success/20 shadow-sm"
-                        >
+                        <div class="alert alert-success mb-5 rounded-2xl shadow-sm">
                             <span class="material-icons">check_circle</span>
-                            <span class="font-medium">{{ session('success') }}</span>
+                            <span>{{ session('success') }}</span>
                         </div>
                     @endif
 
                     @if(session('error'))
-                        <div
-                            role="alert"
-                            class="toast-alert alert alert-error mb-5 rounded-2xl border border-error/20 shadow-sm"
-                        >
+                        <div class="alert alert-error mb-5 rounded-2xl shadow-sm">
                             <span class="material-icons">error</span>
-                            <span class="font-medium">{{ session('error') }}</span>
+                            <span>{{ session('error') }}</span>
                         </div>
                     @endif
 
                     @if($errors->any())
-                        <div
-                            role="alert"
-                            class="toast-alert alert alert-error mb-5 rounded-2xl border border-error/20 shadow-sm"
-                        >
-                            <span class="material-icons">error_outline</span>
+                        <div class="alert alert-error mb-5 rounded-2xl shadow-sm">
+                            <span class="material-icons">warning</span>
+
                             <div>
-                                <p class="font-bold">Ada data yang perlu diperbaiki.</p>
-                                <p class="mt-1 text-sm">{{ $errors->first() }}</p>
+                                <p class="font-bold">Periksa kembali data yang diisi.</p>
+
+                                <ul class="mt-1 list-inside list-disc text-sm">
+                                    @foreach($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
                             </div>
                         </div>
                     @endif
@@ -173,7 +146,7 @@
             </main>
         </div>
 
-        <div class="drawer-side z-50">
+        <div class="drawer-side z-40">
             <label
                 for="app-drawer"
                 aria-label="Tutup menu"
@@ -183,6 +156,8 @@
             @yield('sidebar')
         </div>
     </div>
+
+    @include('components.theme-switcher')
 
     @stack('scripts')
 </body>

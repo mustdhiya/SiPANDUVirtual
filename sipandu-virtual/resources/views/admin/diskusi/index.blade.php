@@ -8,21 +8,22 @@
     $periodeTerbuka = $periodes->where('is_open', true)->count();
 @endphp
 
-<div class="space-y-8">
+<div class="mx-auto max-w-7xl space-y-8">
 
     {{-- Header halaman --}}
-    <section class="flex flex-col gap-4 border-b border-base-300 pb-5 lg:flex-row lg:items-end lg:justify-between">
+    <section class="flex flex-col gap-4 border-b border-base-300 pb-6 lg:flex-row lg:items-end lg:justify-between">
         <div>
             <p class="text-xs font-bold uppercase tracking-[0.14em] text-secondary">
                 Pendampingan Guru
             </p>
 
-            <h1 class="font-display mt-1 text-3xl font-semibold text-neutral">
+            <h1 class="font-display mt-2 text-3xl font-semibold text-base-content md:text-4xl">
                 Ruang Diskusi
             </h1>
 
-            <p class="mt-2 max-w-2xl text-sm leading-6 text-neutral/60">
-                Pilih triwulan untuk membaca pertanyaan guru, memberikan arahan, dan mengelola percakapan pendampingan.
+            <p class="mt-2 max-w-2xl text-sm leading-6 text-base-content/70">
+                Pilih triwulan untuk membaca pertanyaan guru, memberikan arahan,
+                dan mengelola percakapan pendampingan.
             </p>
         </div>
 
@@ -40,20 +41,21 @@
     </section>
 
     {{-- Informasi penggunaan --}}
-    <section class="rounded-2xl border border-secondary/20 bg-secondary/10 px-5 py-4">
+    <section class="rounded-2xl border border-secondary/30 bg-secondary/10 px-5 py-4">
         <div class="flex items-start gap-3">
-            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-secondary/15 text-secondary">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-secondary/20 text-secondary">
                 <span class="material-icons">forum</span>
             </div>
 
             <div>
-                <h2 class="font-semibold text-neutral">
+                <h2 class="font-semibold text-base-content">
                     Cara menggunakan ruang diskusi
                 </h2>
 
-                <p class="mt-1 text-sm leading-6 text-neutral/65">
-                    Buka salah satu periode triwulan untuk melihat seluruh thread diskusi.
-                    Anda dapat membalas pertanyaan guru serta mengunci thread yang sudah selesai dibahas.
+                <p class="mt-1 text-sm leading-6 text-base-content/75">
+                    Buka periode triwulan untuk melihat seluruh thread diskusi.
+                    Pengawas dapat membalas pertanyaan guru dan mengunci thread
+                    yang pembahasannya sudah selesai.
                 </p>
             </div>
         </div>
@@ -66,7 +68,7 @@
                 Pilih Periode
             </p>
 
-            <h2 class="font-display mt-1 text-2xl font-semibold text-neutral">
+            <h2 class="font-display mt-1 text-2xl font-semibold text-base-content">
                 Diskusi Berdasarkan Triwulan
             </h2>
         </div>
@@ -78,12 +80,12 @@
                     $isPastDeadline = $periode->deadline && now()->greaterThan($periode->deadline);
                 @endphp
 
-                <article class="card overflow-hidden border border-base-300 bg-base-100 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-md">
+                <article class="card overflow-hidden border border-base-300 bg-base-100 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-primary hover:shadow-md">
                     <div class="h-1.5 {{ $isOpen ? 'bg-primary' : 'bg-base-300' }}"></div>
 
                     <div class="card-body gap-5 p-5">
                         <div class="flex items-start justify-between gap-3">
-                            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl {{ $isOpen ? 'bg-primary/10 text-primary' : 'bg-base-200 text-neutral/50' }}">
+                            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl {{ $isOpen ? 'bg-primary/15 text-primary' : 'bg-base-200 text-base-content/60' }}">
                                 <span class="material-icons">forum</span>
                             </div>
 
@@ -105,30 +107,34 @@
                                 Triwulan {{ $periode->nomor }}
                             </p>
 
-                            <h3 class="font-display mt-1 text-xl font-semibold leading-snug text-neutral">
-                                {{ $periode->tahunAjaran->label }}
+                            <h3 class="font-display mt-1 text-xl font-semibold leading-snug text-base-content">
+                                {{ $periode->tahunAjaran->label ?? 'Tahun ajaran belum diatur' }}
                             </h3>
 
-                            <p class="mt-2 line-clamp-2 text-sm leading-6 text-neutral/65">
+                            <p class="mt-2 min-h-12 text-sm leading-6 text-base-content/70">
                                 {{ $periode->tema }}
                             </p>
                         </div>
 
-                        <div class="rounded-xl bg-base-200/70 px-3 py-3 text-sm">
-                            <div class="flex items-center gap-2 text-neutral/65">
+                        <div class="rounded-xl bg-base-200 px-3 py-3 text-sm">
+                            <div class="flex items-center gap-2 text-base-content/75">
                                 <span class="material-icons text-base text-secondary">event</span>
 
                                 <span>
                                     Deadline:
-                                    <strong class="font-semibold text-neutral">
-                                        {{ $periode->deadline ? $periode->deadline->format('d M Y') : 'Belum ditentukan' }}
+                                    <strong class="font-semibold text-base-content">
+                                        {{ $periode->deadline ? $periode->deadline->translatedFormat('d M Y') : 'Belum ditentukan' }}
                                     </strong>
                                 </span>
                             </div>
 
                             @if($isPastDeadline)
-                                <p class="mt-2 text-xs font-medium text-warning">
+                                <p class="mt-2 text-xs font-semibold text-warning">
                                     Deadline periode ini sudah berlalu.
+                                </p>
+                            @elseif($periode->deadline)
+                                <p class="mt-2 text-xs text-base-content/60">
+                                    {{ $periode->deadline->diffForHumans() }}
                                 </p>
                             @endif
                         </div>
@@ -145,16 +151,16 @@
                     </div>
                 </article>
             @empty
-                <div class="col-span-full rounded-2xl border border-dashed border-base-300 bg-base-100 px-5 py-12 text-center">
-                    <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-base-200 text-neutral/50">
+                <div class="col-span-full rounded-2xl border border-dashed border-base-300 bg-base-100 px-5 py-14 text-center">
+                    <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-base-200 text-base-content/60">
                         <span class="material-icons text-3xl">date_range</span>
                     </div>
 
-                    <h2 class="font-display mt-4 text-xl font-semibold text-neutral">
+                    <h2 class="font-display mt-4 text-xl font-semibold text-base-content">
                         Belum Ada Triwulan
                     </h2>
 
-                    <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-neutral/60">
+                    <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-base-content/70">
                         Buat tahun ajaran dan periode triwulan terlebih dahulu agar ruang diskusi dapat digunakan.
                     </p>
 
