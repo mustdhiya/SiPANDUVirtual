@@ -977,7 +977,7 @@
 
         <div class="hero-visual reveal">
             <div class="hero-image">
-                <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=900&h=1200&fit=crop" alt="Kegiatan pembelajaran dan pendampingan guru di lingkungan sekolah">
+                <img src="{{ asset('images/meuw1.png') }}" alt="Kegiatan pembelajaran dan pendampingan guru di lingkungan sekolah">
             </div>
             <div class="trust-seal" aria-label="Terpercaya, amanah, profesional">
               
@@ -987,7 +987,7 @@
 
     <section id="tentang" class="section section-alt">
         <div class="container about-grid">
-            <img class="about-image reveal" src="https://images.unsplash.com/photo-1577896334614-5498a338b4f2?w=650&h=760&fit=crop" alt="Suasana pembelajaran di sekolah">
+            <img class="about-image reveal" src="{{ asset('images/meuw.png') }}" alt="Suasana pembelajaran di sekolah">
 
             <div class="about-copy reveal">
                 <div class="eyebrow">Tentang SiPANDU</div>
