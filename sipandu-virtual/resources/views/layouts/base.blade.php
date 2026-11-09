@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>@yield('title', 'SiPANDU VIRTUAL') — SiPANDU VIRTUAL</title>
+    <title>@yield('title', 'SiPANDU VIRTUAL') - SiPANDU VIRTUAL</title>
 
     <link
         rel="icon"

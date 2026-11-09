@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -45,5 +46,16 @@ class Submission extends Model
     public function uploadDokumen(): HasMany
     {
         return $this->hasMany(UploadDokumen::class);
+    }
+
+    public function scopeForUser(Builder $query, User $user): Builder
+    {
+        if ($user->isAdmin()) {
+            return $query;
+        }
+
+        return $query->whereHas('guru', function (Builder $q) use ($user) {
+            $q->where('pengawas_id', $user->id);
+        });
     }
 }

@@ -4,11 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Akun - SiPANDU VIRTUAL</title>
-    <meta name="description" content="Daftar akun Guru PAI di SiPANDU VIRTUAL — Sistem Pendampingan Terpadu Virtual Pengawas PAI Kota Samarinda.">
+    <meta name="description" content="Daftar akun di SiPANDU VIRTUAL - Sistem Pendampingan Terpadu Virtual Pengawas PAI Kota Samarinda.">
 
     {{-- Material Icons (WAJIB sesuai standar sistem) --}}
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+    
+    <link
+        rel="icon"
+        type="image/png"
+        href="{{ asset('images/logo.png') }}"
+    >
+
+    <link
+        rel="apple-touch-icon"
+        href="{{ asset('images/logo.png') }}"
+    >
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        rel="stylesheet"
+    >
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
@@ -33,8 +57,7 @@
             color:var(--sw-text2); font-size:1.25rem; pointer-events:none;
         }
         .input-with-icon{ padding-left:2.75rem !important; }
-        .select-with-icon{ padding-left:2.75rem !important; }
-        .input-bordered:focus, .select-bordered:focus{
+        .input-bordered:focus{
             border-color:var(--sw-gold) !important; outline:2px solid var(--sw-gold-tint);
         }
         .btn-brand{
@@ -49,16 +72,7 @@
             color:var(--sw-gold); display:flex; align-items:center; justify-content:center;
             font-weight:700; font-size:0.8rem; flex-shrink:0;
         }
-        .role-card{
-            border:2px solid var(--sw-border); border-radius:1rem; padding:0.9rem 1rem;
-            cursor:pointer; transition:all 160ms ease; background:#fff;
-        }
-        .role-card:hover{ border-color:var(--sw-gold); }
-        input[type="radio"]:checked + .role-card,
-        .role-card.role-selected{
-            border-color:var(--sw-dark); background:var(--sw-gold-tint);
-        }
-        a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible{
+        a:focus-visible, button:focus-visible, input:focus-visible{
             outline:3px solid var(--sw-gold); outline-offset:2px;
         }
     </style>
@@ -145,41 +159,10 @@
 
                     <div class="divider my-2"></div>
 
-                    {{-- Step 2: Peran --}}
+                    {{-- Step 2: Kata Sandi --}}
                     <div>
                         <div class="flex items-center gap-2 mb-3">
                             <span class="step-badge">2</span>
-                            <span class="font-semibold text-sm" style="color:var(--sw-text);">Pilih Peran</span>
-                        </div>
-
-                        <div class="grid grid-cols-2 gap-3">
-                            <label class="block">
-                                <input type="radio" name="role" value="guru" class="hidden peer"
-                                    {{ old('role', 'guru') === 'guru' ? 'checked' : '' }}
-                                    onchange="document.querySelectorAll('.role-card').forEach(el=>el.classList.remove('role-selected')); this.nextElementSibling.classList.add('role-selected');" />
-                                <div class="role-card {{ old('role', 'guru') === 'guru' ? 'role-selected' : '' }} text-center">
-                                    <span class="material-icons block mb-1" style="color:var(--sw-dark);">school</span>
-                                    <span class="font-semibold text-sm">Guru PAI</span>
-                                </div>
-                            </label>
-                            <label class="block">
-                                <input type="radio" name="role" value="admin" class="hidden peer"
-                                    {{ old('role') === 'admin' ? 'checked' : '' }}
-                                    onchange="document.querySelectorAll('.role-card').forEach(el=>el.classList.remove('role-selected')); this.nextElementSibling.classList.add('role-selected');" />
-                                <div class="role-card {{ old('role') === 'admin' ? 'role-selected' : '' }} text-center">
-                                    <span class="material-icons block mb-1" style="color:var(--sw-dark);">shield_person</span>
-                                    <span class="font-semibold text-sm">Admin</span>
-                                </div>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="divider my-2"></div>
-
-                    {{-- Step 3: Kata Sandi --}}
-                    <div>
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="step-badge">3</span>
                             <span class="font-semibold text-sm" style="color:var(--sw-text);">Buat Kata Sandi</span>
                         </div>
 
@@ -221,7 +204,7 @@
 
         <div class="flex items-start gap-2 text-xs mt-4 px-2" style="color:var(--sw-text2);">
             <span class="material-icons text-sm" style="color:var(--sw-gold);">info</span>
-            <span>Akun yang mendaftar sebagai Guru akan diverifikasi oleh Admin (Pengawas PAI) sebelum dapat digunakan untuk masuk.</span>
+            <span>Setiap akun baru terdaftar sebagai Guru PAI secara default dan perlu disetujui oleh Admin Utama (atau diangkat menjadi Pengawas) sebelum dapat masuk.</span>
         </div>
     </div>
 

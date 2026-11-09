@@ -111,7 +111,7 @@
                                 >
                                     {{ $sekolah->nama_sekolah }}
                                     @if($sekolah->jenjang)
-                                        — {{ $sekolah->jenjang }}
+                                        - {{ $sekolah->jenjang }}
                                     @endif
                                 </option>
                             @endforeach

@@ -46,7 +46,7 @@
             </p>
 
             <h1 class="font-display mt-2 text-3xl font-semibold text-base-content md:text-4xl">
-                Triwulan {{ $periode->nomor }} — {{ $periode->tahunAjaran->label ?? '-' }}
+                Triwulan {{ $periode->nomor }} - {{ $periode->tahunAjaran->label ?? '-' }}
             </h1>
 
             <p class="mt-2 max-w-2xl text-sm leading-6 text-base-content/70">

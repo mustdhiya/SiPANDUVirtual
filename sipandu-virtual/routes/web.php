@@ -4,12 +4,13 @@ use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| Controllers - Auth
+| Controllers - Auth & Profile
 |--------------------------------------------------------------------------
 */
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,7 @@ use App\Http\Controllers\Admin\DiskusiController as AdminDiskusiController;
 use App\Http\Controllers\Admin\LaporanController;
 use App\Http\Controllers\Admin\MonitoringController;
 use App\Http\Controllers\Admin\GudangController;
+use App\Http\Controllers\Admin\BerkasPembinaanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,10 +73,17 @@ Route::middleware('guest')->group(function () {
 });
 
 
-// Logout
-Route::post('/logout', [LoginController::class, 'logout'])
-    ->name('logout')
-    ->middleware('auth');
+// Logout & Profile Wajib (Untuk Semua User yang Sudah Login)
+Route::middleware('auth')->group(function () {
+    Route::post('/logout', [LoginController::class, 'logout'])
+        ->name('logout');
+
+    Route::get('/profile', [ProfileController::class, 'edit'])
+        ->name('profile.edit');
+
+    Route::put('/profile', [ProfileController::class, 'update'])
+        ->name('profile.update');
+});
 
 
 
@@ -83,7 +92,7 @@ Route::post('/logout', [LoginController::class, 'logout'])
 | ADMIN ROUTES
 |--------------------------------------------------------------------------
 |
-| Semua route khusus ADMIN dikumpulkan di sini.
+| Semua route khusus ADMIN & PENGAWAS dikumpulkan di sini.
 |
 */
 
@@ -211,12 +220,18 @@ Route::prefix('admin')
 
                 Route::post('/', [GuruController::class, 'store'])
                     ->name('store');
-                
+
                 Route::get('/hubungkan-akun', [GuruController::class, 'linkAccount'])
                     ->name('link-account');
 
                 Route::post('/hubungkan-akun', [GuruController::class, 'storeLinkedAccount'])
                     ->name('store-linked-account');
+
+                Route::post('/{guru}/ambil-binaan', [GuruController::class, 'claimGuru'])
+                    ->name('claim');
+
+                Route::post('/{guru}/lepas-binaan', [GuruController::class, 'releaseGuru'])
+                    ->name('release');
 
                 Route::get('/{guru}/edit', [GuruController::class, 'edit'])
                     ->name('edit');
@@ -261,7 +276,7 @@ Route::prefix('admin')
 
         /*
         |--------------------------------------------------------------------------
-        | Approve Guru
+        | Approve Guru & Pembagian Pengawas
         |--------------------------------------------------------------------------
         */
 
@@ -271,6 +286,18 @@ Route::prefix('admin')
 
                 Route::get('/', [ApproveGuruController::class, 'index'])
                     ->name('index');
+
+                Route::post('/checklist-assign', [ApproveGuruController::class, 'checklistAssign'])
+                    ->name('checklist-assign');
+
+                Route::post('/{user}/update-user', [ApproveGuruController::class, 'updateUserByAdmin'])
+                    ->name('update-user');
+
+                Route::post('/{user}/angkat-pengawas', [ApproveGuruController::class, 'promoteToPengawas'])
+                    ->name('promote-pengawas');
+
+                Route::post('/{user}/turunkan-guru', [ApproveGuruController::class, 'demoteToGuru'])
+                    ->name('demote-guru');
 
                 Route::post('/{user}/approve', [ApproveGuruController::class, 'approve'])
                     ->name('approve');
@@ -404,6 +431,33 @@ Route::prefix('admin')
                 Route::delete('/{materi}', [GudangController::class, 'destroy'])
                     ->name('destroy');
             });
+        
+            /*
+        |--------------------------------------------------------------------------
+        | Generator Berkas Pembinaan Profesi Guru PAI (Bulanan Jan-Des)
+        |--------------------------------------------------------------------------
+        */
+
+        Route::prefix('berkas-pembinaan')
+            ->name('berkas-pembinaan.')
+            ->group(function () {
+
+                Route::get('/', [BerkasPembinaanController::class, 'index'])
+                    ->name('index');
+
+                Route::get('/identitas', [BerkasPembinaanController::class, 'identitas'])
+                    ->name('identitas');
+
+                Route::put('/identitas', [BerkasPembinaanController::class, 'updateIdentitas'])
+                    ->name('identitas.update');
+
+                Route::get('/{tahun}/{bulan}', [BerkasPembinaanController::class, 'show'])
+                    ->name('show');
+
+                Route::put('/{tahun}/{bulan}', [BerkasPembinaanController::class, 'updateBulan'])
+                    ->name('update');
+            });
+
 
     });
 

@@ -108,10 +108,10 @@
                                     <option value="" disabled {{ old('nomor') ? '' : 'selected' }}>
                                         Pilih triwulan
                                     </option>
-                                    <option value="1" @selected(old('nomor') == 1)>Triwulan I — Januari sampai Maret</option>
-                                    <option value="2" @selected(old('nomor') == 2)>Triwulan II — April sampai Juni</option>
-                                    <option value="3" @selected(old('nomor') == 3)>Triwulan III — Juli sampai September</option>
-                                    <option value="4" @selected(old('nomor') == 4)>Triwulan IV — Oktober sampai Desember</option>
+                                    <option value="1" @selected(old('nomor') == 1)>Triwulan I - Januari sampai Maret</option>
+                                    <option value="2" @selected(old('nomor') == 2)>Triwulan II - April sampai Juni</option>
+                                    <option value="3" @selected(old('nomor') == 3)>Triwulan III - Juli sampai September</option>
+                                    <option value="4" @selected(old('nomor') == 4)>Triwulan IV - Oktober sampai Desember</option>
                                 </select>
 
                                 @error('nomor')

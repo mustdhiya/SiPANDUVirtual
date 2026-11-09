@@ -13,7 +13,11 @@ class GuruController extends Controller
 {
     public function index()
     {
-        $gurus = GuruBinaan::with('sekolah', 'userAccount')->orderBy('nama_lengkap')->get();
+        $gurus = GuruBinaan::forUser(auth()->user())
+            ->with('sekolah', 'userAccount', 'pengawas')
+            ->orderBy('nama_lengkap')
+            ->get();
+
         return view('admin.guru.index', compact('gurus'));
     }
 

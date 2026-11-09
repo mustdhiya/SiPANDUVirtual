@@ -7,10 +7,10 @@
     $statusTerbuka = (bool) old('is_open', $triwulan->is_open);
 
     $namaTriwulan = [
-        1 => 'Triwulan I — Januari sampai Maret',
-        2 => 'Triwulan II — April sampai Juni',
-        3 => 'Triwulan III — Juli sampai September',
-        4 => 'Triwulan IV — Oktober sampai Desember',
+        1 => 'Triwulan I - Januari sampai Maret',
+        2 => 'Triwulan II - April sampai Juni',
+        3 => 'Triwulan III - Juli sampai September',
+        4 => 'Triwulan IV - Oktober sampai Desember',
     ];
 
     $iconTriwulan = [
@@ -169,28 +169,28 @@
                                     value="1"
                                     @selected(old('nomor', $triwulan->nomor) == 1)
                                 >
-                                    Triwulan I — Januari sampai Maret
+                                    Triwulan I - Januari sampai Maret
                                 </option>
 
                                 <option
                                     value="2"
                                     @selected(old('nomor', $triwulan->nomor) == 2)
                                 >
-                                    Triwulan II — April sampai Juni
+                                    Triwulan II - April sampai Juni
                                 </option>
 
                                 <option
                                     value="3"
                                     @selected(old('nomor', $triwulan->nomor) == 3)
                                 >
-                                    Triwulan III — Juli sampai September
+                                    Triwulan III - Juli sampai September
                                 </option>
 
                                 <option
                                     value="4"
                                     @selected(old('nomor', $triwulan->nomor) == 4)
                                 >
-                                    Triwulan IV — Oktober sampai Desember
+                                    Triwulan IV - Oktober sampai Desember
                                 </option>
                             </select>
 

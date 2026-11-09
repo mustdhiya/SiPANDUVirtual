@@ -99,7 +99,7 @@
                                     </div>
                                 </td>
                                 <td class="guru-school">{{ $guru->sekolah->nama_sekolah ?? 'Belum dipilih' }}</td>
-                                <td class="font-mono text-sm guru-nip">{{ $guru->nip_siaga ?? '—' }}</td>
+                                <td class="font-mono text-sm guru-nip">{{ $guru->nip_siaga ?? '-' }}</td>
                                 <td>
                                     @if($guru->status_jabatan === 'GURU')
                                         <span class="badge badge-info gap-1"><span class="material-icons text-xs">school</span> Guru PAI</span>

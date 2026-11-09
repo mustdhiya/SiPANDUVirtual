@@ -1,6 +1,6 @@
 # SiPANDU VIRTUAL
 
-Sistem Pendampingan Terpadu Virtual — Pengawas PAI SMA/SMK Kota Samarinda
+Sistem Pendampingan Terpadu Virtual - Pengawas PAI SMA/SMK Kota Samarinda
 
 ## Tech Stack
 

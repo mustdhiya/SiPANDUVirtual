@@ -8,10 +8,10 @@ Sangat sederhana dan intuitif
 Mudah digunakan oleh orang tua yang tidak terbiasa dengan teknologi
 Navigasi jelas, tombol besar, dan teks mudah dibaca
 Implementasikan dan integrasikan komponen berikut ke dalam halaman:
-<!-- Sidebar nav — bar.js isi otomatis -->
+<!-- Sidebar nav - bar.js isi otomatis -->
 <ul id="sipandu-sidebar-nav" class="menu p-4 gap-1"></ul>
 
-<!-- Judul halaman di topbar — otomatis diisi -->
+<!-- Judul halaman di topbar - otomatis diisi -->
 <h1 id="sipandu-page-title"></h1>
 
 <!-- Tombol Mode Malam/Siang -->

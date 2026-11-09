@@ -221,7 +221,7 @@
                                 <div class="max-w-3xl {{ $pesan->is_admin ? 'order-1' : '' }}">
                                     <div class="mb-1 flex items-center gap-2 {{ $pesan->is_admin ? 'justify-end' : '' }}">
                                         <span class="text-xs font-semibold text-base-content/70">
-                                            {{ $pesan->is_admin ? 'Anda — Pengawas PAI' : ($pesan->user->name ?? 'Guru') }}
+                                            {{ $pesan->is_admin ? 'Anda - Pengawas PAI' : ($pesan->user->name ?? 'Guru') }}
                                         </span>
 
                                         @if($pesan->is_admin)

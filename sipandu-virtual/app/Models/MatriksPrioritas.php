@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class MatriksPrioritas extends Model
@@ -42,5 +43,19 @@ class MatriksPrioritas extends Model
     public function periode(): BelongsTo
     {
         return $this->belongsTo(PeriodeTriwulan::class, 'periode_id');
+    }
+
+    /**
+     * TAMBAHAN BARU: Filter matriks prioritas khusus guru binaan milik pengawas yang login
+     */
+    public function scopeForUser(Builder $query, User $user): Builder
+    {
+        if ($user->isAdmin()) {
+            return $query;
+        }
+
+        return $query->whereHas('guru', function (Builder $q) use ($user) {
+            $q->where('pengawas_id', $user->id);
+        });
     }
 }

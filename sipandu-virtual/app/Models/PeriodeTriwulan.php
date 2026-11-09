@@ -29,10 +29,10 @@ class PeriodeTriwulan extends Model
     ];
 
     const NOMOR_CHOICES = [
-        1 => 'Triwulan I — Perencanaan & Pemetaan (Jan–Mar)',
-        2 => 'Triwulan II — Pendampingan Tahap Awal (Apr–Jun)',
-        3 => 'Triwulan III — Observasi & Umpan Balik (Jul–Sep)',
-        4 => 'Triwulan IV — Evaluasi & Pelaporan (Okt–Des)',
+        1 => 'Triwulan I - Perencanaan & Pemetaan (Jan–Mar)',
+        2 => 'Triwulan II - Pendampingan Tahap Awal (Apr–Jun)',
+        3 => 'Triwulan III - Observasi & Umpan Balik (Jul–Sep)',
+        4 => 'Triwulan IV - Evaluasi & Pelaporan (Okt–Des)',
     ];
 
     public function tahunAjaran(): BelongsTo
@@ -47,6 +47,7 @@ class PeriodeTriwulan extends Model
 
     public function isAccessible(): bool
     {
-        return $this->is_open && now()->date() <= $this->deadline;
+        // Diperbaiki dari now()->date() menjadi now()->startOfDay()->lte($this->deadline)
+        return $this->is_open && now()->startOfDay()->lte($this->deadline);
     }
 }

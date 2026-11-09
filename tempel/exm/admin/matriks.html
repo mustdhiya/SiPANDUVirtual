@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Matriks Prioritas — SiPANDU VIRTUAL</title>
+  <title>Matriks Prioritas - SiPANDU VIRTUAL</title>
 
   <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
@@ -223,7 +223,7 @@
         </div>
       </div>
 
-      <!-- Nav — diisi bar.js -->
+      <!-- Nav - diisi bar.js -->
       <nav class="flex-1 px-3 py-4 overflow-y-auto">
         <ul id="sipandu-sidebar-nav" class="menu gap-1 p-0 text-sm
           [&_a]:text-green-200 [&_a]:rounded-xl [&_a:hover]:bg-white/10 [&_a:hover]:text-white
@@ -259,7 +259,7 @@
     <h3 class="font-bold text-base flex items-center gap-2 mb-1">
       <span class="material-icons text-primary">edit_note</span>Catatan Kategorisasi
     </h3>
-    <p class="text-sm text-base-content/60 mb-4" id="modalGuruName">—</p>
+    <p class="text-sm text-base-content/60 mb-4" id="modalGuruName">-</p>
     <label class="form-control">
       <div class="label pb-1"><span class="label-text font-semibold text-sm">Alasan / Catatan Pengawas</span></div>
       <textarea id="inputCatatan" class="textarea textarea-bordered text-sm" rows="4"
@@ -466,7 +466,7 @@ function onDrop(e, col) {
 function bukaCatatan(id) {
   activeCatalanId = id;
   const g = guruData.find(x => x.id === id);
-  document.getElementById('modalGuruName').textContent = g.nama + ' — ' + g.sekolah;
+  document.getElementById('modalGuruName').textContent = g.nama + ' - ' + g.sekolah;
   document.getElementById('inputCatatan').value = g.catatan || '';
   document.getElementById('modalCatatan').showModal();
 }

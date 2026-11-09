@@ -72,7 +72,7 @@
                 </p>
 
                 <h1 class="font-display mt-2 text-2xl font-semibold leading-tight text-base-content sm:text-3xl">
-                    TW {{ $submission->periode->nomor }} — {{ $submission->guru->nama_lengkap }}
+                    TW {{ $submission->periode->nomor }} - {{ $submission->guru->nama_lengkap }}
                 </h1>
 
                 <p class="mt-2 text-sm text-base-content/70">

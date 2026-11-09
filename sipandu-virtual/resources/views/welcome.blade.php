@@ -6,10 +6,10 @@
 
     <meta
         name="description"
-        content="SiPANDU VIRTUAL — Sistem Pendampingan Terpadu Virtual untuk Pengawas dan Guru PAI SMA/SMK Kota Samarinda."
+        content="SiPANDU VIRTUAL - Sistem Pendampingan Terpadu Virtual untuk Pengawas dan Guru PAI SMA/SMK Kota Samarinda."
     >
 
-    <title>SiPANDU VIRTUAL — Sistem Pendampingan Terpadu Virtual</title>
+    <title>SiPANDU VIRTUAL - Sistem Pendampingan Terpadu Virtual</title>
 
     <link
         rel="icon"
@@ -1150,7 +1150,7 @@
 
     <div class="container footer-bottom">
         <span>
-            &copy; {{ date('Y') }} SiPANDU VIRTUAL — Pengawas PAI SMA/SMK Kota Samarinda
+            &copy; {{ date('Y') }} SiPANDU VIRTUAL - Pengawas PAI SMA/SMK Kota Samarinda
         </span>
 
         <button

@@ -180,7 +180,7 @@
 
     <div class="header">
         <div class="brand">
-            SiPANDU VIRTUAL — Pengawas PAI SMA/SMK Kota Samarinda
+            SiPANDU VIRTUAL - Pengawas PAI SMA/SMK Kota Samarinda
         </div>
 
         <h1>
@@ -189,8 +189,8 @@
 
         <p class="subtitle">
             Tahun Ajaran {{ $periode->tahunAjaran->label ?? '-' }}
-            — {{ $periodeLabel }}
-            — {{ $periode->tema }}
+            - {{ $periodeLabel }}
+            - {{ $periode->tema }}
         </p>
 
         <table class="report-meta">
@@ -296,7 +296,7 @@
     </table>
 
     <div class="footer">
-        Dokumen dibuat otomatis oleh SiPANDU VIRTUAL —
+        Dokumen dibuat otomatis oleh SiPANDU VIRTUAL -
         Sistem Pendampingan Terpadu Virtual Pengawas PAI Kota Samarinda.
     </div>
 </body>

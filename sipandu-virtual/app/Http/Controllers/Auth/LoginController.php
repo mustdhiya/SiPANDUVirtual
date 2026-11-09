@@ -32,7 +32,8 @@ class LoginController extends Controller
                 ]);
             }
 
-            if ($user->isAdmin()) {
+            // Super Admin (Mama) dan Pengawas sama-sama diarahkan ke dashboard panel admin/pengawas
+            if ($user->isAdmin() || $user->isPengawas()) {
                 return redirect()->intended(route('admin.dashboard'));
             }
 

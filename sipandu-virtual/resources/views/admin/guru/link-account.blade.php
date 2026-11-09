@@ -136,7 +136,7 @@
                                 value="{{ $user->id }}"
                                 @selected(old('user_id') == $user->id)
                             >
-                                {{ $user->name }} — {{ $user->email }}
+                                {{ $user->name }} - {{ $user->email }}
                             </option>
                         @endforeach
                     </select>

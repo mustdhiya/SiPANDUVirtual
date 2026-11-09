@@ -26,7 +26,7 @@
             </h1>
 
             <p class="mt-2 max-w-2xl text-sm leading-6 text-base-content/70">
-                {{ now()->translatedFormat('l, d F Y') }} — pantau pendampingan guru, proses review, dan kebutuhan tindak lanjut dari satu halaman.
+                {{ now()->translatedFormat('l, d F Y') }} - pantau pendampingan guru, proses review, dan kebutuhan tindak lanjut dari satu halaman.
             </p>
         </div>
 
