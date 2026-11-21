@@ -165,5 +165,15 @@
         </div>
     </section>
 
+    {{-- Tentang Pengembang --}}
+    <section class="rounded-2xl border-2 border-base-300 bg-base-100 p-6 shadow-sm text-center">
+        <p class="text-sm text-base-content/75">
+            Aplikasi <strong>SiPANDU VIRTUAL</strong> dikembangkan oleh <a href="https://mustdhiya.com" target="_blank" rel="noopener noreferrer" class="font-extrabold text-primary hover:underline">PT MUSTDHIYA TEKNOLOGI INDONESIA</a>.
+        </p>
+        <p class="mt-1 text-xs text-base-content/60">
+            Kunjungi situs resmi kami di <a href="https://mustdhiya.com" target="_blank" rel="noopener noreferrer" class="text-primary underline">mustdhiya.com</a> untuk informasi layanan dan kerja sama teknologi.
+        </p>
+    </section>
+
 </div>
 @endsection

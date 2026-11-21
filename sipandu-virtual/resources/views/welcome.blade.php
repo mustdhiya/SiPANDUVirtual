@@ -996,6 +996,11 @@
                 </div>
                 <p>SiPANDU VIRTUAL membantu Pengawas PAI mendampingi Guru PAI melalui pengelolaan data, pengisian dokumen per triwulan, review, diskusi, monitoring, dan laporan.</p>
                 <p>Setiap proses tersimpan dalam satu sistem sehingga tindak lanjut lebih jelas dan laporan tidak perlu disusun ulang dari awal.</p>
+                <div style="margin-top: 1.25rem; padding: 1rem 1.25rem; border-radius: 0.85rem; background: rgba(36, 60, 44, 0.06); border-left: 4px solid var(--primary, #243c2c);">
+                    <p style="margin: 0; font-size: 0.92rem; color: var(--text);">
+                        Dikembangkan bersama <strong>PT MUSTDHIYA TEKNOLOGI INDONESIA</strong>. Kunjungi website resmi: <a href="https://mustdhiya.com" target="_blank" rel="noopener noreferrer" style="color: #2e7d32; font-weight: 700; text-decoration: underline;">mustdhiya.com &nearr;</a>
+                    </p>
+                </div>
             </div>
 
             <div class="stat-list reveal" aria-label="Keunggulan SiPANDU">
@@ -1143,6 +1148,9 @@
             <p style="max-width:330px;font-size:.88rem;">
                 Platform pendampingan Pendidikan Agama Islam untuk SMA/SMK Kota Samarinda.
             </p>
+            <p style="max-width:330px;font-size:.84rem;margin-top:.5rem;color:rgba(255,255,255,.75);">
+                Dikembangkan oleh <a href="https://mustdhiya.com" target="_blank" rel="noopener noreferrer" style="color:#d4af37;font-weight:700;text-decoration:underline;">PT MUSTDHIYA TEKNOLOGI INDONESIA</a>.
+            </p>
         </div>
 
         {{-- Footer lain tetap sama --}}
@@ -1150,7 +1158,7 @@
 
     <div class="container footer-bottom">
         <span>
-            &copy; {{ date('Y') }} SiPANDU VIRTUAL - Pengawas PAI SMA/SMK Kota Samarinda
+            &copy; {{ date('Y') }} SiPANDU VIRTUAL - Pengawas PAI SMA/SMK Kota Samarinda | Powered by <a href="https://mustdhiya.com" target="_blank" rel="noopener noreferrer" style="color:#d4af37;text-decoration:underline;font-weight:600;">mustdhiya.com</a>
         </span>
 
         <button

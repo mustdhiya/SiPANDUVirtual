@@ -243,6 +243,9 @@
             <p class="mt-3 text-center text-xs font-medium text-base-content/75">
                 SiPANDU VIRTUAL &copy; {{ date('Y') }}
             </p>
+            <p class="mt-1 text-center text-[11px] text-base-content/65">
+                by <a href="https://mustdhiya.com" target="_blank" rel="noopener noreferrer" class="font-bold text-primary hover:underline">PT MUSTDHIYA TEKNOLOGI INDONESIA</a>
+            </p>
         </div>
     </aside>
 @endsection
