@@ -13,7 +13,8 @@ class GudangController extends Controller
     {
         $materis = MateriGudang::with('uploader')
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->paginate(15)
+            ->withQueryString();
         return view('admin.gudang.index', compact('materis'));
     }
 

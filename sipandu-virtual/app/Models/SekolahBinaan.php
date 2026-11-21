@@ -13,6 +13,7 @@ class SekolahBinaan extends Model
 
     protected $fillable = [
         'nama_sekolah',
+        'nama_kepsek',
         'jenjang',
         'status',
         'is_active',

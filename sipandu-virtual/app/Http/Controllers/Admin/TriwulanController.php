@@ -14,7 +14,8 @@ class TriwulanController extends Controller
         $triwulans = PeriodeTriwulan::with('tahunAjaran')
             ->orderBy('tahun_ajaran_id')
             ->orderBy('nomor')
-            ->get();
+            ->paginate(15)
+            ->withQueryString();
         return view('admin.triwulan.index', compact('triwulans'));
     }
 

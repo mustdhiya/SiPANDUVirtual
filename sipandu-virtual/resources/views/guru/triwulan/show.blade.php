@@ -80,20 +80,6 @@
         </span>
     </div>
 
-    @if(session('success'))
-        <div class="alert alert-success shadow-sm mb-5">
-            <span class="material-icons">check_circle</span>
-            <span>{{ session('success') }}</span>
-        </div>
-    @endif
-
-    @if(session('error'))
-        <div class="alert alert-error shadow-sm mb-5">
-            <span class="material-icons">error</span>
-            <span>{{ session('error') }}</span>
-        </div>
-    @endif
-
     @if($submissionStatus === 'revisi')
         <div class="alert alert-warning mb-5">
             <span class="material-icons">priority_high</span>

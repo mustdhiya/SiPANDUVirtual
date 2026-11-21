@@ -5,14 +5,7 @@
 @section('content')
 <div class="mx-auto max-w-7xl space-y-8">
 
-    @if(session('success'))
-        <div class="alert alert-success rounded-2xl shadow-sm">
-            <span class="material-icons">check_circle</span>
-            <span>{{ session('success') }}</span>
-        </div>
-    @endif
-
-    {{-- Filter Pengawas (Khusus Mama / Super Admin jika ingin melihat berkas pengawas lain) --}}
+    {{-- Filter Pengawas (Khusus Super Admin jika ingin melihat berkas pengawas lain) --}}
     @if(auth()->user()->isAdmin() && $daftarPengawas->count() > 1)
         <form method="GET" action="{{ route('admin.berkas-pembinaan.index') }}" class="flex flex-wrap items-center gap-3 rounded-2xl border border-base-300 bg-base-100 p-4 shadow-sm">
             <span class="text-sm font-semibold">Tampilkan Generator Milik Pengawas:</span>
@@ -87,7 +80,7 @@
 
     {{-- Map Tahunan 12 Bulan --}}
     <section class="space-y-4">
-        <div class="flex flex-col justify-between gap-2 sm:flex-row sm:items-end">
+        <div class="flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
             <div>
                 <h2 class="font-display text-2xl font-semibold text-base-content">
                     Map tahunan {{ $tahun }}
@@ -96,6 +89,18 @@
                     Pilih bulan, tentukan tema, lengkapi dokumentasi, dan cetak tiga berkas pemberkasan.
                 </p>
             </div>
+
+            <form method="GET" action="{{ route('admin.berkas-pembinaan.index') }}" class="flex items-center gap-2">
+                @if(request()->filled('pengawas_id'))
+                    <input type="hidden" name="pengawas_id" value="{{ request('pengawas_id') }}">
+                @endif
+                <label for="tahun-select" class="text-sm font-bold text-base-content">Tahun:</label>
+                <select id="tahun-select" name="tahun" onchange="this.form.submit()" class="select select-bordered select-sm">
+                    @foreach(range(date('Y') - 1, date('Y') + 2) as $yr)
+                        <option value="{{ $yr }}" {{ (int) $tahun === (int) $yr ? 'selected' : '' }}>{{ $yr }}</option>
+                    @endforeach
+                </select>
+            </form>
         </div>
 
         <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PanduanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,7 @@ use App\Http\Controllers\Admin\LaporanController;
 use App\Http\Controllers\Admin\MonitoringController;
 use App\Http\Controllers\Admin\GudangController;
 use App\Http\Controllers\Admin\BerkasPembinaanController;
+use App\Http\Controllers\Admin\UserManagementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,8 +85,24 @@ Route::middleware('auth')->group(function () {
 
     Route::put('/profile', [ProfileController::class, 'update'])
         ->name('profile.update');
+
+    Route::get('/panduan', [PanduanController::class, 'index'])
+        ->name('panduan.index');
+
+    Route::post('/tour/complete', [PanduanController::class, 'completeTour'])
+        ->name('tour.complete');
 });
 
+Route::get('/guru/menunggu-approval', function () {
+    return view('guru.menunggu-approval');
+})->name('guru.menunggu-approval');
+
+// Khusus Super Admin
+// use Illuminate\Support\Facades\Gate;
+
+// Route::middleware(['auth', 'can:viewAny'])
+//     ->get('/admin/users', [UserManagementController::class, 'index'])
+//     ->name('admin.users.index');
 
 
 /*
@@ -101,6 +119,14 @@ Route::prefix('admin')
     ->name('admin.')
     ->group(function () {
 
+        Route::get('/users', [UserManagementController::class, 'index'])
+            ->name('users.index');
+
+        Route::put('/users/{targetUser}/role', [UserManagementController::class, 'updateRole'])
+            ->name('users.update-role');
+
+        Route::put('/users/{targetUser}/password', [UserManagementController::class, 'updatePassword'])
+            ->name('users.update-password');
 
         /*
         |--------------------------------------------------------------------------

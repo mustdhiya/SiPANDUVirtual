@@ -10,9 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 class AdminRequired
 {
     /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * Izinkan Super Admin (admin) dan Pengawas PAI (pengawas) masuk ke panel admin/pengawas.
      */
     public function handle(Request $request, Closure $next): Response
     {
@@ -22,15 +20,16 @@ class AdminRequired
 
         $user = Auth::user();
 
-        if (!$user->isAdmin()) {
-            abort(403, 'Akses ditolak. Hanya admin yang boleh mengakses halaman ini.');
-        }
-
         if (!$user->canLogin()) {
             Auth::logout();
             return redirect()->route('login')->withErrors([
                 'email' => 'Akun Anda belum diaktifkan atau sedang ditangguhkan.',
             ]);
+        }
+
+        if (!$user->isPanelPengawas()) {
+            return redirect()->route('guru.dashboard')
+                ->with('error', 'Halaman tersebut khusus untuk Pengawas / Super Admin.');
         }
 
         return $next($request);

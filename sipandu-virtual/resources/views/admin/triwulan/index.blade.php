@@ -376,5 +376,9 @@
             </table>
         </div>
     </section>
+
+    <div class="flex justify-center pt-2">
+        {{ $triwulans->links() }}
+    </div>
 </div>
 @endsection

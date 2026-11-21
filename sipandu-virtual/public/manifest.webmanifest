@@ -1,0 +1,26 @@
+{
+    "name": "SiPANDU VIRTUAL - Pengawas PAI",
+    "short_name": "SiPANDU",
+    "description": "Sistem Pendampingan Terpadu Virtual Pengawas & Guru PAI Kota Samarinda",
+    "start_url": "/login",
+    "scope": "/",
+    "display": "standalone",
+    "orientation": "portrait-primary",
+    "background_color": "#F2F5EE",
+    "theme_color": "#1E4D2B",
+    "lang": "id",
+    "icons": [
+        {
+            "src": "/images/logo.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/images/logo.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}

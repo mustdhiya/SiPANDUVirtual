@@ -4,286 +4,153 @@
 
 @section('content')
 @php
-    $totalSekolah = $sekolahs->count();
-    $totalAktif = $sekolahs->where('is_active', true)->count();
-    $totalSma = $sekolahs->where('jenjang', 'SMA')->count();
-    $totalSmk = $sekolahs->where('jenjang', 'SMK')->count();
+    $isSuperAdmin = auth()->user()->isAdmin();
 @endphp
 
-<div class="mx-auto max-w-7xl space-y-8">
+<div class="mx-auto max-w-6xl space-y-6">
 
     {{-- Header --}}
-    <section class="flex flex-col gap-4 border-b border-base-300 pb-6 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-            <p class="text-xs font-bold uppercase tracking-[0.14em] text-secondary">
-                Data Utama
-            </p>
+    <section class="rounded-2xl border-2 border-base-300 bg-base-100 p-6 shadow-sm">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+                <span class="badge {{ $isSuperAdmin ? 'badge-secondary' : 'badge-primary' }} mb-2">
+                    {{ $isSuperAdmin ? 'Dikelola Super Admin' : 'Daftar Pilihan Sekolah' }}
+                </span>
+                <h1 class="text-2xl font-extrabold text-base-content sm:text-3xl">
+                    Sekolah Binaan
+                </h1>
+                <p class="mt-2 text-base text-base-content/80">
+                    @if($isSuperAdmin)
+                        Kelola daftar sekolah SMA/SMK binaan beserta nama Kepala Sekolah. Pengawas dan guru akan memilih dari daftar ini.
+                    @else
+                        Daftar sekolah SMA/SMK binaan resmi beserta nama Kepala Sekolah (dikelola terpusat oleh Super Admin).
+                    @endif
+                </p>
+            </div>
 
-            <h1 class="font-display mt-2 text-3xl font-semibold text-base-content md:text-4xl">
-                Sekolah Binaan
-            </h1>
-
-            <p class="mt-2 max-w-2xl text-sm leading-6 text-base-content/70">
-                Kelola daftar sekolah SMA dan SMK yang menjadi binaan Pengawas PAI Kota Samarinda.
-            </p>
+            @if($isSuperAdmin)
+                <a href="{{ route('admin.sekolah.create') }}" class="btn btn-primary btn-lg shrink-0">
+                    <span class="material-icons text-2xl">add</span>
+                    Tambah Sekolah
+                </a>
+            @endif
         </div>
-
-        <a href="{{ route('admin.sekolah.create') }}" class="btn btn-primary rounded-xl">
-            <span class="material-icons">add</span>
-            Tambah Sekolah
-        </a>
     </section>
 
     {{-- Statistik --}}
-    <section class="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
-
-        <article class="rounded-2xl border border-base-300 bg-base-100 p-4 shadow-sm sm:p-5">
-            <div class="flex items-center justify-between">
-                <span class="material-icons text-primary">school</span>
-                <span class="text-[11px] font-bold uppercase tracking-wide text-base-content/50">
-                    Total
-                </span>
-            </div>
-
-            <p class="mt-5 text-sm text-base-content/70">
-                Sekolah Terdaftar
-            </p>
-
-            <p class="font-display mt-1 text-3xl font-semibold text-primary">
-                {{ $totalSekolah }}
-            </p>
-        </article>
-
-        <article class="rounded-2xl border border-base-300 bg-base-100 p-4 shadow-sm sm:p-5">
-            <div class="flex items-center justify-between">
-                <span class="material-icons text-success">check_circle</span>
-                <span class="text-[11px] font-bold uppercase tracking-wide text-base-content/50">
-                    Aktif
-                </span>
-            </div>
-
-            <p class="mt-5 text-sm text-base-content/70">
-                Sekolah Aktif
-            </p>
-
-            <p class="font-display mt-1 text-3xl font-semibold text-success">
-                {{ $totalAktif }}
-            </p>
-        </article>
-
-        <article class="rounded-2xl border border-base-300 bg-base-100 p-4 shadow-sm sm:p-5">
-            <div class="flex items-center justify-between">
-                <span class="material-icons text-secondary">account_balance</span>
-                <span class="text-[11px] font-bold uppercase tracking-wide text-base-content/50">
-                    Jenjang
-                </span>
-            </div>
-
-            <p class="mt-5 text-sm text-base-content/70">
-                SMA Binaan
-            </p>
-
-            <p class="font-display mt-1 text-3xl font-semibold text-secondary">
-                {{ $totalSma }}
-            </p>
-        </article>
-
-        <article class="rounded-2xl border border-base-300 bg-base-100 p-4 shadow-sm sm:p-5">
-            <div class="flex items-center justify-between">
-                <span class="material-icons text-warning">construction</span>
-                <span class="text-[11px] font-bold uppercase tracking-wide text-base-content/50">
-                    Jenjang
-                </span>
-            </div>
-
-            <p class="mt-5 text-sm text-base-content/70">
-                SMK Binaan
-            </p>
-
-            <p class="font-display mt-1 text-3xl font-semibold text-warning">
-                {{ $totalSmk }}
-            </p>
-        </article>
-    </section>
-
-    {{-- Daftar Sekolah --}}
-    <section class="overflow-hidden rounded-2xl border border-base-300 bg-base-100 shadow-sm">
-        <div class="flex flex-col gap-3 border-b border-base-300 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-                <h2 class="font-display text-xl font-semibold text-base-content">
-                    Daftar Sekolah
-                </h2>
-
-                <p class="mt-1 text-sm text-base-content/70">
-                    {{ $totalSekolah }} sekolah tersedia di dalam sistem.
-                </p>
-            </div>
-
-            <div class="flex items-center gap-2 rounded-xl bg-base-200 px-3 py-2 text-sm text-base-content/70">
-                <span class="material-icons text-base text-secondary">info</span>
-                Pilih ikon pensil untuk mengubah data.
-            </div>
+    <section class="grid grid-cols-2 gap-4 lg:grid-cols-4">
+        <div class="rounded-2xl border-2 border-base-300 bg-base-100 p-5 shadow-sm">
+            <p class="text-sm font-bold text-base-content/80">Total Sekolah</p>
+            <p class="mt-2 text-3xl font-extrabold text-primary">{{ $totalSekolah }}</p>
         </div>
-
-        @if($sekolahs->isNotEmpty())
-            <div class="overflow-x-auto">
-                <table class="table w-full">
-                    <thead class="bg-base-200 text-base-content/70">
-                        <tr>
-                            <th class="w-16">No.</th>
-                            <th>Nama Sekolah</th>
-                            <th>Jenjang</th>
-                            <th>Status Sekolah</th>
-                            <th>Status Data</th>
-                            <th class="w-32 text-center">Aksi</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        @foreach($sekolahs as $index => $sekolah)
-                            <tr class="hover:bg-base-200">
-                                <td class="font-semibold text-base-content/60">
-                                    {{ $index + 1 }}
-                                </td>
-
-                                <td>
-                                    <div class="flex items-center gap-3">
-                                        <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/15 text-primary">
-                                            <span class="material-icons">school</span>
-                                        </div>
-
-                                        <div>
-                                            <p class="font-semibold text-base-content">
-                                                {{ $sekolah->nama_sekolah }}
-                                            </p>
-
-                                            <p class="mt-0.5 text-xs text-base-content/60">
-                                                ID Sekolah: #{{ $sekolah->id }}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </td>
-
-                                <td>
-                                    <span class="badge badge-outline border-primary/40 bg-primary/10 font-semibold text-primary">
-                                        {{ $sekolah->jenjang }}
-                                    </span>
-                                </td>
-
-                                <td>
-                                    @if($sekolah->status === 'N')
-                                        <span class="badge badge-info gap-1">
-                                            <span class="material-icons text-sm">account_balance</span>
-                                            Negeri
-                                        </span>
-                                    @else
-                                        <span class="badge badge-warning gap-1">
-                                            <span class="material-icons text-sm">business</span>
-                                            Swasta
-                                        </span>
-                                    @endif
-                                </td>
-
-                                <td>
-                                    @if($sekolah->is_active)
-                                        <span class="badge badge-success gap-1">
-                                            <span class="material-icons text-sm">check_circle</span>
-                                            Aktif
-                                        </span>
-                                    @else
-                                        <span class="badge badge-ghost gap-1">
-                                            <span class="material-icons text-sm">pause_circle</span>
-                                            Nonaktif
-                                        </span>
-                                    @endif
-                                </td>
-
-                                <td>
-                                    <div class="flex justify-center gap-2">
-                                        <a
-                                            href="{{ route('admin.sekolah.edit', $sekolah->id) }}"
-                                            class="btn btn-square btn-sm btn-outline btn-primary rounded-xl"
-                                            title="Ubah data {{ $sekolah->nama_sekolah }}"
-                                            aria-label="Ubah data {{ $sekolah->nama_sekolah }}"
-                                        >
-                                            <span class="material-icons text-base">edit</span>
-                                        </a>
-
-                                        <button
-                                            type="button"
-                                            class="btn btn-square btn-sm btn-outline btn-error rounded-xl"
-                                            title="Hapus {{ $sekolah->nama_sekolah }}"
-                                            aria-label="Hapus {{ $sekolah->nama_sekolah }}"
-                                            onclick="document.getElementById('hapus-sekolah-{{ $sekolah->id }}').showModal()"
-                                        >
-                                            <span class="material-icons text-base">delete</span>
-                                        </button>
-
-                                        <dialog id="hapus-sekolah-{{ $sekolah->id }}" class="modal">
-                                            <div class="modal-box max-w-md rounded-3xl">
-                                                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-error/15 text-error">
-                                                    <span class="material-icons">delete_forever</span>
-                                                </div>
-
-                                                <h3 class="font-display mt-4 text-xl font-semibold text-base-content">
-                                                    Hapus Sekolah?
-                                                </h3>
-
-                                                <p class="mt-2 text-sm leading-6 text-base-content/70">
-                                                    Data <strong>{{ $sekolah->nama_sekolah }}</strong> akan dihapus dari daftar sekolah binaan.
-                                                    Pastikan sekolah ini memang tidak lagi diperlukan.
-                                                </p>
-
-                                                <div class="modal-action">
-                                                    <form method="dialog">
-                                                        <button type="submit" class="btn btn-ghost rounded-xl">
-                                                            Batal
-                                                        </button>
-                                                    </form>
-
-                                                    <form action="{{ route('admin.sekolah.destroy', $sekolah->id) }}" method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-
-                                                        <button type="submit" class="btn btn-error rounded-xl">
-                                                            <span class="material-icons text-base">delete</span>
-                                                            Ya, Hapus
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </div>
-
-                                            <form method="dialog" class="modal-backdrop">
-                                                <button aria-label="Tutup dialog">Tutup</button>
-                                            </form>
-                                        </dialog>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        @else
-            <div class="flex flex-col items-center justify-center px-6 py-16 text-center">
-                <div class="flex h-16 w-16 items-center justify-center rounded-3xl bg-base-200 text-primary">
-                    <span class="material-icons text-3xl">school</span>
-                </div>
-
-                <h2 class="font-display mt-5 text-2xl font-semibold text-base-content">
-                    Belum ada sekolah binaan
-                </h2>
-
-                <p class="mt-2 max-w-md text-sm leading-6 text-base-content/70">
-                    Tambahkan sekolah pertama agar data guru binaan dapat dihubungkan dengan sekolahnya.
-                </p>
-
-                <a href="{{ route('admin.sekolah.create') }}" class="btn btn-primary mt-5 rounded-xl">
-                    <span class="material-icons">add</span>
-                    Tambah Sekolah Pertama
-                </a>
-            </div>
-        @endif
+        <div class="rounded-2xl border-2 border-base-300 bg-base-100 p-5 shadow-sm">
+            <p class="text-sm font-bold text-base-content/80">Sekolah Aktif</p>
+            <p class="mt-2 text-3xl font-extrabold text-success">{{ $totalAktif }}</p>
+        </div>
+        <div class="rounded-2xl border-2 border-base-300 bg-base-100 p-5 shadow-sm">
+            <p class="text-sm font-bold text-base-content/80">SMA Binaan</p>
+            <p class="mt-2 text-3xl font-extrabold text-secondary">{{ $totalSma }}</p>
+        </div>
+        <div class="rounded-2xl border-2 border-base-300 bg-base-100 p-5 shadow-sm">
+            <p class="text-sm font-bold text-base-content/80">SMK Binaan</p>
+            <p class="mt-2 text-3xl font-extrabold text-info">{{ $totalSmk }}</p>
+        </div>
     </section>
+
+    {{-- Pencarian --}}
+    <section class="rounded-2xl border-2 border-base-300 bg-base-100 p-5 shadow-sm">
+        <form method="GET" action="{{ route('admin.sekolah.index') }}" class="flex flex-col gap-3 sm:flex-row">
+            <input
+                type="text"
+                name="search"
+                value="{{ $search ?? '' }}"
+                placeholder="Cari nama sekolah atau nama Kepala Sekolah..."
+                class="input input-bordered w-full flex-1"
+            />
+            <div class="flex gap-2">
+                <button type="submit" class="btn btn-primary flex-1 sm:flex-none">
+                    <span class="material-icons text-xl">search</span>
+                    Cari
+                </button>
+                @if(!empty($search))
+                    <a href="{{ route('admin.sekolah.index') }}" class="btn btn-outline border-2 border-base-300">Reset</a>
+                @endif
+            </div>
+        </form>
+    </section>
+
+    {{-- Tabel Sekolah --}}
+    <section class="overflow-hidden rounded-2xl border-2 border-base-300 bg-base-100 shadow-sm">
+        <div class="overflow-x-auto">
+            <table class="table w-full">
+                <thead>
+                    <tr>
+                        <th class="w-12">No.</th>
+                        <th>Nama Sekolah</th>
+                        <th>Nama Kepala Sekolah</th>
+                        <th>Jenjang &amp; Status</th>
+                        <th>Keaktifan</th>
+                        @if($isSuperAdmin)
+                            <th class="text-right">Tindakan</th>
+                        @endif
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($sekolahs as $index => $sekolah)
+                        <tr class="hover:bg-base-200/60">
+                            <td class="font-bold">{{ $sekolahs->firstItem() + $index }}</td>
+                            <td class="font-bold text-base-content">{{ $sekolah->nama_sekolah }}</td>
+                            <td class="font-medium text-base-content">
+                                {{ $sekolah->nama_kepsek ?: 'Belum diisi' }}
+                            </td>
+                            <td>
+                                <div class="flex flex-wrap gap-1.5">
+                                    <span class="badge badge-outline border-primary font-bold text-primary">{{ $sekolah->jenjang }}</span>
+                                    <span class="badge {{ $sekolah->status === 'N' ? 'badge-info' : 'badge-warning' }}">
+                                        {{ $sekolah->status === 'N' ? 'Negeri' : 'Swasta' }}
+                                    </span>
+                                </div>
+                            </td>
+                            <td>
+                                @if($sekolah->is_active)
+                                    <span class="badge badge-success">Aktif</span>
+                                @else
+                                    <span class="badge badge-ghost border border-base-300">Nonaktif</span>
+                                @endif
+                            </td>
+                            @if($isSuperAdmin)
+                                <td class="text-right">
+                                    <div class="inline-flex items-center gap-2">
+                                        <a href="{{ route('admin.sekolah.edit', $sekolah->id) }}" class="btn btn-outline btn-primary btn-sm border-2">
+                                            <span class="material-icons text-base">edit</span>
+                                            Ubah
+                                        </a>
+                                        <form action="{{ route('admin.sekolah.destroy', $sekolah->id) }}" method="POST" onsubmit="return confirm('Hapus sekolah {{ $sekolah->nama_sekolah }}?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-outline btn-error btn-sm border-2">
+                                                <span class="material-icons text-base">delete</span>
+                                                Hapus
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            @endif
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="{{ $isSuperAdmin ? 6 : 5 }}" class="py-12 text-center text-base font-semibold text-base-content/75">
+                                Belum ada data sekolah binaan.
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <div class="flex justify-center pt-2">
+        {{ $sekolahs->links() }}
+    </div>
 </div>
 @endsection

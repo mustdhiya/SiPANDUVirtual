@@ -7,96 +7,130 @@
         $isProfileActive = request()->routeIs('profile.*');
     @endphp
 
-    <header class="sticky top-0 z-30 border-b border-base-300 bg-base-100/95 backdrop-blur">
+    <header class="sticky top-0 z-30 border-b-2 border-base-300 bg-base-100 shadow-sm">
         <div class="page-shell">
-            <div class="navbar min-h-16 px-4 sm:px-6 lg:px-8">
+            <div class="flex min-h-[4.5rem] items-center justify-between gap-3 px-4 py-2 sm:px-6 lg:px-8">
 
-                {{-- Tombol menu mobile --}}
-                <div class="flex-none lg:hidden">
-                    <label
-                        for="app-drawer"
-                        class="btn btn-square btn-ghost rounded-xl"
-                        aria-label="Buka menu utama"
-                    >
-                        <span class="material-icons">menu</span>
-                    </label>
+                {{-- Kiri: Logo Mobile + Judul Halaman (di mobile navigasi pakai Bottom Bar) --}}
+                <div class="flex min-w-0 items-center gap-3">
+                    <div class="sipandu-logo-header shrink-0 lg:hidden">
+                        <img
+                            src="{{ asset('images/logo.png') }}"
+                            alt="Logo SiPANDU VIRTUAL"
+                            class="sipandu-logo-image"
+                        >
+                    </div>
+
+                    <div class="min-w-0">
+                        <p class="truncate text-lg font-bold leading-tight text-primary lg:hidden">
+                            SiPANDU VIRTUAL
+                        </p>
+                        <p class="hidden truncate text-lg font-bold leading-tight text-base-content lg:block">
+                            @yield('title', 'Beranda')
+                        </p>
+                        <p class="hidden text-xs font-medium text-base-content/75 sm:block">
+                            {{ $isSuperAdmin ? 'Mode Super Admin & Pengawas PAI' : 'Mode Pengawas PAI' }}
+                        </p>
+                    </div>
                 </div>
 
-                {{-- Brand Header --}}
-                <div class="min-w-0 flex-1">
+                {{-- Kanan: Pengaturan Huruf (Ramah Lansia) + Profil + Keluar --}}
+                <div class="flex shrink-0 items-center gap-2 sm:gap-3">
+
+                    {{-- Tombol Mulai Tur Halaman Ini (Berlaku di SEMUA Halaman) --}}
+                    <button
+                        type="button"
+                        onclick="window.triggerPageTour && window.triggerPageTour()"
+                        data-tour="tour-btn"
+                        class="btn btn-secondary btn-sm sm:btn-md font-bold"
+                        title="Mulai tur interaktif di halaman ini"
+                    >
+                        <span class="material-icons text-xl">play_circle</span>
+                        <span class="hidden sm:inline">Tur</span>
+                    </button>
+
+                    {{-- Tombol Panduan Penggunaan --}}
                     <a
-                        href="{{ route('admin.dashboard') }}"
-                        class="flex items-center gap-3 rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                        aria-label="Kembali ke dashboard admin"
+                        href="{{ route('panduan.index') }}"
+                        data-tour="panduan-btn"
+                        class="btn btn-outline btn-primary btn-sm sm:btn-md border-2 font-bold {{ request()->routeIs('panduan.*') ? 'btn-active' : '' }}"
+                        title="Buka Buku Panduan Penggunaan"
                     >
-                        <div class="sipandu-logo-header hidden shrink-0 sm:block">
-                            <img
-                                src="{{ asset('images/logo.png') }}"
-                                alt="Logo SiPANDU VIRTUAL"
-                                class="sipandu-logo-image"
-                            >
-                        </div>
-
-                        <div class="min-w-0">
-                            <p class="font-display truncate text-lg font-semibold leading-tight text-primary">
-                                SiPANDU VIRTUAL
-                            </p>
-
-                            <p class="hidden text-xs text-base-content/60 sm:block">
-                                {{ $isSuperAdmin ? 'Panel Admin Utama & Pengawas PAI' : 'Panel Pengawas PAI' }}
-                            </p>
-                        </div>
-
-                        <span class="badge {{ $isSuperAdmin ? 'badge-secondary' : 'badge-primary' }} badge-sm ml-1 hidden font-semibold xs:inline-flex">
-                            {{ $isSuperAdmin ? 'ADMIN UTAMA' : 'PENGAWAS' }}
-                        </span>
+                        <span class="material-icons text-xl">help_outline</span>
+                        <span class="hidden md:inline">Panduan</span>
                     </a>
-                </div>
 
-                {{-- Akun (Klik untuk ke Profil Wajib) dan Logout --}}
-                <div class="flex flex-none items-center gap-2 sm:gap-3">
+                    {{-- Kontrol Ukuran Huruf & Kontras --}}
+                    <div data-tour="font-controls" class="hidden items-center gap-1 rounded-xl border-2 border-base-300 bg-base-200 px-1.5 py-1 md:flex" role="group" aria-label="Pengaturan tampilan huruf">
+                        <button
+                            type="button"
+                            onclick="window.sipanduUI.stepSize(-1)"
+                            class="btn btn-ghost btn-sm min-h-0 h-9 px-2.5 text-sm font-bold"
+                            title="Perkecil huruf"
+                            aria-label="Perkecil ukuran huruf"
+                        >
+                            A-
+                        </button>
+                        <span class="px-1 text-xs font-bold text-base-content" data-font-label>Nyaman</span>
+                        <button
+                            type="button"
+                            onclick="window.sipanduUI.stepSize(1)"
+                            class="btn btn-ghost btn-sm min-h-0 h-9 px-2.5 text-base font-extrabold"
+                            title="Perbesar huruf"
+                            aria-label="Perbesar ukuran huruf"
+                        >
+                            A+
+                        </button>
+                        <button
+                            type="button"
+                            data-contrast-btn
+                            onclick="window.sipanduUI.toggleContrast()"
+                            class="btn btn-ghost btn-sm min-h-0 h-9 px-2"
+                            title="Aktifkan mode kontras tinggi"
+                            aria-label="Ubah kontras tampilan"
+                        >
+                            <span class="material-icons text-lg">contrast</span>
+                        </button>
+                    </div>
+
+                    {{-- Profil --}}
                     <a
                         href="{{ route('profile.edit') }}"
-                        title="Pengaturan Profil Wajib"
-                        class="hidden items-center gap-3 rounded-2xl border {{ $isProfileActive ? 'border-primary bg-primary/10' : 'border-base-300 bg-base-200 hover:bg-base-300/70' }} px-3 py-1.5 transition md:flex"
+                        title="Buka Profil & Kata Sandi"
+                        class="hidden items-center gap-2.5 rounded-xl border-2 {{ $isProfileActive ? 'border-primary bg-primary/10' : 'border-base-300 bg-base-100 hover:border-primary' }} px-3 py-1.5 transition xl:flex"
                     >
                         @if($currentUser->foto_profil)
                             <img
                                 src="{{ asset('storage/' . $currentUser->foto_profil) }}"
                                 alt="{{ $currentUser->name }}"
-                                class="h-8 w-8 rounded-full object-cover ring-1 ring-primary"
+                                class="h-9 w-9 rounded-full object-cover ring-2 ring-primary"
                             />
                         @else
-                            <div class="avatar placeholder">
-                                <div class="w-8 rounded-full bg-primary text-primary-content">
-                                    <span class="text-xs font-bold">
-                                        {{ strtoupper(substr($currentUser->name, 0, 1)) }}
-                                    </span>
-                                </div>
+                            <div class="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-content">
+                                {{ strtoupper(substr($currentUser->name, 0, 1)) }}
                             </div>
                         @endif
 
                         <div class="max-w-44 leading-tight">
-                            <p class="truncate text-sm font-semibold text-base-content">
+                            <p class="truncate text-sm font-bold text-base-content">
                                 {{ $currentUser->name }}
                             </p>
-
-                            <p class="truncate text-xs text-base-content/60">
-                                {{ $isSuperAdmin ? 'Admin Utama & Pengawas' : ($currentUser->jabatan_pengawas ?? 'Pengawas PAI') }}
+                            <p class="truncate text-xs font-medium text-base-content/75">
+                                {{ $isSuperAdmin ? 'Super Admin' : 'Pengawas PAI' }}
                             </p>
                         </div>
                     </a>
 
+                    {{-- Keluar --}}
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
-
                         <button
                             type="submit"
-                            class="btn btn-sm btn-ghost rounded-xl text-error hover:bg-error/15 hover:text-error"
-                            title="Keluar dari sistem"
-                            aria-label="Keluar dari sistem"
+                            class="btn btn-outline btn-error btn-sm sm:btn-md border-2 font-bold"
+                            title="Keluar dari aplikasi"
+                            aria-label="Keluar dari aplikasi"
                         >
-                            <span class="material-icons">logout</span>
+                            <span class="material-icons text-xl">logout</span>
                             <span class="hidden sm:inline">Keluar</span>
                         </button>
                     </form>
@@ -112,24 +146,21 @@
         $isSuperAdmin = $currentUser->isAdmin();
 
         $isDashboard = request()->routeIs('admin.dashboard');
-
+        $isUsers = request()->routeIs('admin.users.*');
         $isTahunAjaran = request()->routeIs('admin.tahun-ajaran.*');
         $isTriwulan = request()->routeIs('admin.triwulan.*');
         $isSekolah = request()->routeIs('admin.sekolah.*');
         $isGuru = request()->routeIs('admin.guru.*');
         $isDokumen = request()->routeIs('admin.dokumen.*');
-
         $isApproveGuru = request()->routeIs('admin.approve-guru.*');
         $isReviewTriwulan = request()->routeIs('admin.review-triwulan.*');
         $isDiskusi = request()->routeIs('admin.diskusi.*');
         $isMonitoring = request()->routeIs('admin.monitoring.*');
-
         $isBerkasPembinaan = request()->routeIs('admin.berkas-pembinaan.*');
         $isLaporan = request()->routeIs('admin.laporan.*');
         $isGudang = request()->routeIs('admin.gudang.*');
         $isProfile = request()->routeIs('profile.*');
 
-        // Hitung badge notifikasi cepat (aman dari error jika tabel belum dimigrasi)
         $pendingAccountCount = 0;
         $pendingSubmissionCount = 0;
         try {
@@ -144,14 +175,14 @@
         }
     @endphp
 
-    <aside class="flex min-h-full w-72 flex-col border-r border-base-300 bg-base-200">
+    <aside class="flex min-h-full w-80 flex-col border-r-2 border-base-300 bg-base-100">
 
-        {{-- Logo Sidebar --}}
-        <div class="border-b border-base-300 px-5 py-5">
+        {{-- Brand & Identitas Peran --}}
+        <div class="border-b-2 border-base-300 bg-base-200 px-5 py-5">
             <a
                 href="{{ route('admin.dashboard') }}"
-                class="flex items-center gap-3 rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                aria-label="Kembali ke dashboard admin"
+                class="flex items-center gap-3.5 rounded-xl outline-none"
+                aria-label="Kembali ke beranda"
             >
                 <div class="sipandu-logo-sidebar shrink-0">
                     <img
@@ -162,217 +193,273 @@
                 </div>
 
                 <div class="min-w-0">
-                    <p class="font-display text-lg font-semibold leading-tight text-primary">
+                    <p class="text-xl font-extrabold leading-tight text-primary">
                         SiPANDU
                     </p>
-
-                    <p class="truncate text-xs font-medium tracking-wide text-base-content/60">
-                        {{ $isSuperAdmin ? 'Admin Utama & Pengawas' : 'Panel Pengawas PAI' }}
-                    </p>
+                    <span class="mt-1 inline-flex items-center rounded-lg px-2.5 py-0.5 text-xs font-bold {{ $isSuperAdmin ? 'bg-secondary text-secondary-content' : 'bg-primary text-primary-content' }}">
+                        {{ $isSuperAdmin ? 'SUPER ADMIN & PENGAWAS' : 'PENGAWAS PAI' }}
+                    </span>
                 </div>
             </a>
-        </div>
 
-        {{-- User mobile --}}
-        <div class="border-b border-base-300 px-4 py-4 md:hidden">
-            <a href="{{ route('profile.edit') }}" class="flex items-center gap-3 rounded-2xl bg-base-100 p-3 shadow-sm">
-                @if($currentUser->foto_profil)
-                    <img
-                        src="{{ asset('storage/' . $currentUser->foto_profil) }}"
-                        alt="{{ $currentUser->name }}"
-                        class="h-10 w-10 rounded-full object-cover ring-1 ring-primary"
-                    />
-                @else
-                    <div class="avatar placeholder">
-                        <div class="w-10 rounded-full bg-primary text-primary-content">
-                            <span class="font-semibold">
-                                {{ strtoupper(substr($currentUser->name, 0, 1)) }}
-                            </span>
-                        </div>
-                    </div>
-                @endif
-
-                <div class="min-w-0 flex-1">
-                    <p class="truncate text-sm font-bold text-base-content">
-                        {{ $currentUser->name }}
-                    </p>
-
-                    <p class="text-xs text-base-content/60">
-                        {{ $isSuperAdmin ? 'Admin Utama & Pengawas' : 'Pengawas PAI' }}
-                    </p>
+            {{-- Kontrol Huruf khusus Mobile --}}
+            <div class="mt-4 flex items-center justify-between rounded-xl border border-base-300 bg-base-100 px-3 py-2 md:hidden">
+                <span class="text-xs font-bold text-base-content">Ukuran Huruf:</span>
+                <div class="flex items-center gap-1">
+                    <button type="button" onclick="window.sipanduUI.stepSize(-1)" class="btn btn-ghost btn-sm min-h-0 h-8 px-2 font-bold">A-</button>
+                    <button type="button" onclick="window.sipanduUI.stepSize(1)" class="btn btn-ghost btn-sm min-h-0 h-8 px-2 font-extrabold">A+</button>
+                    <button type="button" data-contrast-btn onclick="window.sipanduUI.toggleContrast()" class="btn btn-ghost btn-sm min-h-0 h-8 px-2" title="Kontras">
+                        <span class="material-icons text-base">contrast</span>
+                    </button>
                 </div>
-
-                <span class="material-icons text-base text-base-content/50">settings</span>
-            </a>
+            </div>
         </div>
 
-        {{-- Navigasi --}}
-        <nav aria-label="Menu admin" class="flex-1 overflow-y-auto px-3 py-4">
-            <ul class="menu gap-1 p-0 text-[15px]">
+        {{-- Menu Navigasi --}}
+        <nav data-tour="sidebar-nav" aria-label="Menu utama" class="flex-1 overflow-y-auto px-3 py-4">
+            <ul class="menu gap-1.5 p-0">
 
+                {{-- BERANDA --}}
                 <li>
-                    <a
-                        href="{{ route('admin.dashboard') }}"
-                        class="rounded-xl {{ $isDashboard ? 'active font-bold' : '' }}"
-                    >
-                        <span class="material-icons">dashboard</span>
-                        Dashboard
+                    <a href="{{ route('admin.dashboard') }}" class="{{ $isDashboard ? 'active' : '' }}">
+                        <span class="material-icons text-2xl">home</span>
+                        <span>Beranda</span>
                     </a>
                 </li>
 
-                <li class="menu-title mt-4 px-3">
-                    <span class="text-[11px] font-bold uppercase tracking-[0.14em] text-base-content/45">
-                        Data Utama
+                {{-- TUGAS HARIAN --}}
+                <li class="menu-title mt-4 px-3 pb-1">
+                    <span class="text-xs font-extrabold uppercase tracking-wider text-secondary">
+                        Tugas Utama
                     </span>
                 </li>
 
-                @if($isSuperAdmin)
-                    {{-- Tahun Ajaran & Pembukaan Triwulan khusus dikelola terpusat oleh Mama (Admin Utama) --}}
-                    <li>
-                        <a href="{{ route('admin.tahun-ajaran.index') }}" class="rounded-xl {{ $isTahunAjaran ? 'active font-bold' : '' }}">
-                            <span class="material-icons">calendar_today</span>
-                            Tahun Ajaran
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="{{ route('admin.triwulan.index') }}" class="rounded-xl {{ $isTriwulan ? 'active font-bold' : '' }}">
-                            <span class="material-icons">date_range</span>
-                            Triwulan
-                        </a>
-                    </li>
-                @endif
-
                 <li>
-                    <a href="{{ route('admin.sekolah.index') }}" class="rounded-xl {{ $isSekolah ? 'active font-bold' : '' }}">
-                        <span class="material-icons">school</span>
-                        Sekolah Binaan
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{{ route('admin.guru.index') }}" class="rounded-xl {{ $isGuru ? 'active font-bold' : '' }}">
-                        <span class="material-icons">groups</span>
-                        Guru Binaan
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{{ route('admin.dokumen.index') }}" class="rounded-xl {{ $isDokumen ? 'active font-bold' : '' }}">
-                        <span class="material-icons">description</span>
-                        Dokumen Wajib
-                    </a>
-                </li>
-
-                <li class="menu-title mt-4 px-3">
-                    <span class="text-[11px] font-bold uppercase tracking-[0.14em] text-base-content/45">
-                        Pendampingan
-                    </span>
-                </li>
-
-                @if($isSuperAdmin)
-                    <li>
-                        <a href="{{ route('admin.approve-guru.index') }}" class="rounded-xl {{ $isApproveGuru ? 'active font-bold' : '' }}">
-                            <span class="material-icons">how_to_reg</span>
-                            <span class="flex-1">Persetujuan &amp; Akun</span>
-                            @if($pendingAccountCount > 0)
-                                <span class="badge badge-error badge-sm font-bold text-white">{{ $pendingAccountCount }}</span>
-                            @endif
-                        </a>
-                    </li>
-                @endif
-
-                <li>
-                    <a href="{{ route('admin.review-triwulan.index') }}" class="rounded-xl {{ $isReviewTriwulan ? 'active font-bold' : '' }}">
-                        <span class="material-icons">fact_check</span>
-                        <span class="flex-1">Review Triwulan</span>
+                    <a href="{{ route('admin.review-triwulan.index') }}" class="{{ $isReviewTriwulan ? 'active' : '' }}">
+                        <span class="material-icons text-2xl">fact_check</span>
+                        <span class="flex-1">Periksa Laporan Guru</span>
                         @if($pendingSubmissionCount > 0)
-                            <span class="badge badge-info badge-sm font-bold">{{ $pendingSubmissionCount }}</span>
+                            <span class="badge badge-info">{{ $pendingSubmissionCount }}</span>
                         @endif
                     </a>
                 </li>
 
                 <li>
-                    <a href="{{ route('admin.diskusi.index') }}" class="rounded-xl {{ $isDiskusi ? 'active font-bold' : '' }}">
-                        <span class="material-icons">forum</span>
-                        Ruang Diskusi
+                    <a href="{{ route('admin.monitoring.index') }}" class="{{ $isMonitoring ? 'active' : '' }}">
+                        <span class="material-icons text-2xl">analytics</span>
+                        <span>Monitoring SIAGA</span>
                     </a>
                 </li>
 
                 <li>
-                    <a
-                        href="{{ route('admin.monitoring.index') }}"
-                        class="rounded-xl {{ $isMonitoring ? 'active font-bold' : '' }}"
-                    >
-                        <span class="material-icons">analytics</span>
-                        <span class="flex-1">Monitoring SIAGA</span>
-                        <span class="badge badge-warning badge-sm font-bold">SIAGA</span>
+                    <a href="{{ route('admin.diskusi.index') }}" class="{{ $isDiskusi ? 'active' : '' }}">
+                        <span class="material-icons text-2xl">forum</span>
+                        <span>Ruang Diskusi</span>
                     </a>
                 </li>
 
-                <li class="menu-title mt-4 px-3">
-                    <span class="text-[11px] font-bold uppercase tracking-[0.14em] text-base-content/45">
-                        Laporan dan Pemberkasan
-                    </span>
-                </li>
-
-                {{-- Menu Baru: Generator Berkas Pembinaan Profesi Guru PAI --}}
-                <li>
-                    <a
-                        href="{{ route('admin.berkas-pembinaan.index') }}"
-                        class="rounded-xl {{ $isBerkasPembinaan ? 'active font-bold' : '' }}"
-                    >
-                        <span class="material-icons">auto_stories</span>
-                        <span class="flex-1">Generator Berkas</span>
-                        <span class="badge badge-secondary badge-sm font-bold">12 BLN</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{{ route('admin.laporan.index') }}" class="rounded-xl {{ $isLaporan ? 'active font-bold' : '' }}">
-                        <span class="material-icons">summarize</span>
-                        Laporan Triwulan
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{{ route('admin.gudang.index') }}" class="rounded-xl {{ $isGudang ? 'active font-bold' : '' }}">
-                        <span class="material-icons">folder_open</span>
-                        Gudang PAI-BMTS
-                    </a>
-                </li>
-
-                <li class="menu-title mt-4 px-3">
-                    <span class="text-[11px] font-bold uppercase tracking-[0.14em] text-base-content/45">
-                        Pengaturan Akun
+                {{-- LAPORAN & BERKAS --}}
+                <li class="menu-title mt-4 px-3 pb-1">
+                    <span class="text-xs font-extrabold uppercase tracking-wider text-secondary">
+                        Laporan &amp; Berkas
                     </span>
                 </li>
 
                 <li>
-                    <a href="{{ route('profile.edit') }}" class="rounded-xl {{ $isProfile ? 'active font-bold' : '' }}">
-                        <span class="material-icons">manage_accounts</span>
-                        Profil Wajib &amp; Sandi
+                    <a href="{{ route('admin.laporan.index') }}" class="{{ $isLaporan ? 'active' : '' }}">
+                        <span class="material-icons text-2xl">summarize</span>
+                        <span>{{ $isSuperAdmin ? 'Laporan Semua Pengawas' : 'Laporan Triwulan Saya' }}</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('admin.berkas-pembinaan.index') }}" class="{{ $isBerkasPembinaan ? 'active' : '' }}">
+                        <span class="material-icons text-2xl">auto_stories</span>
+                        <span>Berkas Pembinaan (12 Bln)</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('admin.gudang.index') }}" class="{{ $isGudang ? 'active' : '' }}">
+                        <span class="material-icons text-2xl">folder_open</span>
+                        <span>Gudang Materi PAI</span>
+                    </a>
+                </li>
+
+                {{-- DATA & AKUN --}}
+                <li class="menu-title mt-4 px-3 pb-1">
+                    <span class="text-xs font-extrabold uppercase tracking-wider text-secondary">
+                        Data Binaan
+                    </span>
+                </li>
+
+                <li>
+                    <a href="{{ route('admin.guru.index') }}" class="{{ $isGuru ? 'active' : '' }}">
+                        <span class="material-icons text-2xl">groups</span>
+                        <span>Daftar Guru Binaan</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('admin.sekolah.index') }}" class="{{ $isSekolah ? 'active' : '' }}">
+                        <span class="material-icons text-2xl">school</span>
+                        <span>Sekolah Binaan</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('admin.dokumen.index') }}" class="{{ $isDokumen ? 'active' : '' }}">
+                        <span class="material-icons text-2xl">description</span>
+                        <span>Daftar Dokumen Wajib</span>
+                    </a>
+                </li>
+
+                @if($isSuperAdmin)
+                    <li class="menu-title mt-4 px-3 pb-1">
+                        <span class="text-xs font-extrabold uppercase tracking-wider text-secondary">
+                            Khusus Super Admin
+                        </span>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('admin.approve-guru.index') }}" class="{{ $isApproveGuru ? 'active' : '' }}">
+                            <span class="material-icons text-2xl">how_to_reg</span>
+                            <span class="flex-1">Persetujuan Akun Baru</span>
+                            @if($pendingAccountCount > 0)
+                                <span class="badge badge-error">{{ $pendingAccountCount }}</span>
+                            @endif
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('admin.users.index') }}" class="{{ $isUsers ? 'active' : '' }}">
+                            <span class="material-icons text-2xl">key</span>
+                            <span>Akun &amp; Kata Sandi</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('admin.tahun-ajaran.index') }}" class="{{ $isTahunAjaran ? 'active' : '' }}">
+                            <span class="material-icons text-2xl">calendar_today</span>
+                            <span>Tahun Ajaran</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('admin.triwulan.index') }}" class="{{ $isTriwulan ? 'active' : '' }}">
+                            <span class="material-icons text-2xl">date_range</span>
+                            <span>Jadwal Triwulan</span>
+                        </a>
+                    </li>
+                @endif
+
+                {{-- PROFIL --}}
+                <li class="menu-title mt-4 px-3 pb-1">
+                    <span class="text-xs font-extrabold uppercase tracking-wider text-secondary">
+                        Akun Saya
+                    </span>
+                </li>
+
+                <li>
+                    <a href="{{ route('profile.edit') }}" class="{{ $isProfile ? 'active' : '' }}">
+                        <span class="material-icons text-2xl">manage_accounts</span>
+                        <span>Profil &amp; Kata Sandi</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('panduan.index') }}" class="{{ request()->routeIs('panduan.*') ? 'active' : '' }}">
+                        <span class="material-icons text-2xl">help_outline</span>
+                        <span>Panduan Penggunaan</span>
                     </a>
                 </li>
             </ul>
         </nav>
 
-        {{-- Bantuan --}}
-        <div class="border-t border-base-300 p-4">
-            <div class="rounded-2xl border border-base-300 bg-base-100 p-3">
-                <div class="flex items-center gap-2 text-xs text-base-content/60">
-                    <span class="material-icons text-base text-secondary">support_agent</span>
-                    Butuh bantuan teknis?
-                </div>
-
-                <p class="mt-1 text-xs font-semibold text-primary">
-                    Hubungi tim developer
-                </p>
-            </div>
-
-            <p class="mt-3 text-center text-[11px] text-base-content/45">
+        {{-- Footer Sidebar --}}
+        <div class="border-t-2 border-base-300 bg-base-200 px-4 py-3 text-center">
+            <p class="text-xs font-semibold text-base-content/75">
                 SiPANDU VIRTUAL &copy; {{ date('Y') }}
             </p>
         </div>
     </aside>
+@endsection
+
+@section('bottom_nav')
+    @php
+        $currentUser = auth()->user();
+        $isSuperAdmin = $currentUser->isAdmin();
+
+        $isDashboard = request()->routeIs('admin.dashboard');
+        $isReview = request()->routeIs('admin.review-triwulan.*');
+        $isLaporan = request()->routeIs('admin.laporan.*');
+        $isFourth = $isSuperAdmin
+            ? request()->routeIs('admin.users.*')
+            : request()->routeIs('admin.monitoring.*');
+    @endphp
+
+    {{-- Bottom Navigation Bar Mobile (Style 05: Pill Highlight) --}}
+    <nav
+        data-tour="bottom-nav"
+        aria-label="Navigasi bawah mobile"
+        class="mobile-bottom-nav fixed bottom-0 left-0 right-0 z-40 border-t-2 border-base-300 bg-base-100/95 px-2 pt-2 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] backdrop-blur lg:hidden"
+    >
+        <div class="mx-auto grid max-w-lg grid-cols-5 items-center gap-1">
+            {{-- 1. Beranda --}}
+            <a
+                href="{{ route('admin.dashboard') }}"
+                class="flex min-h-[54px] flex-col items-center justify-center rounded-2xl px-1 py-1.5 text-center transition {{ $isDashboard ? 'bg-primary/15 text-primary font-extrabold' : 'text-base-content/75 font-semibold hover:bg-base-200' }}"
+            >
+                <span class="material-icons text-[24px]">home</span>
+                <span class="mt-0.5 text-[11px] leading-tight">Beranda</span>
+            </a>
+
+            {{-- 2. Periksa --}}
+            <a
+                href="{{ route('admin.review-triwulan.index') }}"
+                class="flex min-h-[54px] flex-col items-center justify-center rounded-2xl px-1 py-1.5 text-center transition {{ $isReview ? 'bg-primary/15 text-primary font-extrabold' : 'text-base-content/75 font-semibold hover:bg-base-200' }}"
+            >
+                <span class="material-icons text-[24px]">fact_check</span>
+                <span class="mt-0.5 text-[11px] leading-tight">Periksa</span>
+            </a>
+
+            {{-- 3. Laporan --}}
+            <a
+                href="{{ route('admin.laporan.index') }}"
+                class="flex min-h-[54px] flex-col items-center justify-center rounded-2xl px-1 py-1.5 text-center transition {{ $isLaporan ? 'bg-primary/15 text-primary font-extrabold' : 'text-base-content/75 font-semibold hover:bg-base-200' }}"
+            >
+                <span class="material-icons text-[24px]">summarize</span>
+                <span class="mt-0.5 text-[11px] leading-tight">Laporan</span>
+            </a>
+
+            {{-- 4. Akun & Sandi (Super Admin) / Monitoring (Pengawas) --}}
+            @if($isSuperAdmin)
+                <a
+                    href="{{ route('admin.users.index') }}"
+                    class="flex min-h-[54px] flex-col items-center justify-center rounded-2xl px-1 py-1.5 text-center transition {{ $isFourth ? 'bg-primary/15 text-primary font-extrabold' : 'text-base-content/75 font-semibold hover:bg-base-200' }}"
+                >
+                    <span class="material-icons text-[24px]">key</span>
+                    <span class="mt-0.5 text-[11px] leading-tight">Akun</span>
+                </a>
+            @else
+                <a
+                    href="{{ route('admin.monitoring.index') }}"
+                    class="flex min-h-[54px] flex-col items-center justify-center rounded-2xl px-1 py-1.5 text-center transition {{ $isFourth ? 'bg-primary/15 text-primary font-extrabold' : 'text-base-content/75 font-semibold hover:bg-base-200' }}"
+                >
+                    <span class="material-icons text-[24px]">analytics</span>
+                    <span class="mt-0.5 text-[11px] leading-tight">SIAGA</span>
+                </a>
+            @endif
+
+            {{-- 5. Menu Lainnya (buka drawer lengkap) --}}
+            <label
+                for="app-drawer"
+                class="flex min-h-[54px] cursor-pointer flex-col items-center justify-center rounded-2xl px-1 py-1.5 text-center font-semibold text-base-content/75 transition hover:bg-base-200"
+                aria-label="Buka menu lainnya"
+            >
+                <span class="material-icons text-[24px]">grid_view</span>
+                <span class="mt-0.5 text-[11px] leading-tight">Lainnya</span>
+            </label>
+        </div>
+    </nav>
 @endsection

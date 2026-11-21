@@ -29,6 +29,30 @@
 
 <div class="mx-auto max-w-7xl space-y-8">
 
+    @if(auth()->user()->isAdmin() && isset($daftarPengawas) && $daftarPengawas->count() > 0)
+        <section class="rounded-2xl border-2 border-secondary/40 bg-base-100 p-4 shadow-sm sm:p-5">
+            <form method="GET" action="{{ route('admin.laporan.show', $periode->id) }}" class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <div class="flex items-center gap-2.5">
+                    <span class="material-icons text-2xl text-secondary">supervisor_account</span>
+                    <div>
+                        <p class="text-sm font-extrabold text-base-content">Pantau Laporan Pengawas (Khusus Super Admin)</p>
+                        <p class="text-xs text-base-content/75">Pilih semua pengawas atau lihat laporan pengawas tertentu.</p>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
+                    <select name="pengawas_id" onchange="this.form.submit()" class="select select-bordered min-w-[240px]">
+                        <option value="">Semua Pengawas ({{ $daftarPengawas->count() }} orang)</option>
+                        @foreach($daftarPengawas as $p)
+                            <option value="{{ $p->id }}" {{ (int) ($selectedPengawasId ?? 0) === $p->id ? 'selected' : '' }}>
+                                {{ $p->name }} {{ $p->isAdmin() ? '(Super Admin)' : '(Pengawas)' }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+            </form>
+        </section>
+    @endif
+
     {{-- Header --}}
     <section class="flex flex-col gap-5 border-b border-base-300 pb-6 xl:flex-row xl:items-end xl:justify-between">
         <div>

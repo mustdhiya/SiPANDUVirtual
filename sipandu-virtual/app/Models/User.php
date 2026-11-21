@@ -23,6 +23,7 @@ class User extends Authenticatable
         'is_approved',
         'status',
         'is_profile_complete',
+        'has_seen_tour',
         'nomor_wa',
         'nip',
         'pangkat_golongan',
@@ -46,6 +47,7 @@ class User extends Authenticatable
         'email_verified_at'   => 'datetime',
         'is_approved'         => 'boolean',
         'is_profile_complete' => 'boolean',
+        'has_seen_tour'       => 'boolean',
     ];
 
     const ROLE_ADMIN    = 'admin';    // Admin Utama sekaligus Pengawas (Mama)

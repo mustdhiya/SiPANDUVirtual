@@ -10,7 +10,7 @@ class TahunAjaranController extends Controller
 {
     public function index()
     {
-        $tahunAjarans = TahunAjaran::orderBy('created_at', 'desc')->get();
+        $tahunAjarans = TahunAjaran::orderBy('created_at', 'desc')->paginate(15)->withQueryString();
         return view('admin.tahun-ajaran.index', compact('tahunAjarans'));
     }
 

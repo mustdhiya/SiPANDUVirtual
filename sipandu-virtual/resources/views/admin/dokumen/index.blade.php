@@ -328,5 +328,9 @@
             </table>
         </div>
     </section>
+
+    <div class="flex justify-center pt-2">
+        {{ $dokumens->links() }}
+    </div>
 </div>
 @endsection

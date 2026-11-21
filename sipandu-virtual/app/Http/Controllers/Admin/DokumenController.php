@@ -10,7 +10,7 @@ class DokumenController extends Controller
 {
     public function index()
     {
-        $dokumens = DokumenWajib::orderBy('triwulan')->orderBy('urutan')->get();
+        $dokumens = DokumenWajib::orderBy('triwulan')->orderBy('urutan')->paginate(15)->withQueryString();
         return view('admin.dokumen.index', compact('dokumens'));
     }
 

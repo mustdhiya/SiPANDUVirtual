@@ -1,188 +1,101 @@
 @extends('layouts.admin')
 
-@section('title', 'Review Triwulan')
+@section('title', 'Periksa Laporan Guru')
 
 @section('content')
 @php
-    $totalSubmission = $submissions->count();
-    $menungguReview = $submissions->where('status_review', 'submitted')->count();
-    $perluRevisi = $submissions->where('status_review', 'revisi')->count();
-    $lengkap = $submissions->where('status_review', 'lengkap')->count();
+    $totalSubmission = $totalSubmission ?? $submissions->total();
+    $menungguReview = $menungguReview ?? 0;
+    $perluRevisi = $perluRevisi ?? 0;
+    $lengkap = $lengkap ?? 0;
 
     $statusConfig = [
         'draft' => [
-            'label' => 'Draft',
-            'class' => 'badge-ghost',
+            'label' => 'Belum Dikirim',
+            'class' => 'badge-ghost border border-base-300',
             'icon' => 'edit_note',
         ],
         'submitted' => [
-            'label' => 'Menunggu Review',
+            'label' => 'Perlu Diperiksa',
             'class' => 'badge-info',
             'icon' => 'pending_actions',
         ],
         'revisi' => [
-            'label' => 'Perlu Revisi',
+            'label' => 'Perlu Perbaikan',
             'class' => 'badge-warning',
             'icon' => 'edit',
         ],
         'lengkap' => [
-            'label' => 'Lengkap',
+            'label' => 'Sudah Lengkap',
             'class' => 'badge-success',
             'icon' => 'check_circle',
         ],
     ];
 @endphp
 
-<div class="mx-auto max-w-7xl space-y-8">
+<div class="mx-auto max-w-6xl space-y-6">
 
     {{-- Header --}}
-    <section class="flex flex-col gap-4 border-b border-base-300 pb-6 lg:flex-row lg:items-end lg:justify-between">
-        <div>
-            <p class="text-xs font-bold uppercase tracking-[0.14em] text-secondary">
-                Pendampingan Guru
-            </p>
+    <section class="rounded-2xl border-2 border-base-300 bg-base-100 p-6 shadow-sm">
+        <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+                <span class="badge badge-primary mb-2">Pemeriksaan Triwulan</span>
+                <h1 class="text-2xl font-extrabold text-base-content sm:text-3xl">
+                    Periksa Laporan Guru Binaan
+                </h1>
+                <p class="mt-2 text-base text-base-content/80">
+                    Buka berkas yang dikirim guru, beri catatan jika ada yang kurang, lalu pilih status <strong>Sudah Lengkap</strong> atau <strong>Perlu Perbaikan</strong>.
+                </p>
+            </div>
 
-            <h1 class="font-display mt-2 text-3xl font-semibold text-base-content md:text-4xl">
-                Review Triwulan
-            </h1>
+            <a href="{{ route('admin.monitoring.index') }}" class="btn btn-outline btn-primary border-2 shrink-0">
+                <span class="material-icons text-xl">analytics</span>
+                Buka Monitoring SIAGA
+            </a>
+        </div>
+    </section>
 
-            <p class="mt-2 max-w-2xl text-sm leading-6 text-base-content/70">
-                Periksa submission dan dokumen guru, beri catatan jika perlu revisi,
-                lalu tetapkan status akhir submission.
-            </p>
+    {{-- Ringkasan Status --}}
+    <section class="grid grid-cols-2 gap-4 lg:grid-cols-4">
+        <div class="rounded-2xl border-2 border-base-300 bg-base-100 p-5 shadow-sm">
+            <p class="text-sm font-bold text-base-content/80">Semua Laporan</p>
+            <p class="mt-2 text-3xl font-extrabold text-primary">{{ $totalSubmission }}</p>
         </div>
 
-        <a
-            href="{{ route('admin.monitoring.index') }}"
-            class="btn btn-outline btn-primary rounded-xl"
-        >
-            <span class="material-icons">analytics</span>
-            Buka Monitoring SIAGA
-        </a>
+        <div class="rounded-2xl border-2 border-info bg-info/10 p-5 shadow-sm">
+            <p class="text-sm font-bold text-info">Perlu Diperiksa</p>
+            <p class="mt-2 text-3xl font-extrabold text-info">{{ $menungguReview }}</p>
+        </div>
+
+        <div class="rounded-2xl border-2 border-warning bg-warning/10 p-5 shadow-sm">
+            <p class="text-sm font-bold text-warning">Perlu Perbaikan</p>
+            <p class="mt-2 text-3xl font-extrabold text-warning">{{ $perluRevisi }}</p>
+        </div>
+
+        <div class="rounded-2xl border-2 border-success bg-success/10 p-5 shadow-sm">
+            <p class="text-sm font-bold text-success">Sudah Lengkap</p>
+            <p class="mt-2 text-3xl font-extrabold text-success">{{ $lengkap }}</p>
+        </div>
     </section>
 
-    {{-- Ringkasan --}}
-    <section class="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
-
-        <article class="rounded-2xl border border-base-300 bg-base-100 p-4 shadow-sm">
-            <div class="flex items-center justify-between">
-                <span class="material-icons text-primary">assignment</span>
-                <span class="text-[11px] font-bold uppercase tracking-wide text-base-content/50">
-                    Total
-                </span>
-            </div>
-
-            <p class="mt-5 text-sm text-base-content/70">
-                Semua Submission
-            </p>
-
-            <p class="font-display mt-1 text-3xl font-semibold text-primary">
-                {{ $totalSubmission }}
-            </p>
-        </article>
-
-        <article class="rounded-2xl border border-info/30 bg-info/10 p-4 shadow-sm">
-            <div class="flex items-center justify-between">
-                <span class="material-icons text-info">pending_actions</span>
-                <span class="text-[11px] font-bold uppercase tracking-wide text-info">
-                    Prioritas
-                </span>
-            </div>
-
-            <p class="mt-5 text-sm text-base-content/70">
-                Menunggu Review
-            </p>
-
-            <p class="font-display mt-1 text-3xl font-semibold text-info">
-                {{ $menungguReview }}
-            </p>
-        </article>
-
-        <article class="rounded-2xl border border-warning/30 bg-warning/10 p-4 shadow-sm">
-            <div class="flex items-center justify-between">
-                <span class="material-icons text-warning">edit</span>
-                <span class="text-[11px] font-bold uppercase tracking-wide text-warning">
-                    Tindak Lanjut
-                </span>
-            </div>
-
-            <p class="mt-5 text-sm text-base-content/70">
-                Perlu Revisi
-            </p>
-
-            <p class="font-display mt-1 text-3xl font-semibold text-warning">
-                {{ $perluRevisi }}
-            </p>
-        </article>
-
-        <article class="rounded-2xl border border-success/30 bg-success/10 p-4 shadow-sm">
-            <div class="flex items-center justify-between">
-                <span class="material-icons text-success">check_circle</span>
-                <span class="text-[11px] font-bold uppercase tracking-wide text-success">
-                    Selesai
-                </span>
-            </div>
-
-            <p class="mt-5 text-sm text-base-content/70">
-                Submission Lengkap
-            </p>
-
-            <p class="font-display mt-1 text-3xl font-semibold text-success">
-                {{ $lengkap }}
-            </p>
-        </article>
-    </section>
-
-    {{-- Informasi prioritas --}}
-    @if($menungguReview > 0)
-        <section class="alert rounded-2xl border border-info/30 bg-info/10 text-base-content shadow-sm">
-            <span class="material-icons text-info">info</span>
-
-            <div>
-                <p class="font-semibold">
-                    Ada {{ $menungguReview }} submission yang perlu diperiksa.
-                </p>
-
-                <p class="mt-1 text-sm text-base-content/75">
-                    Buka detail submission, periksa dokumen guru satu per satu,
-                    lalu pilih status “Lengkap” atau “Perlu Revisi”.
-                </p>
-            </div>
-        </section>
-    @endif
-
-    {{-- Daftar Submission --}}
-    <section class="overflow-hidden rounded-2xl border border-base-300 bg-base-100 shadow-sm">
-        <div class="flex flex-col gap-3 border-b border-base-300 px-5 py-5 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-                <h2 class="font-display text-xl font-semibold text-base-content">
-                    Daftar Submission Guru
-                </h2>
-
-                <p class="mt-1 text-sm text-base-content/70">
-                    Submission terbaru tampil lebih dulu.
-                </p>
-            </div>
-
-            <span class="badge badge-outline gap-2 self-start sm:self-auto">
-                <span class="material-icons text-sm">sort</span>
-                Urut berdasarkan waktu submit
-            </span>
+    {{-- Daftar Desktop --}}
+    <section class="hidden overflow-hidden rounded-2xl border-2 border-base-300 bg-base-100 shadow-sm lg:block">
+        <div class="border-b-2 border-base-300 bg-base-200 px-6 py-4">
+            <h2 class="text-lg font-extrabold text-base-content">Daftar Laporan Masuk</h2>
         </div>
 
         <div class="overflow-x-auto">
             <table class="table w-full">
-                <thead class="bg-base-200 text-base-content/70">
+                <thead>
                     <tr>
                         <th class="w-12">No.</th>
-                        <th>Guru dan Sekolah</th>
-                        <th>Periode</th>
+                        <th>Nama Guru &amp; Sekolah</th>
+                        <th>Triwulan</th>
                         <th>Status</th>
-                        <th>Waktu Submit</th>
-                        <th class="text-right">Aksi</th>
+                        <th>Tanggal Kirim</th>
+                        <th class="text-right">Tindakan</th>
                     </tr>
                 </thead>
-
                 <tbody>
                     @forelse($submissions as $index => $submission)
                         @php
@@ -191,111 +104,62 @@
                                 'class' => 'badge-ghost',
                                 'icon' => 'help_outline',
                             ];
-
                             $isPriority = $submission->status_review === 'submitted';
-
-                            $initials = collect(explode(' ', trim($submission->guru->nama_lengkap)))
-                                ->filter()
-                                ->take(2)
-                                ->map(fn ($name) => strtoupper(substr($name, 0, 1)))
-                                ->implode('');
                         @endphp
 
-                        <tr class="{{ $isPriority ? 'bg-info/10' : '' }} hover:bg-base-200">
-                            <td class="font-semibold text-base-content/60">
-                                {{ $index + 1 }}
-                            </td>
+                        <tr class="{{ $isPriority ? 'bg-info/10' : '' }} hover:bg-base-200/70">
+                            <td class="font-bold">{{ $submissions->firstItem() + $index }}</td>
 
                             <td>
-                                <div class="flex min-w-56 items-center gap-3">
-                                    <div class="avatar placeholder">
-                                        <div class="w-10 rounded-full bg-primary/15 text-primary">
-                                            <span class="text-sm font-bold">
-                                                {{ $initials ?: 'G' }}
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                    <div class="min-w-0">
-                                        <p class="font-semibold text-base-content">
-                                            {{ $submission->guru->nama_lengkap }}
-                                        </p>
-
-                                        <p class="max-w-56 truncate text-xs text-base-content/60">
-                                            {{ $submission->guru->sekolah->nama_sekolah ?? 'Sekolah belum diatur' }}
-                                        </p>
-                                    </div>
-                                </div>
-                            </td>
-
-                            <td>
-                                <p class="font-semibold text-sm text-base-content">
-                                    TW {{ $submission->periode->nomor }}
+                                <p class="text-base font-bold text-base-content">
+                                    {{ $submission->guru->nama_lengkap }}
                                 </p>
+                                <p class="text-sm text-base-content/75">
+                                    {{ $submission->guru->sekolah->nama_sekolah ?? 'Sekolah belum diatur' }}
+                                </p>
+                            </td>
 
-                                <p class="text-xs text-base-content/60">
+                            <td>
+                                <p class="font-bold text-base-content">Triwulan {{ $submission->periode->nomor }}</p>
+                                <p class="text-xs font-medium text-base-content/75">
                                     {{ $submission->periode->tahunAjaran->label ?? '-' }}
                                 </p>
                             </td>
 
                             <td>
-                                <span class="badge {{ $status['class'] }} gap-1 whitespace-nowrap">
-                                    <span class="material-icons text-sm">
-                                        {{ $status['icon'] }}
-                                    </span>
+                                <span class="badge {{ $status['class'] }} gap-1.5 whitespace-nowrap">
+                                    <span class="material-icons text-sm">{{ $status['icon'] }}</span>
                                     {{ $status['label'] }}
                                 </span>
                             </td>
 
                             <td>
                                 @if($submission->submitted_at)
-                                    <p class="text-sm font-medium text-base-content">
+                                    <p class="font-semibold text-base-content">
                                         {{ $submission->submitted_at->translatedFormat('d M Y') }}
                                     </p>
-
-                                    <p class="text-xs text-base-content/60">
-                                        {{ $submission->submitted_at->format('H:i') }} WITA
+                                    <p class="text-xs text-base-content/75">
+                                        Pukul {{ $submission->submitted_at->format('H:i') }} WITA
                                     </p>
                                 @else
-                                    <span class="text-sm text-base-content/60">
-                                        Belum dikirim
-                                    </span>
+                                    <span class="text-sm text-base-content/75">Belum dikirim</span>
                                 @endif
                             </td>
 
                             <td class="text-right">
                                 <a
                                     href="{{ route('admin.review-triwulan.show', $submission->id) }}"
-                                    class="btn btn-sm {{ $isPriority ? 'btn-primary' : 'btn-outline btn-primary' }} rounded-xl"
+                                    class="btn {{ $isPriority ? 'btn-primary' : 'btn-outline btn-primary border-2' }}"
                                 >
-                                    <span class="material-icons text-base">
-                                        {{ $isPriority ? 'fact_check' : 'visibility' }}
-                                    </span>
-
-                                    <span class="hidden sm:inline">
-                                        {{ $isPriority ? 'Review Sekarang' : 'Buka' }}
-                                    </span>
+                                    <span class="material-icons text-xl">{{ $isPriority ? 'fact_check' : 'visibility' }}</span>
+                                    {{ $isPriority ? 'Periksa Sekarang' : 'Lihat Berkas' }}
                                 </a>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6">
-                                <div class="flex flex-col items-center justify-center py-14 text-center">
-                                    <div class="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-base-200 text-primary">
-                                        <span class="material-icons text-3xl">
-                                            assignment_turned_in
-                                        </span>
-                                    </div>
-
-                                    <h3 class="font-display text-xl font-semibold text-base-content">
-                                        Belum ada submission
-                                    </h3>
-
-                                    <p class="mt-2 max-w-sm text-sm leading-6 text-base-content/70">
-                                        Submission triwulan dari guru akan muncul di halaman ini setelah dikirim.
-                                    </p>
-                                </div>
+                            <td colspan="6" class="py-14 text-center text-base font-semibold text-base-content/75">
+                                Belum ada laporan triwulan yang masuk.
                             </td>
                         </tr>
                     @endforelse
@@ -303,5 +167,52 @@
             </table>
         </div>
     </section>
+
+    {{-- Tampilan Kartu Mobile / Tablet --}}
+    <section class="space-y-4 lg:hidden">
+        @forelse($submissions as $submission)
+            @php
+                $status = $statusConfig[$submission->status_review] ?? [
+                    'label' => ucfirst($submission->status_review),
+                    'class' => 'badge-ghost',
+                    'icon' => 'help_outline',
+                ];
+                $isPriority = $submission->status_review === 'submitted';
+            @endphp
+
+            <article class="rounded-2xl border-2 {{ $isPriority ? 'border-info bg-info/5' : 'border-base-300 bg-base-100' }} p-5 shadow-sm space-y-3">
+                <div class="flex flex-wrap items-start justify-between gap-2">
+                    <div>
+                        <h3 class="text-lg font-extrabold text-base-content">{{ $submission->guru->nama_lengkap }}</h3>
+                        <p class="text-sm text-base-content/80">{{ $submission->guru->sekolah->nama_sekolah ?? 'Sekolah belum diatur' }}</p>
+                    </div>
+                    <span class="badge {{ $status['class'] }} gap-1">
+                        <span class="material-icons text-sm">{{ $status['icon'] }}</span>
+                        {{ $status['label'] }}
+                    </span>
+                </div>
+
+                <div class="rounded-xl bg-base-200 p-3 text-sm">
+                    <p><strong>Periode:</strong> Triwulan {{ $submission->periode->nomor }} ({{ $submission->periode->tahunAjaran->label ?? '-' }})</p>
+                    <p class="mt-1"><strong>Dikirim:</strong> {{ $submission->submitted_at ? $submission->submitted_at->translatedFormat('d M Y, H:i') . ' WITA' : 'Belum dikirim' }}</p>
+                </div>
+
+                <a href="{{ route('admin.review-triwulan.show', $submission->id) }}"
+                   class="btn {{ $isPriority ? 'btn-primary' : 'btn-outline btn-primary border-2' }} w-full">
+                    <span class="material-icons text-xl">{{ $isPriority ? 'fact_check' : 'visibility' }}</span>
+                    {{ $isPriority ? 'Periksa Sekarang' : 'Lihat Berkas' }}
+                </a>
+            </article>
+        @empty
+            <div class="rounded-2xl border-2 border-base-300 bg-base-100 p-10 text-center text-base font-semibold">
+                Belum ada laporan triwulan yang masuk.
+            </div>
+        @endforelse
+    </section>
+
+    <div class="flex justify-center pt-2">
+        {{ $submissions->links() }}
+    </div>
+
 </div>
 @endsection

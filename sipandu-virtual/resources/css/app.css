@@ -2,77 +2,248 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+|--------------------------------------------------------------------------
+| SiPANDU VIRTUAL - Sistem Desain Ramah Orang Tua / Senior
+|--------------------------------------------------------------------------
+| Fokus:
+| 1. Ukuran huruf nyaman dibaca & bisa diperbesar (A- / A / A+).
+| 2. Kontras warna tinggi (teks gelap di latar terang, tidak pudar).
+| 3. Tombol, kolom isian, dan menu besar agar mudah ditekan.
+| 4. Jarak lega agar tidak ada elemen yang tumpang tindih.
+*/
+
+@layer base {
+    html {
+        font-size: var(--sipandu-font-size, 17px);
+        scroll-behavior: smooth;
+    }
+
+    body {
+        font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        background-color: hsl(var(--b2));
+        color: hsl(var(--bc));
+    }
+
+    h1, h2, h3, h4 {
+        letter-spacing: -0.015em;
+        line-height: 1.3;
+    }
+
+    /* Fokus keyboard yang sangat jelas */
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible {
+        outline: 3px solid hsl(var(--s));
+        outline-offset: 2px;
+    }
+}
+
 @layer components {
+    /*
+    |--------------------------------------------------------------------------
+    | Peningkatan Global Komponen DaisyUI agar Ramah Lansia di Semua Halaman
+    |--------------------------------------------------------------------------
+    */
+    .btn {
+        min-height: 2.85rem;
+        height: auto;
+        padding-top: 0.6rem;
+        padding-bottom: 0.6rem;
+        padding-left: 1.15rem;
+        padding-right: 1.15rem;
+        font-size: 0.95rem;
+        font-weight: 600;
+        border-radius: 0.85rem;
+        line-height: 1.35;
+    }
+
+    .btn-sm {
+        min-height: 2.4rem;
+        padding-top: 0.45rem;
+        padding-bottom: 0.45rem;
+        padding-left: 0.9rem;
+        padding-right: 0.9rem;
+        font-size: 0.88rem;
+    }
+
+    .btn-lg {
+        min-height: 3.35rem;
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        font-size: 1.05rem;
+    }
+
+    .input,
+    .select {
+        min-height: 3rem;
+        font-size: 1rem;
+        border-width: 2px;
+        border-radius: 0.85rem;
+        background-color: hsl(var(--b1));
+        color: hsl(var(--bc));
+    }
+
+    .textarea {
+        font-size: 1rem;
+        border-width: 2px;
+        border-radius: 0.85rem;
+        background-color: hsl(var(--b1));
+        color: hsl(var(--bc));
+        line-height: 1.6;
+    }
+
+    .label-text {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: hsl(var(--bc));
+    }
+
+    .badge {
+        min-height: 1.75rem;
+        height: auto;
+        padding: 0.25rem 0.75rem;
+        font-size: 0.82rem;
+        font-weight: 700;
+        line-height: 1.25;
+        border-radius: 9999px;
+    }
+
+    .badge-sm {
+        min-height: 1.5rem;
+        padding: 0.15rem 0.6rem;
+        font-size: 0.78rem;
+    }
+
+    .badge-lg {
+        min-height: 2.25rem;
+        padding: 0.35rem 0.95rem;
+        font-size: 0.9rem;
+    }
+
+    .alert {
+        padding: 1rem 1.25rem;
+        border-radius: 1rem;
+        font-size: 0.98rem;
+        line-height: 1.55;
+        border-width: 2px;
+    }
+
+    .table :where(th, td) {
+        padding: 0.95rem 1rem;
+        font-size: 0.95rem;
+        vertical-align: middle;
+    }
+
+    .table :where(thead th) {
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        background-color: hsl(var(--b2));
+        color: hsl(var(--bc));
+        border-bottom: 2px solid hsl(var(--b3));
+    }
+
+    .table tbody tr {
+        border-bottom: 1px solid hsl(var(--b3));
+    }
+
+    .menu li > a {
+        padding: 0.75rem 1rem;
+        font-size: 0.98rem;
+        font-weight: 500;
+        border-radius: 0.85rem;
+        gap: 0.75rem;
+    }
+
+    .menu li > a.active {
+        background-color: hsl(var(--p));
+        color: hsl(var(--pc));
+        font-weight: 700;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Kelas Utilitas Khusus SiPANDU
+    |--------------------------------------------------------------------------
+    */
     .admin-page {
-        @apply min-h-full bg-base-100 text-base-content;
+        @apply min-h-full bg-base-200 text-base-content;
     }
 
     .admin-page-title {
-        @apply font-display text-3xl font-semibold leading-tight text-base-content;
+        @apply text-2xl font-bold leading-tight text-base-content sm:text-3xl;
     }
 
     .admin-page-subtitle {
-        @apply mt-2 text-sm leading-6 text-base-content/70;
+        @apply mt-2 text-base leading-relaxed text-base-content/80;
     }
 
     .admin-eyebrow {
-        @apply text-xs font-bold uppercase tracking-[0.14em] text-secondary;
+        @apply text-xs font-bold uppercase tracking-[0.12em] text-secondary;
     }
 
     .admin-section-title {
-        @apply font-display mt-1 text-2xl font-semibold text-base-content;
+        @apply mt-1 text-xl font-bold text-base-content sm:text-2xl;
     }
 
     .admin-surface {
-        @apply rounded-2xl border border-base-300 bg-base-100 shadow-sm;
+        @apply rounded-2xl border-2 border-base-300 bg-base-100 shadow-sm;
     }
 
     .admin-surface-soft {
-        @apply rounded-2xl border border-base-300 bg-base-200 shadow-sm;
+        @apply rounded-2xl border-2 border-base-300 bg-base-200 shadow-sm;
     }
 
     .admin-card {
-        @apply rounded-2xl border border-base-300 bg-base-100 p-4 shadow-sm transition duration-200;
+        @apply rounded-2xl border-2 border-base-300 bg-base-100 p-5 shadow-sm transition duration-200;
     }
 
     .admin-card:hover {
-        @apply -translate-y-0.5 border-primary shadow-md;
+        @apply border-primary shadow-md;
     }
 
     .admin-icon-primary {
-        @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-base-200 text-primary;
+        @apply flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/15 text-primary;
     }
 
     .admin-icon-secondary {
-        @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-base-200 text-secondary;
+        @apply flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-secondary/15 text-secondary;
     }
 
     .admin-icon-warning {
-        @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-base-200 text-warning;
+        @apply flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-warning/15 text-warning;
     }
 
     .admin-icon-success {
-        @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-base-200 text-success;
+        @apply flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-success/15 text-success;
     }
 
     .admin-menu-card {
-        @apply flex items-center gap-4 rounded-2xl border border-base-300 bg-base-100 p-4 shadow-sm transition duration-200;
+        @apply flex items-center gap-4 rounded-2xl border-2 border-base-300 bg-base-100 p-5 shadow-sm transition duration-200;
     }
 
     .admin-menu-card:hover {
-        @apply -translate-y-0.5 border-primary shadow-md;
+        @apply border-primary shadow-md;
     }
 
     .admin-menu-title {
-        @apply font-semibold text-base-content;
+        @apply text-base font-bold text-base-content;
     }
 
     .admin-menu-description {
-        @apply mt-1 text-sm leading-5 text-base-content/70;
+        @apply mt-1 text-sm leading-relaxed text-base-content/80;
     }
 
     .admin-menu-arrow {
-        @apply material-icons text-base-content/40 transition;
+        @apply material-icons text-base-content/60 transition;
     }
 
     .group:hover .admin-menu-arrow {
@@ -80,10 +251,82 @@
     }
 
     .admin-help-box {
-        @apply rounded-2xl border border-base-300 bg-base-200 px-5 py-4;
+        @apply rounded-2xl border-2 border-base-300 bg-base-100 px-5 py-4;
     }
 
     .admin-table-head {
-        @apply bg-base-200 text-base-content/70;
+        @apply bg-base-200 text-base-content;
     }
+}
+
+/* Pastikan teks sekunder di halaman lama tidak terlalu pudar untuk mata orang tua */
+.text-base-content\/50,
+.text-base-content\/60,
+.text-neutral\/60 {
+    color: hsl(var(--bc) / 0.78) !important;
+}
+
+.text-base-content\/70,
+.text-base-content\/75 {
+    color: hsl(var(--bc) / 0.85) !important;
+}
+
+/* Gaya Driver.js Popover khusus Ramah Orang Tua */
+.sipandu-driver-popover.driver-popover {
+    background-color: #ffffff;
+    color: #141B11;
+    border: 2px solid #1E4D2B;
+    border-radius: 1.25rem;
+    padding: 1.25rem;
+    max-width: min(380px, calc(100vw - 2rem));
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+}
+
+.sipandu-driver-popover .driver-popover-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #1E4D2B;
+    line-height: 1.35;
+}
+
+.sipandu-driver-popover .driver-popover-description {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.98rem;
+    line-height: 1.6;
+    color: #1F2937;
+    margin-top: 0.5rem;
+}
+
+.sipandu-driver-popover .driver-popover-footer {
+    margin-top: 1.1rem;
+    gap: 0.5rem;
+}
+
+.sipandu-driver-popover .driver-popover-progress-text {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #8C5A00;
+}
+
+.sipandu-driver-popover button.driver-popover-next-btn,
+.sipandu-driver-popover button.driver-popover-prev-btn {
+    min-height: 42px;
+    padding: 0.45rem 0.95rem;
+    border-radius: 0.75rem;
+    font-size: 0.92rem;
+    font-weight: 700;
+    text-shadow: none;
+}
+
+.sipandu-driver-popover button.driver-popover-next-btn {
+    background-color: #1E4D2B;
+    color: #ffffff;
+    border: 2px solid #1E4D2B;
+}
+
+.sipandu-driver-popover button.driver-popover-prev-btn {
+    background-color: #F2F5EE;
+    color: #141B11;
+    border: 2px solid #D4DEC9;
 }

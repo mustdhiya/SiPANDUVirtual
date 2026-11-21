@@ -11,14 +11,26 @@ use Illuminate\Validation\Rule;
 
 class GuruController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $gurus = GuruBinaan::forUser(auth()->user())
-            ->with('sekolah', 'userAccount', 'pengawas')
-            ->orderBy('nama_lengkap')
-            ->get();
+        $user = auth()->user();
+        $search = $request->query('search');
 
-        return view('admin.guru.index', compact('gurus'));
+        $baseQuery = GuruBinaan::forUser($user);
+        $totalGuru = (clone $baseQuery)->count();
+        $totalAktif = (clone $baseQuery)->where('is_active', true)->count();
+
+        $gurus = $baseQuery
+            ->with('sekolah', 'userAccount', 'pengawas')
+            ->when($search, function ($q) use ($search) {
+                $q->where('nama_lengkap', 'like', "%{$search}%")
+                  ->orWhere('nip_siaga', 'like', "%{$search}%");
+            })
+            ->orderBy('nama_lengkap')
+            ->paginate(15)
+            ->withQueryString();
+
+        return view('admin.guru.index', compact('gurus', 'search', 'totalGuru', 'totalAktif'));
     }
 
     public function create()
@@ -36,6 +48,8 @@ class GuruController extends Controller
             'status_jabatan' => 'required|in:GURU,GURU_KEPSEK',
             'is_active' => 'boolean',
         ]);
+
+        $validated['pengawas_id'] = auth()->id();
 
         GuruBinaan::create($validated);
 

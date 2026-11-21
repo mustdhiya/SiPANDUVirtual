@@ -13,10 +13,27 @@ class ReviewTriwulanController extends Controller
 {
     public function index()
     {
-        $submissions = Submission::with(['guru.sekolah', 'periode'])
+        $user = auth()->user();
+
+        $baseQuery = Submission::forUser($user);
+        $totalSubmission = (clone $baseQuery)->count();
+        $menungguReview = (clone $baseQuery)->where('status_review', 'submitted')->count();
+        $perluRevisi = (clone $baseQuery)->where('status_review', 'revisi')->count();
+        $lengkap = (clone $baseQuery)->where('status_review', 'lengkap')->count();
+
+        $submissions = $baseQuery
+            ->with(['guru.sekolah', 'periode.tahunAjaran'])
             ->orderBy('submitted_at', 'desc')
-            ->get();
-        return view('admin.review-triwulan.index', compact('submissions'));
+            ->paginate(15)
+            ->withQueryString();
+
+        return view('admin.review-triwulan.index', compact(
+            'submissions',
+            'totalSubmission',
+            'menungguReview',
+            'perluRevisi',
+            'lengkap'
+        ));
     }
 
     public function show($submissionId)

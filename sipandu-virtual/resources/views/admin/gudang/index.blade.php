@@ -335,5 +335,9 @@
             </div>
         @endif
     </section>
+
+    <div class="flex justify-center pt-2">
+        {{ $materis->links() }}
+    </div>
 </div>
 @endsection

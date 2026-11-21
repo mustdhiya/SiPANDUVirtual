@@ -7,10 +7,18 @@ module.exports = {
     ],
 
     theme: {
+        screens: {
+            xs: '480px',
+            sm: '640px',
+            md: '768px',
+            lg: '1024px',
+            xl: '1280px',
+            '2xl': '1536px',
+        },
         extend: {
             fontFamily: {
-                display: ['Fraunces', 'serif'],
-                sans: ['Inter', 'sans-serif'],
+                display: ['Inter', 'system-ui', 'sans-serif'],
+                sans: ['Inter', 'system-ui', 'sans-serif'],
             },
         },
     },
@@ -23,130 +31,82 @@ module.exports = {
         themes: [
             /*
             |--------------------------------------------------------------------------
-            | Tema Terang
+            | Tema Utama SiPANDU (Ramah Lansia - Kontras Tinggi & Nyaman di Mata)
             |--------------------------------------------------------------------------
             */
-
-            'light',
-            'corporate',
-            'cupcake',
-            'emerald',
-            'bumblebee',
-            'retro',
-            'cyberpunk',
-            'valentine',
-            'aqua',
-            'pastel',
-            'nord',
-            'lofi',
-            'lemonade',
-            'winter',
-            'garden',
-            'silk',
-
-            /*
-            |--------------------------------------------------------------------------
-            | Tema Gelap
-            |--------------------------------------------------------------------------
-            */
-
-            'night',
-            'dark',
-            'dracula',
-            'synthwave',
-            'forest',
-            'halloween',
-            'luxury',
-            'black',
-            'coffee',
-            'business',
-            'dim',
-            'sunset',
-
-            /*
-            |--------------------------------------------------------------------------
-            | Tema Default SiPANDU / MMG Brand
-            |--------------------------------------------------------------------------
-            */
-
             {
-                mmgas: {
-                    primary: '#0D3B6E',
-                    'primary-content': '#ffffff',
+                sipandu: {
+                    primary: '#1E4D2B',
+                    'primary-content': '#FFFFFF',
 
-                    secondary: '#1565C0',
-                    'secondary-content': '#ffffff',
+                    secondary: '#8C5A00',
+                    'secondary-content': '#FFFFFF',
 
-                    accent: '#F97316',
-                    'accent-content': '#ffffff',
+                    accent: '#0F5132',
+                    'accent-content': '#FFFFFF',
 
-                    neutral: '#1E293B',
-                    'neutral-content': '#ffffff',
+                    neutral: '#1A2417',
+                    'neutral-content': '#FFFFFF',
 
-                    'base-100': '#F8FAFC',
-                    'base-200': '#EFF6FF',
-                    'base-300': '#DBEAFE',
-                    'base-content': '#0F172A',
+                    'base-100': '#FFFFFF',
+                    'base-200': '#F2F5EE',
+                    'base-300': '#D4DEC9',
+                    'base-content': '#141B11',
 
-                    info: '#38BDF8',
-                    'info-content': '#082F49',
+                    info: '#0369A1',
+                    'info-content': '#FFFFFF',
 
-                    success: '#22C55E',
-                    'success-content': '#052E16',
+                    success: '#15803D',
+                    'success-content': '#FFFFFF',
 
-                    warning: '#FACC15',
-                    'warning-content': '#422006',
+                    warning: '#B45309',
+                    'warning-content': '#FFFFFF',
 
-                    error: '#EF4444',
+                    error: '#B91C1C',
                     'error-content': '#FFFFFF',
                 },
             },
 
             /*
             |--------------------------------------------------------------------------
-            | Tema Resmi SiPANDU Warm Editorial
+            | Tema Kontras Ekstra (Untuk Penglihatan Lebih Tajam)
             |--------------------------------------------------------------------------
-            |
-            | Ini menyesuaikan landing page olive, gold, cream,
-            | dan Fraunces yang Anda buat sebelumnya.
-            |
             */
-
             {
-                sipandu: {
-                    primary: '#3D4A2F',
+                'sipandu-hc': {
+                    primary: '#0B3D1A',
                     'primary-content': '#FFFFFF',
 
-                    secondary: '#A97F34',
+                    secondary: '#7C4A00',
                     'secondary-content': '#FFFFFF',
 
-                    accent: '#A97F34',
+                    accent: '#004085',
                     'accent-content': '#FFFFFF',
 
-                    neutral: '#1F2419',
+                    neutral: '#000000',
                     'neutral-content': '#FFFFFF',
 
-                    'base-100': '#FAF7F0',
-                    'base-200': '#EEF0E3',
-                    'base-300': '#F2E6CC',
-                    'base-content': '#1F2419',
+                    'base-100': '#FFFFFF',
+                    'base-200': '#F3F4F6',
+                    'base-300': '#9CA3AF',
+                    'base-content': '#000000',
 
-                    info: '#38BDF8',
-                    'info-content': '#082F49',
+                    info: '#004E98',
+                    'info-content': '#FFFFFF',
 
-                    success: '#22C55E',
-                    'success-content': '#052E16',
+                    success: '#0D652D',
+                    'success-content': '#FFFFFF',
 
-                    warning: '#FACC15',
-                    'warning-content': '#422006',
+                    warning: '#9A3412',
+                    'warning-content': '#FFFFFF',
 
-                    error: '#EF4444',
+                    error: '#991B1B',
                     'error-content': '#FFFFFF',
                 },
             },
         ],
 
-        darkTheme: 'night',
+        darkTheme: 'sipandu',
 
         base: true,
         styled: true,

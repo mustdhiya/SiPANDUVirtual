@@ -111,6 +111,30 @@
                     @enderror
                 </div>
 
+                <div class="form-control">
+                    <label for="nama_kepsek" class="label px-0 pt-0">
+                        <span class="label-text font-semibold">
+                            Nama Kepala Sekolah <span class="text-error">*</span>
+                        </span>
+                    </label>
+
+                    <input
+                        id="nama_kepsek"
+                        type="text"
+                        name="nama_kepsek"
+                        value="{{ old('nama_kepsek', $sekolah->nama_kepsek) }}"
+                        placeholder="Contoh: Drs. H. Ahmad Suryadi, M.Pd."
+                        class="input input-bordered w-full rounded-xl @error('nama_kepsek') input-error @enderror"
+                        required
+                    >
+
+                    @error('nama_kepsek')
+                        <label class="label px-0">
+                            <span class="label-text-alt text-error">{{ $message }}</span>
+                        </label>
+                    @enderror
+                </div>
+
                 <div class="grid gap-6 sm:grid-cols-2">
 
                     <div class="form-control">

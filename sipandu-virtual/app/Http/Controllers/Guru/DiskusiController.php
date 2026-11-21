@@ -17,9 +17,9 @@ class DiskusiController extends Controller
         $user = Auth::user();
         $guru = GuruBinaan::where('user_account_id', $user->id)->first();
 
-        if (!$guru) {
-            return redirect()->route('guru.dashboard')
-                ->with('error', 'Profil guru Anda belum lengkap. Hubungi admin.');
+        if (!$guru || !$user->is_profile_complete) {
+            return redirect()->route('profile.edit')
+                ->with('success', 'Silakan lengkapi profil Anda dan pilih Pengawas pembimbing terlebih dahulu.');
         }
 
         $periodes = PeriodeTriwulan::with('tahunAjaran')
@@ -35,8 +35,9 @@ class DiskusiController extends Controller
         $user = Auth::user();
         $guru = GuruBinaan::where('user_account_id', $user->id)->first();
 
-        if (!$guru) {
-            abort(404, 'Profil guru tidak ditemukan.');
+        if (!$guru || !$user->is_profile_complete) {
+            return redirect()->route('profile.edit')
+                ->with('success', 'Silakan lengkapi profil Anda dan pilih Pengawas pembimbing terlebih dahulu.');
         }
 
         $periode = PeriodeTriwulan::with('tahunAjaran')->findOrFail($periodeId);
@@ -54,8 +55,9 @@ class DiskusiController extends Controller
         $user = Auth::user();
         $guru = GuruBinaan::where('user_account_id', $user->id)->first();
 
-        if (!$guru) {
-            abort(404, 'Profil guru tidak ditemukan.');
+        if (!$guru || !$user->is_profile_complete) {
+            return redirect()->route('profile.edit')
+                ->with('success', 'Silakan lengkapi profil Anda dan pilih Pengawas pembimbing terlebih dahulu.');
         }
 
         $periode = PeriodeTriwulan::findOrFail($periodeId);
@@ -68,8 +70,9 @@ class DiskusiController extends Controller
         $user = Auth::user();
         $guru = GuruBinaan::where('user_account_id', $user->id)->first();
 
-        if (!$guru) {
-            abort(404, 'Profil guru tidak ditemukan.');
+        if (!$guru || !$user->is_profile_complete) {
+            return redirect()->route('profile.edit')
+                ->with('success', 'Silakan lengkapi profil Anda dan pilih Pengawas pembimbing terlebih dahulu.');
         }
 
         $periode = PeriodeTriwulan::findOrFail($periodeId);

@@ -15,15 +15,29 @@ class DashboardController extends Controller
         $user = auth()->user();
 
         if (!$user->is_profile_complete) {
-            return redirect()->route('profile.edit')
+            return redirect()
+                ->route('profile.edit')
                 ->with('success', 'Silakan lengkapi data profil wajib Anda terlebih dahulu.');
         }
 
         return view('admin.dashboard', [
-            'totalSekolah'           => SekolahBinaan::where('is_active', true)->count(),
-            'totalGuru'              => GuruBinaan::forUser($user)->where('is_active', true)->count(),
-            'totalPendingGuru'       => $user->isAdmin() ? User::where('is_approved', false)->count() : 0,
-            'totalSubmissionPending' => Submission::forUser($user)->where('status_review', 'submitted')->count(),
+            'totalSekolah' => SekolahBinaan::where('is_active', true)->count(),
+
+            // Hanya guru yang akunnya sudah disetujui Admin.
+            'totalGuru' => GuruBinaan::forUser($user)
+                ->where('is_active', true)
+                ->whereHas('userAccount', function ($query) {
+                    $query->where('is_approved', true);
+                })
+                ->count(),
+
+            'totalPendingGuru' => $user->isAdmin()
+                ? User::where('is_approved', false)->count()
+                : 0,
+
+            'totalSubmissionPending' => Submission::forUser($user)
+                ->where('status_review', 'submitted')
+                ->count(),
         ]);
     }
 }

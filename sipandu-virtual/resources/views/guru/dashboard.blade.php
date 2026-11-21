@@ -1,6 +1,6 @@
 @extends('layouts.guru')
 
-@section('title', 'Dashboard')
+@section('title', 'Beranda Guru')
 
 @section('content')
 @php
@@ -11,89 +11,150 @@
     $progress = $total > 0 ? min(100, round((($submitted + $lengkapCount) / $total) * 100)) : 0;
 @endphp
 
-<div class="max-w-6xl mx-auto">
-    <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between mb-6">
-        <div>
-            <div class="text-sm font-bold tracking-wide uppercase text-secondary">Dashboard Guru</div>
-            <h1 class="font-display text-3xl font-semibold mt-1">Selamat datang, {{ auth()->user()->name }}</h1>
-            <p class="text-neutral/60 mt-1">Pantau kelengkapan dokumen dan tindak lanjut triwulan Anda.</p>
-        </div>
-        <a href="{{ route('guru.triwulan.index') }}" class="btn btn-primary gap-2">
-            <span class="material-icons">upload_file</span>
-            Buka Triwulan
-        </a>
-    </div>
+<div class="mx-auto max-w-5xl space-y-7">
 
-    <div class="card bg-base-200 border border-base-300 shadow-sm mb-6">
-        <div class="card-body gap-4 md:flex-row md:items-center md:justify-between">
+    {{-- Sapaan & Tombol Utama --}}
+    <section data-tour="welcome-card" class="rounded-2xl border-2 border-base-300 bg-base-100 p-6 shadow-sm sm:p-7">
+        <div class="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
             <div>
-                <h2 class="font-display text-xl font-semibold">Progress Pendampingan</h2>
-                <p class="text-sm text-neutral/60">{{ $total > 0 ? 'Selesaikan dokumen dan kirim submission sebelum deadline.' : 'Belum ada triwulan yang tersedia saat ini.' }}</p>
+                <span class="badge badge-primary mb-2">Panel Guru PAI Binaan</span>
+                <h1 class="text-2xl font-extrabold leading-snug text-base-content sm:text-3xl">
+                    Assalamu'alaikum, {{ auth()->user()->name }}
+                </h1>
+                <p class="mt-2 text-base text-base-content/80">
+                    Kirim laporan dokumen per triwulan sesuai jadwal, lalu pantau hasil pemeriksaan dari Pengawas PAI di sini.
+                </p>
             </div>
-            <div class="w-full md:w-80">
-                <div class="flex justify-between text-sm font-semibold mb-2"><span>Progress</span><span>{{ $progress }}%</span></div>
-                <progress class="progress progress-primary w-full" value="{{ $progress }}" max="100"></progress>
-            </div>
-        </div>
-    </div>
 
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-7">
-        <div class="stat bg-base-100 border border-base-300 rounded-2xl p-4">
-            <div class="stat-figure text-primary"><span class="material-icons">date_range</span></div>
-            <div class="stat-title">Total Triwulan</div><div class="stat-value text-primary text-2xl">{{ $total }}</div>
+            <a href="{{ route('guru.triwulan.index') }}" class="btn btn-primary btn-lg shrink-0">
+                <span class="material-icons text-2xl">upload_file</span>
+                Buka Laporan Triwulan
+            </a>
         </div>
-        <div class="stat bg-base-100 border border-base-300 rounded-2xl p-4">
-            <div class="stat-figure text-info"><span class="material-icons">send</span></div>
-            <div class="stat-title">Sudah Submit</div><div class="stat-value text-info text-2xl">{{ $submitted }}</div>
-        </div>
-        <div class="stat bg-base-100 border border-base-300 rounded-2xl p-4">
-            <div class="stat-figure text-warning"><span class="material-icons">edit_note</span></div>
-            <div class="stat-title">Perlu Revisi</div><div class="stat-value text-warning text-2xl">{{ $revisi }}</div>
-        </div>
-        <div class="stat bg-base-100 border border-base-300 rounded-2xl p-4">
-            <div class="stat-figure text-success"><span class="material-icons">verified</span></div>
-            <div class="stat-title">Lengkap</div><div class="stat-value text-success text-2xl">{{ $lengkapCount }}</div>
-        </div>
-    </div>
+    </section>
 
+    {{-- Peringatan Penting jika Ada Revisi --}}
     @if($revisi > 0)
-        <div class="alert alert-warning mb-6">
-            <span class="material-icons">priority_high</span>
-            <div><strong>Ada {{ $revisi }} submission yang perlu revisi.</strong><br><span class="text-sm">Buka menu Triwulan untuk melihat catatan dari pengawas dan memperbaiki dokumen.</span></div>
-            <a href="{{ route('guru.triwulan.index') }}" class="btn btn-sm btn-warning">Lihat Revisi</a>
-        </div>
+        <section class="rounded-2xl border-2 border-warning bg-warning/10 p-5 shadow-sm">
+            <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div class="flex items-start gap-3">
+                    <span class="material-icons text-3xl text-warning">priority_high</span>
+                    <div>
+                        <h2 class="text-lg font-extrabold text-warning">
+                            Ada {{ $revisi }} Laporan yang Perlu Diperbaiki
+                        </h2>
+                        <p class="mt-1 text-base text-base-content">
+                            Silakan buka menu Laporan Triwulan untuk membaca catatan dari Pengawas dan mengganti berkas yang kurang.
+                        </p>
+                    </div>
+                </div>
+                <a href="{{ route('guru.triwulan.index') }}" class="btn btn-warning btn-lg shrink-0">
+                    Perbaiki Sekarang
+                </a>
+            </div>
+        </section>
     @endif
 
-    <div class="mb-3">
-        <h2 class="font-display text-2xl font-semibold">Akses Cepat</h2>
-        <p class="text-neutral/60 text-sm">Pilih layanan yang ingin Anda buka.</p>
-    </div>
+    {{-- Progres Pelaporan --}}
+    <section data-tour="stats-section" class="rounded-2xl border-2 border-base-300 bg-base-100 p-6 shadow-sm">
+        <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div>
+                <h2 class="text-xl font-extrabold text-base-content">Perkembangan Laporan Anda</h2>
+                <p class="mt-1 text-base text-base-content/80">
+                    {{ $total > 0 ? 'Pastikan semua dokumen wajib diunggah sebelum batas waktu berakhir.' : 'Belum ada jadwal triwulan yang dibuka saat ini.' }}
+                </p>
+            </div>
+            <div class="w-full md:w-80">
+                <div class="mb-2 flex justify-between text-base font-bold text-base-content">
+                    <span>Selesai</span>
+                    <span class="text-primary">{{ $progress }}%</span>
+                </div>
+                <progress class="progress progress-primary h-4 w-full" value="{{ $progress }}" max="100"></progress>
+            </div>
+        </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <a href="{{ route('guru.triwulan.index') }}" class="card bg-base-100 border border-base-300 hover:shadow-lg hover:-translate-y-0.5 transition-all">
-            <div class="card-body">
-                <div class="w-12 h-12 rounded-xl bg-base-200 flex items-center justify-center"><span class="material-icons text-primary">upload_file</span></div>
-                <h3 class="card-title font-display mt-2">Triwulan Saya</h3>
-                <p class="text-sm text-neutral/60">Isi instrumen, unggah dokumen, dan kirim submission.</p>
-                <div class="card-actions justify-end mt-2"><span class="btn btn-sm btn-primary">Buka <span class="material-icons text-base">arrow_forward</span></span></div>
+        <div class="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
+            <div class="rounded-xl border-2 border-base-300 bg-base-200 p-4">
+                <p class="text-sm font-bold text-base-content/80">Total Triwulan</p>
+                <p class="mt-1 text-3xl font-extrabold text-primary">{{ $total }}</p>
             </div>
-        </a>
-        <a href="{{ route('guru.diskusi.index') }}" class="card bg-base-100 border border-base-300 hover:shadow-lg hover:-translate-y-0.5 transition-all">
-            <div class="card-body">
-                <div class="w-12 h-12 rounded-xl bg-base-200 flex items-center justify-center"><span class="material-icons text-primary">forum</span></div>
-                <h3 class="card-title font-display mt-2">Ruang Diskusi</h3>
-                <p class="text-sm text-neutral/60">Ajukan pertanyaan dan baca tanggapan dari pengawas.</p>
-                <div class="card-actions justify-end mt-2"><span class="btn btn-sm btn-primary">Buka <span class="material-icons text-base">arrow_forward</span></span></div>
+            <div class="rounded-xl border-2 border-base-300 bg-base-200 p-4">
+                <p class="text-sm font-bold text-base-content/80">Sudah Dikirim</p>
+                <p class="mt-1 text-3xl font-extrabold text-info">{{ $submitted }}</p>
             </div>
-        </a>
-        <a href="{{ route('guru.gudang.index') }}" class="card bg-base-100 border border-base-300 hover:shadow-lg hover:-translate-y-0.5 transition-all">
-            <div class="card-body">
-                <div class="w-12 h-12 rounded-xl bg-base-200 flex items-center justify-center"><span class="material-icons text-primary">folder</span></div>
-                <h3 class="card-title font-display mt-2">Gudang PAI-BMTS</h3>
-                <p class="text-sm text-neutral/60">Unduh materi, instrumen, dan contoh perangkat dari pengawas.</p>
-                <div class="card-actions justify-end mt-2"><span class="btn btn-sm btn-primary">Buka <span class="material-icons text-base">arrow_forward</span></span></div>
+            <div class="rounded-xl border-2 border-base-300 bg-base-200 p-4">
+                <p class="text-sm font-bold text-base-content/80">Perlu Perbaikan</p>
+                <p class="mt-1 text-3xl font-extrabold text-warning">{{ $revisi }}</p>
             </div>
-        </a>
-    </div>
+            <div class="rounded-xl border-2 border-base-300 bg-base-200 p-4">
+                <p class="text-sm font-bold text-base-content/80">Sudah Lengkap</p>
+                <p class="mt-1 text-3xl font-extrabold text-success">{{ $lengkapCount }}</p>
+            </div>
+        </div>
+    </section>
+
+    {{-- 3 Menu Utama Guru (Besar & Mudah Dipahami) --}}
+    <section data-tour="primary-actions">
+        <h2 class="mb-4 text-xl font-extrabold text-base-content sm:text-2xl">
+            Pilih Layanan yang Diperlukan
+        </h2>
+
+        <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
+            <a href="{{ route('guru.triwulan.index') }}" class="flex flex-col justify-between rounded-2xl border-2 border-base-300 bg-base-100 p-6 shadow-sm transition hover:border-primary hover:shadow-md">
+                <div>
+                    <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/15 text-primary">
+                        <span class="material-icons text-3xl">upload_file</span>
+                    </div>
+                    <h3 class="mt-4 text-xl font-extrabold text-base-content">1. Laporan Triwulan</h3>
+                    <p class="mt-2 text-base text-base-content/80">
+                        Unggah berkas dokumen wajib dan kirim laporan setiap triwulan ke Pengawas.
+                    </p>
+                </div>
+                <div class="mt-5">
+                    <span class="btn btn-primary w-full">
+                        Buka Laporan
+                        <span class="material-icons text-xl">arrow_forward</span>
+                    </span>
+                </div>
+            </a>
+
+            <a href="{{ route('guru.diskusi.index') }}" class="flex flex-col justify-between rounded-2xl border-2 border-base-300 bg-base-100 p-6 shadow-sm transition hover:border-primary hover:shadow-md">
+                <div>
+                    <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-info/15 text-info">
+                        <span class="material-icons text-3xl">forum</span>
+                    </div>
+                    <h3 class="mt-4 text-xl font-extrabold text-base-content">2. Tanya Pengawas</h3>
+                    <p class="mt-2 text-base text-base-content/80">
+                        Kirim pertanyaan jika ada kendala dan baca jawaban langsung dari Pengawas PAI.
+                    </p>
+                </div>
+                <div class="mt-5">
+                    <span class="btn btn-outline btn-primary border-2 w-full">
+                        Buka Diskusi
+                        <span class="material-icons text-xl">arrow_forward</span>
+                    </span>
+                </div>
+            </a>
+
+            <a href="{{ route('guru.gudang.index') }}" class="flex flex-col justify-between rounded-2xl border-2 border-base-300 bg-base-100 p-6 shadow-sm transition hover:border-primary hover:shadow-md">
+                <div>
+                    <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-secondary/15 text-secondary">
+                        <span class="material-icons text-3xl">folder_open</span>
+                    </div>
+                    <h3 class="mt-4 text-xl font-extrabold text-base-content">3. Gudang Materi</h3>
+                    <p class="mt-2 text-base text-base-content/80">
+                        Unduh contoh perangkat pembelajaran, format dokumen, dan materi pembinaan.
+                    </p>
+                </div>
+                <div class="mt-5">
+                    <span class="btn btn-outline btn-primary border-2 w-full">
+                        Buka Gudang
+                        <span class="material-icons text-xl">arrow_forward</span>
+                    </span>
+                </div>
+            </a>
+        </div>
+    </section>
+
 </div>
 @endsection
